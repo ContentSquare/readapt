@@ -1,0 +1,78 @@
+.readapt-highlight {
+  background-color: #1170AA66 !important;
+}
+
+/* Loading spinner */
+@keyframes spinner {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotate(360deg);
+  }
+}
+
+.readapt-loading{
+  overflow: clip !important;
+}
+
+.readapt-loading::after {
+  background-color: rgba(0, 0, 0, 0.4);
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 6;
+}
+
+.readapt-loading::before {
+  animation: 1.5s linear infinite spinner;
+  animation-play-state: inherit;
+  border: solid 5px #cfd0d1;
+  border-bottom-color: #1c87c9;
+  border-radius: 50%;
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  height: 40px;
+  width: 40px;
+  will-change: transform;
+  z-index: 2;
+}
+
+/* Ruler*/
+#ruler {
+  position: fixed;
+  top:0;
+  border-bottom: var(--ruler-size) solid var(--ruler-color);
+  width: 100vw;
+  z-index: 6;
+}
+
+/* Mask */
+#mask {
+  position: fixed;
+  width: 100vw;
+  z-index: 6;
+}
+
+#mask-before {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  background-color: var(--mask-color);
+  z-index: 6;
+}
+
+#mask::after {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--mask-color);
+  z-index: 6;
+  content: '';
+}

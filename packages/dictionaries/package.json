@@ -1,0 +1,44 @@
+{
+  "name": "@readapt/dictionaries",
+  "version": "0.1.0",
+  "types": "dist/index.d.ts",
+  "main": "",
+  "targets": {
+    "en": {
+      "distDir": "dist/en",
+      "source": "src/en/index.ts",
+      "outputFormat": "commonjs",
+      "isLibrary": true,
+      "optimize": true
+    },
+    "fr": {
+      "distDir": "dist/fr",
+      "source": "src/fr/index.ts",
+      "outputFormat": "commonjs",
+      "isLibrary": true,
+      "optimize": true
+    }
+  },
+  "scripts": {
+    "clean": "shx rm -rf dist",
+    "build": "parcel build && npm run types",
+    "types": "tsc --emitDeclarationOnly",
+    "generate-fr-dict": "ts-node scripts/generateFrenchDictionary.ts",
+    "generate-en-dict": "ts-node scripts/generateEnglishDictionary.ts"
+  },
+  "files": [
+    "dist/*"
+  ],
+  "license": "SEE LICENSE IN LICENSE.md",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ContentSquare/readapt.git"
+  },
+  "devDependencies": {
+    "compromise-syllables": "^0.0.6",
+    "nlp-syllables-async": "^0.1.2"
+  }
+}
