@@ -13,7 +13,8 @@
     "I_HAVE_PROFILE_CODE": "J'ai un code de profil",
     "MENU_LANGUAGE": "Langue du menu :",
     "CONTACT_US": "Contactez-nous !",
-    "TELL_US_ABOUT_YOU": "Dites nous en plus sur vous"
+    "TELL_US_ABOUT_YOU": "Dites nous en plus sur vous",
+    "FIRST_RUN": "Pour configurer votre profil, veuillez choisir une des options suivantes :"
   },
   "QUICK_ACTIVATE": {
     "QUICK_ACTIVATE": "Activation rapide",
