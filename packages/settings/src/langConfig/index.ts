@@ -1,0 +1,1 @@
+export { getLangConfig } from './langConfig'

@@ -1,0 +1,47 @@
+@font-face {
+  font-family: Luciole;
+  src: url('./fonts/Luciole-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: Luciole;
+  src: url('./fonts/Luciole-Regular-Italic.ttf') format('truetype');
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Luciole;
+  src: url('./fonts/Luciole-Bold.ttf') format('truetype');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: Luciole;
+  src: url('./fonts/Luciole-Bold-Italic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: OpenDyslexic;
+  src: url("./fonts/OpenDyslexic-Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: OpenDyslexic;
+  src: url("./fonts/OpenDyslexic-Italic.otf") format("opentype");
+  font-style: italic;
+}
+
+@font-face {
+  font-family: OpenDyslexic;
+  src: url("./fonts/OpenDyslexic-Bold.otf") format("opentype");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: OpenDyslexic;
+  src: url("./fonts/OpenDyslexic-BoldItalic.otf") format("opentype");
+  font-weight: bold;
+  font-style: italic;
+}

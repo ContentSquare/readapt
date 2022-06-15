@@ -1,0 +1,24 @@
+{
+  "name": "@readapt/settings",
+  "version": "0.1.0",
+  "main": "dist/readapt-settings.js",
+  "module": "dist/readapt-settings.esm.js",
+  "types": "dist/types.d.ts",
+  "scripts": {
+    "clean": "shx rm -rf dist",
+    "test": "jest",
+    "build": "rollup -c rollup.config.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ContentSquare/readapt.git"
+  },
+  "files": [
+    "dist/*",
+    "src/*"
+  ]
+}

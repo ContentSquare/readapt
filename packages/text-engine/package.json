@@ -1,0 +1,30 @@
+{
+  "name": "@readapt/text-engine",
+  "version": "0.1.0",
+  "main": "dist/readapt-text-engine.js",
+  "module": "dist/readapt-text-engine.esm.js",
+  "types": "dist/types.d.ts",
+  "scripts": {
+    "clean": "shx rm -rf dist",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "build": "rollup -c rollup.config.js",
+    "generate-docs": "typedoc src/index.ts"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ContentSquare/readapt.git"
+  },
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
+  "dependencies": {
+    "@readapt/dictionaries": "^0.1.0"
+  }
+}

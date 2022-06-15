@@ -1,0 +1,32 @@
+{
+  "name": "@readapt/visual-engine",
+  "version": "0.1.0",
+  "main": "dist/readapt-visual-engine.js",
+  "module": "dist/readapt-visual-engine.esm.js",
+  "types": "dist/types.d.ts",
+  "scripts": {
+    "clean": "shx rm -rf dist",
+    "test": "jest",
+    "build": "rollup -c rollup.config.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ContentSquare/readapt.git"
+  },
+  "license": "Apache-2.0",
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "@readapt/settings": "0.1.0",
+    "@readapt/text-engine": "0.1.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.179"
+  }
+}

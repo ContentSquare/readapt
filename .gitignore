@@ -1,0 +1,14 @@
+node_modules/
+.DS_Store
+
+coverage/
+
+.idea
+dist/
+.vscode/lauch.js
+
+.parcel-cache
+*.tsbuildinfo
+docs
+
+lerna-debug.log
