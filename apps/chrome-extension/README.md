@@ -2,9 +2,9 @@
 
 ## Introduction
 
-Created by [Contentsquare Foundation](https://contentsquare-foundation.org/), Readapt is a software platform that aims to help those with reading challenges like dyslexia to more easily read digital text. The [Chrome extension](https://chrome.google.com/webstore/detail/readapt/emgfmfgandmhbgleikkoaebngboghfpe) version of Readapt allows users to set their reading preferences and adapt text on websites. It also provides reading tools like a screen mask and reading ruler. 
+Created by [Contentsquare Foundation](https://contentsquare-foundation.org/), Readapt is a software platform that aims to help those with reading challenges like dyslexia to more easily read digital text. The [Chrome extension](https://chrome.google.com/webstore/detail/readapt/emgfmfgandmhbgleikkoaebngboghfpe) version of Readapt allows users to set their reading preferences and adapt text on websites. It also provides reading tools like a screen mask and reading ruler.
 
-This Chrome extension is compatible with many Chromium-based browsers like Google Chrome and Microsoft Edge (web view 2). It is available in English and French. 
+This Chrome extension is compatible with many Chromium-based browsers like Google Chrome and Microsoft Edge (web view 2). It is available in English and French.
 
 ## How the Readapt Chrome extension works
 After installing the extension, you can click on the extension to either create your profile from scratch or select from one of our reading templates. After saving your preferences, you can start to adapt text on websites by holding the control (Windows) or command ⌘ key (Mac) and left-clicking on your target text. To remove the text adaptation, you can either click on the extension and click on "Reset text on page", or right-click on the webpage and select "Readapt > Reset all text".
@@ -16,6 +16,10 @@ The reading tools (screen mask and reading ruler) can be activated on a webpage 
 ```
 yarn install
 ```
+
+### Setup env var
+
+After install an `.env` file will be generated, please fill missing values
 
 ### Compiles and hot-reloads for development
 ```
