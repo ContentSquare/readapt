@@ -1,6 +1,6 @@
 {
   "name": "@readapt/shared-components",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "main": "dist/readapt-shared-components.common.js",
   "module": "dist/readapt-shared-components.common.js",
   "types": "dist/types.d.ts",
@@ -25,7 +25,7 @@
     "url": "git+https://github.com/ContentSquare/readapt.git"
   },
   "dependencies": {
-    "@readapt/settings": "0.1.0",
+    "@readapt/settings": "^1.0.0",
     "bootstrap": "~4.6.1",
     "bootstrap-vue": "~2.22.0",
     "core-js": "^3.8.3"

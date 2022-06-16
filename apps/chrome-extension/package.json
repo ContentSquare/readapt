@@ -1,6 +1,6 @@
 {
   "name": "chrome-extension",
-  "version": "0.8.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -12,10 +12,10 @@
     "package": "scripts/package-release"
   },
   "dependencies": {
-    "@readapt/settings": "0.1.0",
-    "@readapt/shared-components": "0.1.0",
-    "@readapt/text-engine": "0.1.0",
-    "@readapt/visual-engine": "0.1.0",
+    "@readapt/settings": "^1.0.0",
+    "@readapt/shared-components": "^1.0.0",
+    "@readapt/text-engine": "^1.0.0",
+    "@readapt/visual-engine": "^1.0.0",
     "@vue/composition-api": "~1.4.5",
     "bootstrap": "~4.6.1",
     "bootstrap-vue": "~2.22.0",
