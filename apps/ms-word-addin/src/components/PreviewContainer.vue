@@ -37,10 +37,10 @@ export default PreviewContainer
 </script>
 <template>
   <div class="mb-auto">
-    <textarea class="form-control" ref="textToAdaptElement" v-model="textToAdapt" @blur="onRead" :hidden="isReading" />
+    <textarea class="textarea-container form-control" rows="5" ref="textToAdaptElement" v-model="textToAdapt" @blur="onRead" :hidden="isReading" />
 
     <template v-if="isReading">
-      <AdaptContainer class="adapt-container" :content-to-adapt="textToAdapt" :settings="settings" :scope="scope" @edit="onEdit" />
+      <AdaptContainer class="adapt-container" :content-to-adapt="$sanitize(textToAdapt)" :settings="settings" :scope="scope" @edit="onEdit" />
     </template>
   </div>
 </template>
@@ -49,5 +49,10 @@ export default PreviewContainer
 .adapt-container {
   max-height: 67vh;
   overflow-y: scroll;
+  cursor: pointer;
+
+  &:hover {
+    outline: 1px solid #dee2e6;
+  }
 }
 </style>
