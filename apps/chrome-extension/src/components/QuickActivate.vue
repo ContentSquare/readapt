@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent, ref, watchEffect } from '@vue/composition-api'
-import { BCard, BTableSimple, BTbody, BTd, BTh, BTr } from 'bootstrap-vue'
+import { BTableSimple, BTbody, BTd, BTh, BTr } from 'bootstrap-vue'
 import { opacityOptions } from '@readapt/settings'
 
 import { thicknessOptions } from '@/constants/ticknessOptions'
@@ -11,7 +11,6 @@ import { RangeBar } from '@readapt/shared-components'
 
 const QuickActivate = defineComponent({
   components: {
-    BCard,
     BTableSimple,
     BTbody,
     BTr,
@@ -51,9 +50,9 @@ const QuickActivate = defineComponent({
 export default QuickActivate
 </script>
 <template>
-  <b-card>
-    <h6 class="text-uppercase pl-1">{{ $t('QUICK_ACTIVATE.QUICK_ACTIVATE') }}</h6>
-    <b-table-simple striped small responsive class="mt-3" style="max-height: 33vh">
+  <div class="border rounded">
+    <div class="text-uppercase pl-1 my-3">{{ $t('QUICK_ACTIVATE.QUICK_ACTIVATE') }}</div>
+    <b-table-simple striped small responsive style="max-height: 35vh">
       <b-tbody>
         <!-- FONT
         <b-tr>
@@ -142,5 +141,5 @@ export default QuickActivate
         </b-tr>
       </b-tbody>
     </b-table-simple>
-  </b-card>
+  </div>
 </template>
