@@ -72,7 +72,7 @@ export const lettersEn: ColoredOption[] = [
 ]
 
 export const textPreviewEn =
-  '<p>The hungry purple dinosaur ate the kind, zingy fox, the jabbering crab, and the mad whale and started vending and quacking. The quick brown fox jumps over the lazy dog.</p>'
+  'The hungry purple dinosaur ate the kind, zingy fox, the jabbering crab, and the mad whale and started vending and quacking. The quick brown fox jumps over the lazy dog.'
 
 export const langConfigEn: LangConfig = {
   phonemeOptions: phonemesEn,
