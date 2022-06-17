@@ -1,0 +1,53 @@
+<script lang="ts">
+import { Settings } from '@readapt/settings'
+import { defineComponent, PropType, ref, watch } from '@vue/composition-api'
+import AdaptContainer from './AdaptContainer.vue'
+
+const PreviewContainer = defineComponent({
+  components: { AdaptContainer },
+  props: {
+    contentToAdapt: { type: String, required: true },
+    settings: { type: Object as PropType<Settings>, required: true },
+    scope: { type: String, default: 'preview' }
+  },
+  setup(props) {
+    const textToAdaptElement = ref<HTMLTextAreaElement>()
+    const isReading = ref(true)
+
+    const onRead = () => {
+      isReading.value = true
+    }
+
+    const onEdit = () => {
+      isReading.value = false
+      setTimeout(() => textToAdaptElement.value?.focus())
+    }
+
+    const textToAdapt = ref(props.contentToAdapt)
+    watch([textToAdapt, isReading], () => {
+      if (isReading.value && !textToAdapt.value) {
+        textToAdapt.value = props.contentToAdapt
+      }
+    })
+
+    return { textToAdapt, textToAdaptElement, isReading, onRead, onEdit }
+  }
+})
+export default PreviewContainer
+</script>
+<template>
+  <div class="mb-auto">
+    <textarea class="form-control" ref="textToAdaptElement" v-model="textToAdapt" @blur="onRead" :hidden="isReading" />
+
+    <template v-if="isReading">
+      <AdaptContainer class="adapt-container" :content-to-adapt="textToAdapt" :settings="settings" :scope="scope" @edit="onEdit" />
+    </template>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+.adapt-container {
+  max-height: 67vh;
+  overflow-y: scroll;
+}
+</style>
