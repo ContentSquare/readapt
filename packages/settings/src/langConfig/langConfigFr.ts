@@ -77,7 +77,7 @@ const lettersFr: ColoredOption[] = [
 ]
 
 const textPreviewFr =
-  "<p>Voici un texte de démonstration. En effet il montrera l'effet des options sélectionnées. Il y a trois onglets de configuration. Prenez le temps de chercher la configuration qui vous aidera le mieux.</p>"
+  "Voici un texte de démonstration. En effet il montrera l'effet des options sélectionnées. Il y a trois onglets de configuration. Prenez le temps de chercher la configuration qui vous aidera le mieux."
 
 export const langConfigFr: LangConfig = {
   phonemeOptions: phonemesFr,
