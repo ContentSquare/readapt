@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 
-import SelectPercentage from '@/components/forms/SelectPercentage.vue'
+import SelectPercentage from '../../src/components/forms/SelectPercentage.vue'
 
 describe('SelectPercentage', () => {
   test('should select currentValue', async () => {

@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
-import RangeBar from '@/components/forms/RangeBar.vue'
 import { BFormInput } from 'bootstrap-vue'
+
+import RangeBar from '../../src/components/forms/RangeBar.vue'
 
 describe('RangeBar', () => {
   test('should select currentValue', async () => {
