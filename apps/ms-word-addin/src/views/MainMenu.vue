@@ -7,6 +7,7 @@ import { BButton, BImg } from 'bootstrap-vue'
 import i18n from '@/i18n'
 import { buildDefaultProfiles } from '@/constants/defaultProfiles'
 import { Profiles } from '@/interfaces'
+import { trackAdaptEvent } from '@/services/stats'
 
 export interface OfficeCustomImageData {
   htmlImage: HTMLImageElement
@@ -138,6 +139,7 @@ const MainMenu = defineComponent({
     }
 
     const openDialogBox = () => {
+      trackAdaptEvent()
       Office.context.ui.displayDialogAsync(
         `${window.location.origin}/#/dialog-box`,
         { height: 90, width: 90 },
