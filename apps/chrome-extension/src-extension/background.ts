@@ -93,11 +93,25 @@ chrome.storage.onChanged.addListener(async (changes) => {
   if (hasSettingsChanged(changes)) {
     await broadcastMessage('REFRESH')
   }
+
+  const matomoURL = '__MATOMO_URL'
+  if (matomoURL && hasEventChanged(changes)) {
+    await fetch(`${matomoURL}/matomo.php?idsite=1&action_name=adapt&rec=1`)
+  }
 })
 
 const hasEnabledChanged = (changes: { [p: string]: chrome.storage.StorageChange }): boolean => {
   for (const [key] of Object.entries(changes)) {
     if (key === 'enabled') {
+      return true
+    }
+  }
+  return false
+}
+
+const hasEventChanged = (changes: { [p: string]: chrome.storage.StorageChange }): boolean => {
+  for (const [key] of Object.entries(changes)) {
+    if (key === 'event') {
       return true
     }
   }

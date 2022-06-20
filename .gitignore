@@ -6,6 +6,8 @@ coverage/
 .idea
 dist/
 .vscode/lauch.js
+.env*
+!.env-template
 
 .parcel-cache
 *.tsbuildinfo

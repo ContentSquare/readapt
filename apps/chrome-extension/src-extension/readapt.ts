@@ -196,6 +196,7 @@ const adaptHtmlElement = async (element: HTMLElement): Promise<void> => {
     console.error('Something went wrong when adapting element', element)
     console.error(error)
   }
+  chrome.storage.local.set({ event: `adapt:${new Date().toISOString()}` }).catch(console.error)
 
   document.body.classList.remove('readapt-loading')
 }
