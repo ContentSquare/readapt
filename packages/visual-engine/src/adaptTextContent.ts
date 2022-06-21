@@ -1,4 +1,4 @@
-import { AnaliseTextFn, Liaison, Phoneme, Syllable } from '@readapt/text-engine'
+import { AnaliseTextFn, Liaison, Syllable } from '@readapt/text-engine'
 import { ColoredItem, Settings } from '@readapt/settings'
 import xor from 'lodash/xor'
 
