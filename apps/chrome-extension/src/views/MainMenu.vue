@@ -75,7 +75,7 @@ export default MainMenu
 </script>
 
 <template>
-  <div class="container-fluid d-flex flex-column justify-content-between" style="min-width: 600px; min-height: 600px">
+  <div class="container-fluid d-flex flex-column justify-content-between" style="min-width: 600px; min-height: 600px; max-width: 600px">
     <div class="mt-2 d-flex justify-content-between align-items-center">
       <div>
         <!--<b-button class="mr-2" size="sm" variant="primary" @click="adapt()" :disabled="!readaptEnabled">-->
