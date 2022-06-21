@@ -1,5 +1,5 @@
-import * as textEngine from './text-engine'
-import { Phoneme } from './models'
+import * as textEngine from '../src/text-engine/text-engine'
+import { Phoneme } from '../src'
 
 describe('English TextEngine', () => {
   const enPhonemes = textEngine.getPhonemes('en')
@@ -51,7 +51,7 @@ describe('English TextEngine', () => {
     const lang = 'en'
     const expectedPhonemes = 'jh.aa._.n._.ih.z._.l.ih.s._.ah.n.ih.ng.ng._.t.uw._.k._.r.ih.s._.m.ah.s._.w._.ih.s._.l.ih.ng.ng'
     // prettier-ignore
-    const expectedSyllablesValue = [[0, 3], [5, 5], [6, 6], [8, 10], [11, 12], [13, 16], [18, 19], [21, 26], [27, 29], [31, 34], [35, 39]]
+    const expectedSyllablesValue = [[0, 3], [5, 6], [8, 10], [11, 12], [13, 16], [18, 19], [21, 26], [27, 29], [31, 34], [35, 39]]
     const expectedSilentLettersValue = [2, 11, 22, 26, 32, 35]
 
     const { phonemes, syllables, silentLetters } = textEngine.analyse(text, lang)
@@ -82,7 +82,7 @@ describe('English TextEngine', () => {
     const expectedPhonemes =
       'dh.dh.ih.s._.ih.z._.ae.n._._.ih.g|z.ae.m.p.ah|l._._._.s.eh.n.t.ah.n.s._._._.w._.ah.t._.ae.n._._.ao.ao._.s.ah.m._._.w.er.er.d._.ih.t._.ih.z._._.ih.t._.s._.f.ae.n.t.ae.s.t.ih.k._.ah.m.ey.z.ih.ng.ng._._._.b._.y.uw.t.ah.f.ah.l._._._._._._._.ih.n.k.r.eh.d.ah.b.ah|l._._._.dh.dh.ah._.s.k.ay._.ih.z._.b.l.uw._._.ih.sh.sh'
     // prettier-ignore
-    const expectedSyllablesValue = [[0, 3], [5, 5], [6, 6], [8, 9], [12, 13], [14, 15], [16, 18], [21, 23], [24, 28], [31, 34], [36, 37], [40, 42], [43, 46], [48, 51], [53, 54], [56, 56], [57, 57], [60, 63], [65, 67], [68, 70], [71, 73], [75, 75], [76, 78], [79, 81], [85, 88], [89, 90], [91, 93], [101, 102], [103, 106], [107, 107], [108, 110], [113, 115], [117, 119], [121, 121], [122, 122], [124, 127], [129, 131]]
+    const expectedSyllablesValue = [[0, 3], [5, 6], [8, 9], [12, 13], [14, 15], [16, 18], [21, 23], [24, 28], [31, 34], [36, 37], [40, 42], [43, 46], [48, 51], [53, 54], [56, 57], [60, 63], [65, 67], [68, 70], [71, 73], [75, 75], [76, 78], [79, 81], [85, 88], [89, 90], [91, 93], [101, 102], [103, 106], [107, 107], [108, 110], [113, 115], [117, 119], [121, 122], [124, 127], [129, 131]]
     const expectedSilentLettersValue = [32]
 
     const { phonemes, syllables, silentLetters } = textEngine.analyse(text, lang)

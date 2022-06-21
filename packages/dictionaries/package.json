@@ -22,6 +22,7 @@
   "scripts": {
     "clean": "shx rm -rf dist",
     "build": "parcel build && npm run types",
+    "test": "echo 'no test yet'",
     "types": "tsc --emitDeclarationOnly",
     "generate-fr-dict": "ts-node scripts/generateFrenchDictionary.ts",
     "generate-en-dict": "ts-node scripts/generateEnglishDictionary.ts"
