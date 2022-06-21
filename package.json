@@ -6,6 +6,7 @@
   "scripts": {
     "build-ms-word-addin": "yarn build-deps && yarn workspace ms-word-addin build",
     "build-chrome-extension": "yarn build-deps && yarn workspace chrome-extension build",
+    "test": "yarn workspaces run test",
     "build-deps": "lerna run build --stream --include-dependencies --scope=@readapt/* ",
     "lint": "eslint --ext .ts,.vue packages/* apps/*"
   },
