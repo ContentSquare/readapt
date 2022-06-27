@@ -8,7 +8,6 @@ import utils from '@/chrome'
 import PreviewContainer from '@/components/PreviewContainer.vue'
 import { Settings } from '@readapt/settings'
 import { CloseSettings, SaveSettings } from '@readapt/shared-components'
-undefined
 
 const { closeCurrentTab } = utils
 
@@ -34,16 +33,13 @@ const SettingsMenu = defineComponent({
       closeCurrentTab()
     }
 
-    const textToAdapt = ref(store.getters.getTextPreview)
-
     return {
       settings,
       settingsFile,
       contentToAdapt,
       isSettingsDirty,
       saveSettings,
-      closeSettings,
-      textToAdapt
+      closeSettings
     }
   }
 })

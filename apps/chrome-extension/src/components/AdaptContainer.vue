@@ -2,10 +2,10 @@
 import { adaptHtmlElementAsync } from '@/visualEngine/adaptHtmlElementAsync'
 import { removeStyleElement } from '@readapt/visual-engine'
 import { Settings } from '@readapt/settings'
-import { defineComponent, PropType, ref, watchEffect, onMounted, onUnmounted } from '@vue/composition-api'
+import { defineComponent, PropType, ref, onMounted, onUnmounted, watch } from '@vue/composition-api'
 import { BSpinner } from 'bootstrap-vue'
 
-const PreviewContainer = defineComponent({
+const AdaptContainer = defineComponent({
   components: { BSpinner },
   props: {
     contentToAdapt: { type: String, required: true },
@@ -22,10 +22,19 @@ const PreviewContainer = defineComponent({
         contentElement.value.innerHTML = props.contentToAdapt
         await adaptHtmlElementAsync(containerElement.value, props.settings, props.scope)
         isLoading.value = false
+        emit('ready') // Only for ms-word addin
       }
     }
 
-    watchEffect(() => adaptContent(), { flush: 'post' })
+    watch(
+      () => ({
+        ...props,
+        containerElement: containerElement.value,
+        contentElement: contentElement.value
+      }),
+      () => adaptContent(),
+      { deep: true, flush: 'post' }
+    )
 
     onMounted(() => adaptContent())
 
@@ -36,10 +45,10 @@ const PreviewContainer = defineComponent({
     return { isLoading, containerElement, contentElement, onClick }
   }
 })
-export default PreviewContainer
+export default AdaptContainer
 </script>
 <template>
-  <div class="adapt-container">
+  <div>
     <template v-if="isLoading">
       <div class="d-flex h-100 align-items-center justify-content-center flex-column">
         <b-spinner label="Loading..." variant="primary"></b-spinner>

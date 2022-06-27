@@ -29,6 +29,10 @@ const PreviewContainer = defineComponent({
         textToAdapt.value = props.contentToAdapt
       }
     })
+    watch(
+      () => props.contentToAdapt,
+      () => (textToAdapt.value = props.contentToAdapt)
+    )
 
     return { textToAdapt, textToAdaptElement, isReading, onRead, onEdit }
   }
