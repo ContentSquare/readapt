@@ -2,7 +2,7 @@
 import { adaptHtmlElementAsync } from '@/visualEngine/adaptHtmlElementAsync'
 import { removeStyleElement } from '@readapt/visual-engine'
 import { Settings } from '@readapt/settings'
-import { defineComponent, PropType, ref, onMounted, onUnmounted, watch } from '@vue/composition-api'
+import { defineComponent, PropType, ref, onUnmounted, watch } from '@vue/composition-api'
 import { BSpinner } from 'bootstrap-vue'
 
 const AdaptContainer = defineComponent({
@@ -35,8 +35,6 @@ const AdaptContainer = defineComponent({
       () => adaptContent(),
       { deep: true, flush: 'post' }
     )
-
-    onMounted(() => adaptContent())
 
     onUnmounted(() => removeStyleElement(props.scope))
 
