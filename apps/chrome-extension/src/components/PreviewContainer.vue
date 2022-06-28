@@ -25,7 +25,7 @@ const PreviewContainer = defineComponent({
 
     const textToAdapt = ref(props.contentToAdapt)
     watch([textToAdapt, isReading], () => {
-      if (isReading.value && !textToAdapt.value) {
+      if (isReading.value && !/\S/.test(textToAdapt.value)) {
         textToAdapt.value = props.contentToAdapt
       }
     })
