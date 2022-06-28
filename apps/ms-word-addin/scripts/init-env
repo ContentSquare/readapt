@@ -5,6 +5,12 @@
 const fs = require('fs');
 const path = require('path')
 
+// do not check env file in CI
+if (process.env.RENDER) {
+  console.log('Env vars must be configured in the CI dashboard')
+  return
+}
+
 const ENV_FILE_PATH = path.join(__dirname, '../.env');
 
 
