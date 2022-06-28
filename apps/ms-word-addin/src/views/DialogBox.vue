@@ -1,7 +1,7 @@
 <script lang="ts">
 /* global Office */
 import { computed, defineComponent, onMounted, ref } from '@vue/composition-api'
-import { BButton, BFormCheckbox, BFormSelect, BTableSimple, BTbody, BTr, BTd, BTh, BIconList, BSpinner, BSidebar } from 'bootstrap-vue'
+import { BButton, BFormCheckbox, BFormSelect, BTableSimple, BTbody, BTr, BTd, BTh, BIconList, BSidebar } from 'bootstrap-vue'
 
 import {
   Settings,
@@ -29,7 +29,6 @@ const DialogBox = defineComponent({
     BTd,
     BTh,
     BIconList,
-    BSpinner,
     BSidebar,
     BFormCheckbox,
     BFormSelect,
@@ -40,7 +39,6 @@ const DialogBox = defineComponent({
   setup() {
     const error = ref<string>('')
     const userPlatform = ref<Office.PlatformType>()
-    const isLoading = ref(true)
     const rulerActivated = ref(false)
     const maskActivated = ref(false)
 
@@ -86,7 +84,6 @@ const DialogBox = defineComponent({
     const docHtml = ref<string>('')
 
     const onReady = () => {
-      isLoading.value = false
       // Setting the default height of the Mask
       const maskReadingZone = document.getElementById('mask-readingzone') as HTMLElement
       maskReadingZone.style.height = `${heightMask}px`
@@ -201,7 +198,6 @@ const DialogBox = defineComponent({
       docHtml,
       print,
       userPlatform,
-      isLoading,
       onReady,
       toggleRuler,
       toggleMask,
@@ -385,15 +381,8 @@ export default DialogBox
           </b-sidebar>
         </div>
       </div>
-      <div v-if="isLoading">
-        <div class="d-flex h-100 align-items-center justify-content-center flex-column">
-          <b-spinner label="Loading..." variant="primary"></b-spinner>
-          <div>{{ $t('LOADING') }}...</div>
-        </div>
-      </div>
-      <div :class="{ loading: isLoading }">
-        <AdaptContainer :settings="settings" :content-to-adapt="docHtml" @ready="onReady" />
-      </div>
+
+      <AdaptContainer :settings="settings" :content-to-adapt="docHtml" @ready="onReady" />
     </div>
     <div id="ruler"></div>
     <div id="mask">
