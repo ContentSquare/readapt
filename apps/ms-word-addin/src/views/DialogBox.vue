@@ -1,7 +1,7 @@
 <script lang="ts">
 /* global Office */
 import { computed, defineComponent, onMounted, ref } from '@vue/composition-api'
-import { BButton, BFormCheckbox, BFormSelect, BTableSimple, BTbody, BTr, BTd, BTh, BIconList, BSpinner, BSidebar } from 'bootstrap-vue'
+import { BButton, BFormCheckbox, BFormSelect, BTableSimple, BTbody, BTr, BTd, BTh, BIconList, BSidebar } from 'bootstrap-vue'
 
 import {
   Settings,
