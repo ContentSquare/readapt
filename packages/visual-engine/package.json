@@ -1,6 +1,6 @@
 {
   "name": "@readapt/visual-engine",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "dist/readapt-visual-engine.js",
   "module": "dist/readapt-visual-engine.esm.js",
   "types": "dist/types.d.ts",
@@ -22,8 +22,8 @@
     "src/*"
   ],
   "dependencies": {
-    "@readapt/settings": "^1.0.0",
-    "@readapt/text-engine": "^1.0.0",
+    "@readapt/settings": "^1.1.0",
+    "@readapt/text-engine": "^1.1.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
