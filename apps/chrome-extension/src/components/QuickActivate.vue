@@ -1,9 +1,8 @@
 <script lang="ts">
 import { defineComponent, ref, watchEffect } from '@vue/composition-api'
 import { BTableSimple, BTbody, BTd, BTh, BTr } from 'bootstrap-vue'
-import { opacityOptions } from '@readapt/settings'
+import { opacityOptions, thicknessOptions } from '@readapt/settings'
 
-import { thicknessOptions } from '@/constants/ticknessOptions'
 import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
 import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 import utils from '@/chrome'
