@@ -16,7 +16,7 @@
     "validate": "office-addin-manifest validate manifest.xml",
     "cert:install": "node ./node_modules/.bin/office-addin-dev-certs install",
     "cert:uninstall": "node ./node_modules/.bin/office-addin-dev-certs uninstall",
-    "postinstall": "scripts/init-env"
+    "postinstall": "node scripts/init-env"
   },
   "dependencies": {
     "@readapt/settings": "^1.1.1",
