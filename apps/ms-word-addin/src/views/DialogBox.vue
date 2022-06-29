@@ -11,6 +11,7 @@ import {
   wordSpacingOptions,
   lineSpacingOptions,
   languageOptions,
+  thicknessOptions,
   SettingsKey,
   Option
 } from '@readapt/settings'
@@ -56,16 +57,10 @@ const DialogBox = defineComponent({
       { value: '5', text: '5' }
     ]
 
-    const sizeOptions: Option[] = [
-      { value: '1', text: '1' },
-      { value: '2', text: '2' },
-      { value: '3', text: '3' }
-    ]
-
-    let opacityMaskSelected = ref<string>('1')
-    let opacityRulerSelected = ref<string>('1')
-    let heightMaskSelected = ref<string>('1')
-    let heightRulerSelected = ref<string>('1')
+    const opacityMaskSelected = ref<string>('1')
+    const opacityRulerSelected = ref<string>('1')
+    const heightMaskSelected = ref<string>('1')
+    const heightRulerSelected = ref<string>('1')
 
     const settings = computed<Settings>(() => store.getters.getSettings)
     const allItemsLettersActive = computed<boolean>(() => settings.value.lettersActive)
@@ -140,7 +135,7 @@ const DialogBox = defineComponent({
       if (!mask) mask = document.getElementById('mask') as HTMLElement
       if (!maskBeforeReadingZone) maskBeforeReadingZone = document.getElementById('before-readingzone') as HTMLElement
       if (!topBarZone) topBarZone = document.getElementById('topbar')
-      let heightMax = document.body.scrollHeight
+      const heightMax = document.body.scrollHeight
       mask.style.height = `${heightMax.toString()}px`
 
       if (topBarZone && event.pageY > topBarZone.offsetHeight) {
@@ -219,7 +214,7 @@ const DialogBox = defineComponent({
       opacityMaskSelected,
       opacityRulerChange,
       opacityRulerSelected,
-      sizeOptions,
+      thicknessOptions,
       heightRulerSelected,
       heightMaskSelected,
       rulerHeightChange
@@ -360,7 +355,7 @@ export default DialogBox
                 <b-tr>
                   <b-td>{{ $t('GENERAL.THICKNESS') }}</b-td>
                   <b-td>
-                    <RangeBar :value="heightMaskSelected" :options="sizeOptions" @change="maskHeightChange($event)" />
+                    <RangeBar :value="heightMaskSelected" :options="thicknessOptions" @change="maskHeightChange($event)" />
                   </b-td>
                 </b-tr>
                 <b-tr>
@@ -373,7 +368,7 @@ export default DialogBox
                 <b-tr>
                   <b-td>{{ $t('GENERAL.THICKNESS') }}</b-td>
                   <b-td>
-                    <RangeBar :value="heightRulerSelected" :options="sizeOptions" @change="rulerHeightChange($event)" />
+                    <RangeBar :value="heightRulerSelected" :options="thicknessOptions" @change="rulerHeightChange($event)" />
                   </b-td>
                 </b-tr>
               </b-tbody>

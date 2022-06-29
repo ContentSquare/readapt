@@ -1,18 +1,15 @@
 <script lang="ts">
-/* global Office Word OfficeExtension */
+/* global Office Word */
 import { computed, defineComponent, ref } from '@vue/composition-api'
-import isEqual from 'lodash/isEqual'
-import store from '@/store'
 import { BButton, BImg } from 'bootstrap-vue'
+import isEqual from 'lodash/isEqual'
+
+import store from '@/store'
 import i18n from '@/i18n'
 import { buildDefaultProfiles } from '@/constants/defaultProfiles'
 import { Profiles } from '@/interfaces'
 import { trackAdaptEvent } from '@/services/stats'
-
-export interface OfficeCustomImageData {
-  htmlImage: HTMLImageElement
-  base64Image: OfficeExtension.ClientResult<string>
-}
+import { Settings } from '@readapt/settings'
 
 const MainMenu = defineComponent({
   components: {
@@ -31,110 +28,73 @@ const MainMenu = defineComponent({
       return isEqual(settings.value, defaultSettings)
     })
 
-    const sendMessage = (message: string) => {
-      const dialogBox = dialogContext.value
-      if (Office.context.requirements.isSetSupported('DialogApi', '1.2')) {
-        dialogBox?.messageChild(message)
-      } else {
-        console.warn('dialogApi not supported')
-      }
-    }
-
-    const sendDocument = (bodyHTML: string) => {
-      let lang = i18n.locale
-      sendMessage(JSON.stringify({ html: bodyHTML, settings: settings.value, lang }))
-    }
-
-    const imageFormat = () => {
-      return Word.run(async (context) => {
-        var htmlDocumentBody = context.document.body.getHtml()
+    const getDocumentBody = (): Promise<HTMLElement> => {
+      return Word.run(async (context: Word.RequestContext) => {
+        const htmlDocument = context.document.body.getHtml()
         await context.sync()
-        if (Office.context.platform === Office.PlatformType.OfficeOnline) {
-          let documentDom = new DOMParser().parseFromString(htmlDocumentBody.value, 'text/html')
-          return documentDom.body
-        }
-        let myImages = context.document.body.inlinePictures.load({ $all: true })
-        return context.sync().then(async () => {
-          let documentDom = new DOMParser().parseFromString(htmlDocumentBody.value, 'text/html')
-          let htmlImages = documentDom.getElementsByTagName('img')
-          const values: OfficeCustomImageData[] = []
-          for (let i = 0; i < myImages.items.length; i++) {
-            const base64 = myImages.items[i].getBase64ImageSrc()
-            await context.sync()
-            values.push({
-              base64Image: base64,
-              htmlImage: htmlImages[i]
-            })
-          }
-          for (let i = 0; i < myImages.items.length; i++) {
-            // Format PNG
-            if (values[i].base64Image.value.startsWith('iVBORw')) {
-              htmlImages[i].src = 'data:image/png;base64,' + values[i].base64Image.value
-            }
-            // Format Jpeg
-            else if (values[i].base64Image.value.startsWith('/9j/4AAQSkZJRg')) {
-              htmlImages[i].src = 'data:image/jpeg;base64,' + values[i].base64Image.value
-            }
-            // Format GIF
-            else if (values[i].base64Image.value.startsWith('R0lGO')) {
-              htmlImages[i].src = 'data:image/gif;base64,' + values[i].base64Image.value
-            }
-            // Format SVG
-            else if (values[i].base64Image.value.startsWith('PHN2Zy')) {
-              htmlImages[i].src = 'data:image/svg+xml;base64,' + values[i].base64Image.value
-            }
-          }
-          return documentDom.body
-        })
+        const domDocument = new DOMParser().parseFromString(htmlDocument.value, 'text/html')
+        return domDocument.body
       })
     }
 
-    const listFormat = (body: HTMLElement) => {
+    const convertImages = async (body: HTMLElement) => {
+      if (Office.context.platform === Office.PlatformType.OfficeOnline) {
+        return // nothing to do
+      }
+
+      await Word.run(async (context: Word.RequestContext) => {
+        const documentPictures = context.document.body.inlinePictures.load({ $all: true })
+        await context.sync()
+        const htmlImages = body.getElementsByTagName('img')
+        for (let i = 0; i < documentPictures.items.length; i++) {
+          const base64 = documentPictures.items[i].getBase64ImageSrc()
+          await context.sync()
+          const base64Image = base64.value
+          let mimeType = ''
+          if (base64Image.startsWith('iVBORw')) {
+            mimeType = 'image/png'
+          } else if (base64Image.startsWith('/9j/4AAQSkZJRg')) {
+            mimeType = 'image/jpeg'
+          } else if (base64Image.startsWith('R0lGO')) {
+            mimeType = 'image/gif'
+          } else if (base64Image.startsWith('PHN2Zy')) {
+            mimeType = 'image/svg+xml'
+          }
+          if (mimeType) {
+            htmlImages[i].src = `data:${mimeType};base64,${base64Image}`
+          }
+        }
+      })
+    }
+
+    const addListStyles = (body: HTMLElement) => {
       let listMarker = Array.from(body.getElementsByClassName('ListMarkerWrappingSpan')) as HTMLElement[]
 
-      //Format des listMarker
-      for (let index = 0; index < listMarker.length; index++) {
-        var sibling = listMarker[index].nextElementSibling as HTMLElement
+      listMarker.forEach((item) => {
+        const sibling = item.nextElementSibling as HTMLElement
 
-        if (listMarker[index].innerText === '·') {
-          listMarker[index].style.fontFamily = 'Symbol, Symbol_MSFontService, sans-serif'
+        if (item.innerText === '·') {
+          item.style.fontFamily = 'Symbol, Symbol_MSFontService, sans-serif'
         } else {
-          listMarker[index].style.fontFamily = sibling.style.fontFamily
+          item.style.fontFamily = sibling.style.fontFamily
         }
 
-        listMarker[index].innerText = listMarker[index].innerText + '\t'
-        listMarker[index].style.fontSize = sibling.style.fontSize
-        listMarker[index].style.color = sibling.style.color
-        listMarker[index].style.lineHeight = sibling.style.lineHeight
-      }
-      return body
+        item.innerText = item.innerText + '\t'
+        item.style.fontSize = sibling.style.fontSize
+        item.style.color = sibling.style.color
+        item.style.lineHeight = sibling.style.lineHeight
+      })
     }
 
-    const fontFormat = (body: HTMLElement) => {
+    const removeFontStyles = (body: HTMLElement) => {
       let elements = Array.from(body.getElementsByTagName('*')) as HTMLElement[]
 
-      for (let index = 0; index < elements.length; index++) {
-        elements[index].style.fontFamily = ''
-        elements[index].style.fontSize = ''
+      elements.forEach((item) => {
+        item.style.fontFamily = ''
+        item.style.fontSize = ''
 
         // Décallage des listes
-        elements[index].style.textIndent = '0'
-      }
-      return body
-    }
-
-    const onMessage = () => {
-      let document = imageFormat()
-      document.then((doc) => {
-        // Suppression des FontSize et FontFamily
-        let htmlFormated = fontFormat(doc as HTMLElement)
-
-        // Modification de HTML List
-        htmlFormated = listFormat(doc as HTMLElement)
-
-        //XML Seralizer
-        const newHTML = new XMLSerializer().serializeToString(htmlFormated)
-        sendDocument(newHTML)
+        item.style.textIndent = '0'
       })
     }
 
@@ -151,12 +111,31 @@ const MainMenu = defineComponent({
       )
     }
 
+    const onMessage = async () => {
+      const body = await getDocumentBody()
+      await convertImages(body)
+      removeFontStyles(body)
+      addListStyles(body)
+
+      const newHTML = new XMLSerializer().serializeToString(body)
+
+      sendDocument(newHTML, settings.value, i18n.locale)
+    }
+
+    const sendDocument = (html: string, settings: Settings, lang: string) => {
+      const message = JSON.stringify({ html: html, settings, lang })
+
+      const dialogBox = dialogContext.value
+      if (Office.context.requirements.isSetSupported('DialogApi', '1.2')) {
+        dialogBox?.messageChild(message)
+      } else {
+        console.warn('dialogApi not supported')
+      }
+    }
+
     return {
-      dialogContext,
-      // methods
-      sendMessage,
-      openDialogBox,
-      isDefaultSettings
+      isDefaultSettings,
+      openDialogBox
     }
   },
   methods: {
