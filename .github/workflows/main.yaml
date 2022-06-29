@@ -2,7 +2,7 @@ name: readapt ci
 
 on:
   pull_request:
-    branches: [ "master", "develop", "release/ms-word-addin"]
+    branches: [ "master", "release/ms-word-addin"]
   push:
     branches: [ "master" ]
 
