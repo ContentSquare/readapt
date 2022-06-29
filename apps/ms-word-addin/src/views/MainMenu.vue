@@ -37,7 +37,7 @@ const MainMenu = defineComponent({
       })
     }
 
-    const convertImages = async (body: HTMLElement) => {
+    const convertImages = async (body: HTMLElement): Promise<void> => {
       if (Office.context.platform === Office.PlatformType.OfficeOnline) {
         return // nothing to do
       }
@@ -45,7 +45,15 @@ const MainMenu = defineComponent({
       await Word.run(async (context: Word.RequestContext) => {
         const documentPictures = context.document.body.inlinePictures.load({ $all: true })
         await context.sync()
-        const htmlImages = body.getElementsByTagName('img')
+        const htmlImages = Array.from(body.getElementsByTagName('img')) as HTMLImageElement[]
+        if (documentPictures.items.length !== htmlImages.length) {
+          htmlImages.forEach((image) => {
+            image.src = `assets/no-image.png`
+            image.width = 64
+            image.height = 58
+          })
+          return
+        }
         for (let i = 0; i < documentPictures.items.length; i++) {
           const base64 = documentPictures.items[i].getBase64ImageSrc()
           await context.sync()
@@ -67,7 +75,7 @@ const MainMenu = defineComponent({
       })
     }
 
-    const addListStyles = (body: HTMLElement) => {
+    const addListStyles = (body: HTMLElement): void => {
       let listMarker = Array.from(body.getElementsByClassName('ListMarkerWrappingSpan')) as HTMLElement[]
 
       listMarker.forEach((item) => {
@@ -86,7 +94,7 @@ const MainMenu = defineComponent({
       })
     }
 
-    const removeFontStyles = (body: HTMLElement) => {
+    const removeFontStyles = (body: HTMLElement): void => {
       let elements = Array.from(body.getElementsByTagName('*')) as HTMLElement[]
 
       elements.forEach((item) => {
@@ -98,7 +106,7 @@ const MainMenu = defineComponent({
       })
     }
 
-    const openDialogBox = () => {
+    const openDialogBox = (): void => {
       trackAdaptEvent()
       Office.context.ui.displayDialogAsync(
         `${window.location.origin}/#/dialog-box`,
@@ -111,7 +119,7 @@ const MainMenu = defineComponent({
       )
     }
 
-    const onMessage = async () => {
+    const onMessage = async (): Promise<void> => {
       const body = await getDocumentBody()
       await convertImages(body)
       removeFontStyles(body)
@@ -122,7 +130,7 @@ const MainMenu = defineComponent({
       sendDocument(newHTML, settings.value, i18n.locale)
     }
 
-    const sendDocument = (html: string, settings: Settings, lang: string) => {
+    const sendDocument = (html: string, settings: Settings, lang: string): void => {
       const message = JSON.stringify({ html: html, settings, lang })
 
       const dialogBox = dialogContext.value
