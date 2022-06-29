@@ -11,7 +11,7 @@
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "package": "scripts/package-release",
-    "postinstall": "scripts/init-env"
+    "postinstall": "node scripts/init-env"
   },
   "dependencies": {
     "@readapt/settings": "^1.1.1",
