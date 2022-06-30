@@ -1,5 +1,7 @@
 # Readapt
 
+[![readapt ci](https://github.com/ContentSquare/readapt/actions/workflows/main.yaml/badge.svg)](https://github.com/ContentSquare/readapt/actions/workflows/main.yaml)
+
 ## Introduction
 
 Created by [Contentsquare Foundation](https://contentsquare-foundation.org/), Readapt is a software platform that aims
