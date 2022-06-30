@@ -437,10 +437,6 @@ export default DialogBox
     visibility: hidden !important;
   }
 }
-.loading {
-  opacity: 0.5;
-  background-color: var(--light);
-}
 .top-bar {
   z-index: 4;
   background-color: white;

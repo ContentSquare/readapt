@@ -1,6 +1,7 @@
 {
   "MAIN_MENU": {
     "ADAPT_DOC": "Adapte le document !",
+    "ADAPT_SELECTION": "Adapte le texte selectioné",
     "SEE_MODIFY_CURRENT_PROFILE": "Voir/Modifier le profil en cours",
     "CREATE_A_PROFILE": "Cliquez ici pour créer un profil !",
     "WELCOME_1": "Visualisez le texte de votre document adapté en fonction de vos besoins spécifiques afin de pouvoir le lire plus confortablement !",
