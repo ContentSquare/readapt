@@ -15,11 +15,10 @@ const AdaptContainer = defineComponent({
   setup(props, { emit }) {
     const isLoading = ref(true)
     const containerElement = ref<HTMLDivElement>()
-    const contentElement = ref<HTMLParagraphElement>()
 
     const adaptContent = async () => {
-      if (containerElement.value && contentElement.value && props.contentToAdapt) {
-        contentElement.value.innerHTML = props.contentToAdapt
+      if (containerElement.value && props.contentToAdapt) {
+        containerElement.value.innerHTML = props.contentToAdapt
         await adaptHtmlElementAsync(containerElement.value, props.settings, props.scope)
         isLoading.value = false
         emit('ready') // Only for ms-word addin
@@ -29,8 +28,7 @@ const AdaptContainer = defineComponent({
     watch(
       () => ({
         ...props,
-        containerElement: containerElement.value,
-        contentElement: contentElement.value
+        containerElement: containerElement.value
       }),
       () => adaptContent(),
       { deep: true, flush: 'post' }
@@ -38,9 +36,7 @@ const AdaptContainer = defineComponent({
 
     onUnmounted(() => removeStyleElement(props.scope))
 
-    const onClick = () => emit('edit')
-
-    return { isLoading, containerElement, contentElement, onClick }
+    return { isLoading, containerElement }
   }
 })
 export default AdaptContainer
@@ -55,9 +51,7 @@ export default AdaptContainer
     </template>
 
     <div :class="{ loading: isLoading }">
-      <div ref="containerElement" @click="onClick">
-        <p ref="contentElement" />
-      </div>
+      <div ref="containerElement"></div>
     </div>
   </div>
 </template>

@@ -43,9 +43,9 @@ export default PreviewContainer
   <div class="mb-auto">
     <textarea class="textarea-container form-control" rows="5" ref="textToAdaptElement" v-model="textToAdapt" @blur="onRead" :hidden="isReading" />
 
-    <template v-if="isReading">
-      <AdaptContainer class="adapt-container" :content-to-adapt="$sanitize(textToAdapt)" :settings="settings" :scope="scope" @edit="onEdit" />
-    </template>
+    <div v-if="isReading" @click="onEdit">
+      <AdaptContainer class="adapt-container" :content-to-adapt="$sanitize('<p>' + textToAdapt + '</p>')" :settings="settings" :scope="scope" />
+    </div>
   </div>
 </template>
 

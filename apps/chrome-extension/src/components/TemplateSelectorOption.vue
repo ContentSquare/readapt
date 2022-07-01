@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, PropType, ref } from '@vue/composition-api'
+import { computed, defineComponent, PropType, ref } from '@vue/composition-api'
 import { BButton, BCard, BCardText, BFormRadio } from 'bootstrap-vue'
 import AdaptContainer from '@/components/AdaptContainer.vue'
 import { SettingsTemplate } from '@/interfaces/settingsTemplate'
@@ -14,6 +14,8 @@ const TemplateSelectorOption = defineComponent({
   setup(props, { emit }) {
     const valueModel = ref(props.value)
 
+    const templateContent = computed(() => `<p>${props.template.content}</p>`)
+
     const isSelected = () => props.value.value === props.template.value
 
     const onSelect = (value: SettingsTemplate) => {
@@ -25,7 +27,7 @@ const TemplateSelectorOption = defineComponent({
 
     const onModify = () => emit('modify', props.template.settings)
 
-    return { valueModel, isSelected, onSelect, onChange, onModify }
+    return { valueModel, isSelected, onSelect, onChange, onModify, templateContent }
   }
 })
 export default TemplateSelectorOption
@@ -49,7 +51,7 @@ export default TemplateSelectorOption
       </ul>
     </b-card-text>
 
-    <AdaptContainer class="template-preview" :content-to-adapt="template.content" :settings="template.settings" :scope="template.value" />
+    <AdaptContainer class="template-preview" :content-to-adapt="templateContent" :settings="template.settings" :scope="template.value" />
   </b-card>
 </template>
 
