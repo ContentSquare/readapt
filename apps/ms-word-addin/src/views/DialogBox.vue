@@ -1,6 +1,6 @@
 <script lang="ts">
 /* global Office */
-import { computed, defineComponent, onMounted, ref } from '@vue/composition-api'
+import { computed, defineComponent, onMounted, ref, unref } from '@vue/composition-api'
 import { BButton, BFormCheckbox, BFormSelect, BTableSimple, BTbody, BTr, BTd, BTh, BIconList, BSidebar } from 'bootstrap-vue'
 
 import {
@@ -12,6 +12,7 @@ import {
   lineSpacingOptions,
   languageOptions,
   thicknessOptions,
+  opacityOptions,
   SettingsKey,
   Option
 } from '@readapt/settings'
@@ -43,24 +44,13 @@ const DialogBox = defineComponent({
     const rulerActivated = ref(false)
     const maskActivated = ref(false)
 
-    let heightMask = 25
-    let heightRuler = 1
+    const heightMask = 25
+    const BASE_COLOR = '#000000'
 
-    let opacityMask = 0.2
-    let opacityRuler = 0.2
-
-    const opacityOptions: Option[] = [
-      { value: '1', text: '1' },
-      { value: '2', text: '2' },
-      { value: '3', text: '3' },
-      { value: '4', text: '4' },
-      { value: '5', text: '5' }
-    ]
-
-    const opacityMaskSelected = ref<string>('1')
-    const opacityRulerSelected = ref<string>('1')
-    const heightMaskSelected = ref<string>('1')
-    const heightRulerSelected = ref<string>('1')
+    const opacityMaskSelected = ref<string>(opacityOptions[0].value)
+    const opacityRulerSelected = ref<string>(opacityOptions[0].value)
+    const heightMaskSelected = ref<string>(thicknessOptions[0].value)
+    const heightRulerSelected = ref<string>(thicknessOptions[0].value)
 
     const settings = computed<Settings>(() => store.getters.getSettings)
     const allItemsLettersActive = computed<boolean>(() => settings.value.lettersActive)
@@ -71,18 +61,14 @@ const DialogBox = defineComponent({
       return shadeAlternateLinesActive ? lineSpacingOptions.slice(1) : lineSpacingOptions
     })
 
-    let ruler = document.getElementById('ruler')
-    let mask = document.getElementById('mask')
-    let maskBeforeReadingZone = document.getElementById('before-readingzone')
-    let topBarZone = document.getElementById('topbar')
+    const ruler = ref<HTMLDivElement>()
+    const mask = ref<HTMLDivElement>()
+    const maskBeforeReadingZone = ref<HTMLDivElement>()
+    const maskReadingZone = ref<HTMLDivElement>()
+    const maskAfterReadingZone = ref<HTMLDivElement>()
+    const topBarZone = ref<HTMLDivElement>()
 
     const docHtml = ref<string>('')
-
-    const onReady = () => {
-      // Setting the default height of the Mask
-      const maskReadingZone = document.getElementById('mask-readingzone') as HTMLElement
-      maskReadingZone.style.height = `${heightMask}px`
-    }
 
     const onMessage = (event: Office.DialogParentMessageReceivedEventArgs) => {
       try {
@@ -108,9 +94,25 @@ const DialogBox = defineComponent({
     }
 
     onMounted(() => {
-      Office.onReady().then((info: { platform: Office.PlatformType }) => {
+      Office.onReady((info: { platform: Office.PlatformType }) => {
         Office.context.ui.addHandlerAsync(Office.EventType.DialogParentMessageReceived, onMessage, onRegister)
         userPlatform.value = info.platform
+      })
+
+      document.addEventListener('mousemove', (event: MouseEvent) => {
+        if (mask.value) {
+          const heightMax = document.body.scrollHeight
+          mask.value.style.height = `${heightMax.toString()}px`
+        }
+
+        if (topBarZone.value && event.pageY > topBarZone.value.offsetHeight) {
+          if (ruler.value && rulerActivated.value) {
+            ruler.value.style.top = `${event.pageY - 2}px`
+          }
+          if (maskBeforeReadingZone.value && maskActivated.value) {
+            maskBeforeReadingZone.value.style.height = `${event.pageY - topBarZone.value.offsetHeight - 20}px`
+          }
+        }
       })
     })
 
@@ -130,34 +132,15 @@ const DialogBox = defineComponent({
       document.body.className = maskActivated.value ? 'showmask' : ''
     }
 
-    document.body.onmousemove = (event) => {
-      if (!ruler) ruler = document.getElementById('ruler') as HTMLElement
-      if (!mask) mask = document.getElementById('mask') as HTMLElement
-      if (!maskBeforeReadingZone) maskBeforeReadingZone = document.getElementById('before-readingzone') as HTMLElement
-      if (!topBarZone) topBarZone = document.getElementById('topbar')
-      const heightMax = document.body.scrollHeight
-      mask.style.height = `${heightMax.toString()}px`
-
-      if (topBarZone && event.pageY > topBarZone.offsetHeight) {
-        if (ruler && rulerActivated.value) {
-          ruler.style.top = `${event.pageY - 2}px`
-        }
-        if (mask && maskActivated.value) {
-          // clientY - (top zone height) - (mask height/2)
-          maskBeforeReadingZone.style.height = `${event.pageY - topBarZone.offsetHeight - 20}px`
-        }
-      }
-    }
-
     const maskHeightChange = (size: string) => {
-      let maskReadingZone = document.getElementById('mask-readingzone') as HTMLElement
-      maskReadingZone.style.height = `${(heightMask * parseInt(size)).toString()}px`
+      const maskReadingZoneElem = unref(maskReadingZone) as HTMLDivElement
+      maskReadingZoneElem.style.height = `${(heightMask * parseInt(size)).toString()}px`
       heightMaskSelected.value = size
     }
 
     const rulerHeightChange = (size: string) => {
-      let ruler = document.getElementById('ruler') as HTMLElement
-      ruler.style.borderTop = `${(heightRuler * parseInt(size)).toString()}px solid black`
+      const rulerElem = unref(ruler) as HTMLDivElement
+      rulerElem.style.borderTopWidth = `${size}px`
       heightRulerSelected.value = size
     }
 
@@ -171,20 +154,20 @@ const DialogBox = defineComponent({
       }
     }
 
-    const opacityMaskChange = (options: number) => {
-      let beforeReadingZone = document.getElementById('before-readingzone') as HTMLElement
-      let afterReadingZone = document.getElementById('after-readingzone') as HTMLElement
+    const opacityMaskChange = (opacity: string) => {
+      const maskBeforeReadingZoneElem = unref(maskBeforeReadingZone) as HTMLElement
+      const maskAfterReadingZoneElem = unref(maskAfterReadingZone) as HTMLElement
 
-      beforeReadingZone.style.opacity = (opacityMask * options).toString()
-      afterReadingZone.style.opacity = (opacityMask * options).toString()
-      opacityMaskSelected.value = opacityOptions[options - 1].value
+      maskBeforeReadingZoneElem.style.backgroundColor = BASE_COLOR + opacity
+      maskAfterReadingZoneElem.style.backgroundColor = BASE_COLOR + opacity
+      opacityMaskSelected.value = opacity
     }
 
-    const opacityRulerChange = (options: number) => {
-      let ruler = document.getElementById('ruler') as HTMLElement
+    const opacityRulerChange = (opacity: string) => {
+      const ruleElem = unref(ruler) as HTMLDivElement
 
-      ruler.style.opacity = (opacityRuler * options).toString()
-      opacityRulerSelected.value = opacityOptions[options - 1].value
+      ruleElem.style.borderColor = BASE_COLOR + opacity
+      opacityRulerSelected.value = opacity
     }
 
     return {
@@ -193,7 +176,6 @@ const DialogBox = defineComponent({
       docHtml,
       print,
       userPlatform,
-      onReady,
       toggleRuler,
       toggleMask,
       maskHeightChange,
@@ -217,7 +199,13 @@ const DialogBox = defineComponent({
       thicknessOptions,
       heightRulerSelected,
       heightMaskSelected,
-      rulerHeightChange
+      rulerHeightChange,
+      topBarZone,
+      mask,
+      maskBeforeReadingZone,
+      maskReadingZone,
+      maskAfterReadingZone,
+      ruler
     }
   }
 })
@@ -228,10 +216,10 @@ export default DialogBox
   <div>
     <div v-if="error">{{ error }}</div>
     <div class="container-fluid">
-      <div id="topbar" class="sticky-top top-bar">
-        <b-button v-if="userPlatform !== 'Mac'" size="sm" variant="primary" @click="print()" style="margin-right: 10px">{{
-          $t('DIALOG_BOX.PRINT')
-        }}</b-button>
+      <div id="topbar" ref="topBarZone" class="sticky-top top-bar">
+        <b-button v-if="userPlatform !== 'Mac'" size="sm" variant="primary" @click="print()" style="margin-right: 10px">
+          {{ $t('DIALOG_BOX.PRINT') }}
+        </b-button>
         <b-form-checkbox :checked="maskActivated" @change="toggleMask()" inline switch>{{ $t('DIALOG_BOX.MASK') }}</b-form-checkbox>
         <b-form-checkbox :checked="rulerActivated" @change="toggleRuler()" inline switch>{{ $t('DIALOG_BOX.RULER') }}</b-form-checkbox>
 
@@ -241,27 +229,21 @@ export default DialogBox
             <b-table-simple striped responsive class="mb-0">
               <b-tbody>
                 <b-tr>
-                  <b-th rowspan="1" class="bg-white">
-                    {{ $t('GENERAL.FONT') }}
-                  </b-th>
+                  <b-th class="bg-white"> {{ $t('GENERAL.FONT') }} </b-th>
                   <b-td>
                     <b-form-select :options="fontFamilyOptions" :value="settings.fontFamily" @change="updateOption('fontFamily', $event)" />
                   </b-td>
                   <b-td />
                 </b-tr>
                 <b-tr>
-                  <b-th rowspan="1" class="bg-white">
-                    {{ $t('GENERAL.FONT_SIZE') }}
-                  </b-th>
+                  <b-th class="bg-white"> {{ $t('GENERAL.FONT_SIZE') }} </b-th>
                   <b-td>
                     <SelectPercentage :options="fontSizeOptions" :value="settings.fontSize" @change="updateOption('fontSize', $event)" />
                   </b-td>
                   <b-td />
                 </b-tr>
                 <b-tr>
-                  <b-th :rowspan="1" class="bg-white">
-                    {{ $t('GENERAL.LETTER_SPACING') }}
-                  </b-th>
+                  <b-th class="bg-white"> {{ $t('GENERAL.LETTER_SPACING') }} </b-th>
                   <b-td>
                     <SelectPercentage
                       :options="letterSpacingOptions"
@@ -272,18 +254,14 @@ export default DialogBox
                   <b-td />
                 </b-tr>
                 <b-tr>
-                  <b-th :rowspan="1" class="bg-white">
-                    {{ $t('GENERAL.WORD_SPACING') }}
-                  </b-th>
+                  <b-th class="bg-white"> {{ $t('GENERAL.WORD_SPACING') }} </b-th>
                   <b-td>
                     <SelectPercentage :options="wordSpacingOptions" :value="settings.wordSpacing" @change="updateOption('wordSpacing', $event)" />
                   </b-td>
                   <b-td />
                 </b-tr>
                 <b-tr>
-                  <b-th :rowspan="1" class="bg-white">
-                    {{ $t('GENERAL.LINE_SPACING') }}
-                  </b-th>
+                  <b-th class="bg-white"> {{ $t('GENERAL.LINE_SPACING') }} </b-th>
                   <b-td>
                     <SelectPercentage
                       :options="lineSpacingOptionsOptimized"
@@ -294,59 +272,49 @@ export default DialogBox
                   <b-td />
                 </b-tr>
                 <b-tr>
-                  <b-th :rowspan="1" class="bg-white">
-                    {{ $t('GENERAL.HIGHLIGHT_ALTERNATING_SYLLABLES') }}
-                  </b-th>
+                  <b-th class="bg-white"> {{ $t('GENERAL.HIGHLIGHT_ALTERNATING_SYLLABLES') }} </b-th>
                   <b-td />
                   <b-td class="text-right">
                     <b-form-checkbox :checked="settings.syllableActive" @change="updateOption('syllableActive', $event)" switch />
                   </b-td>
                 </b-tr>
                 <b-tr>
-                  <b-th :rowspan="1" class="bg-white">
-                    {{ $t('GENERAL.GREY_SILENT_LETTERS') }}
-                  </b-th>
+                  <b-th class="bg-white"> {{ $t('GENERAL.GREY_SILENT_LETTERS') }} </b-th>
                   <b-td />
                   <b-td class="text-right">
                     <b-form-checkbox :checked="settings.silentLetterActive" @change="updateOption('silentLetterActive', $event)" switch />
                   </b-td>
                 </b-tr>
                 <b-tr>
-                  <b-th :rowspan="1" class="bg-white">
-                    {{ $t('SETTINGS.ALL_PHONEMES_SETTINGS') }}
-                  </b-th>
+                  <b-th class="bg-white"> {{ $t('SETTINGS.ALL_PHONEMES_SETTINGS') }} </b-th>
                   <b-td />
                   <b-td class="text-right">
                     <b-form-checkbox :checked="allItemsPhonemesActive" @change="updateOption('phonemesActive', $event)" switch />
                   </b-td>
                 </b-tr>
                 <b-tr>
-                  <b-th :rowspan="1" class="bg-white">
-                    {{ $t('SETTINGS.ALL_LETTERS_SETTINGS') }}
-                  </b-th>
+                  <b-th class="bg-white"> {{ $t('SETTINGS.ALL_LETTERS_SETTINGS') }} </b-th>
                   <b-td />
                   <b-td class="text-right">
                     <b-form-checkbox :checked="allItemsLettersActive" @change="updateOption('lettersActive', $event)" switch />
                   </b-td>
                 </b-tr>
                 <b-tr v-if="settings.language === 'fr'">
-                  <b-th :rowspan="1" class="bg-white">{{ $t('GENERAL.SHOW_LIAISONS') }}</b-th>
+                  <b-th class="bg-white">{{ $t('GENERAL.SHOW_LIAISONS') }}</b-th>
                   <b-td />
                   <b-td class="text-right">
                     <b-form-checkbox :checked="settings.liaisonsActive" @change="updateOption('liaisonsActive', $event)" switch />
                   </b-td>
                 </b-tr>
                 <b-tr>
-                  <b-th :rowspan="1" class="bg-white">
-                    {{ $t('GENERAL.SHADE_ALTERNATE_LINES') }}
-                  </b-th>
+                  <b-th class="bg-white"> {{ $t('GENERAL.SHADE_ALTERNATE_LINES') }} </b-th>
                   <b-td />
                   <b-td class="text-right">
                     <b-form-checkbox :checked="settings.shadeAlternateLinesActive" @change="updateShadeAlternateLines" switch />
                   </b-td>
                 </b-tr>
                 <b-tr>
-                  <b-th class="bg-white" :rowspan="2">{{ $t('DIALOG_BOX.READING_MASK') }}</b-th>
+                  <b-th class="bg-white" rowspan="2">{{ $t('DIALOG_BOX.READING_MASK') }}</b-th>
                   <b-td>{{ $t('GENERAL.OPACITY') }}</b-td>
                   <b-td>
                     <RangeBar :value="opacityMaskSelected" :options="opacityOptions" @change="opacityMaskChange($event)" />
@@ -359,7 +327,7 @@ export default DialogBox
                   </b-td>
                 </b-tr>
                 <b-tr>
-                  <b-th :rowspan="2" class="bg-white bt-0">{{ $t('DIALOG_BOX.READING_RULER') }}</b-th>
+                  <b-th class="bg-white bt-0" rowspan="2">{{ $t('DIALOG_BOX.READING_RULER') }}</b-th>
                   <b-td>{{ $t('GENERAL.OPACITY') }}</b-td>
                   <b-td>
                     <RangeBar :value="opacityRulerSelected" :options="opacityOptions" @change="opacityRulerChange($event)" />
@@ -377,13 +345,13 @@ export default DialogBox
         </div>
       </div>
 
-      <AdaptContainer :settings="settings" :content-to-adapt="docHtml" @ready="onReady" />
+      <AdaptContainer :settings="settings" :content-to-adapt="docHtml" />
     </div>
-    <div id="ruler"></div>
-    <div id="mask">
-      <div id="before-readingzone"></div>
-      <div id="mask-readingzone"></div>
-      <div id="after-readingzone"></div>
+    <div id="ruler" ref="ruler"></div>
+    <div id="mask" ref="mask">
+      <div id="before-reading-zone" ref="maskBeforeReadingZone"></div>
+      <div id="mask-reading-zone" ref="maskReadingZone"></div>
+      <div id="after-reading-zone" ref="maskAfterReadingZone"></div>
     </div>
   </div>
 </template>
@@ -394,8 +362,7 @@ export default DialogBox
   display: none;
   z-index: 3;
   width: 100%;
-  border-top: 1px solid black;
-  opacity: 0.2;
+  border-top: 1px solid #00000033;
 }
 .showruler #ruler {
   display: block;
@@ -410,17 +377,16 @@ export default DialogBox
   z-index: 3;
   width: 100%;
 }
-#before-readingzone,
-#after-readingzone {
-  background: #202020;
-  opacity: 0.2;
+#before-reading-zone,
+#after-reading-zone {
+  background: #20202033;
 }
-#after-readingzone {
+#after-reading-zone {
   flex-grow: 2;
 }
-#mask-readingzone {
+#mask-reading-zone {
   width: 100%;
-  height: 40px; /* should be equal to line-height or max line height */
+  height: 25px;
 }
 .showmask #mask {
   display: flex;
