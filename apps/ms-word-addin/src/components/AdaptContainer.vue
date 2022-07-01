@@ -12,7 +12,7 @@ const AdaptContainer = defineComponent({
     settings: { type: Object as PropType<Settings>, required: true },
     scope: { type: String, default: 'preview' }
   },
-  setup(props, { emit }) {
+  setup(props) {
     const isLoading = ref(true)
     const containerElement = ref<HTMLDivElement>()
 
@@ -21,7 +21,6 @@ const AdaptContainer = defineComponent({
         containerElement.value.innerHTML = props.contentToAdapt
         await adaptHtmlElementAsync(containerElement.value, props.settings, props.scope)
         isLoading.value = false
-        emit('ready') // Only for ms-word addin
       }
     }
 
