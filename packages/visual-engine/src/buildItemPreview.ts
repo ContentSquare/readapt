@@ -14,6 +14,7 @@ const adaptExample = (examples: string[], { color, bold }: { color?: string; bol
 
   return examples
     .map((item: string) => item.replace(/<span>/g, `<span style="${style}">`)) //
+    .map((item: string) => `<span>${item}</span>`)
     .join(',&nbsp;')
 }
 
