@@ -37,6 +37,17 @@ const MainMenu = defineComponent({
       })
     }
 
+    const getDocumentSelection = (): Promise<HTMLElement> => {
+      return Word.run(async (context: Word.RequestContext) => {
+        const rangeSelection = context.document.getSelection()
+        await context.sync()
+        const htmlSelection = rangeSelection.getHtml()
+        await context.sync()
+        const domSelection = new DOMParser().parseFromString(htmlSelection.value, 'text/html')
+        return domSelection.body
+      })
+    }
+
     const convertImages = async (body: HTMLElement): Promise<void> => {
       if (Office.context.platform === Office.PlatformType.OfficeOnline) {
         return // nothing to do
@@ -106,26 +117,26 @@ const MainMenu = defineComponent({
       })
     }
 
-    const openDialogBox = (): void => {
+    const openDialogBox = (document: HTMLElement): void => {
       trackAdaptEvent()
+      const sendDocument = buildSendDocument(document)
       Office.context.ui.displayDialogAsync(
         `${window.location.origin}/#/dialog-box`,
         { height: 90, width: 90 },
         (asyncResult: Office.AsyncResult<Office.Dialog>) => {
           dialogContext.value = asyncResult.value
-          dialogContext.value.addEventHandler(Office.EventType.DialogMessageReceived, onMessage)
-          dialogContext.value.addEventHandler(Office.EventType.DialogEventReceived, onMessage)
+          dialogContext.value.addEventHandler(Office.EventType.DialogMessageReceived, sendDocument)
+          dialogContext.value.addEventHandler(Office.EventType.DialogEventReceived, sendDocument)
         }
       )
     }
 
-    const onMessage = async (): Promise<void> => {
-      const body = await getDocumentBody()
-      await convertImages(body)
-      removeFontStyles(body)
-      addListStyles(body)
+    const buildSendDocument = (documentBody: HTMLElement) => async (): Promise<void> => {
+      await convertImages(documentBody)
+      removeFontStyles(documentBody)
+      addListStyles(documentBody)
 
-      const newHTML = new XMLSerializer().serializeToString(body)
+      const newHTML = new XMLSerializer().serializeToString(documentBody)
 
       sendDocument(newHTML, settings.value, i18n.locale)
     }
@@ -141,9 +152,23 @@ const MainMenu = defineComponent({
       }
     }
 
+    const adaptDocument = async () => {
+      const document = await getDocumentBody()
+      openDialogBox(document)
+    }
+    const adaptSelection = async () => {
+      try {
+        const selection = await getDocumentSelection()
+        openDialogBox(selection)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
     return {
       isDefaultSettings,
-      openDialogBox
+      adaptDocument,
+      adaptSelection
     }
   },
   methods: {
@@ -167,7 +192,12 @@ export default MainMenu
         </div>
       </div>
       <div class="my-2" style="min-width: 250px" v-if="!isDefaultSettings">
-        <b-button class="w-100" size="md" variant="primary" @click="openDialogBox">
+        <b-button class="w-100" size="md" variant="primary" @click="adaptSelection">
+          {{ $t('MAIN_MENU.ADAPT_SELECTION') }}
+        </b-button>
+      </div>
+      <div class="my-2" style="min-width: 250px" v-if="!isDefaultSettings">
+        <b-button class="w-100" size="md" variant="primary" @click="adaptDocument">
           {{ $t('MAIN_MENU.ADAPT_DOC') }}
         </b-button>
       </div>
