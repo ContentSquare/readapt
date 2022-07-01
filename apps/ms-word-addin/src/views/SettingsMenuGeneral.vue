@@ -78,7 +78,6 @@ export default SettingsMenuGeneral
       <b-thead>
         <b-tr>
           <b-th />
-          <b-th />
           <b-th>{{ $t('GENERAL.SETTING') }}</b-th>
           <b-th>{{ $t('GENERAL.OPACITY') }}</b-th>
           <b-th>{{ $t('GENERAL.ACTIVATE') }}</b-th>
@@ -86,8 +85,7 @@ export default SettingsMenuGeneral
       </b-thead>
       <b-tbody>
         <b-tr>
-          <b-th class="bg-white">{{ $t('GENERAL.PROFILE_LANGUAGE') }}</b-th>
-          <b-th />
+          <b-td>{{ $t('GENERAL.PROFILE_LANGUAGE') }}</b-td>
           <b-td>
             <b-form-select :options="languageOptions" :value="settings.language" @change="changeLanguage($event)" />
           </b-td>
@@ -95,9 +93,6 @@ export default SettingsMenuGeneral
           <b-td />
         </b-tr>
         <b-tr>
-          <b-th rowspan="2" class="bg-white">
-            {{ $t('GENERAL.FONT_SETTINGS') }}
-          </b-th>
           <b-td>{{ $t('GENERAL.FONT') }}</b-td>
           <b-td>
             <b-form-select :options="fontFamilyOptions" :value="settings.fontFamily" @change="updateOption('fontFamily', $event)" />
@@ -114,9 +109,6 @@ export default SettingsMenuGeneral
           <b-td />
         </b-tr>
         <b-tr>
-          <b-th rowspan="3" class="bg-white">
-            {{ $t('GENERAL.SPACING') }}
-          </b-th>
           <b-td>{{ $t('GENERAL.LETTER_SPACING') }}</b-td>
           <b-td>
             <SelectPercentage :options="letterSpacingOptions" :value="settings.letterSpacing" @change="updateOption('letterSpacing', $event)" />
@@ -141,9 +133,6 @@ export default SettingsMenuGeneral
           <b-td />
         </b-tr>
         <b-tr>
-          <b-th :rowspan="settings.language === 'fr' ? 3 : 2" class="bg-white">
-            {{ $t('GENERAL.TEXT_HINT') }}
-          </b-th>
           <b-td>{{ $t('GENERAL.HIGHLIGHT_ALTERNATING_SYLLABLES') }}</b-td>
           <b-td>
             <div class="d-flex justify-content-center">
@@ -188,7 +177,6 @@ export default SettingsMenuGeneral
           </b-td>
         </b-tr>
         <b-tr>
-          <b-th class="bg-white">{{ $t('GENERAL.READING_TOOLS') }}</b-th>
           <b-td>{{ $t('GENERAL.SHADE_ALTERNATE_LINES') }}</b-td>
           <b-td />
           <b-td>
