@@ -52,7 +52,7 @@ export default SettingsMenu
         <router-view />
       </b-col>
       <b-col lg="3" class="m-1" style="max-height: 32vh">
-        <PreviewContainer :settings="settings" :content-to-adapt="contentToAdapt" />
+        <PreviewContainer class="text-preview" :settings="settings" :content-to-adapt="contentToAdapt" />
 
         <div style="max-height: 8vh">
           <div class="mt-3 d-flex justify-content-between">
