@@ -51,8 +51,6 @@ export default PreviewContainer
 
 <style lang="scss" scoped>
 .adapt-container {
-  max-height: 67vh;
-  overflow-y: scroll;
   cursor: pointer;
 
   &:hover {
