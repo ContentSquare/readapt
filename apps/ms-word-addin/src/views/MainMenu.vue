@@ -65,6 +65,16 @@ const MainMenu = defineComponent({
           })
           return
         }
+        // Move <img> elements outside <p> elements to avoid to be taked account on shade lines height calculation
+        const pElements = Array.from(body.getElementsByTagName('p')) as HTMLElement[]
+        pElements
+          .filter((pElem) => pElem.getElementsByTagName('img').length > 0) //
+          .forEach((pElem) => {
+            const images = Array.from(pElem.getElementsByTagName('img')) as HTMLElement[]
+            images.forEach((image) => {
+              pElem.parentElement?.insertBefore(image, pElem)
+            })
+          })
         for (let i = 0; i < documentPictures.items.length; i++) {
           const base64 = documentPictures.items[i].getBase64ImageSrc()
           await context.sync()
