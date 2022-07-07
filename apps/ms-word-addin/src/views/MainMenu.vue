@@ -57,15 +57,14 @@ const MainMenu = defineComponent({
         const documentPictures = context.document.body.inlinePictures.load({ $all: true })
         await context.sync()
         const htmlImages = Array.from(body.getElementsByTagName('img')) as HTMLImageElement[]
+        // When the document has floating images, their are badly positioned.
+        // inlinePictures.load() method do not return floating images
+        // This workaround remove the images in this case until we find a better solution
         if (documentPictures.items.length !== htmlImages.length) {
-          htmlImages.forEach((image) => {
-            image.src = `assets/no-image.png`
-            image.width = 64
-            image.height = 58
-          })
+          htmlImages.forEach((image) => image.remove())
           return
         }
-        // Move <img> elements outside <p> elements to avoid to be taked account on shade lines height calculation
+        // Move <img> elements outside <p> elements to avoid to be taken account on shade lines height calculation
         const pElements = Array.from(body.getElementsByTagName('p')) as HTMLElement[]
         pElements
           .filter((pElem) => pElem.getElementsByTagName('img').length > 0) //
