@@ -40,7 +40,7 @@ const PreviewContainer = defineComponent({
 export default PreviewContainer
 </script>
 <template>
-  <div class="mb-auto">
+  <div>
     <textarea class="textarea-container form-control" rows="5" ref="textToAdaptElement" v-model="textToAdapt" @blur="onRead" :hidden="isReading" />
 
     <div v-if="isReading" @click="onEdit">

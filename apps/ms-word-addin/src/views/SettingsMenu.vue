@@ -47,12 +47,12 @@ export default SettingsMenu
       <router-link class="p-3" to="/settings/letters">{{ $t('SETTINGS.LETTER_SETTINGS') }}</router-link>
     </nav>
 
-    <b-row>
-      <b-col lg="8" class="mb-2" style="max-height: 60vh; height: 60vh">
-        <router-view />
+    <b-row style="max-height: 92vh">
+      <b-col lg="12">
+        <router-view class="my-3" style="max-height: 60vh; height: 60vh" />
       </b-col>
-      <b-col lg="3" class="m-1" style="max-height: 32vh">
-        <PreviewContainer class="text-preview" :settings="settings" :content-to-adapt="contentToAdapt" />
+      <b-col lg="12" style="max-height: 32vh">
+        <PreviewContainer class="text-preview mb-auto" :settings="settings" :content-to-adapt="contentToAdapt" />
 
         <div style="max-height: 8vh">
           <div class="mt-3 d-flex justify-content-between">
