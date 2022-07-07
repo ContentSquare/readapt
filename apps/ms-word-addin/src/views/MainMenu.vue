@@ -49,10 +49,6 @@ const MainMenu = defineComponent({
     }
 
     const convertImages = async (body: HTMLElement): Promise<void> => {
-      if (Office.context.platform === Office.PlatformType.OfficeOnline) {
-        return // nothing to do
-      }
-
       await Word.run(async (context: Word.RequestContext) => {
         const documentPictures = context.document.body.inlinePictures.load({ $all: true })
         await context.sync()
@@ -74,6 +70,11 @@ const MainMenu = defineComponent({
               pElem.parentElement?.insertBefore(image, pElem)
             })
           })
+
+        if (Office.context.platform === Office.PlatformType.OfficeOnline) {
+          return
+        }
+        // If the platform is not office online replace image link to base64 encodig image
         for (let i = 0; i < documentPictures.items.length; i++) {
           const base64 = documentPictures.items[i].getBase64ImageSrc()
           await context.sync()
