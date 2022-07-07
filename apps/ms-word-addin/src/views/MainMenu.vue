@@ -48,24 +48,26 @@ const MainMenu = defineComponent({
       })
     }
 
-    const convertImages = async (body: HTMLElement): Promise<void> => {
-      if (Office.context.platform === Office.PlatformType.OfficeOnline) {
-        return // nothing to do
-      }
-
+    const convertImages = async (body: HTMLElement, isSelection: boolean): Promise<void> => {
       await Word.run(async (context: Word.RequestContext) => {
-        const documentPictures = context.document.body.inlinePictures.load({ $all: true })
+        let documentPictures
+        if (isSelection) {
+          const selection = context.document.getSelection()
+          await context.sync()
+          documentPictures = selection.inlinePictures.load({ $all: true })
+        } else {
+          documentPictures = context.document.body.inlinePictures.load({ $all: true })
+        }
         await context.sync()
         const htmlImages = Array.from(body.getElementsByTagName('img')) as HTMLImageElement[]
+        // When the document has floating images, their are badly positioned.
+        // inlinePictures.load() method do not return floating images
+        // This workaround remove the images in this case until we find a better solution
         if (documentPictures.items.length !== htmlImages.length) {
-          htmlImages.forEach((image) => {
-            image.src = `assets/no-image.png`
-            image.width = 64
-            image.height = 58
-          })
+          htmlImages.forEach((image) => image.remove())
           return
         }
-        // Move <img> elements outside <p> elements to avoid to be taked account on shade lines height calculation
+        // Move <img> elements outside <p> elements to avoid to be taken account on shade lines height calculation
         const pElements = Array.from(body.getElementsByTagName('p')) as HTMLElement[]
         pElements
           .filter((pElem) => pElem.getElementsByTagName('img').length > 0) //
@@ -75,6 +77,11 @@ const MainMenu = defineComponent({
               pElem.parentElement?.insertBefore(image, pElem)
             })
           })
+
+        if (Office.context.platform === Office.PlatformType.OfficeOnline) {
+          return
+        }
+        // If the platform is not office online replace image link to base64 encodig image
         for (let i = 0; i < documentPictures.items.length; i++) {
           const base64 = documentPictures.items[i].getBase64ImageSrc()
           await context.sync()
@@ -127,9 +134,9 @@ const MainMenu = defineComponent({
       })
     }
 
-    const openDialogBox = (document: HTMLElement): void => {
+    const openDialogBox = (document: HTMLElement, isSelection = false): void => {
       trackAdaptEvent()
-      const sendDocument = buildSendDocument(document)
+      const sendDocument = buildSendDocument(document, isSelection)
       Office.context.ui.displayDialogAsync(
         `${window.location.origin}/#/dialog-box`,
         { height: 90, width: 90 },
@@ -141,8 +148,8 @@ const MainMenu = defineComponent({
       )
     }
 
-    const buildSendDocument = (documentBody: HTMLElement) => async (): Promise<void> => {
-      await convertImages(documentBody)
+    const buildSendDocument = (documentBody: HTMLElement, isSelection: boolean) => async (): Promise<void> => {
+      await convertImages(documentBody, isSelection)
       removeFontStyles(documentBody)
       addListStyles(documentBody)
 
@@ -169,7 +176,7 @@ const MainMenu = defineComponent({
     const adaptSelection = async () => {
       try {
         const selection = await getDocumentSelection()
-        openDialogBox(selection)
+        openDialogBox(selection, true)
       } catch (error) {
         console.error(error)
       }
