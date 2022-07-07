@@ -48,9 +48,16 @@ const MainMenu = defineComponent({
       })
     }
 
-    const convertImages = async (body: HTMLElement): Promise<void> => {
+    const convertImages = async (body: HTMLElement, isSelection: boolean): Promise<void> => {
       await Word.run(async (context: Word.RequestContext) => {
-        const documentPictures = context.document.body.inlinePictures.load({ $all: true })
+        let documentPictures
+        if (isSelection) {
+          const selection = context.document.getSelection()
+          await context.sync()
+          documentPictures = selection.inlinePictures.load({ $all: true })
+        } else {
+          documentPictures = context.document.body.inlinePictures.load({ $all: true })
+        }
         await context.sync()
         const htmlImages = Array.from(body.getElementsByTagName('img')) as HTMLImageElement[]
         // When the document has floating images, their are badly positioned.
@@ -127,9 +134,9 @@ const MainMenu = defineComponent({
       })
     }
 
-    const openDialogBox = (document: HTMLElement): void => {
+    const openDialogBox = (document: HTMLElement, isSelection = false): void => {
       trackAdaptEvent()
-      const sendDocument = buildSendDocument(document)
+      const sendDocument = buildSendDocument(document, isSelection)
       Office.context.ui.displayDialogAsync(
         `${window.location.origin}/#/dialog-box`,
         { height: 90, width: 90 },
@@ -141,8 +148,8 @@ const MainMenu = defineComponent({
       )
     }
 
-    const buildSendDocument = (documentBody: HTMLElement) => async (): Promise<void> => {
-      await convertImages(documentBody)
+    const buildSendDocument = (documentBody: HTMLElement, isSelection: boolean) => async (): Promise<void> => {
+      await convertImages(documentBody, isSelection)
       removeFontStyles(documentBody)
       addListStyles(documentBody)
 
@@ -169,7 +176,7 @@ const MainMenu = defineComponent({
     const adaptSelection = async () => {
       try {
         const selection = await getDocumentSelection()
-        openDialogBox(selection)
+        openDialogBox(selection, true)
       } catch (error) {
         console.error(error)
       }
