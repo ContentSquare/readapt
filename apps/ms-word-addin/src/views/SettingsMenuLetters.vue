@@ -18,8 +18,7 @@ const SettingsMenuLetters = defineComponent({
   },
   setup() {
     const tableFields = [
-      { key: 'value', label: i18n.t('SETTINGS.LETTER') },
-      { key: 'example', label: i18n.t('SETTINGS.EXAMPLE') },
+      { key: 'value', label: i18n.t('SETTINGS.LETTER_AND_EXAMPLE') },
       { key: 'color', label: i18n.t('SETTINGS.TEXT_COLOR') },
       { key: 'bold', label: i18n.t('SETTINGS.BOLD') },
       { key: 'activate', label: i18n.t('SETTINGS.ACTIVATE') }
@@ -90,22 +89,26 @@ export default SettingsMenuLetters
 
 <template>
   <div>
-    <div class="d-flex pt-2 pb-2">
+    <div class="d-flex pt-2 pb-2" style="max-height: 10%">
       <b-form-checkbox :checked="allItemsActive" @change="switchAllItems" switch />
       <div class="ml-2">{{ $t('SETTINGS.ALL_LETTERS_SETTINGS') }}</div>
     </div>
-    <b-table striped sticky-header="50vh" :items="tableItems" :fields="tableFields">
+    <b-table style="margin-bottom: 0" sticky-header="90%" striped :items="tableItems" :fields="tableFields" responsive>
+      <template #head(value)="value">
+        <div class="h7">{{ value.label }}</div>
+      </template>
       <template #head(color)="color">
-        <div class="text-center">{{ color.label }}</div>
+        <div class="text-center h7">{{ color.label }}</div>
       </template>
       <template #head(bold)="bold">
-        <div class="text-center">{{ bold.label }}</div>
+        <div class="text-center h7">{{ bold.label }}</div>
       </template>
       <template #head(activate)="activate">
-        <div class="text-center">{{ activate.label }}</div>
+        <div class="text-center h7">{{ activate.label }}</div>
       </template>
-      <template #cell(example)="row">
-        <div class="d-flex" v-html="row.item.example" />
+      <template #cell(value)="row">
+        <div class="h7 mb-2">{{ row.item.value }}</div>
+        <div class="d-flex flex-wrap h7" v-html="row.item.example" />
       </template>
       <template #cell(color)="row">
         <div class="d-flex justify-content-center p-2">
@@ -126,4 +129,8 @@ export default SettingsMenuLetters
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.h7 {
+  font-size: 15px;
+}
+</style>

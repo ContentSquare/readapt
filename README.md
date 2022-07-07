@@ -1,5 +1,7 @@
 # Readapt
 
+[![readapt ci](https://github.com/ContentSquare/readapt/actions/workflows/main.yaml/badge.svg)](https://github.com/ContentSquare/readapt/actions/workflows/main.yaml)
+
 ## Introduction
 
 Created by [Contentsquare Foundation](https://contentsquare-foundation.org/), Readapt is a software platform that aims
@@ -99,4 +101,4 @@ To clean all packages and return to a fresh state run `yarn workspaces clean`.
 
 ## License
 
-[Apache License, Version 2.0](https://choosealicense.com/licenses/apache-2.0/)
+All code and dictionaries are published under [Apache License, Version 2.0](https://choosealicense.com/licenses/apache-2.0/), except for the French dictionary which is published under [Creative Commons BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).

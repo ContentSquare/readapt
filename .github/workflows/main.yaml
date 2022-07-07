@@ -1,0 +1,28 @@
+name: readapt ci
+
+on:
+  pull_request:
+    branches: [ "master", "release/ms-word-addin"]
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - run: npm i -g --force yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn audit --groups dependencies
+      - run: yarn lint
+      - run: yarn build-deps
+      - run: yarn test --ci
+      - run: yarn workspace chrome-extension build
+      - run: yarn workspace ms-word-addin build
+
+
+

@@ -1,10 +1,11 @@
 {
   "name": "ms-word-addin",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "test": "yarn test:unit",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "clean": "shx rm -rf dist",
@@ -14,13 +15,14 @@
     "stop": "office-addin-debugging stop manifest.xml",
     "validate": "office-addin-manifest validate manifest.xml",
     "cert:install": "node ./node_modules/.bin/office-addin-dev-certs install",
-    "cert:uninstall": "node ./node_modules/.bin/office-addin-dev-certs uninstall"
+    "cert:uninstall": "node ./node_modules/.bin/office-addin-dev-certs uninstall",
+    "postinstall": "node scripts/init-env"
   },
   "dependencies": {
-    "@readapt/settings": "^1.0.0",
-    "@readapt/shared-components": "^1.0.0",
-    "@readapt/text-engine": "^1.0.0",
-    "@readapt/visual-engine": "^1.0.0",
+    "@readapt/settings": "^1.2.0",
+    "@readapt/shared-components": "^1.2.0",
+    "@readapt/text-engine": "^1.2.0",
+    "@readapt/visual-engine": "^1.2.0",
     "@vue/composition-api": "~1.4.5",
     "bootstrap": "~4.6.1",
     "bootstrap-vue": "~2.22.0",
@@ -30,6 +32,7 @@
     "vue": "~2.6.14",
     "vue-i18n": "~8.27.0",
     "vue-router": "~3.5.1",
+    "vue-sanitize": "^0.2.2",
     "vuex": "~3.6.2"
   },
   "devDependencies": {

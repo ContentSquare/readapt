@@ -1,6 +1,6 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from '@vue/composition-api'
-import { BRow, BCol, BSpinner } from 'bootstrap-vue'
+import { BRow, BCol } from 'bootstrap-vue'
 import isEqual from 'lodash/isEqual'
 
 import { Settings } from '@readapt/settings'
@@ -8,25 +8,19 @@ import { CloseSettings, SaveSettings } from '@readapt/shared-components'
 
 import routes from '../router'
 import store, { loadStoredSettings } from '@/store'
-import AdaptContainer from '@/components/AdaptContainer.vue'
+import PreviewContainer from '@/components/PreviewContainer.vue'
 
 const SettingsMenu = defineComponent({
   components: {
     BRow,
     BCol,
-    BSpinner,
-    AdaptContainer,
+    PreviewContainer,
     SaveSettings,
     CloseSettings
   },
   setup() {
     const settings = computed(() => store.getters.getSettings)
     const contentToAdapt = computed(() => store.getters.getTextPreview)
-    const isLoading = ref(true)
-
-    const onReady = () => {
-      isLoading.value = false
-    }
 
     const storedSettings = ref(loadStoredSettings())
     const isSettingsDirty = computed(() => !isEqual(storedSettings.value, settings.value))
@@ -39,15 +33,7 @@ const SettingsMenu = defineComponent({
       routes.push({ path: '/' })
     }
 
-    return {
-      onReady,
-      settings,
-      contentToAdapt,
-      isLoading,
-      saveSettings,
-      isSettingsDirty,
-      closeSettings
-    }
+    return { settings, contentToAdapt, saveSettings, isSettingsDirty, closeSettings }
   }
 })
 export default SettingsMenu
@@ -61,20 +47,13 @@ export default SettingsMenu
       <router-link class="p-3" to="/settings/letters">{{ $t('SETTINGS.LETTER_SETTINGS') }}</router-link>
     </nav>
 
-    <b-row>
-      <b-col lg="8" class="mb-2" style="max-height: 60vh; height: 60vh">
-        <router-view />
+    <b-row style="max-height: 92vh">
+      <b-col lg="12">
+        <router-view class="my-3" style="max-height: 60vh; height: 60vh" />
       </b-col>
-      <b-col lg="3" class="m-1" style="max-height: 32vh">
-        <div v-if="isLoading">
-          <div class="d-flex h-100 align-items-center justify-content-center flex-column">
-            <b-spinner label="Loading..." variant="primary"></b-spinner>
-            <div>{{ $t('LOADING') }}...</div>
-          </div>
-        </div>
-        <div class="text-preview" :class="{ loading: isLoading }">
-          <AdaptContainer :settings="settings" :content-to-adapt="contentToAdapt" @ready="onReady" />
-        </div>
+      <b-col lg="12" style="max-height: 32vh">
+        <PreviewContainer class="text-preview mb-auto" :settings="settings" :content-to-adapt="contentToAdapt" />
+
         <div style="max-height: 8vh">
           <div class="mt-3 d-flex justify-content-between">
             <SaveSettings @save-settings="saveSettings" />
@@ -109,9 +88,5 @@ export default SettingsMenu
     max-height: 22vh;
     overflow-y: scroll;
   }
-}
-.loading {
-  opacity: 0.5;
-  background-color: var(--light);
 }
 </style>

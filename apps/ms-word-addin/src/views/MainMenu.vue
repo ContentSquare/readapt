@@ -1,17 +1,15 @@
 <script lang="ts">
-/* global Office Word OfficeExtension */
+/* global Office Word */
 import { computed, defineComponent, ref } from '@vue/composition-api'
-import isEqual from 'lodash/isEqual'
-import store from '@/store'
 import { BButton, BImg } from 'bootstrap-vue'
+import isEqual from 'lodash/isEqual'
+
+import store from '@/store'
 import i18n from '@/i18n'
 import { buildDefaultProfiles } from '@/constants/defaultProfiles'
 import { Profiles } from '@/interfaces'
-
-export interface OfficeCustomImageData {
-  htmlImage: HTMLImageElement
-  base64Image: OfficeExtension.ClientResult<string>
-}
+import { trackAdaptEvent } from '@/services/stats'
+import { Settings } from '@readapt/settings'
 
 const MainMenu = defineComponent({
   components: {
@@ -30,7 +28,139 @@ const MainMenu = defineComponent({
       return isEqual(settings.value, defaultSettings)
     })
 
-    const sendMessage = (message: string) => {
+    const getDocumentBody = (): Promise<HTMLElement> => {
+      return Word.run(async (context: Word.RequestContext) => {
+        const htmlDocument = context.document.body.getHtml()
+        await context.sync()
+        const domDocument = new DOMParser().parseFromString(htmlDocument.value, 'text/html')
+        return domDocument.body
+      })
+    }
+
+    const getDocumentSelection = (): Promise<HTMLElement> => {
+      return Word.run(async (context: Word.RequestContext) => {
+        const rangeSelection = context.document.getSelection()
+        await context.sync()
+        const htmlSelection = rangeSelection.getHtml()
+        await context.sync()
+        const domSelection = new DOMParser().parseFromString(htmlSelection.value, 'text/html')
+        return domSelection.body
+      })
+    }
+
+    const convertImages = async (body: HTMLElement, isSelection: boolean): Promise<void> => {
+      await Word.run(async (context: Word.RequestContext) => {
+        let documentPictures
+        if (isSelection) {
+          const selection = context.document.getSelection()
+          await context.sync()
+          documentPictures = selection.inlinePictures.load({ $all: true })
+        } else {
+          documentPictures = context.document.body.inlinePictures.load({ $all: true })
+        }
+        await context.sync()
+        const htmlImages = Array.from(body.getElementsByTagName('img')) as HTMLImageElement[]
+        // When the document has floating images, their are badly positioned.
+        // inlinePictures.load() method do not return floating images
+        // This workaround remove the images in this case until we find a better solution
+        if (documentPictures.items.length !== htmlImages.length) {
+          htmlImages.forEach((image) => image.remove())
+          return
+        }
+        // Move <img> elements outside <p> elements to avoid to be taken account on shade lines height calculation
+        const pElements = Array.from(body.getElementsByTagName('p')) as HTMLElement[]
+        pElements
+          .filter((pElem) => pElem.getElementsByTagName('img').length > 0) //
+          .forEach((pElem) => {
+            const images = Array.from(pElem.getElementsByTagName('img')) as HTMLElement[]
+            images.forEach((image) => {
+              pElem.parentElement?.insertBefore(image, pElem)
+            })
+          })
+
+        if (Office.context.platform === Office.PlatformType.OfficeOnline) {
+          return
+        }
+        // If the platform is not office online replace image link to base64 encodig image
+        for (let i = 0; i < documentPictures.items.length; i++) {
+          const base64 = documentPictures.items[i].getBase64ImageSrc()
+          await context.sync()
+          const base64Image = base64.value
+          let mimeType = ''
+          if (base64Image.startsWith('iVBORw')) {
+            mimeType = 'image/png'
+          } else if (base64Image.startsWith('/9j/4AAQSkZJRg')) {
+            mimeType = 'image/jpeg'
+          } else if (base64Image.startsWith('R0lGO')) {
+            mimeType = 'image/gif'
+          } else if (base64Image.startsWith('PHN2Zy')) {
+            mimeType = 'image/svg+xml'
+          }
+          if (mimeType) {
+            htmlImages[i].src = `data:${mimeType};base64,${base64Image}`
+          }
+        }
+      })
+    }
+
+    const addListStyles = (body: HTMLElement): void => {
+      let listMarker = Array.from(body.getElementsByClassName('ListMarkerWrappingSpan')) as HTMLElement[]
+
+      listMarker.forEach((item) => {
+        const sibling = item.nextElementSibling as HTMLElement
+
+        if (item.innerText === '·') {
+          item.style.fontFamily = 'Symbol, Symbol_MSFontService, sans-serif'
+        } else {
+          item.style.fontFamily = sibling.style.fontFamily
+        }
+
+        item.innerText = item.innerText + '\t'
+        item.style.fontSize = sibling.style.fontSize
+        item.style.color = sibling.style.color
+        item.style.lineHeight = sibling.style.lineHeight
+      })
+    }
+
+    const removeFontStyles = (body: HTMLElement): void => {
+      let elements = Array.from(body.getElementsByTagName('*')) as HTMLElement[]
+
+      elements.forEach((item) => {
+        item.style.fontFamily = ''
+        item.style.fontSize = ''
+
+        // Décallage des listes
+        item.style.textIndent = '0'
+      })
+    }
+
+    const openDialogBox = (document: HTMLElement, isSelection = false): void => {
+      trackAdaptEvent()
+      const sendDocument = buildSendDocument(document, isSelection)
+      Office.context.ui.displayDialogAsync(
+        `${window.location.origin}/#/dialog-box`,
+        { height: 90, width: 90 },
+        (asyncResult: Office.AsyncResult<Office.Dialog>) => {
+          dialogContext.value = asyncResult.value
+          dialogContext.value.addEventHandler(Office.EventType.DialogMessageReceived, sendDocument)
+          dialogContext.value.addEventHandler(Office.EventType.DialogEventReceived, sendDocument)
+        }
+      )
+    }
+
+    const buildSendDocument = (documentBody: HTMLElement, isSelection: boolean) => async (): Promise<void> => {
+      await convertImages(documentBody, isSelection)
+      removeFontStyles(documentBody)
+      addListStyles(documentBody)
+
+      const newHTML = new XMLSerializer().serializeToString(documentBody)
+
+      sendDocument(newHTML, settings.value, i18n.locale)
+    }
+
+    const sendDocument = (html: string, settings: Settings, lang: string): void => {
+      const message = JSON.stringify({ html: html, settings, lang })
+
       const dialogBox = dialogContext.value
       if (Office.context.requirements.isSetSupported('DialogApi', '1.2')) {
         dialogBox?.messageChild(message)
@@ -39,122 +169,23 @@ const MainMenu = defineComponent({
       }
     }
 
-    const sendDocument = (bodyHTML: string) => {
-      let lang = i18n.locale
-      sendMessage(JSON.stringify({ html: bodyHTML, settings: settings.value, lang }))
+    const adaptDocument = async () => {
+      const document = await getDocumentBody()
+      openDialogBox(document)
     }
-
-    const imageFormat = () => {
-      return Word.run(async (context) => {
-        var htmlDocumentBody = context.document.body.getHtml()
-        await context.sync()
-        if (Office.context.platform === Office.PlatformType.OfficeOnline) {
-          let documentDom = new DOMParser().parseFromString(htmlDocumentBody.value, 'text/html')
-          return documentDom.body
-        }
-        let myImages = context.document.body.inlinePictures.load({ $all: true })
-        return context.sync().then(async () => {
-          let documentDom = new DOMParser().parseFromString(htmlDocumentBody.value, 'text/html')
-          let htmlImages = documentDom.getElementsByTagName('img')
-          const values: OfficeCustomImageData[] = []
-          for (let i = 0; i < myImages.items.length; i++) {
-            const base64 = myImages.items[i].getBase64ImageSrc()
-            await context.sync()
-            values.push({
-              base64Image: base64,
-              htmlImage: htmlImages[i]
-            })
-          }
-          for (let i = 0; i < myImages.items.length; i++) {
-            // Format PNG
-            if (values[i].base64Image.value.startsWith('iVBORw')) {
-              htmlImages[i].src = 'data:image/png;base64,' + values[i].base64Image.value
-            }
-            // Format Jpeg
-            else if (values[i].base64Image.value.startsWith('/9j/4AAQSkZJRg')) {
-              htmlImages[i].src = 'data:image/jpeg;base64,' + values[i].base64Image.value
-            }
-            // Format GIF
-            else if (values[i].base64Image.value.startsWith('R0lGO')) {
-              htmlImages[i].src = 'data:image/gif;base64,' + values[i].base64Image.value
-            }
-            // Format SVG
-            else if (values[i].base64Image.value.startsWith('PHN2Zy')) {
-              htmlImages[i].src = 'data:image/svg+xml;base64,' + values[i].base64Image.value
-            }
-          }
-          return documentDom.body
-        })
-      })
-    }
-
-    const listFormat = (body: HTMLElement) => {
-      let listMarker = Array.from(body.getElementsByClassName('ListMarkerWrappingSpan')) as HTMLElement[]
-
-      //Format des listMarker
-      for (let index = 0; index < listMarker.length; index++) {
-        var sibling = listMarker[index].nextElementSibling as HTMLElement
-
-        if (listMarker[index].innerText === '·') {
-          listMarker[index].style.fontFamily = 'Symbol, Symbol_MSFontService, sans-serif'
-        } else {
-          listMarker[index].style.fontFamily = sibling.style.fontFamily
-        }
-
-        listMarker[index].innerText = listMarker[index].innerText + '\t'
-        listMarker[index].style.fontSize = sibling.style.fontSize
-        listMarker[index].style.color = sibling.style.color
-        listMarker[index].style.lineHeight = sibling.style.lineHeight
+    const adaptSelection = async () => {
+      try {
+        const selection = await getDocumentSelection()
+        openDialogBox(selection, true)
+      } catch (error) {
+        console.error(error)
       }
-      return body
-    }
-
-    const fontFormat = (body: HTMLElement) => {
-      let elements = Array.from(body.getElementsByTagName('*')) as HTMLElement[]
-
-      for (let index = 0; index < elements.length; index++) {
-        elements[index].style.fontFamily = ''
-        elements[index].style.fontSize = ''
-
-        // Décallage des listes
-        elements[index].style.textIndent = '0'
-      }
-      return body
-    }
-
-    const onMessage = () => {
-      let document = imageFormat()
-      document.then((doc) => {
-        // Suppression des FontSize et FontFamily
-        let htmlFormated = fontFormat(doc as HTMLElement)
-
-        // Modification de HTML List
-        htmlFormated = listFormat(doc as HTMLElement)
-
-        //XML Seralizer
-        const newHTML = new XMLSerializer().serializeToString(htmlFormated)
-        sendDocument(newHTML)
-      })
-    }
-
-    const openDialogBox = () => {
-      Office.context.ui.displayDialogAsync(
-        `${window.location.origin}/#/dialog-box`,
-        { height: 90, width: 90 },
-        (asyncResult: Office.AsyncResult<Office.Dialog>) => {
-          dialogContext.value = asyncResult.value
-          dialogContext.value.addEventHandler(Office.EventType.DialogMessageReceived, onMessage)
-          dialogContext.value.addEventHandler(Office.EventType.DialogEventReceived, onMessage)
-        }
-      )
     }
 
     return {
-      dialogContext,
-      // methods
-      sendMessage,
-      openDialogBox,
-      isDefaultSettings
+      isDefaultSettings,
+      adaptDocument,
+      adaptSelection
     }
   },
   methods: {
@@ -178,7 +209,12 @@ export default MainMenu
         </div>
       </div>
       <div class="my-2" style="min-width: 250px" v-if="!isDefaultSettings">
-        <b-button class="w-100" size="md" variant="primary" @click="openDialogBox">
+        <b-button class="w-100" size="md" variant="primary" @click="adaptSelection">
+          {{ $t('MAIN_MENU.ADAPT_SELECTION') }}
+        </b-button>
+      </div>
+      <div class="my-2" style="min-width: 250px" v-if="!isDefaultSettings">
+        <b-button class="w-100" size="md" variant="primary" @click="adaptDocument">
           {{ $t('MAIN_MENU.ADAPT_DOC') }}
         </b-button>
       </div>

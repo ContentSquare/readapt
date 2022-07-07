@@ -1,6 +1,6 @@
 {
   "name": "@readapt/shared-components",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "main": "dist/readapt-shared-components.common.js",
   "module": "dist/readapt-shared-components.common.js",
   "types": "dist/types.d.ts",
@@ -12,6 +12,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name readapt-shared-components src/index.ts && yarn types",
     "clean": "shx rm -rf dist",
+    "test": "yarn test:unit",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "types": "rollup -c rollup.config.js"
@@ -25,7 +26,7 @@
     "url": "git+https://github.com/ContentSquare/readapt.git"
   },
   "dependencies": {
-    "@readapt/settings": "^1.0.0",
+    "@readapt/settings": "^1.2.0",
     "bootstrap": "~4.6.1",
     "bootstrap-vue": "~2.22.0",
     "core-js": "^3.8.3"

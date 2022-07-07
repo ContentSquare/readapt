@@ -1,12 +1,12 @@
 {
   "name": "@readapt/settings",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "main": "dist/readapt-settings.js",
   "module": "dist/readapt-settings.esm.js",
   "types": "dist/types.d.ts",
   "scripts": {
     "clean": "shx rm -rf dist",
-    "test": "jest",
+    "test": "echo 'no test yet'",
     "build": "rollup -c rollup.config.js"
   },
   "publishConfig": {
