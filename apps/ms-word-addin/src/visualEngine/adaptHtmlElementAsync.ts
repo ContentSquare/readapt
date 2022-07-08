@@ -1,13 +1,11 @@
-import { Settings } from '@readapt/settings'
 import { AdaptHtmlElementFn, buildAdaptHtmlElement } from '@readapt/visual-engine'
 
 /**
  * @see {@link AdaptHtmlElementFn}
  */
-const adaptHtmlElementAsync = async (element: HTMLElement, settings: Settings, scope: string): Promise<void> => {
+const adaptHtmlElementAsyncFn = async (): Promise<AdaptHtmlElementFn> => {
   const { analyse } = await import(/* webpackChunkName: "text-engine" */ '@readapt/text-engine')
-  const adaptHtmlElement: AdaptHtmlElementFn = buildAdaptHtmlElement(analyse)
-  adaptHtmlElement(element, settings, scope)
+  return buildAdaptHtmlElement(analyse)
 }
 
-export { adaptHtmlElementAsync }
+export { adaptHtmlElementAsyncFn }

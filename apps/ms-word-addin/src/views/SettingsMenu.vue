@@ -1,14 +1,14 @@
 <script lang="ts">
 import { computed, defineComponent, ref, watch } from '@vue/composition-api'
-import { BRow, BCol } from 'bootstrap-vue'
+import { BCol, BRow } from 'bootstrap-vue'
 import isEqual from 'lodash/isEqual'
 
 import { Settings } from '@readapt/settings'
-import { CloseSettings, PreviewContainer, SaveSettings } from '@readapt/shared-components'
+import { AdaptContainer, CloseSettings, PreviewContainer, SaveSettings } from '@readapt/shared-components'
+import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
 
 import routes from '../router'
 import store, { loadStoredSettings } from '@/store'
-import AdaptContainer from '@/components/AdaptContainer.vue'
 
 const SettingsMenu = defineComponent({
   components: {
@@ -39,7 +39,7 @@ const SettingsMenu = defineComponent({
 
     const updateTextToAdapt = (value: string) => (contentToAdapt.value = value)
 
-    return { settings, contentToAdapt, saveSettings, isSettingsDirty, updateTextToAdapt, closeSettings }
+    return { settings, contentToAdapt, isSettingsDirty, saveSettings, updateTextToAdapt, closeSettings, adaptHtmlElementAsyncFn }
   }
 })
 export default SettingsMenu
@@ -59,7 +59,11 @@ export default SettingsMenu
       </b-col>
       <b-col lg="12" style="max-height: 32vh">
         <PreviewContainer class="preview-container mb-auto" :content-to-adapt="contentToAdapt" @update="updateTextToAdapt">
-          <AdaptContainer :content-to-adapt="$sanitize('<p>' + contentToAdapt + '</p>')" :settings="settings" />
+          <AdaptContainer
+            :adapt-html-element-async="adaptHtmlElementAsyncFn()"
+            :content-to-adapt="$sanitize('<p>' + contentToAdapt + '</p>')"
+            :settings="settings"
+          />
         </PreviewContainer>
 
         <div style="max-height: 8vh">

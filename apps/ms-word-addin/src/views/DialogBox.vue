@@ -16,11 +16,11 @@ import {
   SettingsKey,
   Option
 } from '@readapt/settings'
-import { SelectPercentage, RangeBar } from '@readapt/shared-components'
+import { SelectPercentage, RangeBar, AdaptContainer } from '@readapt/shared-components'
 
-import AdaptContainer from '@/components/AdaptContainer.vue'
 import store from '@/store'
 import i18n from '@/i18n'
+import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
 
 const DialogBox = defineComponent({
   components: {
@@ -205,7 +205,8 @@ const DialogBox = defineComponent({
       maskBeforeReadingZone,
       maskReadingZone,
       maskAfterReadingZone,
-      ruler
+      ruler,
+      adaptHtmlElementAsyncFn
     }
   }
 })
@@ -345,7 +346,7 @@ export default DialogBox
         </div>
       </div>
 
-      <AdaptContainer :settings="settings" :content-to-adapt="docHtml" />
+      <AdaptContainer :adapt-html-element-async="adaptHtmlElementAsyncFn()" :settings="settings" :content-to-adapt="docHtml" />
     </div>
     <div id="ruler" ref="ruler"></div>
     <div id="mask" ref="mask">
