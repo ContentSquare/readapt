@@ -1,21 +1,21 @@
 <script lang="ts">
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref, watch } from '@vue/composition-api'
 import { BRow, BCol } from 'bootstrap-vue'
 import isEqual from 'lodash/isEqual'
 import store, { loadStoredSettings } from '@/store'
 import utils from '@/chrome'
 
-import PreviewContainer from '@/components/PreviewContainer.vue'
+import AdaptContainer from '@/components/AdaptContainer.vue'
 import { Settings } from '@readapt/settings'
-import { CloseSettings, SaveSettings } from '@readapt/shared-components'
+import { CloseSettings, SaveSettings, PreviewContainer } from '@readapt/shared-components'
 
 const { closeCurrentTab } = utils
 
 const SettingsMenu = defineComponent({
-  components: { BRow, BCol, PreviewContainer, SaveSettings, CloseSettings },
+  components: { BRow, BCol, PreviewContainer, AdaptContainer, SaveSettings, CloseSettings },
   setup() {
     const settings = computed(() => store.getters.getSettings)
-    const contentToAdapt = computed(() => store.getters.getTextPreview)
+    const textPreview = computed(() => store.getters.getTextPreview)
 
     const settingsFile = computed(() => {
       const settingsFile = encodeURIComponent(JSON.stringify(settings.value, null, 2))
@@ -33,11 +33,17 @@ const SettingsMenu = defineComponent({
       closeCurrentTab()
     }
 
+    const contentToAdapt = ref(textPreview.value)
+    watch(textPreview, () => (contentToAdapt.value = textPreview.value))
+
+    const updateTextToAdapt = (value: string) => (contentToAdapt.value = value)
+
     return {
       settings,
       settingsFile,
       contentToAdapt,
       isSettingsDirty,
+      updateTextToAdapt,
       saveSettings,
       closeSettings
     }
@@ -65,7 +71,9 @@ export default SettingsMenu
       <b-col lg="4">
         <div class="d-flex flex-column align-content-between h-100">
           <h3>{{ $t('SETTINGS.TEXT_PREVIEW') }}</h3>
-          <PreviewContainer :settings="settings" :content-to-adapt="contentToAdapt" />
+          <PreviewContainer class="preview-container" :content-to-adapt="contentToAdapt" @update="updateTextToAdapt">
+            <AdaptContainer :content-to-adapt="$sanitize('<p>' + contentToAdapt + '</p>')" :settings="settings" />
+          </PreviewContainer>
 
           <div class="mt-3 d-flex justify-content-between">
             <SaveSettings @save-settings="saveSettings" />
@@ -93,5 +101,9 @@ export default SettingsMenu
   a:hover {
     text-decoration-line: none;
   }
+}
+.preview-container {
+  max-height: 67vh;
+  overflow-y: scroll;
 }
 </style>
