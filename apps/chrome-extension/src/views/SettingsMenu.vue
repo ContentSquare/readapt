@@ -1,13 +1,14 @@
 <script lang="ts">
 import { computed, defineComponent, ref, watch } from '@vue/composition-api'
-import { BRow, BCol } from 'bootstrap-vue'
+import { BCol, BRow } from 'bootstrap-vue'
 import isEqual from 'lodash/isEqual'
+
+import { Settings } from '@readapt/settings'
+import { AdaptContainer, CloseSettings, PreviewContainer, SaveSettings } from '@readapt/shared-components'
+
 import store, { loadStoredSettings } from '@/store'
 import utils from '@/chrome'
-
-import AdaptContainer from '@/components/AdaptContainer.vue'
-import { Settings } from '@readapt/settings'
-import { CloseSettings, SaveSettings, PreviewContainer } from '@readapt/shared-components'
+import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
 
 const { closeCurrentTab } = utils
 
@@ -45,7 +46,8 @@ const SettingsMenu = defineComponent({
       isSettingsDirty,
       updateTextToAdapt,
       saveSettings,
-      closeSettings
+      closeSettings,
+      adaptHtmlElementAsyncFn
     }
   }
 })
@@ -72,7 +74,11 @@ export default SettingsMenu
         <div class="d-flex flex-column align-content-between h-100">
           <h3>{{ $t('SETTINGS.TEXT_PREVIEW') }}</h3>
           <PreviewContainer class="preview-container" :content-to-adapt="contentToAdapt" @update="updateTextToAdapt">
-            <AdaptContainer :content-to-adapt="$sanitize('<p>' + contentToAdapt + '</p>')" :settings="settings" />
+            <AdaptContainer
+              :adapt-html-element-async="adaptHtmlElementAsyncFn()"
+              :content-to-adapt="$sanitize('<p>' + contentToAdapt + '</p>')"
+              :settings="settings"
+            />
           </PreviewContainer>
 
           <div class="mt-3 d-flex justify-content-between">
