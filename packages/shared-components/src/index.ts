@@ -12,6 +12,8 @@ import CloseSettings from './components/buttons/CloseSettings.vue'
 import PreviewContainer from './components/adapt/PreviewContainer.vue'
 import AdaptContainer from './components/adapt/AdaptContainer.vue'
 
+import { sharedStoreGetters, sharedStoreMutations } from './sharedStoreOptions'
+
 export default {
   install(Vue: VueConstructor) {
     Vue.component('readapt-color-picker', ColorPicker)
@@ -38,5 +40,7 @@ export {
   SaveSettings,
   CloseSettings,
   PreviewContainer,
-  AdaptContainer
+  AdaptContainer,
+  sharedStoreMutations,
+  sharedStoreGetters
 }
