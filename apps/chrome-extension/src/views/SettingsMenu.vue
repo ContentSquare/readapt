@@ -1,14 +1,14 @@
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from '@vue/composition-api'
+import { computed, defineComponent, onMounted, ref, watch } from '@vue/composition-api'
 import { BCol, BRow } from 'bootstrap-vue'
 import isEqual from 'lodash/isEqual'
 
-import { Settings } from '@readapt/settings'
 import { AdaptContainer, CloseSettings, PreviewContainer, SaveSettings } from '@readapt/shared-components'
 
-import store, { loadStoredSettings } from '@/store'
+import store, { getStateFromLocalStorage, loadStoredSettings, saveSettings } from '@/store'
 import utils from '@/chrome'
 import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
+import router from '@/router'
 
 const { closeCurrentTab } = utils
 
@@ -25,13 +25,20 @@ const SettingsMenu = defineComponent({
 
     const storedSettings = ref(loadStoredSettings())
     const isSettingsDirty = computed(() => !isEqual(storedSettings?.value, settings.value))
-    const saveSettings = async () => {
-      await store.dispatch('saveSettings')
-      storedSettings.value = loadStoredSettings() as Settings
+
+    onMounted(() => {
+      if (router.currentRoute.query.newSettings === 'true') {
+        store.commit('newSettings')
+      }
+    })
+
+    const save = () => {
+      saveSettings(settings.value)
+      storedSettings.value = settings.value
     }
-    const closeSettings = () => {
-      store.dispatch('loadSavedSettings')
-      closeCurrentTab()
+    const close = async () => {
+      store.commit('resetState', getStateFromLocalStorage())
+      await closeCurrentTab()
     }
 
     const contentToAdapt = ref(textPreview.value)
@@ -45,8 +52,8 @@ const SettingsMenu = defineComponent({
       contentToAdapt,
       isSettingsDirty,
       updateTextToAdapt,
-      saveSettings,
-      closeSettings,
+      save,
+      close,
       adaptHtmlElementAsyncFn
     }
   }
@@ -82,8 +89,8 @@ export default SettingsMenu
           </PreviewContainer>
 
           <div class="mt-3 d-flex justify-content-between">
-            <SaveSettings @save-settings="saveSettings" />
-            <CloseSettings :is-settings-dirty="isSettingsDirty" @close-settings="closeSettings" />
+            <SaveSettings @save-settings="save" />
+            <CloseSettings :is-settings-dirty="isSettingsDirty" @close-settings="close" />
           </div>
         </div>
       </b-col>
