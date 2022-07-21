@@ -1,4 +1,4 @@
-import { Settings } from '@readapt/settings'
+import { buildDefaultProfiles, Settings, StoreModel } from '@readapt/settings'
 
 export const loadStoredSettings = (): Settings | undefined => {
   const savedSettings = localStorage.getItem('settings')
@@ -10,4 +10,19 @@ export const loadStoredSettings = (): Settings | undefined => {
 
 export const saveSettings = (settings: Settings): void => {
   localStorage.setItem('settings', JSON.stringify(settings))
+}
+
+export const getStateFromLocalStorage = (): StoreModel => {
+  const defaultState: StoreModel = {
+    profiles: buildDefaultProfiles(),
+    language: 'en'
+  }
+
+  const settings = loadStoredSettings()
+  if (settings) {
+    const { language } = settings
+    defaultState.profiles[language] = settings
+    defaultState.language = language
+  }
+  return defaultState
 }

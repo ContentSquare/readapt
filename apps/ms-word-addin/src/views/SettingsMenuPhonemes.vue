@@ -1,8 +1,8 @@
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent, unref } from '@vue/composition-api'
 import { BFormCheckbox, BTable } from 'bootstrap-vue'
 
-import { ColoredItem, ColoredOption, Settings } from '@readapt/settings'
+import { ColoredItem, ColoredOption, SettingsKey } from '@readapt/settings'
 import { buildItemPreview } from '@readapt/visual-engine'
 import { ColorPicker } from '@readapt/shared-components'
 
@@ -11,11 +11,7 @@ import i18n from '@/i18n'
 import { SettingsTableItem } from '@/interfaces'
 
 const SettingsMenuPhonemes = defineComponent({
-  components: {
-    BFormCheckbox,
-    BTable,
-    ColorPicker
-  },
+  components: { BFormCheckbox, BTable, ColorPicker },
   setup() {
     const tableFields = [
       { key: 'value', label: i18n.t('SETTINGS.PHONEME_AND_EXAMPLE') },
@@ -24,7 +20,7 @@ const SettingsMenuPhonemes = defineComponent({
       { key: 'activate', label: i18n.t('SETTINGS.ACTIVATE') }
     ]
 
-    const allItemsActive = computed<Settings>(() => store.getters.getSettings.phonemesActive)
+    const allItemsActive = computed<boolean>(() => store.getters.getPhonemesActive)
     const itemSettings = computed<ColoredItem[]>(() => store.getters.getPhonemes)
 
     const tableItems = computed<SettingsTableItem[]>(() => {
@@ -35,41 +31,43 @@ const SettingsMenuPhonemes = defineComponent({
       })
     })
 
-    const switchBold = (itemKey: string): void => {
-      const { value } = itemSettings
-      const item = value.find(({ key }) => key === itemKey)
+    const updateOption = (key: SettingsKey, value: unknown) => store.commit('updateOption', { key, value })
 
-      if (item) {
-        item.bold = !item.bold
+    const switchBold = (itemKey: string): void => {
+      const items = unref(itemSettings)
+      const item = items.find(({ key }) => key === itemKey)
+      if (!item) {
+        return
       }
 
-      store.dispatch('updateOption', { key: 'phonemes', value })
+      item.bold = !item.bold
+      updateOption('phonemes', items)
     }
 
     const switchActive = (itemKey: string): void => {
-      const { value } = itemSettings
-      const item = value.find(({ key }) => key === itemKey)
-
-      if (item) {
-        item.active = !item.active
+      const items = unref(itemSettings)
+      const item = items.find(({ key }) => key === itemKey)
+      if (!item) {
+        return
       }
 
-      store.dispatch('updateOption', { key: 'phonemes', value })
+      item.active = !item.active
+      updateOption('phonemes', items)
     }
 
     const setColor = (itemKey: string, color: string): void => {
-      const { value } = itemSettings
-      const item = value.find(({ key }) => key === itemKey)
-
-      if (item) {
-        item.color = color
+      const items = unref(itemSettings)
+      const item = items.find(({ key }) => key === itemKey)
+      if (!item) {
+        return
       }
 
-      store.dispatch('updateOption', { key: 'phonemes', value })
+      item.color = color
+      updateOption('phonemes', items)
     }
 
     const switchAllItems = (value: boolean): void => {
-      store.dispatch('updateOption', { key: 'phonemesActive', value })
+      updateOption('phonemesActive', value)
     }
 
     return {

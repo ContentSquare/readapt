@@ -3,12 +3,11 @@ import { computed, defineComponent, ref, watch } from '@vue/composition-api'
 import { BCol, BRow } from 'bootstrap-vue'
 import isEqual from 'lodash/isEqual'
 
-import { Settings } from '@readapt/settings'
 import { AdaptContainer, CloseSettings, PreviewContainer, SaveSettings } from '@readapt/shared-components'
 import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
 
 import routes from '../router'
-import store, { loadStoredSettings } from '@/store'
+import store, { loadStoredSettings, getStateFromLocalStorage, saveSettings } from '@/store'
 
 const SettingsMenu = defineComponent({
   components: {
@@ -25,12 +24,12 @@ const SettingsMenu = defineComponent({
 
     const storedSettings = ref(loadStoredSettings())
     const isSettingsDirty = computed(() => !isEqual(storedSettings.value, settings.value))
-    const saveSettings = async () => {
-      await store.dispatch('saveSettings')
-      storedSettings.value = loadStoredSettings() as Settings
+    const save = () => {
+      saveSettings(settings.value)
+      storedSettings.value = settings.value
     }
-    const closeSettings = () => {
-      store.dispatch('loadSavedSettings')
+    const close = () => {
+      store.commit('resetState', getStateFromLocalStorage())
       routes.push({ path: '/' })
     }
 
@@ -39,7 +38,7 @@ const SettingsMenu = defineComponent({
 
     const updateTextToAdapt = (value: string) => (contentToAdapt.value = value)
 
-    return { settings, contentToAdapt, isSettingsDirty, saveSettings, updateTextToAdapt, closeSettings, adaptHtmlElementAsyncFn }
+    return { settings, contentToAdapt, isSettingsDirty, save, updateTextToAdapt, close, adaptHtmlElementAsyncFn }
   }
 })
 export default SettingsMenu
@@ -68,8 +67,8 @@ export default SettingsMenu
 
         <div style="max-height: 8vh">
           <div class="mt-3 d-flex justify-content-between">
-            <SaveSettings @save-settings="saveSettings" />
-            <CloseSettings :is-settings-dirty="isSettingsDirty" @close-settings="closeSettings" />
+            <SaveSettings @save-settings="save" />
+            <CloseSettings :is-settings-dirty="isSettingsDirty" @close-settings="close" />
           </div>
         </div>
       </b-col>
