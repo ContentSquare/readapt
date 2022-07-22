@@ -16,11 +16,11 @@ import {
   SettingsKey,
   Option
 } from '@readapt/settings'
-import { SelectPercentage, RangeBar } from '@readapt/shared-components'
+import { SelectPercentage, RangeBar, AdaptContainer } from '@readapt/shared-components'
 
-import AdaptContainer from '@/components/AdaptContainer.vue'
 import store from '@/store'
 import i18n from '@/i18n'
+import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
 
 const DialogBox = defineComponent({
   components: {
@@ -53,8 +53,8 @@ const DialogBox = defineComponent({
     const heightRulerSelected = ref<string>(thicknessOptions[0].value)
 
     const settings = computed<Settings>(() => store.getters.getSettings)
-    const allItemsLettersActive = computed<boolean>(() => settings.value.lettersActive)
-    const allItemsPhonemesActive = computed<boolean>(() => settings.value.phonemesActive)
+    const allItemsLettersActive = computed<boolean>(() => store.getters.getLettersActive)
+    const allItemsPhonemesActive = computed<boolean>(() => store.getters.getPhonemesActive)
 
     const lineSpacingOptionsOptimized = computed<Option[]>(() => {
       const { shadeAlternateLinesActive } = settings.value
@@ -75,7 +75,7 @@ const DialogBox = defineComponent({
         const message = event.message
         const { html, settings, lang } = JSON.parse(message)
         docHtml.value = html
-        store.dispatch('updateSettings', settings)
+        store.commit('updateSettings', settings)
         i18n.locale = lang
       } catch (e) {
         error.value = 'error'
@@ -144,13 +144,13 @@ const DialogBox = defineComponent({
       heightRulerSelected.value = size
     }
 
-    const updateOption = (key: SettingsKey, value: unknown) => store.dispatch('updateOption', { key, value })
+    const updateOption = (key: SettingsKey, value: unknown) => store.commit('updateOption', { key, value })
 
-    const updateShadeAlternateLines = async (shadeAlternateLinesActive: string) => {
-      await updateOption('shadeAlternateLinesActive', shadeAlternateLinesActive)
+    const updateShadeAlternateLines = (shadeAlternateLinesActive: string) => {
+      updateOption('shadeAlternateLinesActive', shadeAlternateLinesActive)
       // change lineSpacing value if lineSpacingOptionsOptimized has changed and current value is not selectable
       if (lineSpacingOptionsOptimized.value.length !== lineSpacingOptions.length && settings.value.lineSpacing === lineSpacingOptions[0].value) {
-        await store.dispatch('updateOption', { key: 'lineSpacing', value: lineSpacingOptionsOptimized.value[0].value })
+        updateOption('lineSpacing', lineSpacingOptionsOptimized.value[0].value)
       }
     }
 
@@ -205,7 +205,8 @@ const DialogBox = defineComponent({
       maskBeforeReadingZone,
       maskReadingZone,
       maskAfterReadingZone,
-      ruler
+      ruler,
+      adaptHtmlElementAsyncFn
     }
   }
 })
@@ -345,7 +346,7 @@ export default DialogBox
         </div>
       </div>
 
-      <AdaptContainer :settings="settings" :content-to-adapt="docHtml" />
+      <AdaptContainer :adapt-html-element-async="adaptHtmlElementAsyncFn()" :settings="settings" :content-to-adapt="docHtml" />
     </div>
     <div id="ruler" ref="ruler"></div>
     <div id="mask" ref="mask">

@@ -3,11 +3,11 @@ import { computed, defineComponent, ref, watchEffect } from '@vue/composition-ap
 import { BButton, BFormCheckbox, BImg } from 'bootstrap-vue'
 import isEqual from 'lodash/isEqual'
 
+import { buildDefaultProfiles, Profiles } from '@readapt/settings'
+
 import utils from '@/chrome'
 import i18n from '@/i18n'
 import store from '@/store'
-import { buildDefaultProfiles } from '@/constants/defaultProfiles'
-import { Profiles } from '@/interfaces'
 
 import QuickActivate from '@/components/QuickActivate.vue'
 
@@ -25,7 +25,7 @@ const MainMenu = defineComponent({
   setup() {
     const readaptEnabled = ref(true)
 
-    const { openSettings, sendMessageToCurrentTab, newSettings, openTemplates, broadcastMessage, getEnabled, saveEnabled } = utils
+    const { openSettings, sendMessageToCurrentTab, newSettings, openTemplates, broadcastMessage, getEnabled, saveEnabled, saveLocale } = utils
 
     const settings = computed(() => store.getters.getSettings)
     const defaultProfiles = buildDefaultProfiles()
@@ -51,7 +51,7 @@ const MainMenu = defineComponent({
 
     const changeLocale = async (lang: 'en' | 'fr') => {
       i18n.locale = lang
-      await utils.saveLocale(lang)
+      await saveLocale(lang)
     }
 
     return {

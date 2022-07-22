@@ -1,11 +1,11 @@
 <script lang="ts">
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref, unref } from '@vue/composition-api'
 import { BButton, BIconExclamationTriangle } from 'bootstrap-vue'
 import { Language, Settings } from '@readapt/settings'
 import TemplateSelector from '@/components/TemplateSelector.vue'
 import { templates } from '@/constants/templates'
 import { SettingsTemplate } from '@/interfaces'
-import store from '@/store'
+import store, { saveSettings } from '@/store'
 import utils from '@/chrome'
 import router from '@/router'
 import { LanguageSelector } from '@readapt/shared-components'
@@ -31,13 +31,14 @@ const TemplateSelect = defineComponent({
     const onChangeTemplate = (value: SettingsTemplate) => (selectedTemplate.value = value)
 
     const onModifyTemplate = (settings: Settings) => {
-      store.dispatch('updateSettings', settings)
+      store.commit('updateSettings', settings) // FIXME must be a deepClone
       router.push({ path: 'settings' })
     }
 
     const saveTemplate = () => {
-      store.dispatch('updateSettings', selectedTemplate.value?.settings)
-      store.dispatch('saveSettings')
+      const selectedSettings = unref(selectedTemplate).settings
+      store.commit('updateSettings', selectedSettings) // FIXME must be a deepClone
+      saveSettings(selectedSettings)
       closeCurrentTab()
     }
 

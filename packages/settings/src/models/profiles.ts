@@ -1,4 +1,4 @@
-import { Settings } from '@readapt/settings'
+import { Settings } from './settings'
 
 export interface Profiles {
   en: Settings

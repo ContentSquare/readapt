@@ -4,12 +4,11 @@ import { computed, defineComponent, ref } from '@vue/composition-api'
 import { BButton, BImg } from 'bootstrap-vue'
 import isEqual from 'lodash/isEqual'
 
+import { Settings, Profiles, buildDefaultProfiles } from '@readapt/settings'
+
 import store from '@/store'
 import i18n from '@/i18n'
-import { buildDefaultProfiles } from '@/constants/defaultProfiles'
-import { Profiles } from '@/interfaces'
 import { trackAdaptEvent } from '@/services/stats'
-import { Settings } from '@readapt/settings'
 
 const MainMenu = defineComponent({
   components: {

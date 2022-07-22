@@ -1,25 +1,27 @@
 <script lang="ts">
-import { adaptHtmlElementAsync } from '@/visualEngine/adaptHtmlElementAsync'
-import { removeStyleElement } from '@readapt/visual-engine'
-import { Settings } from '@readapt/settings'
 import { defineComponent, PropType, ref, onUnmounted, watch } from '@vue/composition-api'
 import { BSpinner } from 'bootstrap-vue'
+
+import { AdaptHtmlElementFn, removeStyleElement } from '@readapt/visual-engine'
+import { Settings } from '@readapt/settings'
 
 const AdaptContainer = defineComponent({
   components: { BSpinner },
   props: {
     contentToAdapt: { type: String, required: true },
     settings: { type: Object as PropType<Settings>, required: true },
-    scope: { type: String, default: 'preview' }
+    scope: { type: String, default: 'preview' },
+    adaptHtmlElementAsync: { type: Promise as PropType<Promise<AdaptHtmlElementFn>>, required: true }
   },
   setup(props) {
     const isLoading = ref(true)
     const containerElement = ref<HTMLDivElement>()
 
     const adaptContent = async () => {
-      if (containerElement.value && props.contentToAdapt) {
+      if (containerElement.value && props.contentToAdapt && props.adaptHtmlElementAsync) {
         containerElement.value.innerHTML = props.contentToAdapt
-        await adaptHtmlElementAsync(containerElement.value, props.settings, props.scope)
+        const adaptHtmlElement = await props.adaptHtmlElementAsync
+        adaptHtmlElement(containerElement.value, props.settings, props.scope)
         isLoading.value = false
       }
     }
@@ -27,9 +29,9 @@ const AdaptContainer = defineComponent({
     watch(
       () => ({
         ...props,
-        containerElement: containerElement.value
+        containerElement
       }),
-      () => adaptContent(),
+      adaptContent,
       { deep: true, flush: 'post' }
     )
 

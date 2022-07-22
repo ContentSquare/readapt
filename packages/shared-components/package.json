@@ -27,13 +27,15 @@
   },
   "dependencies": {
     "@readapt/settings": "^1.2.0",
+    "@readapt/visual-engine": "^1.2.0",
     "bootstrap": "~4.6.1",
     "bootstrap-vue": "~2.22.0",
     "core-js": "^3.8.3"
   },
   "peerDependencies": {
     "@vue/composition-api": "~1.4.5",
-    "vue": "~2.6.14"
+    "vue": "~2.6.14",
+    "vuex": "~3.6.2"
   },
   "devDependencies": {
     "@types/jest": "^27.0.1",
