@@ -87,5 +87,9 @@
   "SETTINGS_CODE": {
     "PREFERENCE_CODE": "Preference code"
   },
-  "LOADING": "Loading"
+  "LOADING": "Loading",
+  "DEFAULT": "Default",
+  "MEDIUM": "Medium",
+  "LARGE": "Large",
+  "EXTRA_LARGE": "Extra Large"
 }
