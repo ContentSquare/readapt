@@ -130,7 +130,7 @@ export default SettingsMenuGeneral
         </b-tr>
         <b-tr>
           <b-th :rowspan="settings.language === 'fr' ? 3 : 2" class="bg-white">
-            {{ $t('GENERAL.TEXT_HINT') }}
+            {{ $t('GENERAL.TEXT_HINTS') }}
           </b-th>
           <b-td>{{ $t('GENERAL.HIGHLIGHT_ALTERNATING_SYLLABLES') }}</b-td>
           <b-td>
