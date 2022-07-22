@@ -49,7 +49,7 @@ export default SelectPercentage
     <button @click="onMinus" class="float-left btn" :class="{ disabled: !hasLessOptions }" data-test-id="btn-minus">
       <b-icon-dash-circle font-scale="1.5" />
     </button>
-    <div class="font-weight-bold text-center min-w-100">{{ currentValue }}</div>
+    <div class="font-weight-bold text-center min-w-100">{{ $t(currentValue) }}</div>
     <button @click="onPlus" class="float-right btn" :class="{ disabled: !hasMoreOptions }" data-test-id="btn-plus">
       <b-icon-plus-circle font-scale="1.5" />
     </button>

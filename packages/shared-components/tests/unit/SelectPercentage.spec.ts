@@ -12,7 +12,8 @@ describe('SelectPercentage', () => {
           { value: '3', text: 'option-three' }
         ],
         value: '2'
-      }
+      },
+      mocks: { $t: jest.fn() }
     })
     await wrapper.vm.$nextTick()
 
@@ -32,7 +33,8 @@ describe('SelectPercentage', () => {
           { value: '3', text: 'option-three' }
         ],
         value: '4'
-      }
+      },
+      mocks: { $t: jest.fn() }
     })
     await wrapper.vm.$nextTick()
 
@@ -48,7 +50,8 @@ describe('SelectPercentage', () => {
           { value: '3', text: 'option-three' }
         ],
         value: '1'
-      }
+      },
+      mocks: { $t: jest.fn() }
     })
     await wrapper.vm.$nextTick()
 
@@ -65,7 +68,8 @@ describe('SelectPercentage', () => {
           { value: '3', text: 'option-three' }
         ],
         value: '3'
-      }
+      },
+      mocks: { $t: jest.fn() }
     })
     await wrapper.vm.$nextTick()
 
@@ -84,7 +88,8 @@ describe('SelectPercentage', () => {
         ],
         value: '1'
       },
-      listeners: { change: changeFn }
+      listeners: { change: changeFn },
+      mocks: { $t: jest.fn() }
     })
     await wrapper.vm.$nextTick()
 
@@ -103,7 +108,8 @@ describe('SelectPercentage', () => {
         ],
         value: '3'
       },
-      listeners: { change: changeFn }
+      listeners: { change: changeFn },
+      mocks: { $t: jest.fn() }
     })
     await wrapper.vm.$nextTick()
 
@@ -122,7 +128,8 @@ describe('SelectPercentage', () => {
         ],
         value: '3'
       },
-      listeners: { change: changeFn }
+      listeners: { change: changeFn },
+      mocks: { $t: jest.fn() }
     })
     await wrapper.vm.$nextTick()
 
@@ -141,7 +148,8 @@ describe('SelectPercentage', () => {
         ],
         value: '1'
       },
-      listeners: { change: changeFn }
+      listeners: { change: changeFn },
+      mocks: { $t: jest.fn() }
     })
     await wrapper.vm.$nextTick()
 
