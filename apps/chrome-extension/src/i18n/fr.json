@@ -67,7 +67,7 @@
     "LETTER_SPACING": "Espace entre chaque lettre",
     "WORD_SPACING": "Espace entre chaque mot",
     "LINE_SPACING": "Espace entre chaque ligne",
-    "TEXT_HINT": "Indices de lecture",
+    "TEXT_HINTS": "Indices de lecture",
     "HIGHLIGHT_ALTERNATING_SYLLABLES": "Différenciation des syllabes",
     "SHOW_LIAISONS": "Afficher les liaisons",
     "READING_TOOLS": "Outils de lecture",
