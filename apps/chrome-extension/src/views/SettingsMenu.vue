@@ -1,21 +1,22 @@
 <script lang="ts">
-import { computed, defineComponent, ref } from '@vue/composition-api'
-import { BRow, BCol } from 'bootstrap-vue'
+import { computed, defineComponent, onMounted, ref, watch } from '@vue/composition-api'
+import { BCol, BRow } from 'bootstrap-vue'
 import isEqual from 'lodash/isEqual'
-import store, { loadStoredSettings } from '@/store'
-import utils from '@/chrome'
 
-import PreviewContainer from '@/components/PreviewContainer.vue'
-import { Settings } from '@readapt/settings'
-import { CloseSettings, SaveSettings } from '@readapt/shared-components'
+import { AdaptContainer, CloseSettings, PreviewContainer, SaveSettings } from '@readapt/shared-components'
+
+import store, { getStateFromLocalStorage, loadStoredSettings, saveSettings } from '@/store'
+import utils from '@/chrome'
+import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
+import router from '@/router'
 
 const { closeCurrentTab } = utils
 
 const SettingsMenu = defineComponent({
-  components: { BRow, BCol, PreviewContainer, SaveSettings, CloseSettings },
+  components: { BRow, BCol, PreviewContainer, AdaptContainer, SaveSettings, CloseSettings },
   setup() {
     const settings = computed(() => store.getters.getSettings)
-    const contentToAdapt = computed(() => store.getters.getTextPreview)
+    const textPreview = computed(() => store.getters.getTextPreview)
 
     const settingsFile = computed(() => {
       const settingsFile = encodeURIComponent(JSON.stringify(settings.value, null, 2))
@@ -24,22 +25,36 @@ const SettingsMenu = defineComponent({
 
     const storedSettings = ref(loadStoredSettings())
     const isSettingsDirty = computed(() => !isEqual(storedSettings?.value, settings.value))
-    const saveSettings = async () => {
-      await store.dispatch('saveSettings')
-      storedSettings.value = loadStoredSettings() as Settings
+
+    onMounted(() => {
+      if (router.currentRoute.query.newSettings === 'true') {
+        store.commit('newSettings')
+      }
+    })
+
+    const save = () => {
+      saveSettings(settings.value)
+      storedSettings.value = settings.value
     }
-    const closeSettings = () => {
-      store.dispatch('loadSavedSettings')
-      closeCurrentTab()
+    const close = async () => {
+      store.commit('resetState', getStateFromLocalStorage())
+      await closeCurrentTab()
     }
+
+    const contentToAdapt = ref(textPreview.value)
+    watch(textPreview, () => (contentToAdapt.value = textPreview.value))
+
+    const updateTextToAdapt = (value: string) => (contentToAdapt.value = value)
 
     return {
       settings,
       settingsFile,
       contentToAdapt,
       isSettingsDirty,
-      saveSettings,
-      closeSettings
+      updateTextToAdapt,
+      save,
+      close,
+      adaptHtmlElementAsyncFn
     }
   }
 })
@@ -65,11 +80,17 @@ export default SettingsMenu
       <b-col lg="4">
         <div class="d-flex flex-column align-content-between h-100">
           <h3>{{ $t('SETTINGS.TEXT_PREVIEW') }}</h3>
-          <PreviewContainer :settings="settings" :content-to-adapt="contentToAdapt" />
+          <PreviewContainer class="preview-container" :content-to-adapt="contentToAdapt" @update="updateTextToAdapt">
+            <AdaptContainer
+              :adapt-html-element-async="adaptHtmlElementAsyncFn()"
+              :content-to-adapt="$sanitize('<p>' + contentToAdapt + '</p>')"
+              :settings="settings"
+            />
+          </PreviewContainer>
 
           <div class="mt-3 d-flex justify-content-between">
-            <SaveSettings @save-settings="saveSettings" />
-            <CloseSettings :is-settings-dirty="isSettingsDirty" @close-settings="closeSettings" />
+            <SaveSettings @save-settings="save" />
+            <CloseSettings :is-settings-dirty="isSettingsDirty" @close-settings="close" />
           </div>
         </div>
       </b-col>
@@ -93,5 +114,9 @@ export default SettingsMenu
   a:hover {
     text-decoration-line: none;
   }
+}
+.preview-container {
+  max-height: 67vh;
+  overflow-y: scroll;
 }
 </style>

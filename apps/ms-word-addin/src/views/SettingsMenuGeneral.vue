@@ -40,17 +40,17 @@ const SettingsMenuGeneral = defineComponent({
       return shadeAlternateLinesActive ? lineSpacingOptions.slice(1) : lineSpacingOptions
     })
 
-    const updateOption = (key: SettingsKey, value: unknown) => store.dispatch('updateOption', { key, value })
+    const updateOption = (key: SettingsKey, value: unknown) => store.commit('updateOption', { key, value })
 
-    const updateShadeAlternateLines = async (shadeAlternateLinesActive: string) => {
-      await updateOption('shadeAlternateLinesActive', shadeAlternateLinesActive)
+    const updateShadeAlternateLines = (shadeAlternateLinesActive: string) => {
+      updateOption('shadeAlternateLinesActive', shadeAlternateLinesActive)
       // change lineSpacing value if lineSpacingOptionsOptimized has changed and current value is not selectable
       if (lineSpacingOptionsOptimized.value.length !== lineSpacingOptions.length && settings.value.lineSpacing === lineSpacingOptions[0].value) {
-        await store.dispatch('updateOption', { key: 'lineSpacing', value: lineSpacingOptionsOptimized.value[0].value })
+        updateOption('lineSpacing', lineSpacingOptionsOptimized.value[0].value)
       }
     }
 
-    const changeLanguage = (language: Language) => store.dispatch('changeLanguage', language)
+    const changeLanguage = (language: Language) => store.commit('changeLanguage', language)
 
     return {
       settings,

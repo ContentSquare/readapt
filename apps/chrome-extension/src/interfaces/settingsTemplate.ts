@@ -5,5 +5,5 @@ export interface SettingsTemplate {
   descriptions: string[]
   content: string
   value: string
-  settings: Partial<Settings>
+  settings: Settings
 }

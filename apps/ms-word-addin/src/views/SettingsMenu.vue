@@ -1,39 +1,44 @@
 <script lang="ts">
-import { computed, defineComponent, ref } from '@vue/composition-api'
-import { BRow, BCol } from 'bootstrap-vue'
+import { computed, defineComponent, ref, watch } from '@vue/composition-api'
+import { BCol, BRow } from 'bootstrap-vue'
 import isEqual from 'lodash/isEqual'
 
-import { Settings } from '@readapt/settings'
-import { CloseSettings, SaveSettings } from '@readapt/shared-components'
+import { AdaptContainer, CloseSettings, PreviewContainer, SaveSettings } from '@readapt/shared-components'
+import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
 
 import routes from '../router'
-import store, { loadStoredSettings } from '@/store'
-import PreviewContainer from '@/components/PreviewContainer.vue'
+import store, { loadStoredSettings, getStateFromLocalStorage, saveSettings } from '@/store'
 
 const SettingsMenu = defineComponent({
   components: {
     BRow,
     BCol,
     PreviewContainer,
+    AdaptContainer,
     SaveSettings,
     CloseSettings
   },
   setup() {
     const settings = computed(() => store.getters.getSettings)
-    const contentToAdapt = computed(() => store.getters.getTextPreview)
+    const textPreview = computed(() => store.getters.getTextPreview)
 
     const storedSettings = ref(loadStoredSettings())
     const isSettingsDirty = computed(() => !isEqual(storedSettings.value, settings.value))
-    const saveSettings = async () => {
-      await store.dispatch('saveSettings')
-      storedSettings.value = loadStoredSettings() as Settings
+    const save = () => {
+      saveSettings(settings.value)
+      storedSettings.value = settings.value
     }
-    const closeSettings = () => {
-      store.dispatch('loadSavedSettings')
+    const close = () => {
+      store.commit('resetState', getStateFromLocalStorage())
       routes.push({ path: '/' })
     }
 
-    return { settings, contentToAdapt, saveSettings, isSettingsDirty, closeSettings }
+    const contentToAdapt = ref(textPreview.value)
+    watch(textPreview, () => (contentToAdapt.value = textPreview.value))
+
+    const updateTextToAdapt = (value: string) => (contentToAdapt.value = value)
+
+    return { settings, contentToAdapt, isSettingsDirty, save, updateTextToAdapt, close, adaptHtmlElementAsyncFn }
   }
 })
 export default SettingsMenu
@@ -52,12 +57,18 @@ export default SettingsMenu
         <router-view class="my-3" style="max-height: 60vh; height: 60vh" />
       </b-col>
       <b-col lg="12" style="max-height: 32vh">
-        <PreviewContainer class="text-preview mb-auto" :settings="settings" :content-to-adapt="contentToAdapt" />
+        <PreviewContainer class="preview-container mb-auto" :content-to-adapt="contentToAdapt" @update="updateTextToAdapt">
+          <AdaptContainer
+            :adapt-html-element-async="adaptHtmlElementAsyncFn()"
+            :content-to-adapt="$sanitize('<p>' + contentToAdapt + '</p>')"
+            :settings="settings"
+          />
+        </PreviewContainer>
 
         <div style="max-height: 8vh">
           <div class="mt-3 d-flex justify-content-between">
-            <SaveSettings @save-settings="saveSettings" />
-            <CloseSettings :is-settings-dirty="isSettingsDirty" @close-settings="closeSettings" />
+            <SaveSettings @save-settings="save" />
+            <CloseSettings :is-settings-dirty="isSettingsDirty" @close-settings="close" />
           </div>
         </div>
       </b-col>
@@ -82,11 +93,10 @@ export default SettingsMenu
     text-decoration-line: none;
   }
 }
-@media (max-width: 768px) {
-  .text-preview {
-    height: 22vh;
-    max-height: 22vh;
-    overflow-y: scroll;
-  }
+
+.preview-container {
+  height: 22vh;
+  max-height: 22vh;
+  overflow-y: scroll;
 }
 </style>

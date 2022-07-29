@@ -9,6 +9,10 @@ import SettingsSaveConfirmation from './components/modals/SettingsSaveConfirmati
 import SettingsLeaveConfirmation from './components/modals/SettingsLeaveConfirmation.vue'
 import SaveSettings from './components/buttons/SaveSettings.vue'
 import CloseSettings from './components/buttons/CloseSettings.vue'
+import PreviewContainer from './components/adapt/PreviewContainer.vue'
+import AdaptContainer from './components/adapt/AdaptContainer.vue'
+
+import { sharedStoreGetters, sharedStoreMutations } from './sharedStoreOptions'
 
 export default {
   install(Vue: VueConstructor) {
@@ -20,8 +24,23 @@ export default {
     Vue.component('readapt-settings-leave-confirmation', SettingsLeaveConfirmation)
     Vue.component('readapt-save-settings', SaveSettings)
     Vue.component('readapt-close-settings', CloseSettings)
+    Vue.component('readapt-preview-container', PreviewContainer)
+    Vue.component('readapt-adapt-container', AdaptContainer)
   },
   CompositionApi
 }
 
-export { ColorPicker, RangeBar, SelectPercentage, LanguageSelector, SettingsLeaveConfirmation, SettingsSaveConfirmation, SaveSettings, CloseSettings }
+export {
+  ColorPicker,
+  RangeBar,
+  SelectPercentage,
+  LanguageSelector,
+  SettingsLeaveConfirmation,
+  SettingsSaveConfirmation,
+  SaveSettings,
+  CloseSettings,
+  PreviewContainer,
+  AdaptContainer,
+  sharedStoreMutations,
+  sharedStoreGetters
+}

@@ -18,8 +18,8 @@ export interface Settings {
   shadeAlternateLinesActive: boolean
   liaisonsOpacity?: string
   liaisonsActive?: boolean
-  phonemesActive: true
+  phonemesActive: boolean
   phonemes: ColoredItem[]
-  lettersActive: true
+  lettersActive: boolean
   letters: ColoredItem[]
 }
