@@ -88,5 +88,9 @@
     "PREFERENCE_CODE": "Code du profil",
     "PREFERENCE_CODE_HELP": "Ce code correspond à votre profil. Vous pouvez utiliser ce code sur les autres plateformes que nous supportons."
   },
-  "LOADING": "Chargement en cours"
+  "LOADING": "Chargement en cours",
+  "DEFAULT": "Par Défaut",
+  "MEDIUM": "Moyen",
+  "LARGE": "Grand",
+  "EXTRA_LARGE": "Très Grand"
 }

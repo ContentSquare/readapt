@@ -72,5 +72,9 @@
     "SELECT": "Select",
     "CANCEL": "Cancel"
   },
-  "LOADING": "Loading"
+  "LOADING": "Loading",
+  "DEFAULT": "Default",
+  "MEDIUM": "Medium",
+  "LARGE": "Large",
+  "EXTRA_LARGE": "Extra Large"
 }
