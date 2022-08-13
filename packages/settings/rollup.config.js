@@ -1,5 +1,4 @@
-import ts from 'rollup-plugin-ts'
-
+import ts from 'rollup-plugin-typescript2'
 import pkg from './package.json'
 
 export default [
@@ -9,17 +8,6 @@ export default [
       { file: pkg.main, format: 'cjs' },
       { file: pkg.module, format: 'esm' }
     ],
-    plugins: [
-      ts({
-        hook: {
-          // generate only one types.d file
-          outputPath: (path, kind) => {
-            if (kind === 'declaration') {
-              return './dist/types.d.ts'
-            }
-          }
-        }
-      })
-    ]
+    plugins: [ts({ useTsconfigDeclarationDir: true })]
   }
 ]
