@@ -47,8 +47,8 @@ const MainMenu = defineComponent({
       })
     }
 
-    const convertImages = async (body: HTMLElement, isSelection: boolean): Promise<void> => {
-      await Word.run(async (context: Word.RequestContext) => {
+    const convertImages = async (body: HTMLElement, isSelection: boolean): Promise<boolean> => {
+      return await Word.run(async (context: Word.RequestContext) => {
         let documentPictures
         if (isSelection) {
           const selection = context.document.getSelection()
@@ -64,7 +64,7 @@ const MainMenu = defineComponent({
         // This workaround remove the images in this case until we find a better solution
         if (documentPictures.items.length !== htmlImages.length) {
           htmlImages.forEach((image) => image.remove())
-          return
+          return true
         }
         // Move <img> elements outside <p> elements to avoid to be taken account on shade lines height calculation
         const pElements = Array.from(body.getElementsByTagName('p')) as HTMLElement[]
@@ -78,7 +78,7 @@ const MainMenu = defineComponent({
           })
 
         if (Office.context.platform === Office.PlatformType.OfficeOnline) {
-          return
+          return false
         }
         // If the platform is not office online replace image link to base64 encodig image
         for (let i = 0; i < documentPictures.items.length; i++) {
@@ -99,6 +99,8 @@ const MainMenu = defineComponent({
             htmlImages[i].src = `data:${mimeType};base64,${base64Image}`
           }
         }
+
+        return false
       })
     }
 
@@ -148,17 +150,17 @@ const MainMenu = defineComponent({
     }
 
     const buildSendDocument = (documentBody: HTMLElement, isSelection: boolean) => async (): Promise<void> => {
-      await convertImages(documentBody, isSelection)
+      const hasFloatingImages = await convertImages(documentBody, isSelection)
       removeFontStyles(documentBody)
       addListStyles(documentBody)
 
       const newHTML = new XMLSerializer().serializeToString(documentBody)
 
-      sendDocument(newHTML, settings.value, i18n.locale)
+      sendDocument(newHTML, settings.value, i18n.locale, hasFloatingImages)
     }
 
-    const sendDocument = (html: string, settings: Settings, lang: string): void => {
-      const message = JSON.stringify({ html: html, settings, lang })
+    const sendDocument = (html: string, settings: Settings, lang: string, withFloatingImages: boolean): void => {
+      const message = JSON.stringify({ html: html, settings, lang, withFloatingImages })
 
       const dialogBox = dialogContext.value
       if (Office.context.requirements.isSetSupported('DialogApi', '1.2')) {
