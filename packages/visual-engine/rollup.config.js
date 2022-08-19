@@ -1,4 +1,4 @@
-import ts from 'rollup-plugin-ts'
+import ts from 'rollup-plugin-typescript2'
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import pkg from './package.json'
@@ -11,16 +11,7 @@ export default [
       { file: pkg.module, format: 'esm' }
     ],
     external: ['@readapt/settings', '@readapt/text-engine', 'lodash/xor'],
-    plugins: [
-      ts({
-        hook: {
-          // generate only one types.d file
-          outputPath(path, kind) {
-            if (kind === 'declaration') return './dist/types.d.ts'
-          }
-        }
-      })
-    ]
+    plugins: [ts({ useTsconfigDeclarationDir: true })]
   },
   {
     input: 'src/browser.ts',

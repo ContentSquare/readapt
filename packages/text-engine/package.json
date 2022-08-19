@@ -1,9 +1,9 @@
 {
   "name": "@readapt/text-engine",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "main": "dist/readapt-text-engine.js",
   "module": "dist/readapt-text-engine.esm.js",
-  "types": "dist/types.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "clean": "shx rm -rf dist",
     "test": "jest",
@@ -25,6 +25,6 @@
     "src/*"
   ],
   "dependencies": {
-    "@readapt/dictionaries": "^1.3.0"
+    "@readapt/dictionaries": "^1.3.1"
   }
 }
