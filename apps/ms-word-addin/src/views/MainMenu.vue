@@ -136,7 +136,7 @@ const MainMenu = defineComponent({
     }
 
     const openDialogBox = (document: HTMLElement, isSelection = false): void => {
-      trackAdaptEvent()
+      trackAdaptEvent(isSelection)
       const sendDocument = buildSendDocument(document, isSelection)
       Office.context.ui.displayDialogAsync(
         `${window.location.origin}/#/dialog-box`,
