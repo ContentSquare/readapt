@@ -63,7 +63,7 @@ export default SettingsMenu
 
 <template>
   <div class="container-fluid">
-    <div class="mt-3" style="max-height: 20vh">
+    <div class="mt-3">
       <div>
         <span class="h2">{{ $t('SETTINGS.MY_PREFERENCES') }}</span>
         <a class="ml-2 float-right" :href="settingsFile" download="settings.json" target="_blank">{{ $t('SETTINGS.DOWNLOAD_SETTINGS') }}</a>
