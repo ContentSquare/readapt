@@ -21,10 +21,11 @@
     "QUICK_ACTIVATE": "Quick Activate",
     "READING_MASK": "Reading Mask",
     "READING_RULER": "Reading Ruler",
-    "FLOATING_IMAGES_TITLE": "Why can’t I see images",
+    "FLOATING_IMAGES_TITLE": "Why can’t I see images?",
     "FLOATING_IMAGES_EXPLANATION": "Readapt has detected that your original document contains at least 1 floating image, that is, an image that is positioned, for example, in front of, or behind text. Because of how Microsoft Word converts these images to HTML, these cannot be rendered in Readapt and causes incorrect ordering of other images. Try removing the floating image(s) or aligning them with text.",
     "FLOATING_IMAGES_LEARN_MORE": " To learn more about aligning images to text, ",
-    "FLOATING_IMAGES_CLICK_HERE": "click here"
+    "FLOATING_IMAGES_CLICK_HERE": "click here",
+    "FLOATING_IMAGES_SUPPORT_LINK": "https://support.microsoft.com/en-us/office/layout-options-a0f53857-b501-46c6-ba8b-68ba51e0e3cc#ID0EBBD=Text_Wrapping"
   },
   "SETTINGS": {
     "MY_PREFERENCES": "My preferences",

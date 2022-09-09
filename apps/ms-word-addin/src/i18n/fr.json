@@ -21,10 +21,11 @@
     "QUICK_ACTIVATE": "Activation rapide",
     "READING_MASK": "Masque de Lecture",
     "READING_RULER": "Règle de Lecture",
-    "FLOATING_IMAGES_TITLE": "Why can’t I see images",
-    "FLOATING_IMAGES_EXPLANATION": "Readapt has detected that your original document contains at least 1 floating image, that is, an image that is positioned, for example, in front of, or behind text. Because of how Microsoft Word converts these images to HTML, these cannot be rendered in Readapt and causes incorrect ordering of other images. Try removing the floating image(s) or aligning them with text.",
-    "FLOATING_IMAGES_LEARN_MORE": " To learn more about aligning images to text, ",
-    "FLOATING_IMAGES_CLICK_HERE": "click here"
+    "FLOATING_IMAGES_TITLE": "Pourquoi ne puis-je pas voir les images ?",
+    "FLOATING_IMAGES_EXPLANATION": "Readapt a détecté que votre document original contient au moins une image flottante, c'est-à-dire une image qui est positionnée, par exemple, devant ou derrière le texte. En raison de la manière dont Microsoft Word convertit ces images en HTML, celles-ci ne peuvent pas être rendues dans Readapt et entraînent un placement incorrect des autres images. Essayez de supprimer la ou les images flottantes ou de les aligner avec le texte.",
+    "FLOATING_IMAGES_LEARN_MORE": " Pour en apprendre plus sur l'alignement des images avec le texte, ",
+    "FLOATING_IMAGES_CLICK_HERE": "cliquer ici",
+    "FLOATING_IMAGES_SUPPORT_LINK": "https://support.microsoft.com/fr-fr/office/options-de-disposition-a0f53857-b501-46c6-ba8b-68ba51e0e3cc#ID0EBBD=Habillage_du_texte"
   },
   "SETTINGS": {
     "MY_PREFERENCES": "Mes préférences",

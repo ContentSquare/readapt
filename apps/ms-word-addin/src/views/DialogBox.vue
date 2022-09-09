@@ -368,12 +368,9 @@ export default DialogBox
             <hr />
             <p class="mb-0">
               {{ $t('DIALOG_BOX.FLOATING_IMAGES_LEARN_MORE') }}
-              <a
-                class="alert-link"
-                href="https://support.microsoft.com/en-us/office/wrap-text-around-a-picture-in-word-bdbbe1fe-c089-4b5c-b85c-43997da64a12#ID0EBBBBD=Windows"
-                target="_blank"
-                >{{ $t('DIALOG_BOX.FLOATING_IMAGES_CLICK_HERE') }}</a
-              >
+              <a class="alert-link" target="_blank" :href="$t('DIALOG_BOX.FLOATING_IMAGES_SUPPORT_LINK')">{{
+                $t('DIALOG_BOX.FLOATING_IMAGES_CLICK_HERE')
+              }}</a>
             </p>
           </b-alert>
         </template>
