@@ -46,7 +46,7 @@ export default SettingsMenu
 
 <template>
   <div class="container-fluid" style="min-height: 100vh">
-    <nav id="nav" class="d-flex flex-row" style="max-height: 8vh">
+    <nav id="nav" class="d-flex flex-row">
       <router-link class="p-3" to="/settings/general">{{ $t('SETTINGS.GENERAL_SETTINGS') }}</router-link>
       <router-link class="p-3" to="/settings/phonemes">{{ $t('SETTINGS.PHONEME_SETTINGS') }}</router-link>
       <router-link class="p-3" to="/settings/letters">{{ $t('SETTINGS.LETTER_SETTINGS') }}</router-link>
