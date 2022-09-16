@@ -45,14 +45,14 @@ export default SettingsMenu
 </script>
 
 <template>
-  <div class="container-fluid" style="min-height: 100vh">
+  <div class="container-fluid" style="height: 100vh">
     <nav id="nav" class="d-flex flex-row">
       <router-link class="p-3" to="/settings/general">{{ $t('SETTINGS.GENERAL_SETTINGS') }}</router-link>
       <router-link class="p-3" to="/settings/phonemes">{{ $t('SETTINGS.PHONEME_SETTINGS') }}</router-link>
       <router-link class="p-3" to="/settings/letters">{{ $t('SETTINGS.LETTER_SETTINGS') }}</router-link>
     </nav>
 
-    <b-row style="max-height: 92vh">
+    <b-row class="container-fluid-content">
       <b-col lg="12">
         <router-view class="my-3" style="max-height: 60vh; height: 60vh" />
       </b-col>
@@ -64,19 +64,28 @@ export default SettingsMenu
             :settings="settings"
           />
         </PreviewContainer>
-
-        <div style="max-height: 8vh">
-          <div class="mt-3 d-flex justify-content-between">
-            <SaveSettings @save-settings="save" />
-            <CloseSettings :is-settings-dirty="isSettingsDirty" @close-settings="close" />
-          </div>
-        </div>
       </b-col>
     </b-row>
+
+    <div>
+      <div class="mt-3 mb-3 d-flex justify-content-between">
+        <SaveSettings @save-settings="save" />
+        <CloseSettings :is-settings-dirty="isSettingsDirty" @close-settings="close" />
+      </div>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+.container-fluid {
+  display: flex;
+  flex-direction: column;
+
+  .container-fluid-content {
+    flex: 1;
+    overflow: scroll;
+  }
+}
 #nav {
   a {
     font-weight: bold;
@@ -97,6 +106,6 @@ export default SettingsMenu
 .preview-container {
   height: 22vh;
   max-height: 22vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 </style>

@@ -24,7 +24,7 @@
     "FLOATING_IMAGES_TITLE": "Pourquoi ne puis-je pas voir les images ?",
     "FLOATING_IMAGES_EXPLANATION": "Readapt a détecté que votre document original contient au moins une image flottante, c'est-à-dire une image qui est positionnée, par exemple, devant ou derrière le texte. En raison de la manière dont Microsoft Word convertit ces images en HTML, celles-ci ne peuvent pas être rendues dans Readapt et entraînent un placement incorrect des autres images. Essayez de supprimer la ou les images flottantes ou de les aligner avec le texte.",
     "FLOATING_IMAGES_LEARN_MORE": " Pour en apprendre plus sur l'alignement des images avec le texte, ",
-    "FLOATING_IMAGES_CLICK_HERE": "cliquer ici",
+    "FLOATING_IMAGES_CLICK_HERE": "cliquez ici",
     "FLOATING_IMAGES_SUPPORT_LINK": "https://support.microsoft.com/fr-fr/office/options-de-disposition-a0f53857-b501-46c6-ba8b-68ba51e0e3cc#ID0EBBD=Habillage_du_texte"
   },
   "SETTINGS": {
