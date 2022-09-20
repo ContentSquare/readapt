@@ -2,6 +2,85 @@ import { AnaliseTextFn, Liaison, Syllable } from '@readapt/text-engine'
 import { ColoredItem, Settings } from '@readapt/settings'
 import xor from 'lodash/xor'
 
+const buildAdaptTextContentForText =
+  (analyse: AnaliseTextFn) =>
+  (htmlText: string, settings: Settings, liaisonsPhonemes: Set<string>): string => {
+    const adaptNodeForText = buildAdaptTextNodeForText(analyse, settings, liaisonsPhonemes)
+
+    return adaptNodeForText(htmlText)
+  }
+
+/**
+ * build adaptTextNode
+ * adaptTextNode manipulates the DOM to add readapt styles and classes
+ */
+const buildAdaptTextNodeForText =
+  (analyse: AnaliseTextFn, settings: Settings, liaisonsPhonemes: Set<string>) =>
+  (textToAdapt: string): string => {
+    if (!hasTextRulesSettings(settings)) {
+      return `${textToAdapt}`
+    }
+
+    const textEngineResult = analyse(textToAdapt, settings.language)
+    const textAdapted = textToAdapt.split('').map((char: string, textIndex) => {
+      const classList = []
+
+      if (settings.syllableActive) {
+        const syllable = isSyllable(textIndex, textEngineResult.syllables)
+        if (syllable) {
+          classList.push(syllable)
+        }
+      }
+
+      if (settings.liaisonsActive && textEngineResult.liaisons) {
+        const liaison = findLiaison(textIndex, textEngineResult.liaisons)
+        if (liaison) {
+          const [start, end, phoneme] = liaison
+          liaisonsPhonemes.add(phoneme)
+          if (start === textIndex) {
+            classList.push('readapt-liaison-start', `readapt-liaison-${phoneme}`)
+          } else if (start + 1 === textIndex) {
+            classList.push('readapt-liaison-symbol')
+          } else if (end === textIndex) {
+            classList.push('readapt-liaison-end')
+          }
+        }
+      }
+
+      // phonemes
+      let hasPhonemes = false
+      const phoneme = textEngineResult.phonemes[textIndex]
+      if (settings.phonemesActive && typeof phoneme === 'number') {
+        const phonemeClasses = adaptPhoneme(settings, phoneme)
+        hasPhonemes = phonemeClasses.length > 0
+        classList.push(...phonemeClasses)
+      }
+
+      // letters
+      if (settings.lettersActive && !hasPhonemes) {
+        const letterClasses = adaptLetter(settings, char)
+        classList.push(...letterClasses)
+      }
+
+      // silentLetters
+      if (settings.silentLetterActive && textEngineResult.silentLetters.includes(textIndex)) {
+        classList.push('readapt-silent-letter')
+      }
+
+      if (classList.length > 0) {
+        return `<span class="${classList.join(' ')}">${char}</span>`
+      } else {
+        return char
+      }
+    })
+
+    return `${textAdapted.join('')}`
+  }
+
+const hasSameList = (classList: string[], classListToCompare: string[]): boolean => {
+  return xor(classList, classListToCompare).length === 0
+}
+
 const buildAdaptTextContent =
   (analyse: AnaliseTextFn) =>
   (htmlElement: HTMLElement, settings: Settings, liaisonsPhonemes: Set<string>): void => {
@@ -31,7 +110,7 @@ const buildAdaptTextContent =
   }
 
 const hasSameClasses = (classList: string[], element: Element): boolean => {
-  return xor(classList, element.classList).length === 0
+  return hasSameList(classList, element.classList as any as string[])
 }
 
 const hasTextRulesSettings = (settings: Settings): boolean => {
@@ -183,4 +262,4 @@ const buildAdaptTextNode =
     textNode.textContent = ''
   }
 
-export { buildAdaptTextContent }
+export { buildAdaptTextContent, buildAdaptTextContentForText }

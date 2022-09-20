@@ -12,8 +12,8 @@ const fontStyles = (settings: Settings, scope: string): string => {
   return `${scope} .readapt-content { ${globalStyles} } .readapt-content > span { font-size: inherit } ${scope} .readapt-bold { font-weight: bold }`
 }
 
-const generateHtmlElementStyles = (settings: Settings, mainClass: string): string => {
-  const scope = `.${mainClass}`
+const generateHtmlElementStyles = (settings: Settings, mainClass?: string): string => {
+  const scope = mainClass ? `.${mainClass}` : ''
   return fontStyles(settings, scope)
 }
 
