@@ -1,7 +1,7 @@
 import { Settings } from '@readapt/settings'
 
 const generateTextContentStyles = (settings: Settings, mainClass: string, liaisons: Set<string>): string => {
-  const scope = `.${mainClass}`
+  const scope = mainClass ? `.${mainClass}` : ''
   let styles = syllableStyles(settings, scope)
   styles += letterStyles(settings, scope)
   styles += silentLettersStyles(settings, scope)
