@@ -1,9 +1,9 @@
 {
   "name": "@readapt/settings",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "main": "dist/readapt-settings.js",
   "module": "dist/readapt-settings.esm.js",
-  "types": "dist/types.d.ts",
+  "types": "dist/types/index.d.ts",
   "scripts": {
     "clean": "shx rm -rf dist",
     "test": "echo 'no test yet'",

@@ -1,5 +1,5 @@
 import commonjs from '@rollup/plugin-commonjs'
-import ts from 'rollup-plugin-ts'
+import ts from 'rollup-plugin-typescript2'
 import resolve from '@rollup/plugin-node-resolve'
 
 import pkg from './package.json'
@@ -12,16 +12,7 @@ export default [
       { file: pkg.module, format: 'esm' }
     ],
     external: ['@readapt/dictionaries/dist/en', '@readapt/dictionaries/dist/fr'],
-    plugins: [
-      ts({
-        hook: {
-          // generate only one types.d file
-          outputPath(path, kind) {
-            if (kind === 'declaration') return './dist/types.d.ts'
-          }
-        }
-      })
-    ]
+    plugins: [ts({ useTsconfigDeclarationDir: true })]
   },
   {
     input: 'src/index.ts',

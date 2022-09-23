@@ -1,7 +1,7 @@
 <script lang="ts">
 /* global Office */
 import { computed, defineComponent, onMounted, ref, unref } from '@vue/composition-api'
-import { BButton, BFormCheckbox, BFormSelect, BIconList, BSidebar, BTableSimple, BTbody, BTd, BTh, BTr } from 'bootstrap-vue'
+import { BAlert, BButton, BFormCheckbox, BFormSelect, BIconList, BSidebar, BTableSimple, BTbody, BTd, BTh, BTr } from 'bootstrap-vue'
 
 import {
   fontFamilyOptions,
@@ -24,6 +24,7 @@ import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
 
 const DialogBox = defineComponent({
   components: {
+    BAlert,
     BButton,
     BTableSimple,
     BTbody,
@@ -75,13 +76,17 @@ const DialogBox = defineComponent({
 
     const docHtml = ref<string>('')
 
+    const hasFloatingImages = ref<boolean>(false)
+
     const onMessage = (event: Office.DialogParentMessageReceivedEventArgs) => {
       try {
         const message = event.message
-        const { html, settings, lang } = JSON.parse(message)
+        const { html, settings, lang, withFloatingImages } = JSON.parse(message)
         docHtml.value = html
         store.commit('updateSettings', settings)
         i18n.locale = lang
+        hasFloatingImages.value = withFloatingImages
+        console.log('withFloatingImages', withFloatingImages)
       } catch (e) {
         error.value = 'error'
       }
@@ -210,7 +215,8 @@ const DialogBox = defineComponent({
       maskReadingZone,
       maskAfterReadingZone,
       ruler,
-      adaptHtmlElementAsyncFn
+      adaptHtmlElementAsyncFn,
+      hasFloatingImages
     }
   }
 })
@@ -354,6 +360,20 @@ export default DialogBox
             </b-table-simple>
           </b-sidebar>
         </div>
+
+        <template v-if="hasFloatingImages">
+          <b-alert show variant="info" dismissible>
+            <h5 class="alert-heading">{{ $t('DIALOG_BOX.FLOATING_IMAGES_TITLE') }}</h5>
+            <p>{{ $t('DIALOG_BOX.FLOATING_IMAGES_EXPLANATION') }}</p>
+            <hr />
+            <p class="mb-0">
+              {{ $t('DIALOG_BOX.FLOATING_IMAGES_LEARN_MORE') }}
+              <a class="alert-link" target="_blank" :href="$t('DIALOG_BOX.FLOATING_IMAGES_SUPPORT_LINK')">{{
+                $t('DIALOG_BOX.FLOATING_IMAGES_CLICK_HERE')
+              }}</a>
+            </p>
+          </b-alert>
+        </template>
       </div>
 
       <AdaptContainer :adapt-html-element-async="adaptHtmlElementAsyncFn()" :settings="settings" :content-to-adapt="docHtml" />
