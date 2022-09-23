@@ -1,4 +1,4 @@
-name: Comment when opened
+name: Github CLI Command
 on:
   issues:
     types:
