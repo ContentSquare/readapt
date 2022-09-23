@@ -10,6 +10,7 @@ import i18n from '@/i18n'
 import store from '@/store'
 
 import QuickActivate from '@/components/QuickActivate.vue'
+import { useVersion } from '@readapt/app-container'
 
 const MainMenu = defineComponent({
   components: {
@@ -54,7 +55,10 @@ const MainMenu = defineComponent({
       await saveLocale(lang)
     }
 
+    const { version } = useVersion()
+
     return {
+      version,
       readaptEnabled,
       openSettings,
       newSettings,
@@ -135,11 +139,14 @@ export default MainMenu
     </div>
 
     <QuickActivate class="mb-auto" />
-    <div class="my-2 d-flex justify-content-end align-items-center">
-      <a href="https://forms.gle/ciWCnYnkFjutwEHWA" target="_blank" class="mr-2">
+
+    <div class="footer">
+      <strong class="version">Version {{ version }}</strong>
+
+      <a class="about-you" href="https://forms.gle/ciWCnYnkFjutwEHWA" target="_blank">
         <b-button size="sm" variant="primary">{{ $t('MAIN_MENU.TELL_US_ABOUT_YOU') }}</b-button>
       </a>
-      <a href="https://forms.gle/9pv3HCmtPQN8Akpn9" target="_blank">
+      <a class="contact-us" href="https://forms.gle/9pv3HCmtPQN8Akpn9" target="_blank">
         <b-button size="sm" variant="primary">{{ $t('MAIN_MENU.CONTACT_US') }}</b-button>
       </a>
     </div>
@@ -159,5 +166,25 @@ export default MainMenu
   max-height: 200px;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
+}
+</style>
+
+<style lang="scss">
+.footer {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-areas: 'version about-you contact-us';
+  grid-template-columns: 1fr auto auto;
+
+  .version {
+    grid-area: version;
+    justify-self: start;
+  }
+  .about-you {
+    grid-area: about-you;
+  }
+  .contact-us {
+    grid-area: contact-us;
+  }
 }
 </style>
