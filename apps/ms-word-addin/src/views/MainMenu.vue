@@ -6,6 +6,8 @@ import isEqual from 'lodash/isEqual'
 
 import { Settings, Profiles, buildDefaultProfiles } from '@readapt/settings'
 
+import { useVersion } from '@readapt/app-container'
+
 import store from '@/store'
 import i18n from '@/i18n'
 import { trackAdaptEvent } from '@/services/stats'
@@ -183,7 +185,10 @@ const MainMenu = defineComponent({
       }
     }
 
+    const { version } = useVersion()
+
     return {
+      version,
       isDefaultSettings,
       adaptDocument,
       adaptSelection
@@ -236,12 +241,13 @@ export default MainMenu
           <b-button size="sm" variant="primary" class="w-100">{{ $t('MAIN_MENU.CONTACT_US') }}</b-button>
         </a>
       </div>
-      <div class="my-2 text-right" style="min-width: 250px">
-        <span v-if="$i18n.locale === 'fr'">FR</span>
-        <a v-if="$i18n.locale !== 'fr'" href="#" @click="changeLocale('fr')">FR</a>
-        /
-        <span v-if="$i18n.locale === 'en'">EN</span>
-        <a v-if="$i18n.locale !== 'en'" href="#" @click="changeLocale('en')">EN</a>
+      <div class="footer" style="min-width: 250px">
+        <strong class="version">Version {{ version }}</strong>
+        <div class="lang">
+          <span v-if="$i18n.locale === 'fr'">FR</span><a v-if="$i18n.locale !== 'fr'" href="#" @click="changeLocale('fr')">FR</a>
+          /
+          <span v-if="$i18n.locale === 'en'">EN</span><a v-if="$i18n.locale !== 'en'" href="#" @click="changeLocale('en')">EN</a>
+        </div>
       </div>
       <div v-if="isDefaultSettings">
         <p>{{ $t('MAIN_MENU.WELCOME_1') }}</p>
@@ -256,5 +262,22 @@ export default MainMenu
   font-size: 16px !important;
   font-weight: lighter !important;
   padding: 0.45rem 0.74rem !important;
+}
+</style>
+
+<style lang="scss">
+.footer {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-areas: 'version lang';
+  grid-template-columns: 1fr auto;
+
+  .version {
+    grid-area: version;
+    justify-self: start;
+  }
+  .lang {
+    grid-area: lang;
+  }
 }
 </style>
