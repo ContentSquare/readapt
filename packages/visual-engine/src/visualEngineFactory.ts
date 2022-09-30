@@ -2,6 +2,7 @@ import { AnaliseTextFn } from '@readapt/text-engine'
 import { Settings } from '@readapt/settings'
 
 import { adaptHtmlElement } from './adaptHtmlElement'
+import { adaptHtmlText } from './adaptHtmlText'
 
 /**
  * Adapt the html element passed by parameter using the settings. Css styles will be scoped using scope prefix.
@@ -17,4 +18,17 @@ const buildAdaptHtmlElement = (analyse: AnaliseTextFn): AdaptHtmlElementFn => {
   return adaptHtmlElement(analyse)
 }
 
-export { buildAdaptHtmlElement }
+/**
+ * Adapt the html text passed by parameter using the settings. Css styles will be scoped using scope prefix.
+ */
+export type AdaptHtmlTextFn = (htmlText: string, settings: Settings) => string
+
+/**
+ * build a function to adapt an html text
+ * @param analyse the {@link AnaliseTextFn} used to adapt the text content
+ */
+const buildAdaptHtmlText = (analyse: AnaliseTextFn): AdaptHtmlTextFn => {
+  return adaptHtmlText(analyse)
+}
+
+export { buildAdaptHtmlElement, buildAdaptHtmlText }

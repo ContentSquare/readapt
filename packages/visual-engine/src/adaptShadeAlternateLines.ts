@@ -3,6 +3,37 @@ type ShadeAlternateLinesClass = `readapt-shade-alternate-lines-${LineHeight}`
 
 const shadeLinesClasses = new Map<ShadeAlternateLinesClass, string>()
 
+const adaptShadeAlternateLinesForText = (shadeLineOpacity: string) => {
+  const lineHeight = getLineHeightForText()
+  const { className, value } = buildShadeLineClass(lineHeight, shadeLineOpacity)
+
+  return { className, style: value }
+}
+
+const getLineHeightForText = (): number => {
+  const boundingRect = { height: 100 }
+
+  const computed = { fontSize: '16', lineHeight: '16' }
+
+  const fontSizeInt = parseInt(computed.fontSize, 10)
+
+  const lineHeight = computed.lineHeight === 'normal' ? 1.2 * fontSizeInt : parseFloat(computed.lineHeight)
+
+  // adjust lineHeight to element height
+  const elementHeight = boundingRect.height
+  let lineHeightFromLines = 0
+  if (!isNaN(elementHeight)) {
+    // line height can't be small than fontSize
+    const realLineHeight = Math.max(lineHeight, fontSizeInt)
+    const countLines = Math.round(elementHeight / realLineHeight)
+    if (countLines > 0) {
+      lineHeightFromLines = elementHeight / countLines
+    }
+  }
+
+  return Math.max(lineHeight, lineHeightFromLines)
+}
+
 const adaptShadeAlternateLines = (htmlElement: HTMLElement, shadeLineOpacity: string, scope: string) => {
   if (htmlElement.tagName === 'P') {
     addShadeAlternateLinesClass(htmlElement, shadeLineOpacity)
@@ -79,4 +110,4 @@ const cleanShadeAlternateLines = (htmlElement: HTMLElement) => {
   }
 }
 
-export { adaptShadeAlternateLines, cleanShadeAlternateLines }
+export { adaptShadeAlternateLines, cleanShadeAlternateLines, adaptShadeAlternateLinesForText }

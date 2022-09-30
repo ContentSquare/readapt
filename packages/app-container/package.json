@@ -1,0 +1,38 @@
+{
+  "name": "@readapt/app-container",
+  "version": "1.4.2",
+  "types": "dist/types.d.ts",
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
+  "scripts": {
+    "clean": "shx rm -rf dist",
+    "build": "parcel build && npm run types",
+    "test": "echo 'no test yet'",
+    "types": "tsc --emitDeclarationOnly"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ContentSquare/readapt.git"
+  },
+  "peerDependencies": {
+    "@vue/composition-api": "~1.4.5"
+  },
+  "devDependencies": {
+    "typescript": "~4.5.5"
+  },
+  "main": "dist/readapt-app-container.common.js",
+  "source": "src/index.ts",
+  "targets": {
+    "default": {
+      "outputFormat": "commonjs",
+      "isLibrary": true,
+      "optimize": true
+    }
+  }
+}
