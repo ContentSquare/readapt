@@ -1,6 +1,6 @@
 {
   "name": "ms-word-addin",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -19,11 +19,11 @@
     "postinstall": "node scripts/init-env"
   },
   "dependencies": {
-    "@readapt/app-container": "^1.4.1",
-    "@readapt/settings": "^1.4.1",
-    "@readapt/shared-components": "^1.4.1",
-    "@readapt/text-engine": "^1.4.1",
-    "@readapt/visual-engine": "^1.4.1",
+    "@readapt/app-container": "^1.4.2",
+    "@readapt/settings": "^1.4.2",
+    "@readapt/shared-components": "^1.4.2",
+    "@readapt/text-engine": "^1.4.2",
+    "@readapt/visual-engine": "^1.4.2",
     "@vue/composition-api": "~1.4.5",
     "bootstrap": "~4.6.1",
     "bootstrap-vue": "~2.22.0",
