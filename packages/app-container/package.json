@@ -1,6 +1,6 @@
 {
   "name": "@readapt/app-container",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "types": "dist/types.d.ts",
   "files": [
     "dist/*",
@@ -26,8 +26,6 @@
   "devDependencies": {
     "typescript": "~4.5.5"
   },
-
-
   "main": "dist/readapt-app-container.common.js",
   "source": "src/index.ts",
   "targets": {
