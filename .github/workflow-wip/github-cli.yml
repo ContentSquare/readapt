@@ -21,6 +21,6 @@ jobs:
   upload-assets:
     runs-on: ubuntu-latest
     steps:
-      - run: gh release upload
+      - run: gh release upload $READAPT_VERSION ./apps/chrome-extension/dist/readapt-chrome-extension-v1.4.0.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
