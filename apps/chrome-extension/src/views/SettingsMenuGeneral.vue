@@ -21,7 +21,19 @@ import { ColorPicker, RangeBar, SelectPercentage } from '@readapt/shared-compone
 import store from '@/store'
 
 const SettingsMenuGeneral = defineComponent({
-  components: { BFormCheckbox, BFormSelect, BTableSimple, BTbody, BTr, BTh, BTd, BThead, SelectPercentage, RangeBar, ColorPicker },
+  components: {
+    BFormCheckbox,
+    BFormSelect,
+    BTableSimple,
+    BTbody,
+    BTd,
+    BTh,
+    BThead,
+    BTr,
+    RangeBar,
+    SelectPercentage,
+    ColorPicker
+  },
   setup() {
     const settings = computed<Settings>(() => store.getters.getSettings)
 

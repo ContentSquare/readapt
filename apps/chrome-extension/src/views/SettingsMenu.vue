@@ -1,22 +1,45 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from '@vue/composition-api'
-import { BCol, BRow } from 'bootstrap-vue'
+import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
 import isEqual from 'lodash/isEqual'
 
 import { AdaptContainer, CloseSettings, PreviewContainer, SaveSettings } from '@readapt/shared-components'
 
 import store, { getStateFromLocalStorage, loadStoredSettings, saveSettings } from '@/store'
+import router from '@/router'
 import utils from '@/chrome'
 import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
-import router from '@/router'
+
+import SettingsMenuGeneral from '@/views/SettingsMenuGeneral.vue'
+import SettingsMenuTableItems from '@/views/SettingsMenuTableItems.vue'
+import { ColoredOption, SettingsKey } from '@readapt/settings'
 
 const { closeCurrentTab } = utils
 
+type TabName = 'GENERAL' | 'LETTERS' | 'PHONEMES'
+
 const SettingsMenu = defineComponent({
-  components: { BRow, BCol, PreviewContainer, AdaptContainer, SaveSettings, CloseSettings },
+  components: {
+    BRow,
+    BCol,
+    BNav,
+    BNavItem,
+    SettingsMenuGeneral,
+    SettingsMenuTableItems,
+    PreviewContainer,
+    AdaptContainer,
+    SaveSettings,
+    CloseSettings
+  },
   setup() {
     const settings = computed(() => store.getters.getSettings)
     const textPreview = computed(() => store.getters.getTextPreview)
+
+    const activeTab = ref<TabName>('GENERAL')
+
+    const activateTab = (tabName: TabName) => {
+      activeTab.value = tabName
+    }
 
     const settingsFile = computed(() => {
       const settingsFile = encodeURIComponent(JSON.stringify(settings.value, null, 2))
@@ -46,15 +69,25 @@ const SettingsMenu = defineComponent({
 
     const updateTextToAdapt = (value: string) => (contentToAdapt.value = value)
 
+    const letterOptions = computed<ColoredOption[]>(() => store.getters.getLetterOptions)
+    const phonemeOptions = computed<ColoredOption[]>(() => store.getters.getPhonemeOptions)
+
+    const updateOption = (key: SettingsKey, value: unknown) => store.commit('updateOption', { key, value })
+
     return {
+      activeTab,
       settings,
       settingsFile,
       contentToAdapt,
       isSettingsDirty,
+      letterOptions,
+      phonemeOptions,
+      activateTab,
       updateTextToAdapt,
       save,
       close,
-      adaptHtmlElementAsyncFn
+      adaptHtmlElementAsyncFn,
+      updateOption
     }
   }
 })
@@ -68,15 +101,37 @@ export default SettingsMenu
         <span class="h2">{{ $t('SETTINGS.MY_PREFERENCES') }}</span>
         <a class="ml-2 float-right" :href="settingsFile" download="settings.json" target="_blank">{{ $t('SETTINGS.DOWNLOAD_SETTINGS') }}</a>
       </div>
-      <nav id="nav" class="d-flex flex-row">
-        <router-link class="p-3" to="/settings/general">{{ $t('SETTINGS.GENERAL_SETTINGS') }}</router-link>
-        <router-link class="p-3" to="/settings/phonemes">{{ $t('SETTINGS.PHONEME_SETTINGS') }}</router-link>
-        <router-link class="p-3" to="/settings/letters">{{ $t('SETTINGS.LETTER_SETTINGS') }}</router-link>
-      </nav>
+      <b-nav class="d-flex flex-row">
+        <b-nav-item @click="activateTab('GENERAL')" :active="activeTab === 'GENERAL'">{{ $t('SETTINGS.GENERAL_SETTINGS') }}</b-nav-item>
+        <b-nav-item @click="activateTab('PHONEMES')" :active="activeTab === 'PHONEMES'">{{ $t('SETTINGS.PHONEME_SETTINGS') }}</b-nav-item>
+        <b-nav-item @click="activateTab('LETTERS')" :active="activeTab === 'LETTERS'">{{ $t('SETTINGS.LETTER_SETTINGS') }}</b-nav-item>
+      </b-nav>
     </div>
-
     <b-row class="mt-2" style="max-height: 80vh; height: 80vh">
-      <b-col lg="8"><router-view /></b-col>
+      <b-col lg="8">
+        <SettingsMenuGeneral v-if="activeTab === 'GENERAL'"></SettingsMenuGeneral>
+        <SettingsMenuTableItems
+          v-if="activeTab === 'PHONEMES'"
+          table-label="SETTINGS.PHONEME"
+          switch-all-label="SETTINGS.ALL_PHONEMES_SETTINGS"
+          :all-items-active="settings.phonemesActive"
+          :items="settings.phonemes"
+          :options="phonemeOptions"
+          @update-items="updateOption('phonemes', $event)"
+          @update-active="updateOption('phonemesActive', $event)"
+        >
+        </SettingsMenuTableItems>
+        <SettingsMenuTableItems
+          v-if="activeTab === 'LETTERS'"
+          table-label="SETTINGS.LETTER"
+          switch-all-label="SETTINGS.ALL_LETTERS_SETTINGS"
+          :all-items-active="settings.lettersActive"
+          :items="settings.letters"
+          :options="letterOptions"
+          @update-items="updateOption('letters', $event)"
+          @update-active="updateOption('lettersActive', $event)"
+        ></SettingsMenuTableItems>
+      </b-col>
       <b-col lg="4">
         <div class="d-flex flex-column align-content-between h-100">
           <h3>{{ $t('SETTINGS.TEXT_PREVIEW') }}</h3>
@@ -99,22 +154,25 @@ export default SettingsMenu
 </template>
 
 <style lang="scss" scoped>
-#nav {
+.nav-item {
   a {
     font-weight: bold;
     color: rgba(0, 0, 0, 0.48);
     font-size: 15px;
     border-bottom: 1px solid #d1d6df;
+    padding: 1rem;
 
-    &.router-link-active {
+    &.active {
       color: var(--blue);
       border-bottom: 2px solid var(--blue);
     }
   }
+
   a:hover {
     text-decoration-line: none;
   }
 }
+
 .preview-container {
   max-height: 67vh;
   overflow-y: scroll;

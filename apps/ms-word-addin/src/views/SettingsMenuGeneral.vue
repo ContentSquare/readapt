@@ -26,8 +26,8 @@ const SettingsMenuGeneral = defineComponent({
     BFormSelect,
     BTableSimple,
     BTbody,
-    BTr,
     BTd,
+    BTr,
     RangeBar,
     SelectPercentage,
     ColorPicker
@@ -53,15 +53,15 @@ const SettingsMenuGeneral = defineComponent({
     const changeLanguage = (language: Language) => store.commit('changeLanguage', language)
 
     return {
-      settings,
       fontFamilyOptions,
       fontSizeOptions,
       letterSpacingOptions,
       wordSpacingOptions,
-      lineSpacingOptionsOptimized,
       languageOptions,
       opacityOptions,
       silentLetterOpacityOptions,
+      settings,
+      lineSpacingOptionsOptimized,
       updateOption,
       updateShadeAlternateLines,
       changeLanguage
