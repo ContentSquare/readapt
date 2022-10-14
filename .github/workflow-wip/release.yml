@@ -1,0 +1,33 @@
+name: Release CLI Command
+
+on:
+  issues:
+    types:
+      - opened
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+    steps:
+      - run: lerna version
+
+  build-ms-word:
+    runs-on: ubuntu-latest
+    steps:
+      - run: yarn build-ms-word-addin
+
+  build-chrome:
+    runs-on: ubuntu-latest
+    steps:
+      - run: yarn build-chrome-extension
+        
+  package-chrome:
+    runs-on: ubuntu-latest
+    steps:
+      - run: cd ./apps/chrome-extension && yarn package
+
+  publish-to-npm:
+    runs-on: ubuntu-latest
+    steps:
+      - run: lerna publish from-package --force-publish
