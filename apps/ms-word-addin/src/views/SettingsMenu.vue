@@ -5,10 +5,11 @@ import isEqual from 'lodash/isEqual'
 
 import { AdaptContainer, CloseSettings, PreviewContainer, SaveSettings } from '@readapt/shared-components'
 import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
-import { ColoredOption, SettingsKey } from '@readapt/settings'
+import { ColoredOption, Language, SettingsKey } from '@readapt/settings'
 
-import routes from '../router'
 import store, { loadStoredSettings, getStateFromLocalStorage, saveSettings } from '@/store'
+import router from '@/router'
+
 import SettingsMenuGeneral from './SettingsMenuGeneral.vue'
 import SettingsMenuTableItems from './SettingsMenuTableItems.vue'
 
@@ -45,7 +46,7 @@ const SettingsMenu = defineComponent({
     }
     const close = () => {
       store.commit('resetState', getStateFromLocalStorage())
-      routes.push({ path: '/' })
+      router.push({ path: '/' })
     }
 
     const contentToAdapt = ref(textPreview.value)
@@ -57,6 +58,7 @@ const SettingsMenu = defineComponent({
     const phonemeOptions = computed<ColoredOption[]>(() => store.getters.getPhonemeOptions)
 
     const updateOption = (key: SettingsKey, value: unknown) => store.commit('updateOption', { key, value })
+    const changeLanguage = (language: Language) => store.commit('changeLanguage', language)
 
     return {
       activeTab,
@@ -70,6 +72,7 @@ const SettingsMenu = defineComponent({
       save,
       close,
       adaptHtmlElementAsyncFn,
+      changeLanguage,
       updateOption
     }
   }
@@ -88,7 +91,13 @@ export default SettingsMenu
     <b-row class="container-fluid-content">
       <b-col lg="12">
         <div class="my-3">
-          <SettingsMenuGeneral v-if="activeTab === 'GENERAL'" class="my-3 settings-tab"></SettingsMenuGeneral>
+          <SettingsMenuGeneral
+            v-if="activeTab === 'GENERAL'"
+            class="my-3 settings-tab"
+            :settings="settings"
+            @update="updateOption($event.key, $event.value)"
+            @change-language="changeLanguage($event)"
+          ></SettingsMenuGeneral>
           <SettingsMenuTableItems
             v-if="activeTab === 'PHONEMES'"
             class="my-3 settings-tab"
