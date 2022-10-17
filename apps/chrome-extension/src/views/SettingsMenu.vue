@@ -4,17 +4,16 @@ import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
 import isEqual from 'lodash/isEqual'
 
 import { AdaptContainer, CloseSettings, PreviewContainer, SaveSettings } from '@readapt/shared-components'
+import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
+import { ColoredOption, Language, SettingsKey } from '@readapt/settings'
 
 import store, { getStateFromLocalStorage, loadStoredSettings, saveSettings } from '@/store'
 import router from '@/router'
 import utils from '@/chrome'
-import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
+const { closeCurrentTab } = utils
 
 import SettingsMenuGeneral from '@/views/SettingsMenuGeneral.vue'
 import SettingsMenuTableItems from '@/views/SettingsMenuTableItems.vue'
-import { ColoredOption, SettingsKey } from '@readapt/settings'
-
-const { closeCurrentTab } = utils
 
 type TabName = 'GENERAL' | 'LETTERS' | 'PHONEMES'
 
@@ -73,6 +72,7 @@ const SettingsMenu = defineComponent({
     const phonemeOptions = computed<ColoredOption[]>(() => store.getters.getPhonemeOptions)
 
     const updateOption = (key: SettingsKey, value: unknown) => store.commit('updateOption', { key, value })
+    const changeLanguage = (language: Language) => store.commit('changeLanguage', language)
 
     return {
       activeTab,
@@ -87,6 +87,7 @@ const SettingsMenu = defineComponent({
       save,
       close,
       adaptHtmlElementAsyncFn,
+      changeLanguage,
       updateOption
     }
   }
@@ -109,7 +110,13 @@ export default SettingsMenu
     </div>
     <b-row class="mt-2" style="max-height: 80vh; height: 80vh">
       <b-col lg="8">
-        <SettingsMenuGeneral v-if="activeTab === 'GENERAL'"></SettingsMenuGeneral>
+        <SettingsMenuGeneral
+          v-if="activeTab === 'GENERAL'"
+          :settings="settings"
+          @update="updateOption($event.key, $event.value)"
+          @change-language="changeLanguage($event)"
+        >
+        </SettingsMenuGeneral>
         <SettingsMenuTableItems
           v-if="activeTab === 'PHONEMES'"
           table-label="SETTINGS.PHONEME"
