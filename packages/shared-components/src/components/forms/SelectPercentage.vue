@@ -1,5 +1,5 @@
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import { computed, defineComponent, PropType } from 'vue'
 import { BIconPlusCircle, BIconDashCircle } from 'bootstrap-vue'
 
 import { Option } from '@readapt/settings'
@@ -32,7 +32,10 @@ const SelectPercentage = defineComponent({
       }
     }
 
+    const blabla = 'test'
+
     return {
+      blabla,
       currentValue,
       hasLessOptions,
       hasMoreOptions,

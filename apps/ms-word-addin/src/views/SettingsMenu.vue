@@ -1,5 +1,5 @@
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from '@vue/composition-api'
+import { computed, defineComponent, ref, watch } from 'vue'
 import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
 import isEqual from 'lodash/isEqual'
 

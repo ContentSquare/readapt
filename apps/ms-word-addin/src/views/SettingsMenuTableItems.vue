@@ -1,5 +1,5 @@
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import { computed, defineComponent, PropType } from 'vue'
 import { BFormCheckbox, BTable } from 'bootstrap-vue'
 
 import { ColoredItem, ColoredOption } from '@readapt/settings'
@@ -19,9 +19,8 @@ const SettingsMenuTableItems = defineComponent({
   },
   components: { BFormCheckbox, BTable, ColorPicker },
   setup(props, { emit }) {
-    const tableLabel = props.tableLabel
     const tableFields = [
-      { key: 'value', label: i18n.t(tableLabel) },
+      { key: 'value', label: i18n.t(props.tableLabel) },
       { key: 'color', label: i18n.t('SETTINGS.TEXT_COLOR') },
       { key: 'bold', label: i18n.t('SETTINGS.BOLD') },
       { key: 'activate', label: i18n.t('SETTINGS.ACTIVATE') }

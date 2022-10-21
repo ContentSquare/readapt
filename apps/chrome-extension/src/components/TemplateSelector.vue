@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, PropType } from '@vue/composition-api'
+import { defineComponent, PropType } from 'vue'
 import { BCol, BRow } from 'bootstrap-vue'
 import TemplateSelectorOption from './TemplateSelectorOption.vue'
 import { SettingsTemplate } from '@/interfaces/settingsTemplate'

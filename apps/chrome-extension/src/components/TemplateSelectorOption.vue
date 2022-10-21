@@ -1,5 +1,5 @@
 <script lang="ts">
-import { computed, defineComponent, PropType, ref } from '@vue/composition-api'
+import { computed, defineComponent, PropType, ref } from 'vue'
 import { BButton, BCard, BCardText, BFormRadio } from 'bootstrap-vue'
 import { AdaptContainer } from '@readapt/shared-components'
 import { SettingsTemplate } from '@/interfaces/settingsTemplate'

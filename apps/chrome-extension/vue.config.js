@@ -1,4 +1,3 @@
-const path = require('path')
 const CopyPlugin = require('copy-webpack-plugin')
 const pkg = require('./package.json')
 
@@ -35,10 +34,5 @@ module.exports = {
       args[0].title = 'Readapt by Contentsquare Foundation'
       return [...args]
     })
-
-    config.resolve.alias.set(
-      '@vue/composition-api',
-      path.resolve(__dirname, '../../node_modules/@vue/composition-api/dist/vue-composition-api.esm.js')
-    )
   }
 }

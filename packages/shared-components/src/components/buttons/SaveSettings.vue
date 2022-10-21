@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from 'vue'
 import { BButton } from 'bootstrap-vue'
 
 import SettingsSaveConfirmation from '../modals/SettingsSaveConfirmation.vue'
