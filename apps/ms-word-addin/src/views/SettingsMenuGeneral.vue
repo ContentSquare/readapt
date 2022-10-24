@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from '@vue/composition-api'
+import { defineComponent, PropType, ref, watch } from 'vue'
 import { BFormCheckbox, BFormSelect, BTableSimple, BTbody, BTd, BTr } from 'bootstrap-vue'
 
 import {

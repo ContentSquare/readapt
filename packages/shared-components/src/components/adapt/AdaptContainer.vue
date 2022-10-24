@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, PropType, ref, onUnmounted, watch } from '@vue/composition-api'
+import { defineComponent, PropType, ref, onUnmounted, watch } from 'vue'
 import { BSpinner } from 'bootstrap-vue'
 
 import { AdaptHtmlElementFn, removeStyleElement } from '@readapt/visual-engine'

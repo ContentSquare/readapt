@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref, PropType } from '@vue/composition-api'
+import { defineComponent, ref, PropType } from 'vue'
 import { BModal } from 'bootstrap-vue'
 import { colors } from '@readapt/settings'
 

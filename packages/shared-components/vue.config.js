@@ -25,7 +25,7 @@ module.exports = defineConfig({
     }
 
     config.merge({
-      externals: ['vue', '@vue/composition-api', '@readapt/settings']
+      externals: ['vue', '@readapt/settings']
     })
   },
   parallel: false

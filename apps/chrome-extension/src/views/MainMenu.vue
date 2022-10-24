@@ -1,5 +1,5 @@
 <script lang="ts">
-import { computed, defineComponent, ref, watchEffect } from '@vue/composition-api'
+import { computed, defineComponent, ref, watchEffect } from 'vue'
 import { BButton, BFormCheckbox, BImg } from 'bootstrap-vue'
 import isEqual from 'lodash/isEqual'
 
