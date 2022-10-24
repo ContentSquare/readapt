@@ -1,6 +1,6 @@
 {
   "name": "@readapt/app-container",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "types": "dist/types.d.ts",
   "files": [
     "dist/*",
