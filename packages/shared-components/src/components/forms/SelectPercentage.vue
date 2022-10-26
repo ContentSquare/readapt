@@ -32,10 +32,7 @@ const SelectPercentage = defineComponent({
       }
     }
 
-    const blabla = 'test'
-
     return {
-      blabla,
       currentValue,
       hasLessOptions,
       hasMoreOptions,
