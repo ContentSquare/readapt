@@ -1,8 +1,8 @@
-import { computed } from '@vue/composition-api'
+import { computed } from 'vue'
 
 export function useVersion() {
   const version = computed(() => {
-    return 'v1.4.3'
+    return 'v1.4.4'
   })
   return { version }
 }

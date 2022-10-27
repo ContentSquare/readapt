@@ -1,5 +1,5 @@
 import { VueConstructor } from 'vue'
-import CompositionApi from '@vue/composition-api'
+import CompositionApi from 'vue'
 
 import ColorPicker from './components/forms/ColorPicker.vue'
 import RangeBar from './components/forms/RangeBar.vue'

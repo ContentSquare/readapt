@@ -1,6 +1,6 @@
 <script lang="ts">
 /* global Office Word */
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref } from 'vue'
 import { BButton, BImg } from 'bootstrap-vue'
 import isEqual from 'lodash/isEqual'
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, onMounted, onBeforeUnmount, ref } from '@vue/composition-api'
+import { defineComponent, onMounted, onBeforeUnmount, ref } from 'vue'
 import { BButton, BModal } from 'bootstrap-vue'
 
 const SettingsSaveConfirmation = defineComponent({

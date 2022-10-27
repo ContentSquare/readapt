@@ -9,11 +9,10 @@ This package contains Vue.js components shared between readapt apps.
 Install peer-dependencies
 
 1. `vue`
-2. `@vue/composition-api`
-3. `bootstrap`
-4. `bootstrap-vue`
-5. `@readapt/settings`
-6. `core-js`
+2. `bootstrap`
+3. `bootstrap-vue`
+4. `@readapt/settings`
+5. `core-js`
 
 ### npm
 
@@ -43,7 +42,7 @@ Add the ReadaptComponent in your template for example:
 Or add it individually in your components (for smaller bundles)
 
 ```javascript
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 import { ColorPicker } from '@readapt/shared-components'
 
 const MyComponent = defineComponent({

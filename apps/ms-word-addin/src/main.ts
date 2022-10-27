@@ -1,5 +1,4 @@
 import VueSanitize from 'vue-sanitize'
-import CompositionApi from '@vue/composition-api'
 import { ToastPlugin, SidebarPlugin } from 'bootstrap-vue'
 import Vue from 'vue'
 
@@ -12,7 +11,6 @@ import './theme.scss'
 
 Vue.config.productionTip = false
 
-Vue.use(CompositionApi)
 Vue.use(VueSanitize)
 Vue.use(ToastPlugin)
 Vue.use(SidebarPlugin)

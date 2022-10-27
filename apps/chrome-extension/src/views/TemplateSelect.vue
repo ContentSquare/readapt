@@ -1,5 +1,5 @@
 <script lang="ts">
-import { computed, defineComponent, ref, unref } from '@vue/composition-api'
+import { computed, defineComponent, ref, unref } from 'vue'
 import { BButton, BIconExclamationTriangle } from 'bootstrap-vue'
 import { Language, Settings } from '@readapt/settings'
 import TemplateSelector from '@/components/TemplateSelector.vue'

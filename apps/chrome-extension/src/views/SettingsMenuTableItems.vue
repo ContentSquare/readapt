@@ -1,80 +1,83 @@
 <script lang="ts">
-import { computed, defineComponent, unref } from '@vue/composition-api'
+import { computed, defineComponent, PropType } from 'vue'
 import { BFormCheckbox, BTable } from 'bootstrap-vue'
 
-import { ColoredItem, ColoredOption, SettingsKey } from '@readapt/settings'
+import { ColoredItem, ColoredOption } from '@readapt/settings'
 import { buildItemPreview } from '@readapt/visual-engine'
 import { ColorPicker } from '@readapt/shared-components'
 
-import store from '@/store'
 import i18n from '@/i18n'
 import { SettingsTableItem } from '@/interfaces'
 
-const SettingsMenuPhonemes = defineComponent({
+const SettingsMenuTableItems = defineComponent({
+  props: {
+    tableLabel: { type: String, required: true },
+    switchAllLabel: { type: String, required: true },
+    allItemsActive: { type: Boolean, required: true },
+    items: { type: Array as PropType<ColoredItem[]>, required: true },
+    options: { type: Array as PropType<ColoredOption[]>, required: true }
+  },
   components: { BFormCheckbox, BTable, ColorPicker },
-  setup() {
+  setup(props, { emit }) {
     const tableFields = [
-      { key: 'value', label: i18n.t('SETTINGS.PHONEME') },
+      { key: 'value', label: i18n.t(props.tableLabel) },
       { key: 'example', label: i18n.t('SETTINGS.EXAMPLE') },
       { key: 'color', label: i18n.t('SETTINGS.TEXT_COLOR') },
       { key: 'bold', label: i18n.t('SETTINGS.BOLD') },
       { key: 'activate', label: i18n.t('SETTINGS.ACTIVATE') }
     ]
 
-    const allItemsActive = computed<boolean>(() => store.getters.getPhonemesActive)
-    const itemSettings = computed<ColoredItem[]>(() => store.getters.getPhonemes)
-
     const tableItems = computed<SettingsTableItem[]>(() => {
-      const options: ColoredOption[] = store.getters.getPhonemeOptions
-      return itemSettings.value.map((item) => {
-        const example = buildItemPreview(options, item)
+      return props.items.map((item) => {
+        const example = buildItemPreview(props.options, item)
         return { ...item, example }
       })
     })
 
-    const updateOption = (key: SettingsKey, value: unknown) => store.commit('updateOption', { key, value })
+    const updateOption = (value: unknown) => {
+      emit('update-items', value)
+    }
 
     const switchBold = (itemKey: string): void => {
-      const items = unref(itemSettings)
-      const item = items.find(({ key }) => key === itemKey)
-      if (!item) {
+      const items = props.items.slice()
+      const index = items.findIndex(({ key }) => key === itemKey)
+      if (index === -1) {
         return
       }
-
-      item.bold = !item.bold
-      updateOption('phonemes', items)
+      const item = items[index]
+      items[index] = { ...item, bold: !item.bold }
+      updateOption(items)
     }
 
     const switchActive = (itemKey: string): void => {
-      const items = unref(itemSettings)
-      const item = items.find(({ key }) => key === itemKey)
-      if (!item) {
+      const items = props.items.slice()
+      const index = items.findIndex(({ key }) => key === itemKey)
+      if (index === -1) {
         return
       }
-
-      item.active = !item.active
-      updateOption('phonemes', items)
+      const item = items[index]
+      items[index] = { ...item, active: !item.active }
+      updateOption(items)
     }
 
     const setColor = (itemKey: string, color: string): void => {
-      const items = unref(itemSettings)
-      const item = items.find(({ key }) => key === itemKey)
-      if (!item) {
+      const items = props.items.slice()
+      const index = items.findIndex(({ key }) => key === itemKey)
+      if (index === -1) {
         return
       }
-
-      item.color = color
-      updateOption('phonemes', items)
+      const item = items[index]
+      items[index] = { ...item, color }
+      updateOption(items)
     }
 
     const switchAllItems = (value: boolean): void => {
-      updateOption('phonemesActive', value)
+      emit('update-active', value)
     }
 
     return {
       tableFields,
       tableItems,
-      allItemsActive,
       // methods
       switchBold,
       switchActive,
@@ -83,14 +86,14 @@ const SettingsMenuPhonemes = defineComponent({
     }
   }
 })
-export default SettingsMenuPhonemes
+export default SettingsMenuTableItems
 </script>
 
 <template>
   <div>
     <div class="d-flex pt-2 pb-2">
       <b-form-checkbox :checked="allItemsActive" @change="switchAllItems" switch />
-      <h5 class="ml-2">{{ $t('SETTINGS.ALL_PHONEMES_SETTINGS') }}</h5>
+      <h5 class="ml-2">{{ $t(switchAllLabel) }}</h5>
     </div>
     <b-table small striped sticky-header="73vh" :items="tableItems" :fields="tableFields" responsive="sm">
       <template #head(color)="color">

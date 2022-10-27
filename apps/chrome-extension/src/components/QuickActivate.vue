@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref, watchEffect } from '@vue/composition-api'
+import { defineComponent, ref, watchEffect } from 'vue'
 import { BTableSimple, BTbody, BTd, BTh, BTr } from 'bootstrap-vue'
 import { opacityOptions, thicknessOptions } from '@readapt/settings'
 

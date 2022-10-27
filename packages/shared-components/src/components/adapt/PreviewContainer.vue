@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref, unref } from '@vue/composition-api'
+import { defineComponent, ref, unref } from 'vue'
 
 const PreviewContainer = defineComponent({
   props: {

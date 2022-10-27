@@ -5,7 +5,7 @@ import RangeBar from '../../src/components/forms/RangeBar.vue'
 
 describe('RangeBar', () => {
   test('should select currentValue', async () => {
-    const wrapper = mount(RangeBar, {
+    const wrapper = mount<any>(RangeBar, {
       propsData: {
         options: [
           { value: 'one', text: '1' },
@@ -18,12 +18,12 @@ describe('RangeBar', () => {
 
     await wrapper.vm.$nextTick()
 
-    expect(wrapper.vm.$data.currentValue).toBe('2')
-    expect(wrapper.vm.$data.max).toBe('3')
+    expect(wrapper.vm.currentValue).toBe('2')
+    expect(wrapper.vm.max).toBe('3')
   })
 
   test('should select first value if props value do not exists', async () => {
-    const wrapper = mount(RangeBar, {
+    const wrapper = mount<any>(RangeBar, {
       propsData: {
         options: [
           { value: 'one', text: '1' },
@@ -35,7 +35,7 @@ describe('RangeBar', () => {
     })
     await wrapper.vm.$nextTick()
 
-    expect(wrapper.vm.$data.currentValue).toBe('1')
+    expect(wrapper.vm.currentValue).toBe('1')
   })
 
   test('should have input value same as currentValue', async () => {

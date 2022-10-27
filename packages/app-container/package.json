@@ -1,6 +1,6 @@
 {
   "name": "@readapt/app-container",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "types": "dist/types.d.ts",
   "files": [
     "dist/*",
@@ -21,7 +21,7 @@
     "url": "git+https://github.com/ContentSquare/readapt.git"
   },
   "peerDependencies": {
-    "@vue/composition-api": "~1.4.5"
+    "vue": "~2.7.13"
   },
   "devDependencies": {
     "typescript": "~4.5.5"

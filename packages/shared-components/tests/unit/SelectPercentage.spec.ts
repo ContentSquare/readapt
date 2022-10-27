@@ -4,7 +4,7 @@ import SelectPercentage from '../../src/components/forms/SelectPercentage.vue'
 
 describe('SelectPercentage', () => {
   test('should select currentValue', async () => {
-    const wrapper = mount(SelectPercentage, {
+    const wrapper = mount<any>(SelectPercentage, {
       propsData: {
         options: [
           { value: '1', text: 'option-one' },
@@ -17,7 +17,7 @@ describe('SelectPercentage', () => {
     })
     await wrapper.vm.$nextTick()
 
-    expect(wrapper.vm.$data.currentValue).toBe('option-two')
+    expect(wrapper.vm.currentValue).toBe('option-two')
     const btnMinus = wrapper.find('[data-test-id="btn-minus"]')
     expect(btnMinus.classes('disabled')).toBeFalsy()
     const btnPlus = wrapper.find('[data-test-id="btn-plus"]')
@@ -25,7 +25,7 @@ describe('SelectPercentage', () => {
   })
 
   test('should select first value if props value do not exists', async () => {
-    const wrapper = mount(SelectPercentage, {
+    const wrapper = mount<any>(SelectPercentage, {
       propsData: {
         options: [
           { value: '1', text: 'option-one' },
@@ -38,7 +38,7 @@ describe('SelectPercentage', () => {
     })
     await wrapper.vm.$nextTick()
 
-    expect(wrapper.vm.$data.currentValue).toBe('option-one')
+    expect(wrapper.vm.currentValue).toBe('option-one')
   })
 
   test('should disable minus button if has not less options', async () => {

@@ -18,25 +18,7 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/settings',
-    component: () => import('@/views/SettingsMenu.vue'),
-    children: [
-      {
-        path: '',
-        redirect: 'general'
-      },
-      {
-        path: 'general',
-        component: () => import('@/views/SettingsMenuGeneral.vue')
-      },
-      {
-        path: 'phonemes',
-        component: () => import('@/views/SettingsMenuPhonemes.vue')
-      },
-      {
-        path: 'letters',
-        component: () => import('@/views/SettingsMenuLetters.vue')
-      }
-    ]
+    component: () => import('@/views/SettingsMenu.vue')
   }
 ]
 

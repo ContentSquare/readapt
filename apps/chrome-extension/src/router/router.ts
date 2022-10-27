@@ -18,31 +18,11 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/new-settings',
-    redirect: { path: '/settings/general', query: { newSettings: 'true' } }
+    redirect: { path: '/settings', query: { newSettings: 'true' } }
   },
   {
     path: '/settings',
-    component: () => import('@/views/SettingsMenu.vue'),
-    children: [
-      {
-        path: '',
-        redirect: 'general'
-      },
-      {
-        path: 'general',
-        component: () => import('@/views/SettingsMenuGeneral.vue')
-      },
-      {
-        path: 'phonemes',
-        props: { name: 'phonemes' },
-        component: () => import('@/views/SettingsMenuPhonemes.vue')
-      },
-      {
-        path: 'letters',
-        props: { name: 'letters' },
-        component: () => import('@/views/SettingsMenuLetters.vue')
-      }
-    ]
+    component: () => import('@/views/SettingsMenu.vue')
   }
 ]
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { defineComponent, PropType, ref, watch } from 'vue'
 import { BFormCheckbox, BFormSelect, BTableSimple, BTbody, BTd, BTh, BThead, BTr } from 'bootstrap-vue'
 
 import {
@@ -18,29 +18,42 @@ import {
 } from '@readapt/settings'
 import { ColorPicker, RangeBar, SelectPercentage } from '@readapt/shared-components'
 
-import store from '@/store'
-
 const SettingsMenuGeneral = defineComponent({
-  components: { BFormCheckbox, BFormSelect, BTableSimple, BTbody, BTr, BTh, BTd, BThead, SelectPercentage, RangeBar, ColorPicker },
-  setup() {
-    const settings = computed<Settings>(() => store.getters.getSettings)
+  props: {
+    settings: { type: Object as PropType<Settings>, required: true }
+  },
+  components: {
+    BFormCheckbox,
+    BFormSelect,
+    BTableSimple,
+    BTbody,
+    BTd,
+    BTh,
+    BThead,
+    BTr,
+    RangeBar,
+    SelectPercentage,
+    ColorPicker
+  },
+  setup(props, { emit }) {
+    const updateOption = (key: SettingsKey, value: unknown) => emit('update', { key, value })
 
-    const lineSpacingOptionsOptimized = computed<Option[]>(() => {
-      const { shadeAlternateLinesActive } = settings.value
-      return shadeAlternateLinesActive ? lineSpacingOptions.slice(1) : lineSpacingOptions
-    })
+    const changeLanguage = (language: Language) => emit('change-language', language)
 
-    const updateOption = (key: SettingsKey, value: unknown) => store.commit('updateOption', { key, value })
+    const optimizeLineSpacingOptions = (): Option[] => (props.settings.shadeAlternateLinesActive ? lineSpacingOptions.slice(1) : lineSpacingOptions)
 
-    const updateShadeAlternateLines = (shadeAlternateLinesActive: string) => {
-      updateOption('shadeAlternateLinesActive', shadeAlternateLinesActive)
-      // change lineSpacing value if lineSpacingOptionsOptimized has changed and current value is not selectable
-      if (lineSpacingOptionsOptimized.value.length !== lineSpacingOptions.length && settings.value.lineSpacing === lineSpacingOptions[0].value) {
-        updateOption('lineSpacing', lineSpacingOptionsOptimized.value[0].value)
+    const lineSpacingOptionsOptimized = ref<Option[]>(optimizeLineSpacingOptions())
+
+    watch(
+      () => props.settings.shadeAlternateLinesActive,
+      () => {
+        lineSpacingOptionsOptimized.value = optimizeLineSpacingOptions()
+        // change lineSpacing value if lineSpacingOptionsOptimized has changed and current value is not selectable
+        if (lineSpacingOptionsOptimized.value.length !== lineSpacingOptions.length && props.settings.lineSpacing === lineSpacingOptions[0].value) {
+          updateOption('lineSpacing', lineSpacingOptionsOptimized.value[0].value)
+        }
       }
-    }
-
-    const changeLanguage = (language: Language) => store.commit('changeLanguage', language)
+    )
 
     return {
       fontFamilyOptions,
@@ -50,10 +63,8 @@ const SettingsMenuGeneral = defineComponent({
       languageOptions,
       opacityOptions,
       silentLetterOpacityOptions,
-      settings,
       lineSpacingOptionsOptimized,
       updateOption,
-      updateShadeAlternateLines,
       changeLanguage
     }
   }
@@ -187,7 +198,7 @@ export default SettingsMenuGeneral
             />
           </b-td>
           <b-td>
-            <b-form-checkbox :checked="settings.shadeAlternateLinesActive" @change="updateShadeAlternateLines" switch />
+            <b-form-checkbox :checked="settings.shadeAlternateLinesActive" @change="updateOption('shadeAlternateLinesActive', $event)" switch />
           </b-td>
         </b-tr>
       </b-tbody>
