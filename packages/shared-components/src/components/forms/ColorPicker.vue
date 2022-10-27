@@ -56,10 +56,10 @@ export default ColorPicker
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .color-picker-circle {
-  width: 38px;
-  height: 38px;
+  width: 38px !important;
+  height: 38px !important;
   border: 1px solid black !important;
 }
 
