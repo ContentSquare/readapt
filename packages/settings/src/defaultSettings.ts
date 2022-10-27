@@ -1,5 +1,13 @@
 import { ColoredItem, ColoredOption, Language, Settings } from './models'
-import { fontFamilyOptions, fontSizeOptions, letterSpacingOptions, lineSpacingOptions, opacityOptions, wordSpacingOptions } from './options'
+import {
+  fontFamilyOptions,
+  fontSizeOptions,
+  letterSpacingOptions,
+  lineSpacingOptions,
+  opacityOptions,
+  silentLetterOpacityOptions,
+  wordSpacingOptions
+} from './options'
 import { getLangConfig } from './langConfig'
 
 const buildDefaultLetterSettings = (lang: Language): ColoredItem[] => {
@@ -33,7 +41,7 @@ const buildDefaultSettings = (language: Language): Settings => {
     syllableActive: false,
     syllableOpacity: opacityOptions[0].value,
     silentLetterActive: false,
-    silentLetterOpacity: opacityOptions[0].value,
+    silentLetterOpacity: silentLetterOpacityOptions[0].value,
     shadeAlternateLinesActive: false,
     shadeAlternateLinesOpacity: opacityOptions[0].value,
     phonemesActive: true,

@@ -1,6 +1,8 @@
 import { Option } from '../models'
 
-export const fontSizeOptions: Option[] = [
+export type FontSizeOption = 'inherit' | '140%' | '170%' | '200%'
+
+export const fontSizeOptions: Option<FontSizeOption>[] = [
   { value: 'inherit', text: 'DEFAULT' },
   { value: '140%', text: 'MEDIUM' },
   { value: '170%', text: 'LARGE' },
