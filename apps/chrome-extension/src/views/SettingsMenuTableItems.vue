@@ -2,7 +2,7 @@
 import { computed, defineComponent, PropType } from 'vue'
 import { BFormCheckbox, BTable } from 'bootstrap-vue'
 
-import { ColoredItem, ColoredOption } from '@readapt/settings'
+import { ColoredItem, ColoredOption, ColorOption } from '@readapt/settings'
 import { buildItemPreview } from '@readapt/visual-engine'
 import { ColorPicker } from '@readapt/shared-components'
 
@@ -60,7 +60,7 @@ const SettingsMenuTableItems = defineComponent({
       updateOption(items)
     }
 
-    const setColor = (itemKey: string, color: string): void => {
+    const setColor = (itemKey: string, color: ColorOption): void => {
       const items = props.items.slice()
       const index = items.findIndex(({ key }) => key === itemKey)
       if (index === -1) {

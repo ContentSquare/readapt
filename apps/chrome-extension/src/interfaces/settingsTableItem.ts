@@ -1,8 +1,10 @@
+import { ColorOption } from '@readapt/settings'
+
 export interface SettingsTableItem {
   key: string
   value: string
   example: string
-  color?: string
+  color?: ColorOption
   bold: boolean
   active: boolean
 }
