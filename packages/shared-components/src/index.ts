@@ -1,5 +1,4 @@
 import { VueConstructor } from 'vue'
-import CompositionApi from 'vue'
 
 import ColorPicker from './components/forms/ColorPicker.vue'
 import RangeBar from './components/forms/RangeBar.vue'
@@ -14,6 +13,8 @@ import AdaptContainer from './components/adapt/AdaptContainer.vue'
 
 import { sharedStoreGetters, sharedStoreMutations } from './sharedStoreOptions'
 
+import { useVersion } from './composables/useVersion'
+
 export default {
   install(Vue: VueConstructor) {
     Vue.component('readapt-color-picker', ColorPicker)
@@ -26,8 +27,7 @@ export default {
     Vue.component('readapt-close-settings', CloseSettings)
     Vue.component('readapt-preview-container', PreviewContainer)
     Vue.component('readapt-adapt-container', AdaptContainer)
-  },
-  CompositionApi
+  }
 }
 
 export {
@@ -42,5 +42,6 @@ export {
   PreviewContainer,
   AdaptContainer,
   sharedStoreMutations,
-  sharedStoreGetters
+  sharedStoreGetters,
+  useVersion
 }

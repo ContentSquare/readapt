@@ -4,13 +4,13 @@ import { BButton, BFormCheckbox, BImg } from 'bootstrap-vue'
 import isEqual from 'lodash/isEqual'
 
 import { buildDefaultProfiles, Profiles } from '@readapt/settings'
+import { useVersion } from '@readapt/shared-components'
 
 import utils from '@/chrome'
 import i18n from '@/i18n'
 import store from '@/store'
 
 import QuickActivate from '@/components/QuickActivate.vue'
-import { useVersion } from '@readapt/app-container'
 
 const MainMenu = defineComponent({
   components: {
