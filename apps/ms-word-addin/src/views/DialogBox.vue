@@ -8,11 +8,14 @@ import {
   fontSizeOptions,
   languageOptions,
   letterSpacingOptions,
+  LineSpacingOption,
   lineSpacingOptions,
+  OpacityOption,
   opacityOptions,
   Option,
   Settings,
   SettingsKey,
+  ThicknessOption,
   thicknessOptions,
   wordSpacingOptions
 } from '@readapt/settings'
@@ -50,7 +53,7 @@ const DialogBox = defineComponent({
     const allItemsLettersActive = computed<boolean>(() => store.getters.getLettersActive)
     const allItemsPhonemesActive = computed<boolean>(() => store.getters.getPhonemesActive)
 
-    const lineSpacingOptionsOptimized = computed<Option[]>(() => {
+    const lineSpacingOptionsOptimized = computed<Option<LineSpacingOption>[]>(() => {
       const { shadeAlternateLinesActive } = settings.value
       return shadeAlternateLinesActive ? lineSpacingOptions.slice(1) : lineSpacingOptions
     })
@@ -137,13 +140,13 @@ const DialogBox = defineComponent({
       document.body.className = rulerSettings.value.enabled ? 'showruler' : ''
     }
 
-    const rulerUpdateThickness = (thickness: string) => {
+    const rulerUpdateThickness = (thickness: ThicknessOption) => {
       const rulerElem = unref(ruler) as HTMLDivElement
       rulerSettings.value.thickness = thickness
       rulerElem.style.borderTopWidth = `${thickness}px`
     }
 
-    const rulerUpdateOpacity = (opacity: string) => {
+    const rulerUpdateOpacity = (opacity: OpacityOption) => {
       const ruleElem = unref(ruler) as HTMLDivElement
 
       ruleElem.style.borderColor = BASE_COLOR + opacity
@@ -157,13 +160,13 @@ const DialogBox = defineComponent({
       document.body.className = maskSettings.value.enabled ? 'showmask' : ''
     }
 
-    const maskUpdateThickness = (thickness: string) => {
+    const maskUpdateThickness = (thickness: ThicknessOption) => {
       const maskReadingZoneElem = unref(maskReadingZone) as HTMLDivElement
       maskReadingZoneElem.style.height = `${(heightMask * parseInt(thickness)).toString()}px`
       maskSettings.value.thickness = thickness
     }
 
-    const maskUpdateOpacity = (opacity: string) => {
+    const maskUpdateOpacity = (opacity: OpacityOption) => {
       const maskBeforeReadingZoneElem = unref(maskBeforeReadingZone) as HTMLElement
       const maskAfterReadingZoneElem = unref(maskAfterReadingZone) as HTMLElement
 
@@ -395,10 +398,12 @@ export default DialogBox
   width: 100%;
   border-top: 1px solid #00000033;
 }
+
 .showruler #ruler-add-in {
   display: block;
   cursor: vertical-text;
 }
+
 #mask-add-in {
   position: absolute;
   flex-direction: column;
@@ -422,6 +427,7 @@ export default DialogBox
   width: 100%;
   height: 25px;
 }
+
 .showmask #mask-add-in {
   display: flex;
   cursor: vertical-text;
