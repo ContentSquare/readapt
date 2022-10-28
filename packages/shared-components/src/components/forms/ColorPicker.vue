@@ -6,7 +6,7 @@ import { ColorOption, colors } from '@readapt/settings'
 const ColorPicker = defineComponent({
   components: { BModal },
   props: {
-    value: { type: Object as PropType<ColorOption | undefined>, required: true },
+    value: { type: String, default: '' },
     colors: { type: Array as PropType<ColorOption[]>, default: () => colors }
   },
   setup(_, { emit }) {
