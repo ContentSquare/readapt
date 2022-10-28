@@ -20,7 +20,7 @@ const buildDefaultPhonemeSettings = (lang: Language): ColoredItem[] => {
   return buildDefaultColoredItems(langPhonemes)
 }
 
-const buildDefaultColoredItems = (options: ColoredOption[]) =>
+const buildDefaultColoredItems = (options: ColoredOption[]): ColoredItem[] =>
   options.map(({ key, value }) => ({
     key,
     value,
@@ -52,4 +52,24 @@ const buildDefaultSettings = (language: Language): Settings => {
   }
 }
 
-export { buildDefaultSettings }
+const overrideDefaultColoredItems = (defaultColoredItems: ColoredItem[], overrides: ColoredItem[]): ColoredItem[] =>
+  defaultColoredItems.map((item) => {
+    const overridden = overrides.find(({ value }) => item.value === value)
+    return overridden ? overridden : item
+  })
+
+const overrideDefaultLetters = (lang: Language, overrides: ColoredItem[]): ColoredItem[] => {
+  const letterOptions = getLangConfig(lang).letterOptions
+  const lettersSettings = buildDefaultColoredItems(letterOptions)
+
+  return overrideDefaultColoredItems(lettersSettings, overrides)
+}
+
+const overrideDefaultPhonemes = (lang: Language, overrides: ColoredItem[]): ColoredItem[] => {
+  const phonemesOptions = getLangConfig(lang).phonemeOptions
+  const phonemesSettings = buildDefaultColoredItems(phonemesOptions)
+
+  return overrideDefaultColoredItems(phonemesSettings, overrides)
+}
+
+export { buildDefaultSettings, overrideDefaultLetters, overrideDefaultPhonemes }
