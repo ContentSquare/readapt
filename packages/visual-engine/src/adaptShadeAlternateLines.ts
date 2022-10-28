@@ -1,3 +1,5 @@
+import { OpacityOption } from '@readapt/settings'
+
 type LineHeight = string
 type ShadeAlternateLinesClass = `readapt-shade-alternate-lines-${LineHeight}`
 
@@ -34,7 +36,7 @@ const getLineHeightForText = (): number => {
   return Math.max(lineHeight, lineHeightFromLines)
 }
 
-const adaptShadeAlternateLines = (htmlElement: HTMLElement, shadeLineOpacity: string, scope: string) => {
+const adaptShadeAlternateLines = (htmlElement: HTMLElement, shadeLineOpacity: OpacityOption, scope: string) => {
   if (htmlElement.tagName === 'P') {
     addShadeAlternateLinesClass(htmlElement, shadeLineOpacity)
   } else {

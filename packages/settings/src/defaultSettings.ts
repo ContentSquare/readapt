@@ -1,5 +1,13 @@
 import { ColoredItem, ColoredOption, Language, Settings } from './models'
-import { fontFamilyOptions, fontSizeOptions, letterSpacingOptions, lineSpacingOptions, opacityOptions, wordSpacingOptions } from './options'
+import {
+  fontFamilyOptions,
+  fontSizeOptions,
+  letterSpacingOptions,
+  lineSpacingOptions,
+  opacityOptions,
+  silentLetterOpacityOptions,
+  wordSpacingOptions
+} from './options'
 import { getLangConfig } from './langConfig'
 
 const buildDefaultLetterSettings = (lang: Language): ColoredItem[] => {
@@ -12,7 +20,7 @@ const buildDefaultPhonemeSettings = (lang: Language): ColoredItem[] => {
   return buildDefaultColoredItems(langPhonemes)
 }
 
-const buildDefaultColoredItems = (options: ColoredOption[]) =>
+const buildDefaultColoredItems = (options: ColoredOption[]): ColoredItem[] =>
   options.map(({ key, value }) => ({
     key,
     value,
@@ -33,7 +41,7 @@ const buildDefaultSettings = (language: Language): Settings => {
     syllableActive: false,
     syllableOpacity: opacityOptions[0].value,
     silentLetterActive: false,
-    silentLetterOpacity: opacityOptions[0].value,
+    silentLetterOpacity: silentLetterOpacityOptions[0].value,
     shadeAlternateLinesActive: false,
     shadeAlternateLinesOpacity: opacityOptions[0].value,
     phonemesActive: true,
@@ -44,4 +52,24 @@ const buildDefaultSettings = (language: Language): Settings => {
   }
 }
 
-export { buildDefaultSettings }
+const overrideDefaultColoredItems = (defaultColoredItems: ColoredItem[], overrides: ColoredItem[]): ColoredItem[] =>
+  defaultColoredItems.map((item) => {
+    const overridden = overrides.find(({ value }) => item.value === value)
+    return overridden ? overridden : item
+  })
+
+const overrideDefaultLetters = (lang: Language, overrides: ColoredItem[]): ColoredItem[] => {
+  const letterOptions = getLangConfig(lang).letterOptions
+  const lettersSettings = buildDefaultColoredItems(letterOptions)
+
+  return overrideDefaultColoredItems(lettersSettings, overrides)
+}
+
+const overrideDefaultPhonemes = (lang: Language, overrides: ColoredItem[]): ColoredItem[] => {
+  const phonemesOptions = getLangConfig(lang).phonemeOptions
+  const phonemesSettings = buildDefaultColoredItems(phonemesOptions)
+
+  return overrideDefaultColoredItems(phonemesSettings, overrides)
+}
+
+export { buildDefaultSettings, overrideDefaultLetters, overrideDefaultPhonemes }

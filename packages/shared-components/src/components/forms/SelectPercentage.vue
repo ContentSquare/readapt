@@ -7,7 +7,7 @@ import { Option } from '@readapt/settings'
 const SelectPercentage = defineComponent({
   components: { BIconPlusCircle, BIconDashCircle },
   props: {
-    options: { type: Array as PropType<Option[]>, required: true },
+    options: { type: Array as PropType<Option<string>[]>, required: true },
     value: { type: String, required: true }
   },
   setup(props, { emit }) {

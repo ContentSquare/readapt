@@ -1,6 +1,8 @@
 import { Option } from '../models'
 
-export const opacityOptions: Option[] = [
+export type OpacityOption = '33' | '66' | '99' | 'CC' | 'FF'
+
+export const opacityOptions: Option<OpacityOption>[] = [
   { value: '33', text: '1' },
   { value: '66', text: '2' },
   { value: '99', text: '3' },

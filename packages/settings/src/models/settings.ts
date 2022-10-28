@@ -1,22 +1,32 @@
 import { Language } from './language'
 import { ColoredItem } from './coloredItem'
+import {
+  ColorOption,
+  FontFamilyOption,
+  FontSizeOption,
+  LetterSpacingOption,
+  LineSpacingOption,
+  OpacityOption,
+  SilentLetterOpacityOption,
+  WordSpacingOption
+} from '../options'
 
 export interface Settings {
   language: Language
-  fontFamily: string
-  fontSize: string
-  letterSpacing: string
-  wordSpacing: string
-  lineSpacing: string
-  syllableColor1?: string
-  syllableColor2?: string
+  fontFamily: FontFamilyOption
+  fontSize: FontSizeOption
+  letterSpacing: LetterSpacingOption
+  wordSpacing: WordSpacingOption
+  lineSpacing: LineSpacingOption
+  syllableColor1?: ColorOption
+  syllableColor2?: ColorOption
   syllableActive: boolean
-  syllableOpacity: string
-  silentLetterOpacity: string
+  syllableOpacity: OpacityOption
+  silentLetterOpacity: SilentLetterOpacityOption
   silentLetterActive: boolean
-  shadeAlternateLinesOpacity: string
+  shadeAlternateLinesOpacity: OpacityOption
   shadeAlternateLinesActive: boolean
-  liaisonsOpacity?: string
+  liaisonsOpacity?: OpacityOption
   liaisonsActive?: boolean
   phonemesActive: boolean
   phonemes: ColoredItem[]

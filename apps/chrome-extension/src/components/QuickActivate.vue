@@ -26,13 +26,19 @@ const QuickActivate = defineComponent({
     watchEffect(async () => (ruler.value = await getRuleSettings()))
 
     const updateMaskSettings = async (settings: SettingsReadingTool, prop: keyof SettingsReadingTool, value: string) => {
-      settings[prop] = value
-      await saveMaskSettings(settings)
+      const newSettings: SettingsReadingTool = {
+        [prop]: value,
+        ...settings
+      }
+      await saveMaskSettings(newSettings)
       await broadcastMessage('UPDATE_MASK')
     }
     const updateRuleSettings = async (settings: SettingsReadingTool, prop: keyof SettingsReadingTool, value: string) => {
-      settings[prop] = value
-      await saveRuleSettings(settings)
+      const newSettings: SettingsReadingTool = {
+        [prop]: value,
+        ...settings
+      }
+      await saveRuleSettings(newSettings)
       await broadcastMessage('UPDATE_RULER')
     }
 
