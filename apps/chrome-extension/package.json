@@ -1,6 +1,6 @@
 {
   "name": "chrome-extension",
-  "version": "1.4.4",
+  "version": "1.5.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -14,10 +14,10 @@
     "postinstall": "node scripts/init-env"
   },
   "dependencies": {
-    "@readapt/settings": "^1.4.4",
-    "@readapt/shared-components": "^1.4.4",
-    "@readapt/text-engine": "^1.4.4",
-    "@readapt/visual-engine": "^1.4.4",
+    "@readapt/settings": "^1.5.0",
+    "@readapt/shared-components": "^1.5.0",
+    "@readapt/text-engine": "^1.5.0",
+    "@readapt/visual-engine": "^1.5.0",
     "bootstrap": "~4.6.1",
     "bootstrap-vue": "~2.22.0",
     "core-js": "^3.8.3",
