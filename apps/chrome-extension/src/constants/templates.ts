@@ -1,10 +1,11 @@
 import {
   buildDefaultSettings,
-  ColoredItem,
   colors,
   getLangConfig,
   lineSpacingOptions,
   opacityOptions,
+  overrideDefaultLetters,
+  overrideDefaultPhonemes,
   silentLetterOpacityOptions
 } from '@readapt/settings'
 
@@ -14,12 +15,6 @@ const defaultSettingsEn = buildDefaultSettings('en')
 const defaultSettingsFr = buildDefaultSettings('fr')
 const textPreviewEn = getLangConfig('en').textPreview
 const textPreviewFr = getLangConfig('fr').textPreview
-
-const overrideDefaultSettings = (defaultColoredItems: ColoredItem[], overrides: ColoredItem[]) =>
-  defaultColoredItems.map((item) => {
-    const overridden = overrides.find(({ value }) => item.value === value)
-    return overridden ? overridden : item
-  })
 
 export const templates: SettingsTemplate[] = [
   {
@@ -63,7 +58,7 @@ export const templates: SettingsTemplate[] = [
       silentLetterActive: true,
       silentLetterOpacity: silentLetterOpacityOptions[2].value,
       lineSpacing: lineSpacingOptions[1].value,
-      letters: overrideDefaultSettings(defaultSettingsEn.letters, [
+      letters: overrideDefaultLetters('en', [
         { key: '2', value: 'd', bold: false, color: colors[0], active: true },
         { key: '8', value: 'm', bold: false, color: colors[1], active: true },
         { key: '7', value: 'n', bold: false, color: colors[2], active: true },
@@ -87,7 +82,7 @@ export const templates: SettingsTemplate[] = [
       silentLetterActive: true,
       silentLetterOpacity: silentLetterOpacityOptions[2].value,
       lineSpacing: lineSpacingOptions[1].value,
-      phonemes: overrideDefaultSettings(defaultSettingsEn.phonemes, [
+      phonemes: overrideDefaultPhonemes('en', [
         { key: '9', value: 'd', bold: false, color: colors[0], active: true },
         { key: '15', value: 'g', bold: false, color: colors[1], active: true },
         { key: '14', value: 'f', bold: false, color: colors[2], active: true },
@@ -142,7 +137,7 @@ export const templates: SettingsTemplate[] = [
       silentLetterActive: true,
       silentLetterOpacity: silentLetterOpacityOptions[2].value,
       lineSpacing: lineSpacingOptions[1].value,
-      letters: overrideDefaultSettings(defaultSettingsFr.letters, [
+      letters: overrideDefaultLetters('fr', [
         { key: '2', value: 'd', bold: false, color: colors[0], active: true },
         { key: '7', value: 'm', bold: false, color: colors[1], active: true },
         { key: '6', value: 'n', bold: false, color: colors[2], active: true },
@@ -167,7 +162,7 @@ export const templates: SettingsTemplate[] = [
       silentLetterActive: true,
       silentLetterOpacity: silentLetterOpacityOptions[2].value,
       lineSpacing: lineSpacingOptions[1].value,
-      phonemes: overrideDefaultSettings(defaultSettingsFr.phonemes, [
+      phonemes: overrideDefaultPhonemes('fr', [
         { key: '6', value: 'd', bold: false, color: colors[0], active: true },
         { key: '12', value: 'g', bold: false, color: colors[1], active: true },
         { key: '11', value: 'f', bold: false, color: colors[2], active: true },

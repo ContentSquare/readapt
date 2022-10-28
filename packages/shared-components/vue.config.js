@@ -1,6 +1,7 @@
 const { defineConfig } = require('@vue/cli-service')
 
 // process.env.VUE_CLI_CSS_SHADOW_MODE = true
+process.env.VUE_APP_VERSION = require('./package.json').version
 
 /**
  * These are some necessary steps changing the default webpack config of the Vue CLI

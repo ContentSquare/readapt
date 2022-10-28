@@ -130,8 +130,11 @@ export default QuickActivate
         <b-tr>
           <b-th class="bg-white" rowspan="2">{{ $t('QUICK_ACTIVATE.READING_RULER') }}</b-th>
           <b-td class="align-middle">{{ $t('QUICK_ACTIVATE.THICKNESS') }}</b-td>
-          <RangeBar :value="ruler.thickness" :options="thicknessOptions" @change="updateRuleSettings(ruler, 'thickness', $event)"></RangeBar>
+          <b-td>
+            <RangeBar :value="ruler.thickness" :options="thicknessOptions" @change="updateRuleSettings(ruler, 'thickness', $event)"></RangeBar>
+          </b-td>
         </b-tr>
+
         <b-tr>
           <b-td class="align-middle">{{ $t('QUICK_ACTIVATE.OPACITY') }}</b-td>
           <b-td>

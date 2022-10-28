@@ -10,7 +10,7 @@ const LanguageSelector = defineComponent({
     value: { type: String as PropType<Language>, required: true }
   },
   setup(_, { emit }) {
-    const onLanguageChange = (value: string) => emit('change', value)
+    const onLanguageChange = (value: Language): void => emit('change', value)
 
     return { languageOptions, onLanguageChange }
   }

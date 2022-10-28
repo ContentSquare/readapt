@@ -1,25 +1,31 @@
 <script lang="ts">
-import { defineComponent, ref, PropType } from 'vue'
+import { defineComponent, PropType, ref } from 'vue'
 import { BModal } from 'bootstrap-vue'
-import { colors } from '@readapt/settings'
+import { ColorOption, colors } from '@readapt/settings'
 
 const ColorPicker = defineComponent({
   components: { BModal },
   props: {
     value: { type: String, default: '' },
-    colors: { type: Array as PropType<string[]>, default: () => colors }
+    colors: { type: Array as PropType<ColorOption[]>, default: () => colors }
   },
   setup(_, { emit }) {
     const shouldShowPicker = ref(false)
 
-    const showPicker = () => (shouldShowPicker.value = true)
+    const showPicker = (): void => {
+      shouldShowPicker.value = true
+    }
 
-    const selectColor = (value?: string): void => {
+    const selectColor = (value?: ColorOption): void => {
       shouldShowPicker.value = false
       emit('selectColor', value)
     }
 
-    return { shouldShowPicker, showPicker, selectColor }
+    return {
+      shouldShowPicker,
+      showPicker,
+      selectColor
+    }
   }
 })
 
@@ -56,10 +62,10 @@ export default ColorPicker
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .color-picker-circle {
-  width: 38px;
-  height: 38px;
+  width: 38px !important;
+  height: 38px !important;
   border: 1px solid black !important;
 }
 
