@@ -14,7 +14,6 @@
     "postinstall": "node scripts/init-env"
   },
   "dependencies": {
-    "@readapt/app-container": "^1.4.4",
     "@readapt/settings": "^1.4.4",
     "@readapt/shared-components": "^1.4.4",
     "@readapt/text-engine": "^1.4.4",

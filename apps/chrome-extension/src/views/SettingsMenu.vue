@@ -10,10 +10,10 @@ import { ColoredOption, Language, SettingsKey } from '@readapt/settings'
 import store, { getStateFromLocalStorage, loadStoredSettings, saveSettings } from '@/store'
 import router from '@/router'
 import utils from '@/chrome'
-const { closeCurrentTab } = utils
-
 import SettingsMenuGeneral from '@/views/SettingsMenuGeneral.vue'
 import SettingsMenuTableItems from '@/views/SettingsMenuTableItems.vue'
+
+const { closeCurrentTab } = utils
 
 type TabName = 'GENERAL' | 'LETTERS' | 'PHONEMES'
 

@@ -6,7 +6,7 @@ import isEqual from 'lodash/isEqual'
 
 import { Settings, Profiles, buildDefaultProfiles } from '@readapt/settings'
 
-import { useVersion } from '@readapt/app-container'
+import { useVersion } from '@readapt/shared-components'
 
 import store from '@/store'
 import i18n from '@/i18n'
