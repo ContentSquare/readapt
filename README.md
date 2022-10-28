@@ -87,7 +87,7 @@ Fix eslint running script `yarn lint --fix`
 
 ### Clean workspace
 
-To clean all packages and return to a fresh state run `yarn workspaces clean`.
+To clean all packages and return to a fresh state run `yarn workspaces run clean`.
 
 ### How to release (manually)
 
