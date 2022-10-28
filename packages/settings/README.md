@@ -1,7 +1,7 @@
 # @readapt/settings
 
 Readapt adaptations are based on a settings profile. This package contains Settings models, type definitions and a few
-of utility functions to easily build Settings in order to adapt content.
+utility functions to easily build Settings in order to adapt text.
 
 ## Installation
 

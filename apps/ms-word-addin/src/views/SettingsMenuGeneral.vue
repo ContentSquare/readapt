@@ -39,7 +39,8 @@ const SettingsMenuGeneral = defineComponent({
 
     const changeLanguage = (language: Language) => emit('change-language', language)
 
-    const optimizeLineSpacingOptions = (): Option<LineSpacingOption>[] => (props.settings.shadeAlternateLinesActive ? lineSpacingOptions.slice(1) : lineSpacingOptions)
+    const optimizeLineSpacingOptions = (): Option<LineSpacingOption>[] =>
+      props.settings.shadeAlternateLinesActive ? lineSpacingOptions.slice(1) : lineSpacingOptions
 
     const lineSpacingOptionsOptimized = ref<Option<LineSpacingOption>[]>(optimizeLineSpacingOptions())
 
