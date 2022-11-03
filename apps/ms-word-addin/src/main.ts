@@ -1,5 +1,5 @@
 import VueSanitize from 'vue-sanitize'
-import { ToastPlugin, SidebarPlugin } from 'bootstrap-vue'
+import { SidebarPlugin, VBTooltip } from 'bootstrap-vue'
 import Vue from 'vue'
 
 import App from './App.vue'
@@ -12,8 +12,8 @@ import './theme.scss'
 Vue.config.productionTip = false
 
 Vue.use(VueSanitize)
-Vue.use(ToastPlugin)
 Vue.use(SidebarPlugin)
+Vue.directive('b-tooltip', VBTooltip)
 
 Office.onReady(() => {
   new Vue({

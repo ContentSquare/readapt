@@ -8,7 +8,8 @@
     "WELCOME_2": "Configure elements like font, text size and spacing, phonemes and letters. Use tools to help with reading and concentration.",
     "WELCOME_3": "Readapt was designed for those with reading challenges like dyslexia and poor vision.",
     "CONTACT_US": "Contact us!",
-    "TELL_US_ABOUT_YOU": "Tell us about you"
+    "TELL_US_ABOUT_YOU": "Tell us about you",
+    "I_HAVE_PROFILE_CODE": "I have profile code"
   },
   "DIALOG_BOX": {
     "PRINT": "Print",
@@ -77,9 +78,19 @@
     "SELECT": "Select",
     "CANCEL": "Cancel"
   },
+  "SETTINGS_CODE": {
+    "PREFERENCE_CODE": "Preference code",
+    "APPLY_THIS_SETTINGS": "Apply this settings",
+    "APPLY_YOUR_SETTINGS_CODE": "Apply your Settings Code",
+    "WRONG_CODE_ERROR": "Wrong code!",
+    "PASTE_YOUR_SETTINGS": "Paste your settings code here",
+    "PASTE": "Paste your code"
+  },
   "LOADING": "Loading",
   "DEFAULT": "Default",
   "MEDIUM": "Medium",
   "LARGE": "Large",
-  "EXTRA_LARGE": "Extra Large"
+  "EXTRA_LARGE": "Extra Large",
+  "COPY": "Copy",
+  "COPIED": "Copied!"
 }

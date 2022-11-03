@@ -8,7 +8,8 @@
     "WELCOME_2": "Configurez des éléments comme la police, la taille et l'espacement du texte, les phonèmes et les lettres. D’autres outils vous permettront de faciliter votre lecture et votre concentration.",
     "WELCOME_3": "Readapt a été conçu pour les personnes présentant des troubles de la lecture tel que la dyslexie ou un déficit visuel.",
     "CONTACT_US": "Contactez-nous !",
-    "TELL_US_ABOUT_YOU": "Dites nous en plus sur vous"
+    "TELL_US_ABOUT_YOU": "Dites nous en plus sur vous",
+    "I_HAVE_PROFILE_CODE": "J'ai un code de profil"
   },
   "DIALOG_BOX": {
     "PRINT": "Imprimer",
@@ -77,9 +78,19 @@
     "SELECT": "Selectionner",
     "CANCEL": "Annuler"
   },
+  "SETTINGS_CODE": {
+    "PREFERENCE_CODE": "Code profile",
+    "APPLY_THIS_SETTINGS": "Appliquer ces préférences",
+    "APPLY_YOUR_SETTINGS_CODE": "Appliquer votre code profil",
+    "WRONG_CODE_ERROR": "Code erroné",
+    "PASTE_YOUR_SETTINGS": "Coller ici votre code profil",
+    "PASTE": "Coller votre code"
+  },
   "LOADING": "Chargement en cours",
   "DEFAULT": "Par Défaut",
   "MEDIUM": "Moyen",
   "LARGE": "Grand",
-  "EXTRA_LARGE": "Très Grand"
+  "EXTRA_LARGE": "Très Grand",
+  "COPY": "Copier",
+  "COPIED": "Copié !"
 }

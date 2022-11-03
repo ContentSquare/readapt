@@ -12,6 +12,7 @@ import router from '@/router'
 
 import SettingsMenuGeneral from './SettingsMenuGeneral.vue'
 import SettingsMenuTableItems from './SettingsMenuTableItems.vue'
+import SettingsCode from '@/components/SettingsCode.vue'
 
 type TabName = 'GENERAL' | 'LETTERS' | 'PHONEMES'
 
@@ -26,7 +27,8 @@ const SettingsMenu = defineComponent({
     PreviewContainer,
     AdaptContainer,
     SaveSettings,
-    CloseSettings
+    CloseSettings,
+    SettingsCode
   },
   setup() {
     const settings = computed(() => store.getters.getSettings)
@@ -134,7 +136,9 @@ export default SettingsMenu
       </b-col>
     </b-row>
 
-    <div>
+    <div class="mt-auto">
+      <SettingsCode class="mt-2" :settings="settings" />
+
       <div class="mt-3 mb-3 d-flex justify-content-between">
         <SaveSettings @save-settings="save" />
         <CloseSettings :is-settings-dirty="isSettingsDirty" @close-settings="close" />
