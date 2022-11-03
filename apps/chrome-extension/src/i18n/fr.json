@@ -85,12 +85,18 @@
     "CANCEL": "Annuler"
   },
   "SETTINGS_CODE": {
-    "PREFERENCE_CODE": "Code du profil",
-    "PREFERENCE_CODE_HELP": "Ce code correspond à votre profil. Vous pouvez utiliser ce code sur les autres plateformes que nous supportons."
+    "PREFERENCE_CODE": "Code profile",
+    "APPLY_THIS_SETTINGS": "Appliquer ces préférences",
+    "APPLY_YOUR_SETTINGS_CODE": "Appliquer votre code profil",
+    "WRONG_CODE_ERROR": "Code erroné",
+    "PASTE_YOUR_SETTINGS": "Coller ici votre code profil",
+    "PASTE": "Coller votre code"
   },
   "LOADING": "Chargement en cours",
   "DEFAULT": "Par Défaut",
   "MEDIUM": "Moyen",
   "LARGE": "Grand",
-  "EXTRA_LARGE": "Très Grand"
+  "EXTRA_LARGE": "Très Grand",
+  "COPY": "Copier",
+  "COPIED": "Copié !"
 }

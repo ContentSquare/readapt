@@ -6,6 +6,10 @@ import SettingsSaveConfirmation from '../modals/SettingsSaveConfirmation.vue'
 
 const SaveSetting = defineComponent({
   components: { BButton, SettingsSaveConfirmation },
+  props: {
+    disabled: { type: Boolean, default: false },
+    label: { type: String, default: 'SETTINGS.SAVE' }
+  },
   setup(_, { emit }) {
     const shouldShowModal = ref(false)
 
@@ -27,7 +31,7 @@ export default SaveSetting
 
 <template>
   <div>
-    <b-button size="sm" variant="primary" @click="saveSettings">{{ $t('SETTINGS.SAVE') }}</b-button>
+    <b-button size="sm" variant="primary" @click="saveSettings" :disabled="disabled">{{ $t(label) }}</b-button>
     <template v-if="shouldShowModal">
       <SettingsSaveConfirmation @confirm="closeModal" />
     </template>

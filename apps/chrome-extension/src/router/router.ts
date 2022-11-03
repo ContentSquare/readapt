@@ -23,6 +23,10 @@ const routes: Array<RouteConfig> = [
   {
     path: '/settings',
     component: () => import('@/views/SettingsMenu.vue')
+  },
+  {
+    path: '/settings-code',
+    component: () => import('@/views/SettingsCodeEdit.vue')
   }
 ]
 

@@ -231,6 +231,13 @@ export default MainMenu
           </b-button>
         </router-link>
       </div>
+      <div class="my-2" style="min-width: 250px">
+        <router-link to="/settings-code">
+          <b-button class="w-100" size="md" variant="primary">
+            {{ $t('MAIN_MENU.I_HAVE_PROFILE_CODE') }}
+          </b-button>
+        </router-link>
+      </div>
       <div v-if="!isDefaultSettings" class="my-2" style="min-width: 250px">
         <a href="https://forms.gle/tXTeYXhxevafZPF69" target="_blank">
           <b-button size="sm" variant="primary" class="w-100">{{ $t('MAIN_MENU.TELL_US_ABOUT_YOU') }}</b-button>

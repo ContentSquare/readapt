@@ -6,7 +6,7 @@
   "types": "dist/types/index.d.ts",
   "scripts": {
     "clean": "shx rm -rf dist",
-    "test": "echo 'no test yet'",
+    "test": "jest",
     "build": "rollup -c rollup.config.js"
   },
   "publishConfig": {

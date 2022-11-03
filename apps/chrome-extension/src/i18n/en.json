@@ -85,11 +85,18 @@
     "CANCEL": "Cancel"
   },
   "SETTINGS_CODE": {
-    "PREFERENCE_CODE": "Preference code"
+    "PREFERENCE_CODE": "Preference code",
+    "APPLY_THIS_SETTINGS": "Apply this settings",
+    "APPLY_YOUR_SETTINGS_CODE": "Apply your Settings Code",
+    "WRONG_CODE_ERROR": "Wrong code!",
+    "PASTE_YOUR_SETTINGS": "Paste your settings code here",
+    "PASTE": "Paste your code"
   },
   "LOADING": "Loading",
   "DEFAULT": "Default",
   "MEDIUM": "Medium",
   "LARGE": "Large",
-  "EXTRA_LARGE": "Extra Large"
+  "EXTRA_LARGE": "Extra Large",
+  "COPY": "Copy",
+  "COPIED": "Copied!"
 }

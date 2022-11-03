@@ -3,7 +3,8 @@ import { StoreModel, buildDefaultSettings, ColoredItem, ColoredOption, getLangCo
 
 const sharedStoreMutations: MutationTree<StoreModel> = {
   resetState(state, newState: StoreModel) {
-    state = newState
+    state.language = newState.language
+    state.profiles = newState.profiles
   },
   updateSettings(state, settings: Settings) {
     const language = settings.language

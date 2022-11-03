@@ -102,6 +102,16 @@ const getRuleSettings = async (): Promise<SettingsReadingTool> => {
   return ruleSettings ?? buildDefaultSettingsReadingTool()
 }
 
+const openSettingsCode = async (): Promise<void> => {
+  try {
+    await chrome.tabs.create({
+      url: 'index.html#/settings-code'
+    })
+  } catch (e) {
+    console.error(e)
+  }
+}
+
 export {
   getCurrentTab,
   closeCurrentTab,
@@ -117,5 +127,6 @@ export {
   saveMaskSettings,
   getMaskSettings,
   saveRuleSettings,
-  getRuleSettings
+  getRuleSettings,
+  openSettingsCode
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from 'vue'
-import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
+import { BButton, BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
 import isEqual from 'lodash/isEqual'
 
 import { AdaptContainer, CloseSettings, PreviewContainer, SaveSettings } from '@readapt/shared-components'
@@ -12,6 +12,7 @@ import router from '@/router'
 import utils from '@/chrome'
 import SettingsMenuGeneral from '@/views/SettingsMenuGeneral.vue'
 import SettingsMenuTableItems from '@/views/SettingsMenuTableItems.vue'
+import SettingsCode from '@/components/SettingsCode.vue'
 
 const { closeCurrentTab } = utils
 
@@ -19,6 +20,7 @@ type TabName = 'GENERAL' | 'LETTERS' | 'PHONEMES'
 
 const SettingsMenu = defineComponent({
   components: {
+    BButton,
     BRow,
     BCol,
     BNav,
@@ -28,7 +30,8 @@ const SettingsMenu = defineComponent({
     PreviewContainer,
     AdaptContainer,
     SaveSettings,
-    CloseSettings
+    CloseSettings,
+    SettingsCode
   },
   setup() {
     const settings = computed(() => store.getters.getSettings)
@@ -100,7 +103,12 @@ export default SettingsMenu
     <div class="mt-3">
       <div>
         <span class="h2">{{ $t('SETTINGS.MY_PREFERENCES') }}</span>
-        <a class="ml-2 float-right" :href="settingsFile" download="settings.json" target="_blank">{{ $t('SETTINGS.DOWNLOAD_SETTINGS') }}</a>
+        <a class="ml-2 float-right" :href="settingsFile" download="settings.json" target="_blank">
+          <b-button variant="outline-primary">{{ $t('SETTINGS.DOWNLOAD_SETTINGS') }}</b-button>
+        </a>
+        <router-link to="/settings-code" class="ml-2 float-right">
+          <b-button variant="outline-primary">{{ $t('MAIN_MENU.I_HAVE_PROFILE_CODE') }}</b-button>
+        </router-link>
       </div>
       <b-nav class="d-flex flex-row">
         <b-nav-item @click="activateTab('GENERAL')" :active="activeTab === 'GENERAL'">{{ $t('SETTINGS.GENERAL_SETTINGS') }}</b-nav-item>
@@ -149,6 +157,8 @@ export default SettingsMenu
               :settings="settings"
             />
           </PreviewContainer>
+
+          <SettingsCode class="mt-auto" :settings="settings" />
 
           <div class="mt-3 d-flex justify-content-between">
             <SaveSettings @save-settings="save" />
