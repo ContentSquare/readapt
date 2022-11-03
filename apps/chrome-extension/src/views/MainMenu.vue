@@ -26,7 +26,17 @@ const MainMenu = defineComponent({
   setup() {
     const readaptEnabled = ref(true)
 
-    const { openSettings, sendMessageToCurrentTab, newSettings, openTemplates, broadcastMessage, getEnabled, saveEnabled, saveLocale } = utils
+    const {
+      openSettings,
+      sendMessageToCurrentTab,
+      newSettings,
+      openTemplates,
+      broadcastMessage,
+      getEnabled,
+      saveEnabled,
+      saveLocale,
+      openSettingsCode
+    } = utils
 
     const settings = computed(() => store.getters.getSettings)
     const defaultProfiles = buildDefaultProfiles()
@@ -60,16 +70,17 @@ const MainMenu = defineComponent({
     return {
       version,
       readaptEnabled,
+      // methods,
       openSettings,
       newSettings,
       sendMessageToCurrentTab,
       broadcastMessage,
       openTemplates,
-      // methods,
       switchEnabled,
       adapt,
       reset,
       selectTemplate,
+      openSettingsCode,
       changeLocale,
       isDefaultSettings
     }
@@ -109,7 +120,7 @@ export default MainMenu
 
     <div class="mt-3" v-if="!isDefaultSettings">
       <h5>{{ $t('MAIN_MENU.ADAPT_TEXT_BY') }}</h5>
-      <ul class="help">
+      <ul class="help mb-0">
         <!-- <li>-->
         <!--   <b-icon-hand-index-thumb />-->
         <!--   {{ $t('MAIN_MENU.CLICKING_ADAPT_PAGE_BUTTON') }}-->
@@ -120,27 +131,27 @@ export default MainMenu
     </div>
     <div v-else class="text-center my-3">{{ $t('MAIN_MENU.FIRST_RUN') }}</div>
 
-    <div class="mt-3 mb-auto d-flex align-items-center" :class="isDefaultSettings ? 'justify-content-center' : 'justify-content-between'">
-      <b-button v-if="!isDefaultSettings" size="sm" variant="primary" @click="openSettings" style="max-width: 150px">
+    <div class="my-3 d-flex align-items-center" :class="isDefaultSettings ? 'justify-content-center' : 'justify-content-between'">
+      <b-button v-if="!isDefaultSettings" size="sm" variant="primary" @click="openSettings" style="max-width: 120px">
         {{ $t('MAIN_MENU.SEE_MODIFY_CURRENT_PROFILE') }}
       </b-button>
 
-      <b-button size="sm" variant="primary" :class="{ 'mr-4': isDefaultSettings }" @click="newSettings" style="max-width: 150px">
+      <b-button size="sm" variant="primary" :class="{ 'mr-3': isDefaultSettings }" @click="newSettings" style="max-width: 120px">
         {{ $t('MAIN_MENU.CREATE_BRAND_NEW_PROFILE') }}
+      </b-button>
+
+      <b-button size="sm" variant="primary" :class="{ 'mr-3': isDefaultSettings }" @click="openSettingsCode" style="max-width: 120px">
+        {{ $t('MAIN_MENU.I_HAVE_PROFILE_CODE') }}
       </b-button>
 
       <b-button size="sm" variant="primary" @click="selectTemplate" style="max-width: 150px">
         {{ $t('MAIN_MENU.BASE_YOUR_PROFILE_FROM_TEMPLATE') }}
       </b-button>
-
-      <!--            <b-button size="sm" variant="primary" disabled>-->
-      <!--              {{ $t('MAIN_MENU.I_HAVE_PROFILE_CODE') }}-->
-      <!--            </b-button>-->
     </div>
 
     <QuickActivate class="mb-auto" />
 
-    <div class="footer">
+    <div class="footer my-2">
       <strong class="version">Version {{ version }}</strong>
 
       <a class="about-you" href="https://forms.gle/ciWCnYnkFjutwEHWA" target="_blank">

@@ -18,6 +18,7 @@ export interface ChromeUtils {
   saveMaskSettings: (maskSettings: SettingsReadingTool) => Promise<void>
   getRuleSettings: () => Promise<SettingsReadingTool>
   saveRuleSettings: (ruleSettings: SettingsReadingTool) => Promise<void>
+  openSettingsCode: () => Promise<void>
 }
 
 const buildUtils = (): ChromeUtils => {

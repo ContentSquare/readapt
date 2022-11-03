@@ -80,6 +80,10 @@ const getRuleSettings = async (): Promise<SettingsReadingTool> => {
   return buildDefaultSettingsReadingTool()
 }
 
+const openSettingsCode = async () => {
+  await router.push('settings-code')
+}
+
 export {
   getCurrentTab,
   closeCurrentTab,
@@ -95,5 +99,6 @@ export {
   getMaskSettings,
   getRuleSettings,
   saveMaskSettings,
-  saveRuleSettings
+  saveRuleSettings,
+  openSettingsCode
 }
