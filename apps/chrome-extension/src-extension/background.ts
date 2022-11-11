@@ -1,5 +1,5 @@
 /* global chrome  */
-import { broadcastMessage } from '../src/chrome/utils'
+import { broadcastMessage } from '@/chrome/utils'
 
 chrome.runtime.onInstalled.addListener(async () => {
   console.log('readapt installed')

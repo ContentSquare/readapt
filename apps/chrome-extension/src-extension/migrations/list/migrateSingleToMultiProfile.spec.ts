@@ -1,7 +1,7 @@
 import { PersistenceMock } from '@/persistence/persistenceMock'
-import { SingleToMultiProfileMigration } from './singleToMultiProfileMigration'
+import { migrateSingleToMultiProfile } from './migrateSingleToMultiProfile'
 
-describe('SingleToMultiProfileMigration', () => {
+describe('migrateSingleToMultiProfile', () => {
   const SETTINGS_KEY_OLD = 'settings'
   const SETTINGS_KEY_NEW = 'settings@2'
 
@@ -17,9 +17,8 @@ describe('SingleToMultiProfileMigration', () => {
   describe('when storage does not contain old and new settings', () => {
     it('should do nothing', () => {
       const persistence = new PersistenceMock()
-      const migration = new SingleToMultiProfileMigration(persistence)
 
-      migration.migrate()
+      migrateSingleToMultiProfile(persistence)
 
       expect(persistence.getItem(SETTINGS_KEY_OLD)).toBeUndefined()
       expect(persistence.getItem(SETTINGS_KEY_NEW)).toBeUndefined()
@@ -32,9 +31,8 @@ describe('SingleToMultiProfileMigration', () => {
         [SETTINGS_KEY_OLD]: settingsOld,
         [SETTINGS_KEY_NEW]: settingsNew
       })
-      const migration = new SingleToMultiProfileMigration(persistence)
 
-      migration.migrate()
+      migrateSingleToMultiProfile(persistence)
 
       expect(persistence.getItem(SETTINGS_KEY_OLD)).toEqual(settingsOld)
       expect(persistence.getItem(SETTINGS_KEY_NEW)).toEqual(settingsNew)
@@ -47,9 +45,7 @@ describe('SingleToMultiProfileMigration', () => {
         [SETTINGS_KEY_OLD]: settingsOld
       })
 
-      const migration = new SingleToMultiProfileMigration(persistence)
-
-      migration.migrate()
+      migrateSingleToMultiProfile(persistence)
 
       expect(persistence.getItem(SETTINGS_KEY_OLD)).toEqual(settingsOld)
       expect(persistence.getItem(SETTINGS_KEY_NEW)).toEqual(settingsNew)

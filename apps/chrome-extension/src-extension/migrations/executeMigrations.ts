@@ -1,8 +1,7 @@
 import { Persistence } from '@/persistence/persistence'
-import { SingleToMultiProfileMigration } from './list/singleToMultiProfileMigration'
+import { migrateSingleToMultiProfile } from './list/migrateSingleToMultiProfile'
 
 export function executeMigrations(persistence: Persistence): void {
-  ;[new SingleToMultiProfileMigration(persistence)].forEach((migration) => {
-    migration.migrate()
-  })
+  migrateSingleToMultiProfile(persistence)
+  // add here new migration scripts....
 }

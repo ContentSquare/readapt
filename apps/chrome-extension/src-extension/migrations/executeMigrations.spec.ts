@@ -1,15 +1,16 @@
 import { PersistenceMock } from '@/persistence/persistenceMock'
 import { executeMigrations } from './executeMigrations'
-import { SingleToMultiProfileMigration } from './list/singleToMultiProfileMigration'
 
 describe('executeMigrations()', () => {
-  it('should execute the migration scripts in the right order', () => {
-    const singleToMultiProfileMigrateSpy = jest.spyOn(SingleToMultiProfileMigration.prototype, 'migrate')
+  it('should execute the migration scripts', () => {
+    const profile = { language: 'en', fontSize: '140%' }
+    const persistence = new PersistenceMock({
+      settings: profile
+    })
 
-    executeMigrations(new PersistenceMock())
+    executeMigrations(persistence)
 
-    expect(singleToMultiProfileMigrateSpy).toHaveBeenCalled()
-
-    jest.resetAllMocks()
+    expect(persistence.getItem('settings')).toBeTruthy()
+    expect(persistence.getItem('settings@2')).toBeTruthy()
   })
 })

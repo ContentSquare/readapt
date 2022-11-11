@@ -1,9 +1,7 @@
-import { Persistence } from "./persistence";
+import { Persistence } from './persistence'
 
 export class PersistenceMock implements Persistence {
-  constructor(public storage: Record<string, unknown> = {}) {
-
-  }
+  constructor(public storage: Record<string, unknown> = {}) {}
 
   getItem<Item>(key: string): Item | undefined {
     if (key in this.storage) {
