@@ -1,7 +1,7 @@
 import { Persistence } from '@/persistence/persistence'
 import { migrateSingleToMultiProfile } from './list/migrateSingleToMultiProfile'
 
-export function executeMigrations(persistence: Persistence): void {
-  migrateSingleToMultiProfile(persistence)
+export async function executeMigrations(persistence: Persistence): Promise<void> {
+  await migrateSingleToMultiProfile(persistence)
   // add here new migration scripts....
 }

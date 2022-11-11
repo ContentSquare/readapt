@@ -2,15 +2,15 @@ import { PersistenceMock } from '@/persistence/persistenceMock'
 import { executeMigrations } from './executeMigrations'
 
 describe('executeMigrations()', () => {
-  it('should execute the migration scripts', () => {
+  it('should execute the migration scripts', async () => {
     const profile = { language: 'en', fontSize: '140%' }
     const persistence = new PersistenceMock({
       settings: profile
     })
 
-    executeMigrations(persistence)
+    await executeMigrations(persistence)
 
-    expect(persistence.getItem('settings')).toBeTruthy()
-    expect(persistence.getItem('settings@2')).toBeTruthy()
+    expect(await persistence.getItem('settings')).toBeTruthy()
+    expect(await persistence.getItem('settings@2')).toBeTruthy()
   })
 })
