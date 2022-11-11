@@ -1,6 +1,7 @@
 /* global chrome */
 import { maskState, rulerState, addMask, addRuler, updateRulerSettings, removeRuler, removeMask, updateMaskSettings } from './reading-tools'
 import { loadVisualEngine } from './load-visual-engine'
+import { STORAGE_KEY_SETTINGS } from '@/persistence'
 
 const mousePos = {
   x: 0,
@@ -117,7 +118,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 })
 
 const requestSettings = async () => {
-  const { settings } = await chrome.storage.local.get('settings')
+  const { settings } = await chrome.storage.local.get(STORAGE_KEY_SETTINGS)
   return settings
 }
 

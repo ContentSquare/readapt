@@ -1,4 +1,4 @@
-import { PersistenceMock } from '@/persistence/persistenceMock'
+import { PersistenceMock, STORAGE_KEY_SETTINGS_V1, STORAGE_KEY_SETTINGS_V2 } from '@/persistence'
 import { executeMigrations } from './executeMigrations'
 
 describe('executeMigrations()', () => {
@@ -10,7 +10,7 @@ describe('executeMigrations()', () => {
 
     await executeMigrations(persistence)
 
-    expect(await persistence.getItem('settings')).toBeTruthy()
-    expect(await persistence.getItem('settings@2')).toBeTruthy()
+    expect(await persistence.getItem(STORAGE_KEY_SETTINGS_V1)).toBeTruthy()
+    expect(await persistence.getItem(STORAGE_KEY_SETTINGS_V2)).toBeTruthy()
   })
 })

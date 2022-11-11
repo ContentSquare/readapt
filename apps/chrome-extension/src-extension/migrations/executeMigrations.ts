@@ -1,4 +1,4 @@
-import { Persistence } from '@/persistence/persistence'
+import { Persistence } from '@/persistence'
 import { migrateSingleToMultiProfile } from './list/migrateSingleToMultiProfile'
 
 export async function executeMigrations(persistence: Persistence): Promise<void> {

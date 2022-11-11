@@ -1,5 +1,6 @@
 /* global chrome  */
 import { broadcastMessage } from '@/chrome/utils'
+import { STORAGE_KEY_SETTINGS } from '@/persistence'
 
 chrome.runtime.onInstalled.addListener(async () => {
   console.log('readapt installed')
@@ -129,7 +130,7 @@ const switchEnabledContextMenu = (enabled: boolean): void => {
 
 const hasSettingsChanged = (changes: { [p: string]: chrome.storage.StorageChange }): boolean => {
   for (const [key] of Object.entries(changes)) {
-    if (key === 'settings') {
+    if (key === STORAGE_KEY_SETTINGS) {
       return true
     }
   }

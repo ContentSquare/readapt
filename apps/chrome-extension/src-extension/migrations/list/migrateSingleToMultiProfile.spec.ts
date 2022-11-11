@@ -1,10 +1,7 @@
-import { PersistenceMock } from '@/persistence/persistenceMock'
+import { PersistenceMock, STORAGE_KEY_SETTINGS_V1, STORAGE_KEY_SETTINGS_V2 } from '@/persistence'
 import { migrateSingleToMultiProfile } from './migrateSingleToMultiProfile'
 
 describe('migrateSingleToMultiProfile', () => {
-  const SETTINGS_KEY_OLD = 'settings'
-  const SETTINGS_KEY_NEW = 'settings@2'
-
   const profile = { language: 'en', fontSize: '140%' }
   const settingsOld = profile
   const settingsNew = [
@@ -20,35 +17,35 @@ describe('migrateSingleToMultiProfile', () => {
 
       await migrateSingleToMultiProfile(persistence)
 
-      expect(await persistence.getItem(SETTINGS_KEY_OLD)).toBeUndefined()
-      expect(await persistence.getItem(SETTINGS_KEY_NEW)).toBeUndefined()
+      expect(await persistence.getItem(STORAGE_KEY_SETTINGS_V1)).toBeUndefined()
+      expect(await persistence.getItem(STORAGE_KEY_SETTINGS_V2)).toBeUndefined()
     })
   })
 
   describe('when storage contains old and new settings', () => {
     it('should do nothing', async () => {
       const persistence = new PersistenceMock({
-        [SETTINGS_KEY_OLD]: settingsOld,
-        [SETTINGS_KEY_NEW]: settingsNew
+        [STORAGE_KEY_SETTINGS_V1]: settingsOld,
+        [STORAGE_KEY_SETTINGS_V2]: settingsNew
       })
 
       await migrateSingleToMultiProfile(persistence)
 
-      expect(await persistence.getItem(SETTINGS_KEY_OLD)).toEqual(settingsOld)
-      expect(await persistence.getItem(SETTINGS_KEY_NEW)).toEqual(settingsNew)
+      expect(await persistence.getItem(STORAGE_KEY_SETTINGS_V1)).toEqual(settingsOld)
+      expect(await persistence.getItem(STORAGE_KEY_SETTINGS_V2)).toEqual(settingsNew)
     })
   })
 
   describe('when storage contains old settings and no new settings', () => {
     it('should create new settings from old settings', async () => {
       const persistence = new PersistenceMock({
-        [SETTINGS_KEY_OLD]: settingsOld
+        [STORAGE_KEY_SETTINGS_V1]: settingsOld
       })
 
       await migrateSingleToMultiProfile(persistence)
 
-      expect(await persistence.getItem(SETTINGS_KEY_OLD)).toEqual(settingsOld)
-      expect(await persistence.getItem(SETTINGS_KEY_NEW)).toEqual(settingsNew)
+      expect(await persistence.getItem(STORAGE_KEY_SETTINGS_V1)).toEqual(settingsOld)
+      expect(await persistence.getItem(STORAGE_KEY_SETTINGS_V2)).toEqual(settingsNew)
     })
   })
 })

@@ -1,11 +1,11 @@
-import { Persistence } from '@/persistence/persistence'
+import { Persistence, STORAGE_KEY_SETTINGS_V1, STORAGE_KEY_SETTINGS_V2 } from '@/persistence'
 
 export async function migrateSingleToMultiProfile(persistence: Persistence) {
-  const settingsOld = await persistence.getItem('settings')
+  const settingsOld = await persistence.getItem(STORAGE_KEY_SETTINGS_V1)
   if (!settingsOld) {
     return
   }
-  await persistence.setItem('settings@2', [
+  await persistence.setItem(STORAGE_KEY_SETTINGS_V2, [
     {
       name: 'Default',
       profile: settingsOld
