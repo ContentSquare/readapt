@@ -1,4 +1,7 @@
+export type StorageItems = { [key: string]: unknown }
+export type StorageKeys = string | string[] | { [key: string]: unknown } | null
+
 export interface Storage {
-  getItem<Item>(key: string): Promise<Item | undefined>
-  setItem<Item>(key: string, item: Item): Promise<void>
+  get(keys?: StorageKeys): Promise<StorageItems>
+  set(items: StorageItems): Promise<void>
 }
