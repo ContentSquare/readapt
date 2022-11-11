@@ -1,6 +1,6 @@
-import { Persistence } from './persistence'
+import { Storage } from './storage'
 
-export class PersistenceMock implements Persistence {
+export class StorageMock implements Storage {
   constructor(public storage: Record<string, unknown> = {}) {}
 
   async getItem<Item>(key: string): Promise<Item | undefined> {

@@ -1,4 +1,4 @@
-import { PersistenceMock, STORAGE_KEY_SETTINGS_V1, STORAGE_KEY_SETTINGS_V2 } from '@/persistence'
+import { StorageMock, STORAGE_KEY_SETTINGS_V1, STORAGE_KEY_SETTINGS_V2 } from '@/storage'
 import { migrateSingleToMultiProfile } from './migrateSingleToMultiProfile'
 
 describe('migrateSingleToMultiProfile', () => {
@@ -13,39 +13,39 @@ describe('migrateSingleToMultiProfile', () => {
 
   describe('when storage does not contain old and new settings', () => {
     it('should do nothing', async () => {
-      const persistence = new PersistenceMock()
+      const storage = new StorageMock()
 
-      await migrateSingleToMultiProfile(persistence)
+      await migrateSingleToMultiProfile(storage)
 
-      expect(await persistence.getItem(STORAGE_KEY_SETTINGS_V1)).toBeUndefined()
-      expect(await persistence.getItem(STORAGE_KEY_SETTINGS_V2)).toBeUndefined()
+      expect(await storage.getItem(STORAGE_KEY_SETTINGS_V1)).toBeUndefined()
+      expect(await storage.getItem(STORAGE_KEY_SETTINGS_V2)).toBeUndefined()
     })
   })
 
   describe('when storage contains old and new settings', () => {
     it('should do nothing', async () => {
-      const persistence = new PersistenceMock({
+      const storage = new StorageMock({
         [STORAGE_KEY_SETTINGS_V1]: settingsOld,
         [STORAGE_KEY_SETTINGS_V2]: settingsNew
       })
 
-      await migrateSingleToMultiProfile(persistence)
+      await migrateSingleToMultiProfile(storage)
 
-      expect(await persistence.getItem(STORAGE_KEY_SETTINGS_V1)).toEqual(settingsOld)
-      expect(await persistence.getItem(STORAGE_KEY_SETTINGS_V2)).toEqual(settingsNew)
+      expect(await storage.getItem(STORAGE_KEY_SETTINGS_V1)).toEqual(settingsOld)
+      expect(await storage.getItem(STORAGE_KEY_SETTINGS_V2)).toEqual(settingsNew)
     })
   })
 
   describe('when storage contains old settings and no new settings', () => {
     it('should create new settings from old settings', async () => {
-      const persistence = new PersistenceMock({
+      const storage = new StorageMock({
         [STORAGE_KEY_SETTINGS_V1]: settingsOld
       })
 
-      await migrateSingleToMultiProfile(persistence)
+      await migrateSingleToMultiProfile(storage)
 
-      expect(await persistence.getItem(STORAGE_KEY_SETTINGS_V1)).toEqual(settingsOld)
-      expect(await persistence.getItem(STORAGE_KEY_SETTINGS_V2)).toEqual(settingsNew)
+      expect(await storage.getItem(STORAGE_KEY_SETTINGS_V1)).toEqual(settingsOld)
+      expect(await storage.getItem(STORAGE_KEY_SETTINGS_V2)).toEqual(settingsNew)
     })
   })
 })
