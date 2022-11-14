@@ -1,4 +1,5 @@
-import { MemoryStorage, STORAGE_SETTINGS_KEY_V1, STORAGE_SETTINGS_KEY_V2 } from '@/shared/storage'
+import { MemoryStorage } from '@/shared/storage'
+import { STORAGE_SETTINGS_KEY_V1, STORAGE_SETTINGS_KEY_V2 } from '../constants'
 import { StorageItems } from '@/shared/storage'
 import { migrateSingleToMultiProfile } from './migrateSingleToMultiProfile'
 

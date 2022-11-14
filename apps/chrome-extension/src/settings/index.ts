@@ -1,1 +1,1 @@
-export * from './storage'
+export * as SettingsStorage from './storage'

@@ -1,4 +1,5 @@
-import { MemoryStorage, STORAGE_SETTINGS_KEY_V1, STORAGE_SETTINGS_KEY_V2 } from '@/shared/storage'
+import { STORAGE_SETTINGS_KEY_V1, STORAGE_SETTINGS_KEY_V2 } from '../constants'
+import { MemoryStorage } from '@/shared/storage'
 import { executeMigrations } from './executeMigrations'
 
 describe('executeMigrations()', () => {
@@ -10,7 +11,9 @@ describe('executeMigrations()', () => {
 
     await executeMigrations(storage)
 
-    expect(await storage.getItem(STORAGE_SETTINGS_KEY_V1)).toBeTruthy()
-    expect(await storage.getItem(STORAGE_SETTINGS_KEY_V2)).toBeTruthy()
+    expect(await storage.get(null)).toEqual({
+      [STORAGE_SETTINGS_KEY_V1]: expect.anything(),
+      [STORAGE_SETTINGS_KEY_V2]: expect.anything()
+    })
   })
 })
