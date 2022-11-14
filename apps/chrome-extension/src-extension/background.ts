@@ -1,6 +1,6 @@
 /* global chrome  */
 import { broadcastMessage } from '@/chrome/utils'
-import { STORAGE_SETTINGS_KEY } from '@/storage'
+import { STORAGE_SETTINGS_KEY } from '@/shared/storage'
 
 chrome.runtime.onInstalled.addListener(async () => {
   console.log('readapt installed')

@@ -1,7 +1,7 @@
-import { StorageMock, STORAGE_SETTINGS_KEY_V1, STORAGE_SETTINGS_LEY_V2 } from '@/storage'
+import { StorageMock, STORAGE_SETTINGS_KEY_V1, STORAGE_SETTINGS_LEY_V2 } from '@/shared/storage'
 import { migrateSingleToMultiProfile } from './migrateSingleToMultiProfile'
 
-describe('migrateSingleToMultiProfile', () => {
+describe('migrateSingleToMultiProfile()', () => {
   const profile = { language: 'en', fontSize: '140%' }
   const settingsOld = profile
   const settingsNew = [

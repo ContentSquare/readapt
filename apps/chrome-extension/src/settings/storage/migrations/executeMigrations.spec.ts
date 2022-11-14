@@ -1,4 +1,4 @@
-import { StorageMock, STORAGE_SETTINGS_KEY_V1, STORAGE_SETTINGS_LEY_V2 } from '@/storage'
+import { StorageMock, STORAGE_SETTINGS_KEY_V1, STORAGE_SETTINGS_LEY_V2 } from '@/shared/storage'
 import { executeMigrations } from './executeMigrations'
 
 describe('executeMigrations()', () => {

@@ -1,4 +1,4 @@
-import { Storage, STORAGE_SETTINGS_KEY_V1, STORAGE_SETTINGS_LEY_V2 } from '@/storage'
+import { Storage, STORAGE_SETTINGS_KEY_V1, STORAGE_SETTINGS_LEY_V2 } from '@/shared/storage'
 
 export async function migrateSingleToMultiProfile(storage: Storage) {
   const settingsOld = await storage.getItem(STORAGE_SETTINGS_KEY_V1)

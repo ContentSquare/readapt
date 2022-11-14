@@ -1,4 +1,4 @@
-import { Storage } from './storage'
+import { Storage } from '../iStorage'
 
 export class ChromeSyncStorage implements Storage {
   async getItem<Item>(key: string): Promise<Item | undefined> {
