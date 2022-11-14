@@ -5,22 +5,45 @@ describe('MemoryStorage()', () => {
 
   beforeEach(() => {
     const initial = {
-      key: 'value'
+      key: 'value',
+      secondKey: 'second value'
     }
 
     storage = new MemoryStorage(initial)
   })
 
   describe('get', () => {
-    describe('when the key has a value', () => {
+    describe('when the key has an associated value', () => {
       it('should return the value by key', async () => {
         expect(await storage.get('key')).toEqual({ key: 'value' })
       })
+
+      it('should return values for multiple keys', async () => {
+        expect(await storage.get(['key', 'secondKey'])).toEqual({
+          key: 'value',
+          secondKey: 'second value'
+        })
+      })
     })
 
-    describe('when the key does not have a value', () => {
+    describe('when the key does not an associated a value', () => {
       it('should return undefined for the key', async () => {
         expect(await storage.get('nonExistingKey')).toEqual({ nonExistingKey: undefined })
+      })
+    })
+
+    describe('when the key is null', () => {
+      it('should return the whole storage', async () => {
+        expect(await storage.get(null)).toEqual({
+          key: 'value',
+          secondKey: 'second value'
+        })
+      })
+    })
+
+    describe('when the key type is not supported', () => {
+      it('should throw', async () => {
+        await expect(storage.get({ badKey: 'value' })).rejects.toThrow()
       })
     })
   })

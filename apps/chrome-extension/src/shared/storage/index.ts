@@ -1,3 +1,3 @@
 export * from '../../settings/storage/constants'
-export { Storage } from './storage'
-export { StorageMock } from './types/memoryStorage'
+export { Storage, StorageItems } from './storage'
+export { MemoryStorage } from './types/memoryStorage'

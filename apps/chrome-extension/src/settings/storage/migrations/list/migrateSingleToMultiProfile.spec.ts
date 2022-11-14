@@ -1,51 +1,60 @@
-import { StorageMock, STORAGE_SETTINGS_KEY_V1, STORAGE_SETTINGS_LEY_V2 } from '@/shared/storage'
+import { MemoryStorage, STORAGE_SETTINGS_KEY_V1, STORAGE_SETTINGS_KEY_V2 } from '@/shared/storage'
+import { StorageItems } from '@/shared/storage'
 import { migrateSingleToMultiProfile } from './migrateSingleToMultiProfile'
 
 describe('migrateSingleToMultiProfile()', () => {
   const profile = { language: 'en', fontSize: '140%' }
-  const settingsOld = profile
-  const settingsNew = [
+  const settingsInOldFormat = profile
+  const settingsInNewFormat = [
     {
       name: 'Default',
       profile
     }
   ]
 
-  describe('when storage does not contain old and new settings', () => {
+  const expectStorageStateToEqual = async (storage: MemoryStorage, expectedState: StorageItems): Promise<void> => {
+    expect(await storage.get([STORAGE_SETTINGS_KEY_V1, STORAGE_SETTINGS_KEY_V2])).toEqual(expectedState)
+  }
+
+  describe('when storage contains neither old nor new settings', () => {
     it('should do nothing', async () => {
-      const storage = new StorageMock()
+      const storage = new MemoryStorage()
 
       await migrateSingleToMultiProfile(storage)
 
-      expect(await storage.getItem(STORAGE_SETTINGS_KEY_V1)).toBeUndefined()
-      expect(await storage.getItem(STORAGE_SETTINGS_LEY_V2)).toBeUndefined()
-    })
-  })
-
-  describe('when storage contains old and new settings', () => {
-    it('should do nothing', async () => {
-      const storage = new StorageMock({
-        [STORAGE_SETTINGS_KEY_V1]: settingsOld,
-        [STORAGE_SETTINGS_LEY_V2]: settingsNew
+      await expectStorageStateToEqual(storage, {
+        [STORAGE_SETTINGS_KEY_V1]: undefined,
+        [STORAGE_SETTINGS_KEY_V2]: undefined
       })
-
-      await migrateSingleToMultiProfile(storage)
-
-      expect(await storage.getItem(STORAGE_SETTINGS_KEY_V1)).toEqual(settingsOld)
-      expect(await storage.getItem(STORAGE_SETTINGS_LEY_V2)).toEqual(settingsNew)
     })
   })
 
-  describe('when storage contains old settings and no new settings', () => {
+  describe('when storage contains both old and new settings', () => {
+    it('should do nothing', async () => {
+      const state = {
+        [STORAGE_SETTINGS_KEY_V1]: settingsInOldFormat,
+        [STORAGE_SETTINGS_KEY_V2]: settingsInNewFormat
+      }
+      const storage = new MemoryStorage(state)
+
+      await migrateSingleToMultiProfile(storage)
+
+      await expectStorageStateToEqual(storage, state)
+    })
+  })
+
+  describe('when storage contains old settings but no new settings', () => {
     it('should create new settings from old settings', async () => {
-      const storage = new StorageMock({
-        [STORAGE_SETTINGS_KEY_V1]: settingsOld
+      const storage = new MemoryStorage({
+        [STORAGE_SETTINGS_KEY_V1]: settingsInOldFormat
       })
 
       await migrateSingleToMultiProfile(storage)
 
-      expect(await storage.getItem(STORAGE_SETTINGS_KEY_V1)).toEqual(settingsOld)
-      expect(await storage.getItem(STORAGE_SETTINGS_LEY_V2)).toEqual(settingsNew)
+      await expectStorageStateToEqual(storage, {
+        [STORAGE_SETTINGS_KEY_V1]: settingsInOldFormat,
+        [STORAGE_SETTINGS_KEY_V2]: settingsInNewFormat
+      })
     })
   })
 })

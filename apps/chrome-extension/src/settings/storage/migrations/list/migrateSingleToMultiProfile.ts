@@ -1,14 +1,15 @@
-import { Storage, STORAGE_SETTINGS_KEY_V1, STORAGE_SETTINGS_LEY_V2 } from '@/shared/storage'
+import { Storage, STORAGE_SETTINGS_KEY_V1, STORAGE_SETTINGS_KEY_V2 } from '@/shared/storage'
 
 export async function migrateSingleToMultiProfile(storage: Storage) {
-  const settingsOld = await storage.getItem(STORAGE_SETTINGS_KEY_V1)
-  if (!settingsOld) {
+  const { [STORAGE_SETTINGS_KEY_V1]: settingsInOldFormat } = await storage.get(STORAGE_SETTINGS_KEY_V1)
+  if (!settingsInOldFormat) {
     return
   }
-  await storage.setItem(STORAGE_SETTINGS_LEY_V2, [
+  const settingsInNewFormat = [
     {
       name: 'Default',
-      profile: settingsOld
+      profile: settingsInOldFormat
     }
-  ])
+  ]
+  await storage.set({ [STORAGE_SETTINGS_KEY_V2]: settingsInNewFormat })
 }
