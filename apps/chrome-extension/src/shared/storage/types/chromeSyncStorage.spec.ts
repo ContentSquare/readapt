@@ -2,31 +2,23 @@ import { ChromeSyncStorage } from './chromeSyncStorage'
 import { chrome } from 'jest-chrome'
 
 describe('ChromeSyncStorage', () => {
-  let storage: ChromeSyncStorage
-  beforeEach(() => {
-    let memory: Record<string, unknown> = { key: 'value' }
-    chrome.storage.sync.get.mockImplementationOnce(() => memory)
-    chrome.storage.sync.set.mockImplementationOnce((items) => (memory = { ...memory, items }))
-    storage = new ChromeSyncStorage()
+  afterEach(() => jest.resetAllMocks())
+
+  it('should get values from sync chrome storage', async () => {
+    const storage = new ChromeSyncStorage()
+
+    await storage.get('key')
+
+    expect(chrome.storage.sync.get).toBeCalledTimes(1)
+    expect(chrome.storage.sync.get).toHaveBeenCalledWith('key')
   })
 
-  describe('getItem()', () => {
-    describe('when the storage contains a value for key', () => {
-      it('should return the value', async () => {
-        expect(await storage.getItem('key')).toBe('value')
-      })
-    })
+  it('should set values to sync chrome storage', async () => {
+    const storage = new ChromeSyncStorage()
 
-    describe('when the storage does not contain a value for key', () => {
-      it('should return undefined', async () => {
-        expect(await storage.getItem('nonExistingKey')).toBeUndefined()
-      })
-    })
-  })
+    await storage.set({ key: 'Value' })
 
-  it('should set an item', async () => {
-    await storage.setItem('newKey', 'newValue')
-
-    expect(await storage.getItem('newKey')).toBe('newValue')
+    expect(chrome.storage.sync.set).toBeCalledTimes(1)
+    expect(chrome.storage.sync.set).toHaveBeenCalledWith({ key: 'Value' })
   })
 })

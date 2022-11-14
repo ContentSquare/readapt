@@ -1,14 +1,11 @@
-import { Storage } from '../iStorage'
+import { Storage, StorageItems, StorageKeys } from '../storage'
 
 export class ChromeSyncStorage implements Storage {
-  async getItem<Item>(key: string): Promise<Item | undefined> {
-    const result = await chrome.storage.sync.get(key)
-    if (key in result) {
-      return result[key] as Item
-    }
+  get(keys?: StorageKeys): Promise<StorageItems> {
+    return chrome.storage.sync.get(keys)
   }
 
-  async setItem<Item>(key: string, item: Item): Promise<void> {
-    await chrome.storage.sync.set({ [key]: item })
+  async set(items: StorageItems): Promise<void> {
+    await chrome.storage.sync.set(items)
   }
 }
