@@ -1,9 +1,13 @@
 /* global chrome  */
 import { broadcastMessage } from '@/chrome/utils'
-import { STORAGE_SETTINGS_KEY } from '@/shared/storage'
+import { executeMigrations, STORAGE_SETTINGS_KEY } from '@/settings'
+import { ChromeSyncStorage } from '@/shared/storage'
 
 chrome.runtime.onInstalled.addListener(async () => {
-  console.log('readapt installed')
+  console.log('readapt installed or updated')
+
+  await executeMigrations(new ChromeSyncStorage())
+
   const { enabled } = await chrome.storage.sync.get('enabled')
   const isEnabled = enabled ?? true
 
