@@ -1,5 +1,5 @@
 import { buildDefaultProfiles, Settings, StoreModel } from '@readapt/settings'
-import { STORAGE_SETTINGS_KEY } from '@/shared/storage'
+import { STORAGE_SETTINGS_KEY } from '@/settings'
 
 export const loadStoredSettings = (): Settings | undefined => {
   const savedSettings = localStorage.getItem(STORAGE_SETTINGS_KEY)
