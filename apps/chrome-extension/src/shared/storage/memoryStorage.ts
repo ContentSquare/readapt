@@ -1,4 +1,4 @@
-import { Storage, StorageItems, StorageKeys } from '../storage'
+import { Storage, StorageItems, StorageKeys } from './storage'
 
 /**
  * Used mostly in unit tests to mock the storage

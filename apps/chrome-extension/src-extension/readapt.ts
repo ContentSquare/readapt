@@ -1,7 +1,7 @@
 /* global chrome */
 import { maskState, rulerState, addMask, addRuler, updateRulerSettings, removeRuler, removeMask, updateMaskSettings } from './reading-tools'
 import { loadVisualEngine } from './load-visual-engine'
-import { STORAGE_SETTINGS_KEY } from '@/shared/storage'
+import { STORAGE_SETTINGS_KEY } from '@/settings'
 
 const mousePos = {
   x: 0,
