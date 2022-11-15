@@ -1,7 +1,7 @@
 import { Storage } from '@/shared/storage'
-import { migrateSingleToMultiProfile } from './migrateSingleToMultiProfile'
+import { migrateSingleToMultiSettings } from './migrateSingleToMultiSettings'
 
 export async function executeMigrations(storage: Storage): Promise<void> {
-  await migrateSingleToMultiProfile(storage)
+  await migrateSingleToMultiSettings(storage)
   // add here new migration scripts....
 }

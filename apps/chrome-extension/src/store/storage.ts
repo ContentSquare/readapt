@@ -1,19 +1,23 @@
 import { buildDefaultProfiles, Settings, StoreModel } from '@readapt/settings'
-import { STORAGE_SETTINGS_KEY } from '@/settings'
+import { STORAGE_SETTINGS_KEY, SettingsStorageModel } from '@/settings'
 
 export const loadStoredSettings = (): Settings | undefined => {
-  const savedSettings = localStorage.getItem(STORAGE_SETTINGS_KEY)
-  if (!savedSettings) {
+  const settingsStorageModelJson = localStorage.getItem(STORAGE_SETTINGS_KEY)
+  if (!settingsStorageModelJson) {
     return
   }
-  return JSON.parse(savedSettings) as Settings
+  const settingsStorageModel = JSON.parse(settingsStorageModelJson) as SettingsStorageModel
+
+  return settingsStorageModel[0]?.settings
 }
 
 export const saveSettings = (settings: Settings): void => {
-  localStorage.setItem(STORAGE_SETTINGS_KEY, JSON.stringify(settings))
+  const settingsStorageModel: SettingsStorageModel = [{ name: 'Default', settings }]
 
-  chrome?.storage?.local.set({ settings }, () => {
-    console.log('Value is set to ' + settings)
+  localStorage.setItem(STORAGE_SETTINGS_KEY, JSON.stringify(settingsStorageModel))
+
+  chrome?.storage?.local.set({ [STORAGE_SETTINGS_KEY]: settingsStorageModel }, () => {
+    console.log('Value is set to ' + settingsStorageModel)
   })
 }
 
