@@ -5,7 +5,7 @@ import { executeMigrations, STORAGE_SETTINGS_KEY } from '@/settings'
 chrome.runtime.onInstalled.addListener(async () => {
   console.log('readapt installed or updated')
 
-  await executeMigrations(chrome.storage.sync)
+  await executeMigrations(chrome.storage.local)
 
   const { enabled } = await chrome.storage.sync.get('enabled')
   const isEnabled = enabled ?? true
