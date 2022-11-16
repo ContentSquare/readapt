@@ -67,17 +67,13 @@ const openTemplates = async (): Promise<void> => {
 }
 
 const getStoredSettings = async (): Promise<Settings | undefined> => {
-  const savedSettings = await chrome.storage.local.get('settings')
-  if (!savedSettings) {
-    return
-  }
-  return savedSettings as Settings
+  const { settings } = await chrome.storage.local.get('settings')
+  return settings as Settings
 }
 
-const saveSettings = (settings: Settings): void => {
-  chrome.storage.local.set({ settings }, () => {
-    console.log('Value is set to ' + settings)
-  })
+const saveSettings = async (settings: Settings): Promise<void> => {
+  await chrome.storage.local.set({ settings })
+  console.log('Value is set to ' + settings)
 }
 
 const saveLocale = async (locale: string): Promise<void> => {
