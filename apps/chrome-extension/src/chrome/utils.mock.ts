@@ -35,14 +35,16 @@ const broadcastMessage = async (message: unknown): Promise<void> => {
 
 const getStoredSettings = async (): Promise<Settings | undefined> => {
   const savedSettingsAsString = localStorage.getItem('settings')
-  if (savedSettingsAsString == null) {
-    return
+  let savedSettings
+  if (savedSettingsAsString != null) {
+    savedSettings = JSON.parse(savedSettingsAsString)
   }
-  return JSON.parse(savedSettingsAsString)
+  console.log('get settings', savedSettings)
+  return savedSettings
 }
 
 const saveSettings = (settings: Settings): void => {
-  console.log('Save settings to', settings)
+  console.log('save settings', settings)
 
   localStorage.setItem('settings', JSON.stringify(settings))
 }

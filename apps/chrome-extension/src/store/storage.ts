@@ -8,6 +8,7 @@ export const getStateFromLocalStorage = async (): Promise<StoreModel> => {
   }
 
   const settings = await utils.getStoredSettings()
+
   if (settings) {
     const { language } = settings
     defaultState.profiles[language] = settings
