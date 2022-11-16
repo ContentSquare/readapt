@@ -8,7 +8,7 @@ import { useVersion } from '@readapt/shared-components'
 
 import utils from '@/chrome'
 import i18n from '@/i18n'
-import store from '@/store'
+import { store } from '@/store'
 
 import QuickActivate from '@/components/QuickActivate.vue'
 

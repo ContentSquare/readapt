@@ -7,7 +7,7 @@ import { AdaptContainer, CloseSettings, PreviewContainer, SaveSettings } from '@
 import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
 import { ColoredOption, Language, SettingsKey } from '@readapt/settings'
 
-import store, { getStateFromLocalStorage, loadStoredSettings, saveSettings } from '@/store'
+import { store, getStateFromLocalStorage, loadStoredSettings, saveSettings } from '@/store'
 import router from '@/router'
 import utils from '@/chrome'
 import SettingsMenuGeneral from '@/views/SettingsMenuGeneral.vue'
