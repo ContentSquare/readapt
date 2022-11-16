@@ -13,7 +13,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/__tests__/*.{j,t}s?(x)', '**/tests/unit/**/*.spec.{j,t}s?(x)'],
+      files: ['<rootDir>/**/*.spec.(js|jsx|ts|tsx)'],
       env: {
         jest: true
       }
