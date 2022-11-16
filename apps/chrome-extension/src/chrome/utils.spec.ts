@@ -1,19 +1,26 @@
-import { getStoredSettings } from './utils'
+import { getStoredSettings, saveSettings } from './utils'
 import { settings } from '../../tests/fixtures/settings'
 import { chrome } from 'jest-chrome'
 
 describe('chrome utils', () => {
+  const makeGetter = (storageState: Record<string, unknown>) => {
+    return (key: unknown) => {
+      if (typeof key === 'string') {
+        return { [key]: storageState[key] }
+      }
+    }
+  }
+  const makeSetter = (storageState: Record<string, unknown>) => {
+    return (appendStorageState: Record<string, unknown>) => {
+      Object.assign(storageState, appendStorageState)
+    }
+  }
+
   describe('getStoredSettings()', () => {
     describe('when extension storage contains settings', () => {
       it('should return the settings', async () => {
-        chrome.storage.local.get.mockImplementationOnce((key) => {
-          const storageState: Record<string, unknown> = { settings, otherKey: 'other value' }
-          if (typeof key === 'string') {
-            return {
-              [key]: storageState[key]
-            }
-          }
-        })
+        const storageState = { settings, otherKey: 'other value' }
+        chrome.storage.local.get.mockImplementationOnce(makeGetter(storageState))
 
         expect(await getStoredSettings()).toEqual(settings)
       })
@@ -21,17 +28,21 @@ describe('chrome utils', () => {
 
     describe('when extension storage does not contain settings', () => {
       it('should return undefined', async () => {
-        chrome.storage.local.get.mockImplementationOnce(function (key) {
-          const storageState: Record<string, unknown> = { otherKey: 'other value' }
-          if (typeof key === 'string') {
-            return {
-              [key]: storageState[key]
-            }
-          }
-        })
+        const storageState = { otherKey: 'other value' }
+        chrome.storage.local.get.mockImplementationOnce(makeGetter(storageState))
 
         expect(await getStoredSettings()).toBeUndefined()
       })
+    })
+  })
+
+  describe('saveSettings()', () => {
+    it('should add settings to extension storage', async () => {
+      const storageState = { otherKey: 'other value' }
+      chrome.storage.local.get.mockImplementationOnce(makeGetter(storageState))
+      chrome.storage.local.set.mockImplementationOnce(makeSetter(storageState))
+
+      await saveSettings({ settings })
     })
   })
 })
