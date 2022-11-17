@@ -33,7 +33,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Build
-    needs: [lint, test]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -50,4 +49,4 @@ jobs:
         working-directory: apps/chrome-extension/dist
       - uses: actions/upload-artifact@v2
         with:
-          name: chrome-extension.zip
+          name: apps/chrome-extension/dist/chrome-extension.zip
