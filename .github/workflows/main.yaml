@@ -49,5 +49,5 @@ jobs:
         run: zip -qq -r chrome-extension.zip *
         working-directory: apps/chrome-extension/dist
       - uses: actions/upload-artifact@v2
-          with:
-            name: chrome-extension.zip
+        with:
+          name: chrome-extension.zip
