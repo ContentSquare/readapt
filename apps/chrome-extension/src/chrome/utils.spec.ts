@@ -42,7 +42,9 @@ describe('chrome utils', () => {
       chrome.storage.local.get.mockImplementationOnce(makeGetter(storageState))
       chrome.storage.local.set.mockImplementationOnce(makeSetter(storageState))
 
-      await saveSettings({ settings })
+      await saveSettings(settings)
+
+      expect(await getStoredSettings()).toEqual(settings)
     })
   })
 })
