@@ -2,7 +2,7 @@ import { getStoredSettings, saveSettings } from './utils'
 import { settings } from '../../tests/fixtures/settings'
 import { chrome } from 'jest-chrome'
 
-describe('chrome utils', () => {
+describe('chrome/utils', () => {
   const makeGetter = (storageState: Record<string, unknown>) => {
     return (key: unknown) => {
       if (typeof key === 'string') {

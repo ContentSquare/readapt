@@ -73,7 +73,6 @@ const getStoredSettings = async (): Promise<Settings | undefined> => {
 
 const saveSettings = async (settings: Settings): Promise<void> => {
   await chrome.storage.local.set({ settings })
-  console.log('Value is set to ' + settings)
 }
 
 const saveLocale = async (locale: string): Promise<void> => {

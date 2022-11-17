@@ -1,5 +1,5 @@
 import * as chromeUtils from '@/chrome/utils'
-import * as chromeMock from './utils.mock'
+import * as chromeMock from './utilsMock'
 import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 import { Settings } from '@readapt/settings'
 

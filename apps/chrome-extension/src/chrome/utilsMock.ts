@@ -39,13 +39,10 @@ const getStoredSettings = async (): Promise<Settings | undefined> => {
   if (savedSettingsAsString != null) {
     savedSettings = JSON.parse(savedSettingsAsString)
   }
-  console.log('get settings', savedSettings)
   return savedSettings
 }
 
 const saveSettings = (settings: Settings): void => {
-  console.log('save settings', settings)
-
   localStorage.setItem('settings', JSON.stringify(settings))
 }
 
