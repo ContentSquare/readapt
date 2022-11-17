@@ -28,6 +28,7 @@ jobs:
           node-version: 16.x
       - run: npm i -g --force yarn
       - run: yarn install --frozen-lockfile
+      - run: yarn build-deps
       - run: yarn test --ci
   build:
     runs-on: ubuntu-latest
