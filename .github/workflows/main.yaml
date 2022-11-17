@@ -49,4 +49,5 @@ jobs:
         working-directory: apps/chrome-extension/dist
       - uses: actions/upload-artifact@v2
         with:
-          name: apps/chrome-extension/dist/chrome-extension.zip
+          name: "Chrome Extension Zip"
+          path: apps/chrome-extension/dist/chrome-extension.zip
