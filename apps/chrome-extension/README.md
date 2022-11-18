@@ -49,14 +49,6 @@ Run to generate a zip file inside the /dist directory
 yarn package
 ```
 
-## Autobuild of a release
-
-When creating a pull request, the CI build job creates automatically a release file of the extension. To access the release zip file:
-
-1. On the Pull Request page click the "Checks" tab
-2. On the "Checks" tab click "Readapt CI" from the left sidebar
-3. On the "Readapt CI" page scroll to the bottom to the "Artifacts" section and click "Chrome Extension" to download.
-
 ## Install extension in development mode
 
 After build, you can load an unpacked version in your browser following this instructions
@@ -64,3 +56,11 @@ After build, you can load an unpacked version in your browser following this ins
 https://developer.chrome.com/docs/extensions/mv3/getstarted/#unpacked
 
 and selecting `dist/` directory
+
+## Autobuild of a release
+
+When creating a pull request, the CI build job creates automatically a release zip file of the extension. To access the release zip file:
+
+1. On the Pull Request page click the "Checks" tab
+2. On the "Checks" tab click "Readapt CI" from the left sidebar
+3. On the "Readapt CI" page scroll to the bottom to the "Artifacts" section and click "Chrome Extension" to download.
