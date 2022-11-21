@@ -22,12 +22,17 @@ export const saveSettings = (settings: Settings): void => {
 }
 
 export const getStateFromLocalStorage = (): StoreModel => {
+import { buildDefaultProfiles, StoreModel } from '@readapt/settings'
+import utils from '@/chrome'
+
+export const getStateFromLocalStorage = async (): Promise<StoreModel> => {
   const defaultState: StoreModel = {
     profiles: buildDefaultProfiles(),
     language: 'en'
   }
 
-  const settings = loadStoredSettings()
+  const settings = await utils.getStoredSettings()
+
   if (settings) {
     const { language } = settings
     defaultState.profiles[language] = settings

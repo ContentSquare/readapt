@@ -5,7 +5,7 @@ import { Language, Settings } from '@readapt/settings'
 import TemplateSelector from '@/components/TemplateSelector.vue'
 import { templates } from '@/constants/templates'
 import { SettingsTemplate } from '@/interfaces'
-import store, { saveSettings } from '@/store'
+import { store } from '@/store'
 import utils from '@/chrome'
 import router from '@/router'
 import { LanguageSelector } from '@readapt/shared-components'
@@ -23,7 +23,7 @@ const TemplateSelect = defineComponent({
       selectedTemplate.value = filteredTemplates.value[0]
     }
 
-    const { closeCurrentTab } = utils
+    const { closeCurrentTab, saveSettings } = utils
 
     const filteredTemplates = computed(() => templates.filter(isSameLanguage(selectedLanguage.value)))
     const selectedTemplate = ref<SettingsTemplate>(filteredTemplates.value[0])

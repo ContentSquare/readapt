@@ -1,6 +1,7 @@
 import router from '@/router'
 import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
+import { Settings } from '@readapt/settings'
 
 const getCurrentTab = async (): Promise<chrome.tabs.Tab> => {
   console.log('getCurrentTab mock')
@@ -30,6 +31,19 @@ const sendMessageToCurrentTab = async (message: unknown): Promise<void> => {
 
 const broadcastMessage = async (message: unknown): Promise<void> => {
   console.log('brodcastMessage: ', message)
+}
+
+const getStoredSettings = async (): Promise<Settings | undefined> => {
+  const savedSettingsAsString = localStorage.getItem('settings')
+  let savedSettings
+  if (savedSettingsAsString != null) {
+    savedSettings = JSON.parse(savedSettingsAsString)
+  }
+  return savedSettings
+}
+
+const saveSettings = (settings: Settings): void => {
+  localStorage.setItem('settings', JSON.stringify(settings))
 }
 
 const saveLocale = async (locale: string): Promise<void> => {
@@ -87,6 +101,8 @@ export {
   newSettings,
   openTemplates,
   sendMessageToCurrentTab,
+  getStoredSettings,
+  saveSettings,
   saveLocale,
   getLocale,
   broadcastMessage,

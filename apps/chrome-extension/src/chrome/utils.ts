@@ -1,5 +1,5 @@
 /* global chrome */
-
+import { Settings } from '@readapt/settings'
 import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
 
@@ -66,6 +66,15 @@ const openTemplates = async (): Promise<void> => {
   }
 }
 
+const getStoredSettings = async (): Promise<Settings | undefined> => {
+  const { settings } = await chrome.storage.local.get('settings')
+  return settings as Settings
+}
+
+const saveSettings = async (settings: Settings): Promise<void> => {
+  await chrome.storage.local.set({ settings })
+}
+
 const saveLocale = async (locale: string): Promise<void> => {
   await chrome.storage.sync.set({ locale })
 }
@@ -110,6 +119,8 @@ export {
   openTemplates,
   sendMessageToCurrentTab,
   broadcastMessage,
+  getStoredSettings,
+  saveSettings,
   saveLocale,
   getLocale,
   saveEnabled,

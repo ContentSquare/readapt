@@ -5,15 +5,13 @@ import isEqual from 'lodash/isEqual'
 
 import { AdaptContainer, CloseSettings, PreviewContainer, SaveSettings } from '@readapt/shared-components'
 import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
-import { ColoredOption, Language, SettingsKey } from '@readapt/settings'
+import { ColoredOption, Language, Settings, SettingsKey } from '@readapt/settings'
 
-import store, { getStateFromLocalStorage, loadStoredSettings, saveSettings } from '@/store'
+import { store, getStateFromLocalStorage } from '@/store'
 import router from '@/router'
 import utils from '@/chrome'
 import SettingsMenuGeneral from '@/views/SettingsMenuGeneral.vue'
 import SettingsMenuTableItems from '@/views/SettingsMenuTableItems.vue'
-
-const { closeCurrentTab } = utils
 
 type TabName = 'GENERAL' | 'LETTERS' | 'PHONEMES'
 
@@ -45,10 +43,13 @@ const SettingsMenu = defineComponent({
       return `data:application/json;charset=utf-8,${settingsFile}`
     })
 
-    const storedSettings = ref(loadStoredSettings())
+    const { closeCurrentTab, getStoredSettings, saveSettings } = utils
+
+    const storedSettings = ref<Settings>()
     const isSettingsDirty = computed(() => !isEqual(storedSettings?.value, settings.value))
 
-    onMounted(() => {
+    onMounted(async () => {
+      storedSettings.value = await getStoredSettings()
       if (router.currentRoute.query.newSettings === 'true') {
         store.commit('newSettings')
       }

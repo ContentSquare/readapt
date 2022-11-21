@@ -4,12 +4,9 @@ import Vuex from 'vuex'
 import { StoreModel } from '@readapt/settings'
 import { sharedStoreMutations, sharedStoreGetters } from '@readapt/shared-components'
 
-import { getStateFromLocalStorage } from '@/store/storage'
-
 Vue.use(Vuex)
 
-export default new Vuex.Store<StoreModel>({
-  state: getStateFromLocalStorage(),
+export const store = new Vuex.Store<StoreModel>({
   mutations: {
     ...sharedStoreMutations
   },

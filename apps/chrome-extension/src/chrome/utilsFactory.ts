@@ -1,6 +1,7 @@
 import * as chromeUtils from '@/chrome/utils'
-import * as chromeMock from './utils.mock'
+import * as chromeMock from './utilsMock'
 import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
+import { Settings } from '@readapt/settings'
 
 export interface ChromeUtils {
   getCurrentTab: () => Promise<chrome.tabs.Tab>
@@ -10,6 +11,8 @@ export interface ChromeUtils {
   closeCurrentTab: () => Promise<void>
   sendMessageToCurrentTab: (message: unknown) => Promise<void>
   broadcastMessage: (message: unknown) => Promise<void>
+  getStoredSettings: () => Promise<Settings | undefined>
+  saveSettings: (settings: Settings) => void
   saveLocale: (locale: string) => Promise<void>
   getLocale: () => Promise<string>
   saveEnabled: (enabled: boolean) => Promise<void>
@@ -21,10 +24,10 @@ export interface ChromeUtils {
 }
 
 const buildUtils = (): ChromeUtils => {
-  if (!chrome?.extension) {
-    return chromeMock
+  if (chrome?.extension) {
+    return chromeUtils
   }
-  return chromeUtils
+  return chromeMock
 }
 
 export { buildUtils }
