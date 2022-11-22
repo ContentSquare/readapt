@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 
-import MainMenu from '@/views/MainMenu.vue'
+import { PopupPage } from '@/pages/popup'
 
 Vue.use(VueRouter)
 
@@ -9,7 +9,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'main',
-    component: MainMenu
+    component: PopupPage
   },
   {
     path: '/templates',
@@ -22,7 +22,7 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/settings',
-    component: () => import('@/pages/options')
+    component: async () => (await import('@/pages/options')).OptionsPage
   }
 ]
 

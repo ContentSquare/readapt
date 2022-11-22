@@ -1,3 +1,1 @@
-import OptionsPage from './ui/OptionsPage.vue'
-
-export default OptionsPage
+export { default as OptionsPage } from './ui/OptionsPage.vue'
