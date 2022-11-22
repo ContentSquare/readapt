@@ -1,6 +1,7 @@
 import { getStoredSettings, saveSettings } from './utils'
 import { settings } from '../../tests/fixtures/settings'
 import { chrome } from 'jest-chrome'
+import { SettingsStorageModel, STORAGE_SETTINGS_KEY } from '@/settings'
 
 describe('chrome/utils', () => {
   const makeGetter = (storageState: Record<string, unknown>) => {
@@ -19,7 +20,13 @@ describe('chrome/utils', () => {
   describe('getStoredSettings()', () => {
     describe('when extension storage contains settings', () => {
       it('should return the settings', async () => {
-        const storageState = { settings, otherKey: 'other value' }
+        const settingsStorageModel: SettingsStorageModel = [
+          {
+            name: 'Profile',
+            settings
+          }
+        ]
+        const storageState = { [STORAGE_SETTINGS_KEY]: settingsStorageModel, otherKey: 'other value' }
         chrome.storage.local.get.mockImplementationOnce(makeGetter(storageState))
 
         expect(await getStoredSettings()).toEqual(settings)

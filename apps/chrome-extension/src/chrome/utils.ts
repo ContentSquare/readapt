@@ -2,6 +2,7 @@
 import { Settings } from '@readapt/settings'
 import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
+import { SettingsStorageModel, STORAGE_SETTINGS_KEY } from '@/settings'
 
 const getCurrentTab = async (): Promise<chrome.tabs.Tab> => {
   const queryOptions = { active: true, currentWindow: true }
@@ -67,12 +68,13 @@ const openTemplates = async (): Promise<void> => {
 }
 
 const getStoredSettings = async (): Promise<Settings | undefined> => {
-  const { settings } = await chrome.storage.local.get('settings')
-  return settings as Settings
+  const { [STORAGE_SETTINGS_KEY]: settingsStorageModel = [] } = await chrome.storage.local.get(STORAGE_SETTINGS_KEY)
+  return settingsStorageModel[0]?.settings
 }
 
 const saveSettings = async (settings: Settings): Promise<void> => {
-  await chrome.storage.local.set({ settings })
+  const settingsStorageModel: SettingsStorageModel = [{ name: 'Default', settings }]
+  await chrome.storage.local.set({ [STORAGE_SETTINGS_KEY]: settingsStorageModel })
 }
 
 const saveLocale = async (locale: string): Promise<void> => {
