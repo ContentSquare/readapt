@@ -1,101 +1,69 @@
-<script lang="ts">
-import { computed, defineComponent, onMounted, ref, watch } from 'vue'
-import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
+<script lang="ts" setup>
+import { computed, onMounted, ref, watch } from 'vue'
 import isEqual from 'lodash/isEqual'
 
+import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
+
 import { AdaptContainer, CloseSettings, PreviewContainer, SaveSettings } from '@readapt/shared-components'
-import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
+
+import SettingsMenuGeneral from '@/views/SettingsMenuGeneral.vue'
+import SettingsMenuTableItems from '@/views/SettingsMenuTableItems.vue'
+
 import { ColoredOption, Language, Settings, SettingsKey } from '@readapt/settings'
 
 import { store, getStateFromLocalStorage } from '@/store'
 import router from '@/router'
 import utils from '@/chrome'
-import SettingsMenuGeneral from '@/views/SettingsMenuGeneral.vue'
-import SettingsMenuTableItems from '@/views/SettingsMenuTableItems.vue'
+import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
 
 type TabName = 'GENERAL' | 'LETTERS' | 'PHONEMES'
 
-const SettingsMenu = defineComponent({
-  components: {
-    BRow,
-    BCol,
-    BNav,
-    BNavItem,
-    SettingsMenuGeneral,
-    SettingsMenuTableItems,
-    PreviewContainer,
-    AdaptContainer,
-    SaveSettings,
-    CloseSettings
-  },
-  setup() {
-    const settings = computed(() => store.getters.getSettings)
-    const textPreview = computed(() => store.getters.getTextPreview)
+const settings = computed(() => store.getters.getSettings)
+const textPreview = computed(() => store.getters.getTextPreview)
 
-    const activeTab = ref<TabName>('GENERAL')
+const activeTab = ref<TabName>('GENERAL')
 
-    const activateTab = (tabName: TabName) => {
-      activeTab.value = tabName
-    }
+const activateTab = (tabName: TabName) => {
+  activeTab.value = tabName
+}
 
-    const settingsFile = computed(() => {
-      const settingsFile = encodeURIComponent(JSON.stringify(settings.value, null, 2))
-      return `data:application/json;charset=utf-8,${settingsFile}`
-    })
+const settingsFile = computed(() => {
+  const settingsFile = encodeURIComponent(JSON.stringify(settings.value, null, 2))
+  return `data:application/json;charset=utf-8,${settingsFile}`
+})
 
-    const { closeCurrentTab, getStoredSettings, saveSettings } = utils
+const { closeCurrentTab, getStoredSettings, saveSettings } = utils
 
-    const storedSettings = ref<Settings>()
-    const isSettingsDirty = computed(() => !isEqual(storedSettings?.value, settings.value))
+const storedSettings = ref<Settings>()
+const isSettingsDirty = computed(() => !isEqual(storedSettings?.value, settings.value))
 
-    onMounted(async () => {
-      storedSettings.value = await getStoredSettings()
-      if (router.currentRoute.query.newSettings === 'true') {
-        store.commit('newSettings')
-      }
-    })
-
-    const save = () => {
-      saveSettings(settings.value)
-      storedSettings.value = settings.value
-    }
-    const close = async () => {
-      store.commit('resetState', getStateFromLocalStorage())
-      await closeCurrentTab()
-    }
-
-    const contentToAdapt = ref(textPreview.value)
-    watch(textPreview, () => (contentToAdapt.value = textPreview.value))
-
-    const updateTextToAdapt = (value: string) => (contentToAdapt.value = value)
-
-    const letterOptions = computed<ColoredOption[]>(() => store.getters.getLetterOptions)
-    const phonemeOptions = computed<ColoredOption[]>(() => store.getters.getPhonemeOptions)
-
-    const updateOption = (key: SettingsKey, value: unknown) => store.commit('updateOption', { key, value })
-    const changeLanguage = (language: Language) => store.commit('changeLanguage', language)
-
-    return {
-      activeTab,
-      settings,
-      settingsFile,
-      contentToAdapt,
-      isSettingsDirty,
-      letterOptions,
-      phonemeOptions,
-      activateTab,
-      updateTextToAdapt,
-      save,
-      close,
-      adaptHtmlElementAsyncFn,
-      changeLanguage,
-      updateOption
-    }
+onMounted(async () => {
+  storedSettings.value = await getStoredSettings()
+  if (router.currentRoute.query.newSettings === 'true') {
+    store.commit('newSettings')
   }
 })
-export default SettingsMenu
-</script>
 
+const save = () => {
+  saveSettings(settings.value)
+  storedSettings.value = settings.value
+}
+const close = async () => {
+  store.commit('resetState', getStateFromLocalStorage())
+  await closeCurrentTab()
+}
+
+const contentToAdapt = ref(textPreview.value)
+watch(textPreview, () => (contentToAdapt.value = textPreview.value))
+
+const updateTextToAdapt = (value: string) => (contentToAdapt.value = value)
+
+const letterOptions = computed<ColoredOption[]>(() => store.getters.getLetterOptions)
+const phonemeOptions = computed<ColoredOption[]>(() => store.getters.getPhonemeOptions)
+
+const updateOption = (key: SettingsKey, value: unknown) => store.commit('updateOption', { key, value })
+const changeLanguage = (language: Language) => store.commit('changeLanguage', language)
+</script>
 <template>
   <div class="container-fluid">
     <div class="mt-3">
