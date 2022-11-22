@@ -1,5 +1,5 @@
-<script lang="ts">
-import { computed, defineComponent, ref, watchEffect } from 'vue'
+<script lang="ts" setup>
+import { computed, ref, watchEffect } from 'vue'
 import { BButton, BFormCheckbox, BImg } from 'bootstrap-vue'
 import isEqual from 'lodash/isEqual'
 
@@ -12,70 +12,38 @@ import { store } from '@/store'
 
 import QuickActivate from '@/components/QuickActivate.vue'
 
-const MainMenu = defineComponent({
-  components: {
-    // BoostrapVue Icons
-    // BIconHandIndexThumb,
-    // BoostrapVue Components
-    BButton,
-    BFormCheckbox,
-    BImg,
-    // Custom Components
-    QuickActivate
-  },
-  setup() {
-    const readaptEnabled = ref(true)
+const readaptEnabled = ref(true)
 
-    const { openSettings, sendMessageToCurrentTab, newSettings, openTemplates, broadcastMessage, getEnabled, saveEnabled, saveLocale } = utils
+const { openSettings, sendMessageToCurrentTab, newSettings, openTemplates, broadcastMessage, getEnabled, saveEnabled, saveLocale } = utils
 
-    const settings = computed(() => store.getters.getSettings)
-    const defaultProfiles = buildDefaultProfiles()
+const settings = computed(() => store.getters.getSettings)
+const defaultProfiles = buildDefaultProfiles()
 
-    const isDefaultSettings = computed(() => {
-      const lang = settings.value.language as keyof Profiles
-      const defaultSettings = defaultProfiles[lang]
-      return isEqual(settings.value, defaultSettings)
-    })
-
-    watchEffect(async () => (readaptEnabled.value = await getEnabled()))
-
-    const switchEnabled = async () => {
-      readaptEnabled.value = !readaptEnabled.value
-      await saveEnabled(readaptEnabled.value)
-      const message = readaptEnabled.value ? 'ENABLE' : 'DISABLE'
-      await broadcastMessage(message)
-    }
-
-    const adapt = async () => await sendMessageToCurrentTab('ADAPT')
-    const reset = async () => await sendMessageToCurrentTab('RESET')
-    const selectTemplate = async () => await openTemplates()
-
-    const changeLocale = async (lang: 'en' | 'fr') => {
-      i18n.locale = lang
-      await saveLocale(lang)
-    }
-
-    const { version } = useVersion()
-
-    return {
-      version,
-      readaptEnabled,
-      openSettings,
-      newSettings,
-      sendMessageToCurrentTab,
-      broadcastMessage,
-      openTemplates,
-      // methods,
-      switchEnabled,
-      adapt,
-      reset,
-      selectTemplate,
-      changeLocale,
-      isDefaultSettings
-    }
-  }
+const isDefaultSettings = computed(() => {
+  const lang = settings.value.language as keyof Profiles
+  const defaultSettings = defaultProfiles[lang]
+  return isEqual(settings.value, defaultSettings)
 })
-export default MainMenu
+
+watchEffect(async () => (readaptEnabled.value = await getEnabled()))
+
+const switchEnabled = async () => {
+  readaptEnabled.value = !readaptEnabled.value
+  await saveEnabled(readaptEnabled.value)
+  const message = readaptEnabled.value ? 'ENABLE' : 'DISABLE'
+  await broadcastMessage(message)
+}
+
+const adapt = async () => await sendMessageToCurrentTab('ADAPT')
+const reset = async () => await sendMessageToCurrentTab('RESET')
+const selectTemplate = async () => await openTemplates()
+
+const changeLocale = async (lang: 'en' | 'fr') => {
+  i18n.locale = lang
+  await saveLocale(lang)
+}
+
+const { version } = useVersion()
 </script>
 
 <template>
@@ -98,7 +66,7 @@ export default MainMenu
           <span v-if="$i18n.locale === 'en'">EN</span>
           <a v-if="$i18n.locale !== 'en'" href="#" @click="changeLocale('en')">EN</a>
         </div>
-        <b-img class="logo" :src="require('../assets/logo.png')" alt="readapt-logo" />
+        <b-img class="logo" :src="require('@/assets/logo.png')" alt="readapt-logo" />
       </div>
     </div>
 
