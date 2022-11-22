@@ -22,7 +22,7 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/settings',
-    component: () => import('@/views/SettingsMenu.vue')
+    component: () => import('@/pages/options')
   }
 ]
 
