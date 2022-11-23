@@ -1,8 +1,12 @@
 /* global chrome  */
-import { broadcastMessage } from '../src/chrome/utils'
+import { broadcastMessage } from '@/chrome/utils'
+import { executeMigrations, STORAGE_SETTINGS_KEY } from '@/settings'
 
 chrome.runtime.onInstalled.addListener(async () => {
-  console.log('readapt installed')
+  console.log('readapt installed or updated')
+
+  await executeMigrations(chrome.storage.local)
+
   const { enabled } = await chrome.storage.sync.get('enabled')
   const isEnabled = enabled ?? true
 
@@ -129,7 +133,7 @@ const switchEnabledContextMenu = (enabled: boolean): void => {
 
 const hasSettingsChanged = (changes: { [p: string]: chrome.storage.StorageChange }): boolean => {
   for (const [key] of Object.entries(changes)) {
-    if (key === 'settings') {
+    if (key === STORAGE_SETTINGS_KEY) {
       return true
     }
   }

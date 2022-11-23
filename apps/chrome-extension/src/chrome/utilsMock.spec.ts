@@ -1,5 +1,6 @@
 import { getStoredSettings, saveSettings } from './utilsMock'
 import { settings } from '../../tests/fixtures/settings'
+import { SettingsStorageModel, STORAGE_SETTINGS_KEY } from '@/settings'
 
 describe('chrome/utilsMock', () => {
   const setStorageFromState = (state: Record<string, unknown>): void => {
@@ -13,7 +14,13 @@ describe('chrome/utilsMock', () => {
   describe('getStoredSettings()', () => {
     describe('when extension storage contains settings', () => {
       it('should return the settings', async () => {
-        setStorageFromState({ settings, otherKey: 'other value' })
+        const settingsStorageModel: SettingsStorageModel = [
+          {
+            name: 'Profile',
+            settings
+          }
+        ]
+        setStorageFromState({ [STORAGE_SETTINGS_KEY]: settingsStorageModel, otherKey: 'other value' })
 
         expect(await getStoredSettings()).toEqual(settings)
       })

@@ -2,6 +2,7 @@ import router from '@/router'
 import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
 import { Settings } from '@readapt/settings'
+import { SettingsStorageModel, STORAGE_SETTINGS_KEY } from '@/settings'
 
 const getCurrentTab = async (): Promise<chrome.tabs.Tab> => {
   console.log('getCurrentTab mock')
@@ -34,16 +35,14 @@ const broadcastMessage = async (message: unknown): Promise<void> => {
 }
 
 const getStoredSettings = async (): Promise<Settings | undefined> => {
-  const savedSettingsAsString = localStorage.getItem('settings')
-  let savedSettings
-  if (savedSettingsAsString != null) {
-    savedSettings = JSON.parse(savedSettingsAsString)
-  }
-  return savedSettings
+  const settingsJson = localStorage.getItem(STORAGE_SETTINGS_KEY) ?? 'null'
+  const settingsStorageModel = JSON.parse(settingsJson) ?? []
+  return settingsStorageModel[0]?.settings
 }
 
 const saveSettings = (settings: Settings): void => {
-  localStorage.setItem('settings', JSON.stringify(settings))
+  const settingsStorageModel: SettingsStorageModel = [{ name: 'Default', settings }]
+  localStorage.setItem(STORAGE_SETTINGS_KEY, JSON.stringify(settingsStorageModel))
 }
 
 const saveLocale = async (locale: string): Promise<void> => {
