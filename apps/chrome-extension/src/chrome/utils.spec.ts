@@ -1,5 +1,5 @@
 import { getStoredSettings, saveSettings } from './utils'
-import { settings } from '../../tests/fixtures/settings'
+import { settings } from '../shared/tests/fixtures/settings'
 import { chrome } from 'jest-chrome'
 import { SettingsStorageModel, STORAGE_SETTINGS_KEY } from '@/settings'
 

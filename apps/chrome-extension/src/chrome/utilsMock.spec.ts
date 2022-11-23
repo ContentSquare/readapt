@@ -1,5 +1,5 @@
 import { getStoredSettings, saveSettings } from './utilsMock'
-import { settings } from '../../tests/fixtures/settings'
+import { settings } from '../shared/tests/fixtures/settings'
 import { SettingsStorageModel, STORAGE_SETTINGS_KEY } from '@/settings'
 
 describe('chrome/utilsMock', () => {
