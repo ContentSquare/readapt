@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { PropType } from 'vue/types/v3-component-props'
+import { TextAdaptationProfile } from '../model/TextAdaptationProfile'
 
-const props = defineProps({
-  options: {
-    type: Array as PropType<string[]>,
-    required: true
-  }
-})
+interface Props {
+  profiles: TextAdaptationProfile[]
+}
+
+const props = defineProps<Props>()
 </script>
 <template>
   <select data-test-id="dropdown">
-    <option v-for="(option, index) in props.options" :key="index">{{ option }}</option>
+    <option value="">New Profile</option>
+    <option v-for="({ name, id }, index) in props.profiles" :key="index" :value="id">
+      {{ name }}
+    </option>
   </select>
 </template>
