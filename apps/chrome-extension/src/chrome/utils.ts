@@ -2,7 +2,8 @@
 import { Settings } from '@readapt/settings'
 import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
-import { SettingsStorageModel, STORAGE_SETTINGS_KEY } from '@/settings'
+import { TextAdaptationProfile, STORAGE_KEY_TEXT_ADAPTATION_PROFILES } from '@/entities/textAdaptationProfile'
+import { uniqueId } from '@/shared/lib'
 
 const getCurrentTab = async (): Promise<chrome.tabs.Tab> => {
   const queryOptions = { active: true, currentWindow: true }
@@ -68,13 +69,13 @@ const openTemplates = async (): Promise<void> => {
 }
 
 const getStoredSettings = async (): Promise<Settings | undefined> => {
-  const { [STORAGE_SETTINGS_KEY]: settingsStorageModel = [] } = await chrome.storage.local.get(STORAGE_SETTINGS_KEY)
+  const { [STORAGE_KEY_TEXT_ADAPTATION_PROFILES]: settingsStorageModel = [] } = await chrome.storage.local.get(STORAGE_KEY_TEXT_ADAPTATION_PROFILES)
   return settingsStorageModel[0]?.settings
 }
 
 const saveSettings = async (settings: Settings): Promise<void> => {
-  const settingsStorageModel: SettingsStorageModel = [{ name: 'Default', settings }]
-  await chrome.storage.local.set({ [STORAGE_SETTINGS_KEY]: settingsStorageModel })
+  const settingsStorageModel: TextAdaptationProfile[] = [{ name: 'Default', id: uniqueId(), settings }]
+  await chrome.storage.local.set({ [STORAGE_KEY_TEXT_ADAPTATION_PROFILES]: settingsStorageModel })
 }
 
 const saveLocale = async (locale: string): Promise<void> => {

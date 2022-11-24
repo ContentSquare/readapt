@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { TextAdaptationProfile } from '../model/TextAdaptationProfile'
+
 const props = defineProps<{
-  profiles: { id: string; name: string }[]
+  profiles: Pick<TextAdaptationProfile, 'id' | 'name'>[]
   value: string
 }>()
 
