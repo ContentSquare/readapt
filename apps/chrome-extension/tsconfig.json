@@ -3,6 +3,7 @@
     "target": "esnext",
     "module": "esnext",
     "strict": true,
+    "strictFunctionTypes": false, /* Disable for now because of this problem: https://github.com/vuejs/create-vue/issues/185 */
     "jsx": "preserve",
     "moduleResolution": "node",
     "skipLibCheck": true,
