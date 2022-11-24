@@ -1,33 +1,62 @@
 import TextAdaptationProfilesDropdown from './TextAdaptationProfilesDropdown.vue'
 import { mount } from '@vue/test-utils'
-import { TextAdaptationProfile } from '../model/TextAdaptationProfile'
-import { TestFixtures } from '@/shared/tests'
 
 describe('TextAdaptationProfilesDropdown.vue', () => {
-  const profiles: TextAdaptationProfile[] = [
+  const profiles = [
     {
       id: 'profile-1',
-      name: 'Profile 1',
-      settings: TestFixtures.settings
+      name: 'Profile 1'
     },
     {
       id: 'profile-2',
-      name: 'Profile 2',
-      settings: TestFixtures.settings
+      name: 'Profile 2'
     }
   ]
+  const profileId = profiles[0].id
 
-  it('should render options with profiles', () => {
-    const wrapper = mount(TextAdaptationProfilesDropdown, { propsData: { profiles } })
+  const factory = (profileId = '') => {
+    const wrapper = mount(TextAdaptationProfilesDropdown, {
+      propsData: {
+        profiles,
+        value: profileId
+      }
+    })
+    const dropdown = wrapper.find<HTMLSelectElement>('[data-test-id=dropdown]')
 
-    const dropdown = wrapper.find('[data-test-id=dropdown]')
+    return { wrapper, dropdown }
+  }
 
-    profiles.forEach(({ name, id }) => expect(dropdown.find(`[value=${id}]`).text()).toBe(name))
+  describe('profiles dropdown', () => {
+    it('should render profiles as options', () => {
+      const { dropdown } = factory()
+
+      for (const { name, id } of profiles) {
+        expect(dropdown.find(`[value="${id}"]`).text()).toBe(name)
+      }
+    })
+
+    it('should render new profile as option', () => {
+      const { dropdown } = factory()
+
+      expect(dropdown.find('option[value=""]').text()).toBe('New Profile')
+    })
   })
 
-  it('should render new profile option', () => {
-    const wrapper = mount(TextAdaptationProfilesDropdown, { propsData: { profiles } })
+  describe('v-model binding', () => {
+    it('should select a profile using "value" as profile id', () => {
+      const { dropdown } = factory(profileId)
 
-    expect(wrapper.find('[data-test-id=dropdown] option[value=""]').text()).toBe('New Profile')
+      expect(dropdown.element.value).toBe(profileId)
+    })
+
+    describe('when a profile is selected', () => {
+      it('should trigger "input" with selected profile id', () => {
+        const { wrapper, dropdown } = factory()
+
+        dropdown.setValue(profileId)
+
+        expect(wrapper.emitted('input')).toEqual([[profileId]])
+      })
+    })
   })
 })
