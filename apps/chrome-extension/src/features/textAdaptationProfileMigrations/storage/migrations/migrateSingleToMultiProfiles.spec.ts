@@ -6,7 +6,7 @@ import { storageStateV1, storageStateV2 } from '../storageStateByVersions'
 
 describe('migrateSingleToMultiProfile()', () => {
   const expectStorageStateToEqual = async (storage: MemoryStorage, expectedState: StorageItems): Promise<void> => {
-    expect(await storage.get([STORAGE_KEY_V1, STORAGE_KEY_V1])).toEqual(expectedState)
+    expect(await storage.get([STORAGE_KEY_V1, STORAGE_KEY_V2])).toEqual(expectedState)
   }
 
   describe('when storage contains neither single nor multi formats', () => {
