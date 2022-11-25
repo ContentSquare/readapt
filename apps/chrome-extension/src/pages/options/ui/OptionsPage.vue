@@ -5,6 +5,7 @@ import isEqual from 'lodash/isEqual'
 import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
 
 import { AdaptContainer, CloseSettings, PreviewContainer, SaveSettings } from '@readapt/shared-components'
+import { TextAdaptationProfilesDropdown } from '@/entities/textAdaptationPreferences'
 
 import SettingsMenuGeneral from '@/views/SettingsMenuGeneral.vue'
 import SettingsMenuTableItems from '@/views/SettingsMenuTableItems.vue'
@@ -15,6 +16,8 @@ import { store, getStateFromLocalStorage } from '@/store'
 import router from '@/router'
 import utils from '@/chrome'
 import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
+
+const selectedProfiledId = ref('')
 
 type TabName = 'GENERAL' | 'LETTERS' | 'PHONEMES'
 
@@ -66,6 +69,7 @@ const changeLanguage = (language: Language) => store.commit('changeLanguage', la
 </script>
 <template>
   <div class="container-fluid">
+    <text-adaptation-profiles-dropdown v-model="selectedProfiledId" />
     <div class="mt-3">
       <div>
         <span class="h2">{{ $t('SETTINGS.MY_PREFERENCES') }}</span>
