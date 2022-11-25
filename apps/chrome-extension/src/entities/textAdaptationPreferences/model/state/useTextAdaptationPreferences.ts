@@ -1,3 +1,4 @@
+import { Settings } from '@readapt/settings'
 import { toRefs } from 'vue'
 import { TextAdaptationProfile } from '../TextAdaptationPreferences'
 import { textAdaptationPreferencesState as state } from './textAdaptationPreferencesState'
@@ -13,5 +14,17 @@ export function useTextAdaptationPreferences() {
     profiles.value = [...profiles.value, profile]
   }
 
-  return { profiles, reset, addProfile }
+  const getProfileById = (profileId: string) => {
+    return profiles.value.find(({ id }) => id === profileId)
+  }
+
+  const updateProfileSettings = (profileId: string, settings: Settings) => {
+    const profile = getProfileById(profileId)
+    if (profile) {
+      profile.settings = settings
+      profiles.value = [...profiles.value]
+    }
+  }
+
+  return { profiles, reset, addProfile, getProfileById, updateProfileSettings }
 }
