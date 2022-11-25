@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { TextAdaptationProfile } from '../model/TextAdaptationPreferences'
+import { useTextAdaptationPreferences } from '../model/state/useTextAdaptationPreferences'
+
+const { profiles } = useTextAdaptationPreferences()
 
 const props = defineProps<{
-  profiles: Pick<TextAdaptationProfile, 'id' | 'name'>[]
   value: string
 }>()
 
@@ -13,9 +14,9 @@ const emit = defineEmits<{
 const onChange = (event: Event) => emit('input', event.target.value)
 </script>
 <template>
-  <select data-test-id="dropdown" :value="value" @change="onChange">
+  <select data-test-id="dropdown" :value="props.value" @change="onChange">
     <option value="">New Profile</option>
-    <option v-for="({ name, id }, index) in props.profiles" :key="index" :value="id">
+    <option v-for="({ name, id }, index) in profiles" :key="index" :value="id">
       {{ name }}
     </option>
   </select>

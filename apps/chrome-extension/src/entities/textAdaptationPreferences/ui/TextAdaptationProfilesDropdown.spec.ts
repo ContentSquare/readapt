@@ -1,23 +1,20 @@
 import TextAdaptationProfilesDropdown from './TextAdaptationProfilesDropdown.vue'
 import { mount } from '@vue/test-utils'
+import { textAdaptationProfileFixture } from '../model/fixtures/textAdaptationProfileFixture'
+import { useTextAdaptationPreferences } from '../model/state/useTextAdaptationPreferences'
 
 describe('TextAdaptationProfilesDropdown.vue', () => {
-  const profiles = [
-    {
-      id: 'profile-1',
-      name: 'Profile 1'
-    },
-    {
-      id: 'profile-2',
-      name: 'Profile 2'
-    }
-  ]
-  const profileId = profiles[0].id
+  beforeEach(() => {
+    useTextAdaptationPreferences().addProfile(textAdaptationProfileFixture)
+  })
+
+  afterEach(() => {
+    useTextAdaptationPreferences().reset()
+  })
 
   const factory = (profileId = '') => {
     const wrapper = mount(TextAdaptationProfilesDropdown, {
       propsData: {
-        profiles,
         value: profileId
       }
     })
@@ -30,9 +27,7 @@ describe('TextAdaptationProfilesDropdown.vue', () => {
     it('should render profiles as options', () => {
       const { dropdown } = factory()
 
-      for (const { name, id } of profiles) {
-        expect(dropdown.find(`[value="${id}"]`).text()).toBe(name)
-      }
+      expect(dropdown.find(`[value="${textAdaptationProfileFixture.id}"]`).text()).toBe(textAdaptationProfileFixture.name)
     })
 
     it('should render new profile as option', () => {
@@ -44,18 +39,18 @@ describe('TextAdaptationProfilesDropdown.vue', () => {
 
   describe('v-model binding', () => {
     it('should select a profile using "value" as profile id', () => {
-      const { dropdown } = factory(profileId)
+      const { dropdown } = factory(textAdaptationProfileFixture.id)
 
-      expect(dropdown.element.value).toBe(profileId)
+      expect(dropdown.element.value).toBe(textAdaptationProfileFixture.id)
     })
 
     describe('when a profile is selected', () => {
       it('should trigger "input" with selected profile id', () => {
         const { wrapper, dropdown } = factory()
 
-        dropdown.setValue(profileId)
+        dropdown.setValue(textAdaptationProfileFixture.id)
 
-        expect(wrapper.emitted('input')).toEqual([[profileId]])
+        expect(wrapper.emitted('input')).toEqual([[textAdaptationProfileFixture.id]])
       })
     })
   })
