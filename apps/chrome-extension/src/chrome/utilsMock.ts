@@ -2,8 +2,7 @@ import router from '@/router'
 import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
 import { Settings } from '@readapt/settings'
-import { TextAdaptationProfile, STORAGE_KEY_TEXT_ADAPTATION_PROFILES } from '@/entities/textAdaptationProfile'
-import { uniqueId } from '@/shared/lib'
+import { TextAdaptationPreferences, STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES } from '@/entities/textAdaptationPreferences'
 
 const getCurrentTab = async (): Promise<chrome.tabs.Tab> => {
   console.log('getCurrentTab mock')
@@ -36,14 +35,20 @@ const broadcastMessage = async (message: unknown): Promise<void> => {
 }
 
 const getStoredSettings = async (): Promise<Settings | undefined> => {
-  const settingsJson = localStorage.getItem(STORAGE_KEY_TEXT_ADAPTATION_PROFILES) ?? 'null'
-  const settingsStorageModel = JSON.parse(settingsJson) ?? []
-  return settingsStorageModel[0]?.settings
+  const settingsJson = localStorage.getItem(STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES) ?? 'null'
+  const defaultPreferences = {
+    profiles: []
+  }
+  const settingsStorageModel = JSON.parse(settingsJson) ?? defaultPreferences
+  return settingsStorageModel.profiles[0]?.settings
 }
 
 const saveSettings = (settings: Settings): void => {
-  const settingsStorageModel: TextAdaptationProfile[] = [{ name: 'Default', id: uniqueId(), settings }]
-  localStorage.setItem(STORAGE_KEY_TEXT_ADAPTATION_PROFILES, JSON.stringify(settingsStorageModel))
+  const preferences: TextAdaptationPreferences = {
+    activeProfileId: '1',
+    profiles: [{ name: 'Default', id: '1', settings }]
+  }
+  localStorage.setItem(STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES, JSON.stringify(preferences))
 }
 
 const saveLocale = async (locale: string): Promise<void> => {

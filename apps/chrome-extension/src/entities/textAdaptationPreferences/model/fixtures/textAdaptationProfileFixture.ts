@@ -1,4 +1,7 @@
-export const storageStateV1 = {
+import { Settings } from '@readapt/settings'
+import { TextAdaptationProfile } from '../TextAdaptationPreferences'
+
+const settings: Settings = {
   fontFamily: 'inherit',
   fontSize: '200%',
   language: 'en',
@@ -84,10 +87,8 @@ export const storageStateV1 = {
   wordSpacing: 'inherit'
 }
 
-export const storageStateV2 = [
-  {
-    name: 'Default',
-    id: '1',
-    settings: storageStateV1
-  }
-]
+export const textAdaptationProfileFixture: TextAdaptationProfile = {
+  name: 'Default',
+  id: '1',
+  settings
+}

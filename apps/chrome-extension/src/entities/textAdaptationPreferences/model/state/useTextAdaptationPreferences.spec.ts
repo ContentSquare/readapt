@@ -1,18 +1,18 @@
 import { textAdaptationProfileFixture } from '../fixtures/textAdaptationProfileFixture'
-import { useTextAdaptationProfiles } from './useTextAdaptationProfiles'
+import { useTextAdaptationPreferences } from './useTextAdaptationPreferences'
 
-describe('useTextAdaptationProfiles()', () => {
+describe('useTextAdaptationPreferences()', () => {
   afterEach(() => {
-    useTextAdaptationProfiles().reset()
+    useTextAdaptationPreferences().reset()
   })
 
   it('should return the profiles array', () => {
-    const { profiles } = useTextAdaptationProfiles()
+    const { profiles } = useTextAdaptationPreferences()
     expect(profiles).toEqual([])
   })
 
   it('should reset profiles state', () => {
-    const { profiles, reset, addProfile } = useTextAdaptationProfiles()
+    const { profiles, reset, addProfile } = useTextAdaptationPreferences()
 
     reset()
     addProfile(textAdaptationProfileFixture)
@@ -21,7 +21,7 @@ describe('useTextAdaptationProfiles()', () => {
   })
 
   it('should add a profile to the state', () => {
-    const { profiles, addProfile } = useTextAdaptationProfiles()
+    const { profiles, addProfile } = useTextAdaptationPreferences()
 
     addProfile(textAdaptationProfileFixture)
 

@@ -9,7 +9,7 @@ describe('migrateSingleToMultiProfile()', () => {
     expect(await storage.get([STORAGE_KEY_V1, STORAGE_KEY_V2])).toEqual(expectedState)
   }
 
-  describe('when storage contains neither single nor multi formats', () => {
+  describe('when storage contains neither single nor multi profile', () => {
     it('should do nothing', async () => {
       const storage = new MemoryStorage()
 
@@ -22,7 +22,7 @@ describe('migrateSingleToMultiProfile()', () => {
     })
   })
 
-  describe('when storage contains both single and multi formats', () => {
+  describe('when storage contains both single and multi profile', () => {
     it('should do nothing', async () => {
       const state = {
         [STORAGE_KEY_V1]: storageStateV1,
@@ -36,7 +36,7 @@ describe('migrateSingleToMultiProfile()', () => {
     })
   })
 
-  describe('when storage contains single but no multi format', () => {
+  describe('when storage contains single but no multi profile', () => {
     it('should create multi format from single format', async () => {
       const storage = new MemoryStorage({
         [STORAGE_KEY_V1]: storageStateV1

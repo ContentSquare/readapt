@@ -1,6 +1,6 @@
 import { getStoredSettings, saveSettings } from './utilsMock'
 import { settings } from '../shared/tests/fixtures/settings'
-import { TextAdaptationProfile, STORAGE_KEY_TEXT_ADAPTATION_PROFILES } from '@/entities/textAdaptationProfile'
+import { TextAdaptationPreferences, STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES } from '@/entities/textAdaptationPreferences'
 
 describe('chrome/utilsMock', () => {
   const setStorageFromState = (state: Record<string, unknown>): void => {
@@ -14,14 +14,17 @@ describe('chrome/utilsMock', () => {
   describe('getStoredSettings()', () => {
     describe('when extension storage contains settings', () => {
       it('should return the settings', async () => {
-        const profiles: TextAdaptationProfile[] = [
-          {
-            name: 'Profile',
-            id: '1',
-            settings
-          }
-        ]
-        setStorageFromState({ [STORAGE_KEY_TEXT_ADAPTATION_PROFILES]: profiles, otherKey: 'other value' })
+        const preferences: TextAdaptationPreferences = {
+          activeProfileId: '1',
+          profiles: [
+            {
+              name: 'Profile',
+              id: '1',
+              settings
+            }
+          ]
+        }
+        setStorageFromState({ [STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES]: preferences, otherKey: 'other value' })
 
         expect(await getStoredSettings()).toEqual(settings)
       })
