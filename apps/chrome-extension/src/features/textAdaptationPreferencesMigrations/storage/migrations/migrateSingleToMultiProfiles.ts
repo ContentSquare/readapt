@@ -6,12 +6,15 @@ export async function migrateSingleToMultiProfiles(storage: Storage) {
   if (!storageStateV1) {
     return
   }
-  const storageStateV2 = [
-    {
-      name: 'Default',
-      id: '1',
-      settings: storageStateV1
-    }
-  ]
+  const storageStateV2 = {
+    activeProfileId: '1',
+    profiles: [
+      {
+        name: 'Default',
+        id: '1',
+        settings: storageStateV1
+      }
+    ]
+  }
   await storage.set({ [STORAGE_KEY_V2]: storageStateV2 })
 }
