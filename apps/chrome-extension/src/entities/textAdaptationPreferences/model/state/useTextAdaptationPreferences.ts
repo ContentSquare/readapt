@@ -1,17 +1,17 @@
-import { unref } from 'vue'
+import { toRefs } from 'vue'
 import { TextAdaptationProfile } from '../TextAdaptationPreferences'
-import { textAdaptationPreferencesState } from './textAdaptationPreferencesState'
+import { textAdaptationPreferencesState as state } from './textAdaptationPreferencesState'
 
 export function useTextAdaptationPreferences() {
-  const preferences = unref(textAdaptationPreferencesState)
+  const { profiles } = toRefs(state)
 
   const reset = () => {
-    preferences.profiles = []
+    profiles.value = []
   }
 
   const addProfile = (profile: TextAdaptationProfile) => {
-    preferences.profiles.push(profile)
+    profiles.value = [...profiles.value, profile]
   }
 
-  return { profiles: preferences.profiles, reset, addProfile }
+  return { profiles, reset, addProfile }
 }
