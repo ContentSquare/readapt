@@ -6,25 +6,24 @@ describe('useTextAdaptationPreferences()', () => {
     useTextAdaptationPreferences().reset()
   })
 
-  it('should return the profiles array', () => {
-    const { profiles } = useTextAdaptationPreferences()
-    expect(profiles).toEqual([])
+  describe('add profile', () => {
+    it('should add a profile to the state', () => {
+      const { profiles, addProfile } = useTextAdaptationPreferences()
+
+      addProfile(textAdaptationProfileFixture)
+
+      expect(profiles.value).toEqual([textAdaptationProfileFixture])
+    })
   })
 
-  it('should reset profiles state', () => {
-    const { profiles, reset, addProfile } = useTextAdaptationPreferences()
+  describe('reset', () => {
+    it('should reset profiles state', async () => {
+      const { profiles, reset, addProfile } = useTextAdaptationPreferences()
 
-    reset()
-    addProfile(textAdaptationProfileFixture)
+      addProfile(textAdaptationProfileFixture)
+      reset()
 
-    expect(profiles).toEqual([])
-  })
-
-  it('should add a profile to the state', () => {
-    const { profiles, addProfile } = useTextAdaptationPreferences()
-
-    addProfile(textAdaptationProfileFixture)
-
-    expect(profiles).toEqual([textAdaptationProfileFixture])
+      expect(profiles.value).toEqual([])
+    })
   })
 })

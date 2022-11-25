@@ -1,6 +1,8 @@
-import { reactive } from 'vue'
+import { shallowReactive } from 'vue'
 import { TextAdaptationPreferences } from '../TextAdaptationPreferences'
 
-export const textAdaptationPreferencesState = reactive<TextAdaptationPreferences>({
+// @TODO: use shallowRef to increase the performance
+export const textAdaptationPreferencesState = shallowReactive<TextAdaptationPreferences>({
+  activeProfileId: undefined,
   profiles: []
 })
