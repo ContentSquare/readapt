@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { computed, onMounted, ref, watch, watchEffect } from 'vue'
 import isEqual from 'lodash/isEqual'
+import Vue from 'vue'
 import { buildDefaultProfiles } from '@readapt/settings'
 
 import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
@@ -23,17 +24,20 @@ const selectedProfiledId = ref('')
 
 const { addProfile, updateProfileSettings, getProfileById } = useTextAdaptationPreferences()
 
+const defaultSettings = buildDefaultProfiles()['en']
+
+const settings = ref(defaultSettings) //computed(() => store.getters.getSettings)
+
 watchEffect(() => {
   if (selectedProfiledId.value) {
     settings.value = getProfileById(selectedProfiledId.value).settings
+  } else {
+    settings.value = defaultSettings
   }
 })
 
-const defaultSettings = buildDefaultProfiles()['en']
-
 type TabName = 'GENERAL' | 'LETTERS' | 'PHONEMES'
 
-const settings = ref(defaultSettings) //computed(() => store.getters.getSettings)
 const textPreview = computed(() => store.getters.getTextPreview)
 
 const activeTab = ref<TabName>('GENERAL')
@@ -59,13 +63,16 @@ onMounted(async () => {
   }
 })
 
-const save = () => {
+const save = async () => {
   if (selectedProfiledId.value === '') {
+    const id = uniqueId()
     addProfile({
       name: prompt('What is the profile name?'),
-      id: uniqueId(),
-      settings
+      id,
+      settings: settings.value
     })
+    await Vue.nextTick()
+    selectedProfiledId.value = id
   } else {
     updateProfileSettings(selectedProfiledId.value, settings.value)
   }
@@ -85,7 +92,13 @@ const updateTextToAdapt = (value: string) => (contentToAdapt.value = value)
 const letterOptions = computed<ColoredOption[]>(() => store.getters.getLetterOptions)
 const phonemeOptions = computed<ColoredOption[]>(() => store.getters.getPhonemeOptions)
 
-const updateOption = (key: SettingsKey, value: unknown) => (settings.value[key] = value)
+const updateOption = (key: SettingsKey, value: unknown) => {
+  console.log(key, value)
+  settings.value = {
+    ...settings.value,
+    [key]: value
+  }
+}
 const changeLanguage = (language: Language) => store.commit('changeLanguage', language)
 </script>
 <template>
