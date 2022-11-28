@@ -1,3 +1,3 @@
 <template>
-  <button data-test-id="button">Save</button>
+  <button data-test-id="save">Save</button>
 </template>
