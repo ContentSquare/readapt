@@ -1,8 +1,8 @@
 import { MemoryStorage } from '@/shared/storage'
-import { STORAGE_KEY_V1, STORAGE_KEY_V2 } from '../constants'
+import { STORAGE_KEY_V1, STORAGE_KEY_V2 } from '../../../config/storage'
 import { StorageItems } from '@/shared/storage'
 import { migrateSingleToMultiProfile } from './migrateSingleToMultiProfiles'
-import { storageStateV1, storageStateV2 } from '../storageStateByVersions'
+import { storageStateV1, storageStateV2 } from '../storageStateByVersionsFixtures'
 
 describe('migrateSingleToMultiProfile()', () => {
   const expectStorageStateToEqual = async (storage: MemoryStorage, expectedState: StorageItems): Promise<void> => {

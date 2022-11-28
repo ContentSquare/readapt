@@ -1,10 +1,6 @@
 import { initStateFromStorage } from './initStateFromStorage'
-import {
-  TextAdaptationPreferences,
-  textAdaptationProfileFixture,
-  useTextAdaptationPreferences,
-  STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES
-} from '@/entities/textAdaptationPreferences'
+import { TextAdaptationPreferences, textAdaptationProfileFixture, useTextAdaptationPreferences } from '@/entities/textAdaptationPreferences'
+import { STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES } from '@/features/textAdaptationPreferencesPersistence'
 import { MemoryStorage } from '@/shared/storage'
 
 describe('initStateFromStorage()', () => {

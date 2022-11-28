@@ -1,7 +1,8 @@
 import { getStoredSettings, saveSettings } from './utils'
 import { settings } from '../shared/tests/fixtures/settings'
 import { chrome } from 'jest-chrome'
-import { TextAdaptationPreferences, STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES } from '@/entities/textAdaptationPreferences'
+import { STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES } from '@/features/textAdaptationPreferencesPersistence'
+import { TextAdaptationPreferences } from '@/entities/textAdaptationPreferences'
 
 describe('chrome/utils', () => {
   const makeGetter = (storageState: Record<string, unknown>) => {

@@ -1,8 +1,5 @@
-import {
-  STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES,
-  TextAdaptationPreferences,
-  useTextAdaptationPreferences
-} from '@/entities/textAdaptationPreferences'
+import { TextAdaptationPreferences, useTextAdaptationPreferences } from '@/entities/textAdaptationPreferences'
+import { STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES } from '@/features/textAdaptationPreferencesPersistence'
 import { Storage } from '@/shared/storage'
 
 export async function initStateFromStorage(storage: Storage) {
