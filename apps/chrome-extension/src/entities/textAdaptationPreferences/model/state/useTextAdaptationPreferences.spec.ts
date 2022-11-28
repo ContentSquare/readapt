@@ -1,4 +1,5 @@
 import { textAdaptationProfileFixture } from '../fixtures/textAdaptationProfileFixture'
+import { textAdaptationPreferencesInitialState } from './textAdaptationPreferencesState'
 import { useTextAdaptationPreferences } from './useTextAdaptationPreferences'
 
 describe('useTextAdaptationPreferences()', () => {
@@ -6,24 +7,24 @@ describe('useTextAdaptationPreferences()', () => {
     useTextAdaptationPreferences().reset()
   })
 
-  describe('add profile', () => {
+  describe('addProfile()', () => {
     it('should add a profile to the state', () => {
-      const { profiles, addProfile } = useTextAdaptationPreferences()
+      const { preferencesState, addProfile } = useTextAdaptationPreferences()
 
       addProfile(textAdaptationProfileFixture)
 
-      expect(profiles.value).toEqual([textAdaptationProfileFixture])
+      expect(preferencesState.profiles).toEqual([textAdaptationProfileFixture])
     })
   })
 
-  describe('reset', () => {
+  describe('reset()', () => {
     it('should reset profiles state', async () => {
-      const { profiles, reset, addProfile } = useTextAdaptationPreferences()
+      const { preferencesState, reset, addProfile } = useTextAdaptationPreferences()
 
       addProfile(textAdaptationProfileFixture)
       reset()
 
-      expect(profiles.value).toEqual([])
+      expect(preferencesState).toEqual(textAdaptationPreferencesInitialState)
     })
   })
 })

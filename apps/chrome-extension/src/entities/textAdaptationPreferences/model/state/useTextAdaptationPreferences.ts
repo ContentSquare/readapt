@@ -1,30 +1,29 @@
+import { readonly } from 'vue'
 import { Settings } from '@readapt/settings'
-import { toRefs } from 'vue'
 import { TextAdaptationProfile } from '../TextAdaptationPreferences'
-import { textAdaptationPreferencesState as state } from './textAdaptationPreferencesState'
+import { textAdaptationPreferencesState, textAdaptationPreferencesInitialState } from './textAdaptationPreferencesState'
 
 export function useTextAdaptationPreferences() {
-  const { profiles } = toRefs(state)
-
   const reset = () => {
-    profiles.value = []
+    Object.assign(textAdaptationPreferencesState, textAdaptationPreferencesInitialState)
   }
 
   const addProfile = (profile: TextAdaptationProfile) => {
-    profiles.value = [...profiles.value, profile]
+    textAdaptationPreferencesState.profiles.push(profile)
   }
 
   const getProfileById = (profileId: string) => {
-    return profiles.value.find(({ id }) => id === profileId)
+    return textAdaptationPreferencesState.profiles.find(({ id }) => id === profileId)
   }
 
   const updateProfileSettings = (profileId: string, settings: Settings) => {
     const profile = getProfileById(profileId)
     if (profile) {
       profile.settings = settings
-      profiles.value = [...profiles.value]
     }
   }
 
-  return { profiles, reset, addProfile, getProfileById, updateProfileSettings }
+  const preferencesState = readonly(textAdaptationPreferencesState)
+
+  return { preferencesState, reset, addProfile, getProfileById, updateProfileSettings }
 }
