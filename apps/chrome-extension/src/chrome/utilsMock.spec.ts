@@ -1,6 +1,7 @@
 import { getStoredSettings, saveSettings } from './utilsMock'
 import { settings } from '../shared/tests/fixtures/settings'
-import { TextAdaptationPreferences, STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES } from '@/entities/textAdaptationPreferences'
+import { STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES } from '@/features/textAdaptationPreferencesPersistence'
+import { TextAdaptationPreferences } from '@/entities/textAdaptationPreferences'
 
 describe('chrome/utilsMock', () => {
   const setStorageFromState = (state: Record<string, unknown>): void => {

@@ -1,4 +1,4 @@
-import { STORAGE_KEY_V1, STORAGE_KEY_V2 } from '../constants'
+import { STORAGE_KEY_V1, STORAGE_KEY_V2 } from '../../../config/storage'
 import { Storage } from '@/shared/storage'
 
 export async function migrateSingleToMultiProfile(storage: Storage) {

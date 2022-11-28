@@ -1,9 +1,9 @@
-import { STORAGE_KEY_V1, STORAGE_KEY_V2 } from './constants'
 import { MemoryStorage } from '@/shared/storage'
-import { executeStorageMigrations } from './executeMigrations'
-import { storageStateV1, storageStateV2 } from './storageStateByVersions'
+import { STORAGE_KEY_V1, STORAGE_KEY_V2 } from '../../config/storage'
+import { executeStorageMigrations } from './executeStorageMigrations'
+import { storageStateV1, storageStateV2 } from './storageStateByVersionsFixtures'
 
-describe('executeMigrations()', () => {
+describe('executeStorageMigrations()', () => {
   it('should execute the migration scripts', async () => {
     const storage = new MemoryStorage({
       [STORAGE_KEY_V1]: storageStateV1
