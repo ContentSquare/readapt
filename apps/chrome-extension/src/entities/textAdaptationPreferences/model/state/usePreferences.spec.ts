@@ -1,14 +1,14 @@
 import { profiles } from '../preferencesFixtures'
-import { useTextAdaptationPreferences } from './usePreferences'
+import { usePreferences } from './usePreferences'
 
-describe('useTextAdaptationPreferences()', () => {
+describe('usePreferences()', () => {
   afterEach(async () => {
-    useTextAdaptationPreferences().reset()
+    usePreferences().reset()
   })
 
   describe('addProfile()', () => {
     it('should add a profile to the state', () => {
-      const { preferencesState, addProfile } = useTextAdaptationPreferences()
+      const { preferencesState, addProfile } = usePreferences()
 
       addProfile(profiles)
 
@@ -16,23 +16,10 @@ describe('useTextAdaptationPreferences()', () => {
     })
   })
 
-  describe('reset()', () => {
-    it('should reset profiles state', async () => {
-      const { preferencesState, reset, addProfile } = useTextAdaptationPreferences()
-
-      addProfile(profiles)
-      reset()
-
-      expect(preferencesState).toEqual({
-        activeProfileId: undefined,
-        profiles: []
-      })
-    })
-  })
-
   describe('setProfiles()', () => {
+    // TODO: add active profile id validation
     it('should set profiles', () => {
-      const { preferencesState, setProfiles } = useTextAdaptationPreferences()
+      const { preferencesState, setProfiles } = usePreferences()
 
       setProfiles([profiles])
 
@@ -42,7 +29,7 @@ describe('useTextAdaptationPreferences()', () => {
 
   describe('setActiveProfileId()', () => {
     it('should set active profile id', async () => {
-      const { preferencesState, setActiveProfileId, setProfiles } = useTextAdaptationPreferences()
+      const { preferencesState, setActiveProfileId, setProfiles } = usePreferences()
 
       setProfiles([profiles])
       setActiveProfileId(profiles.id)
@@ -52,9 +39,36 @@ describe('useTextAdaptationPreferences()', () => {
 
     describe('when the active profile id does not exist in profiles', () => {
       it('should throw', () => {
-        const { setActiveProfileId } = useTextAdaptationPreferences()
+        const { setActiveProfileId, setProfiles } = usePreferences()
 
-        expect(() => setActiveProfileId(profiles.id)).toThrow()
+        setProfiles([profiles])
+
+        expect(() => setActiveProfileId('non-existing-id')).toThrow()
+      })
+    })
+
+    describe('when the active profile id is undefined', () => {
+      it('should not throw', () => {
+        const { setActiveProfileId, setProfiles } = usePreferences()
+
+        setProfiles([profiles])
+        setActiveProfileId(profiles.id)
+
+        expect(() => setActiveProfileId(undefined)).not.toThrow()
+      })
+    })
+  })
+
+  describe('reset()', () => {
+    it('should reset profiles state', async () => {
+      const { preferencesState, reset, addProfile } = usePreferences()
+
+      addProfile(profiles)
+      reset()
+
+      expect(preferencesState).toEqual({
+        activeProfileId: undefined,
+        profiles: []
       })
     })
   })

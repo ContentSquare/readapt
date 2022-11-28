@@ -51,17 +51,10 @@ const settingsFile = computed(() => {
   return `data:application/json;charset=utf-8,${settingsFile}`
 })
 
-const { closeCurrentTab, getStoredSettings, saveSettings } = utils
+const { closeCurrentTab } = utils
 
 const storedSettings = ref<Settings>()
 const isSettingsDirty = computed(() => !isEqual(storedSettings?.value, settings.value))
-
-onMounted(async () => {
-  storedSettings.value = await getStoredSettings()
-  if (router.currentRoute.query.newSettings === 'true') {
-    store.commit('newSettings')
-  }
-})
 
 const save = async () => {
   if (selectedProfiledId.value === '') {
@@ -76,8 +69,6 @@ const save = async () => {
   } else {
     updateProfileSettings(selectedProfiledId.value, settings.value)
   }
-  // saveSettings(settings.value)
-  // storedSettings.value = settings.value
 }
 const close = async () => {
   store.commit('resetState', getStateFromLocalStorage())

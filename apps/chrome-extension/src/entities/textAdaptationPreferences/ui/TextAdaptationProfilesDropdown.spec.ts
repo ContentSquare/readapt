@@ -1,15 +1,15 @@
 import TextAdaptationProfilesDropdown from './TextAdaptationProfilesDropdown.vue'
 import { mount } from '@vue/test-utils'
 import { profiles } from '../model/preferencesFixtures'
-import { useTextAdaptationPreferences } from '../model/state/usePreferences'
+import { usePreferences } from '../model/state/usePreferences'
 
 describe('TextAdaptationProfilesDropdown.vue', () => {
   beforeEach(() => {
-    useTextAdaptationPreferences().addProfile(profiles)
+    usePreferences().addProfile(profiles)
   })
 
   afterEach(() => {
-    useTextAdaptationPreferences().reset()
+    usePreferences().reset()
   })
 
   const factory = (profileId = '') => {
