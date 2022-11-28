@@ -1,7 +1,7 @@
 import TextAdaptationProfilesDropdown from './TextAdaptationProfilesDropdown.vue'
 import { mount } from '@vue/test-utils'
-import { profiles } from '../model/preferencesFixtures'
-import { usePreferences } from '../model/state/usePreferences'
+import { profiles } from '../../../entities/textAdaptationPreferences/model/preferencesFixtures'
+import { usePreferences } from '../../../entities/textAdaptationPreferences/model/state/usePreferences'
 
 describe('TextAdaptationProfilesDropdown.vue', () => {
   beforeEach(() => {

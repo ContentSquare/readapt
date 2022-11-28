@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { usePreferences } from '../model/state/usePreferences'
+import { useTextAdaptationPreferences } from '@/entities/textAdaptationPreferences'
 
-const { preferencesState } = usePreferences()
+const { preferencesState } = useTextAdaptationPreferences()
 
 const props = defineProps<{
   value: string
