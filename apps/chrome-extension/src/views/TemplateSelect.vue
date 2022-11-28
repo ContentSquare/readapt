@@ -23,7 +23,7 @@ const TemplateSelect = defineComponent({
       selectedTemplate.value = filteredTemplates.value[0]
     }
 
-    const { closeCurrentTab, saveSettings } = utils
+    const { closeCurrentTab } = utils
 
     const filteredTemplates = computed(() => templates.filter(isSameLanguage(selectedLanguage.value)))
     const selectedTemplate = ref<SettingsTemplate>(filteredTemplates.value[0])
@@ -38,7 +38,6 @@ const TemplateSelect = defineComponent({
     const saveTemplate = () => {
       const selectedSettings = unref(selectedTemplate).settings
       store.commit('updateSettings', selectedSettings) // FIXME must be a deepClone
-      saveSettings(selectedSettings)
       closeCurrentTab()
     }
 

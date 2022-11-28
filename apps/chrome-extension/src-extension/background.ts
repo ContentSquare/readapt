@@ -1,8 +1,6 @@
 /* global chrome  */
 import { broadcastMessage } from '@/chrome/utils'
-import { executeStorageMigrations } from '@/features/textAdaptationPreferencesPersistence'
-
-import { STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES } from '@/features/textAdaptationPreferencesPersistence'
+import { executeStorageMigrations, STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES } from '@/entities/textAdaptationPreferences'
 
 chrome.runtime.onInstalled.addListener(async () => {
   console.log('readapt installed or updated')

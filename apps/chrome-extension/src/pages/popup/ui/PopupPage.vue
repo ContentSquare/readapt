@@ -16,13 +16,14 @@ const readaptEnabled = ref(true)
 
 const { openSettings, sendMessageToCurrentTab, newSettings, openTemplates, broadcastMessage, getEnabled, saveEnabled, saveLocale } = utils
 
-const settings = computed(() => store.getters.getSettings)
+// const settings = computed(() => store.getters.getSettings)
 const defaultProfiles = buildDefaultProfiles()
 
 const isDefaultSettings = computed(() => {
-  const lang = settings.value.language as keyof Profiles
-  const defaultSettings = defaultProfiles[lang]
-  return isEqual(settings.value, defaultSettings)
+  // const lang = settings.value.language as keyof Profiles
+  // const defaultSettings = defaultProfiles[lang]
+  // return isEqual(settings.value, defaultSettings)
+  return true
 })
 
 watchEffect(async () => (readaptEnabled.value = await getEnabled()))

@@ -1,9 +1,7 @@
 /* global chrome */
-import { Settings } from '@readapt/settings'
 import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
-import { STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES } from '@/features/textAdaptationPreferencesPersistence'
-import { TextAdaptationPreferences } from '@/entities/textAdaptationPreferences'
+// import { STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES } from '@/features/textAdaptationPreferencesPersistence'
 
 const getCurrentTab = async (): Promise<chrome.tabs.Tab> => {
   const queryOptions = { active: true, currentWindow: true }
@@ -68,24 +66,6 @@ const openTemplates = async (): Promise<void> => {
   }
 }
 
-const getStoredSettings = async (): Promise<Settings | undefined> => {
-  const defaultPreferences = {
-    profiles: []
-  }
-  const { [STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES]: preferences = defaultPreferences } = await chrome.storage.local.get(
-    STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES
-  )
-  return preferences.profiles[0]?.settings
-}
-
-const saveSettings = async (settings: Settings): Promise<void> => {
-  const preferences: TextAdaptationPreferences = {
-    activeProfileId: '1',
-    profiles: [{ name: 'Default', id: '1', settings }]
-  }
-  await chrome.storage.local.set({ [STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES]: preferences })
-}
-
 const saveLocale = async (locale: string): Promise<void> => {
   await chrome.storage.sync.set({ locale })
 }
@@ -130,8 +110,6 @@ export {
   openTemplates,
   sendMessageToCurrentTab,
   broadcastMessage,
-  getStoredSettings,
-  saveSettings,
   saveLocale,
   getLocale,
   saveEnabled,

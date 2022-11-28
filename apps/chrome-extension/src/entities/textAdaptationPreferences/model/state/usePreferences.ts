@@ -3,7 +3,7 @@ import { Settings } from '@readapt/settings'
 import { TextAdaptationProfile } from '../Preferences'
 import { preferencesState } from './preferencesState'
 
-export function useTextAdaptationPreferences() {
+export function usePreferences() {
   const reset = () => {
     preferencesState.activeProfileId = undefined
     preferencesState.profiles = []
@@ -29,11 +29,11 @@ export function useTextAdaptationPreferences() {
   }
 
   const setActiveProfileId = (activeProfileId: string | undefined) => {
-    const activeProfileIdExists = preferencesState.profiles.some(({ id }) => id === activeProfileId)
-    if (activeProfileIdExists) {
+    const isValidActoveProfileId = activeProfileId === undefined || preferencesState.profiles.some(({ id }) => id === activeProfileId)
+    if (isValidActoveProfileId) {
       preferencesState.activeProfileId = activeProfileId
     } else {
-      throw new Error('Text adaptation preferences do not contain a profile with id ' + activeProfileId)
+      throw new Error(`Text adaptation preferences do not contain a profile with id "${activeProfileId}"`)
     }
   }
 
