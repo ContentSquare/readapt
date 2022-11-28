@@ -1,11 +1,11 @@
 import TextAdaptationProfilesDropdown from './TextAdaptationProfilesDropdown.vue'
 import { mount } from '@vue/test-utils'
-import { textAdaptationProfileFixture } from '../model/fixtures/textAdaptationProfileFixture'
-import { useTextAdaptationPreferences } from '../model/state/useTextAdaptationPreferences'
+import { profiles } from '../model/preferencesFixtures'
+import { useTextAdaptationPreferences } from '../model/state/usePreferences'
 
 describe('TextAdaptationProfilesDropdown.vue', () => {
   beforeEach(() => {
-    useTextAdaptationPreferences().addProfile(textAdaptationProfileFixture)
+    useTextAdaptationPreferences().addProfile(profiles)
   })
 
   afterEach(() => {
@@ -27,7 +27,7 @@ describe('TextAdaptationProfilesDropdown.vue', () => {
     it('should render profiles as options', () => {
       const { dropdown } = factory()
 
-      expect(dropdown.find(`[value="${textAdaptationProfileFixture.id}"]`).text()).toBe(textAdaptationProfileFixture.name)
+      expect(dropdown.find(`[value="${profiles.id}"]`).text()).toBe(profiles.name)
     })
 
     it('should render new profile as option', () => {
@@ -39,18 +39,18 @@ describe('TextAdaptationProfilesDropdown.vue', () => {
 
   describe('v-model binding', () => {
     it('should select a profile using "value" as profile id', () => {
-      const { dropdown } = factory(textAdaptationProfileFixture.id)
+      const { dropdown } = factory(profiles.id)
 
-      expect(dropdown.element.value).toBe(textAdaptationProfileFixture.id)
+      expect(dropdown.element.value).toBe(profiles.id)
     })
 
     describe('when a profile is selected', () => {
       it('should trigger "input" with selected profile id', () => {
         const { wrapper, dropdown } = factory()
 
-        dropdown.setValue(textAdaptationProfileFixture.id)
+        dropdown.setValue(profiles.id)
 
-        expect(wrapper.emitted('input')).toEqual([[textAdaptationProfileFixture.id]])
+        expect(wrapper.emitted('input')).toEqual([[profiles.id]])
       })
     })
   })

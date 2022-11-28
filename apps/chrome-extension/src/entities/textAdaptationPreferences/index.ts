@@ -1,7 +1,7 @@
-export type { TextAdaptationProfile, TextAdaptationPreferences } from './model/TextAdaptationPreferences'
+export type { TextAdaptationProfile, TextAdaptationPreferences } from './model/Preferences'
 
 export { default as TextAdaptationProfilesDropdown } from './ui/TextAdaptationProfilesDropdown.vue'
 
-export { textAdaptationProfileFixture } from './model/fixtures/textAdaptationProfileFixture'
+export { profiles as textAdaptationProfileFixture } from './model/preferencesFixtures'
 
-export { useTextAdaptationPreferences } from './model/state/useTextAdaptationPreferences'
+export { useTextAdaptationPreferences } from './model/state/usePreferences'
