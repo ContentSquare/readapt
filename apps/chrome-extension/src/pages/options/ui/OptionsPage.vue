@@ -7,7 +7,8 @@ import { buildDefaultProfiles } from '@readapt/settings'
 import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
 
 import { AdaptContainer, CloseSettings, PreviewContainer, SaveSettings } from '@readapt/shared-components'
-import { TextAdaptationProfilesDropdown, useTextAdaptationPreferences } from '@/entities/textAdaptationPreferences'
+import { useTextAdaptationPreferences } from '@/entities/textAdaptationPreferences'
+import { TextAdaptationProfilesDropdown } from '@/features/textAdaptationPropfilesDropdown'
 
 import SettingsMenuGeneral from '@/views/SettingsMenuGeneral.vue'
 import SettingsMenuTableItems from '@/views/SettingsMenuTableItems.vue'
