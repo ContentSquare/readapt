@@ -1,7 +1,7 @@
 import { STORAGE_KEY_V1, STORAGE_KEY_V2 } from '../constants'
 import { Storage } from '@/shared/storage'
 
-export async function migrateSingleToMultiProfiles(storage: Storage) {
+export async function migrateSingleToMultiProfile(storage: Storage) {
   const { [STORAGE_KEY_V1]: storageStateV1 } = await storage.get(STORAGE_KEY_V1)
   if (!storageStateV1) {
     return
