@@ -23,12 +23,12 @@ const update = () => {
 }
 
 const create = async () => {
-  const newProfileName = prompt('What is the name of the new profile?')
+  const newProfileName = prompt('What\'s the new profile name?')
   if (!newProfileName) {
     return
   }
   if (existsProfileWithName(newProfileName)) {
-    alert('A profile with this name already exists...')
+    alert(`A profile with "${newProfileName}" name already exists! Please try another name.`)
     return
   }
   const newProfileId = createProfile({
@@ -37,7 +37,7 @@ const create = async () => {
   })
   await nextTick()
   emit('input', newProfileId)
-  alert('The new profile has been created!')
+  alert('The profile has been created!')
 }
 
 const existsProfileWithName = (profileName: string): boolean => {

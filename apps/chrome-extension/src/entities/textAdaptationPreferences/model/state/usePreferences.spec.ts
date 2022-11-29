@@ -1,5 +1,6 @@
+import { Settings } from '@readapt/settings'
 import { profile } from '../preferencesFixtures'
-import { usePreferences } from './usePreferences'
+import { NonExistingProfileIdError, usePreferences } from './usePreferences'
 
 describe('usePreferences()', () => {
   afterEach(async () => {
@@ -9,6 +10,7 @@ describe('usePreferences()', () => {
   describe('createProfile()', () => {
     it('should create a profile from name and settings', () => {
       const { preferencesState, createProfile } = usePreferences()
+      console.log(JSON.stringify(preferencesState))
 
       createProfile({
         name: profile.name,
@@ -48,6 +50,35 @@ describe('usePreferences()', () => {
     })
   })
 
+  describe('updateProfileSettings()', () => {
+    it('should update profile settings', () => {
+      const { preferencesState, setProfiles, updateProfileSettings } = usePreferences()
+      const newSettings: Settings = {
+        ...profile.settings,
+        fontFamily: 'OpenDyslexic'
+      }
+      setProfiles([profile])
+
+      updateProfileSettings(profile.id, newSettings)
+
+      expect(preferencesState.profiles).toEqual([
+        {
+          ...profile,
+          settings: newSettings
+        }
+      ])
+    })
+
+    it('when profile id does not exist', () => {
+      const { setProfiles, updateProfileSettings } = usePreferences()
+      setProfiles([profile])
+
+      expect(() => {
+        updateProfileSettings(1001, profile.settings)
+      }).toThrow(NonExistingProfileIdError)
+    })
+  })
+
   describe('setProfiles()', () => {
     // TODO: add active profile id validation
     it('should set profiles', () => {
@@ -75,7 +106,7 @@ describe('usePreferences()', () => {
 
         setProfiles([profile])
 
-        expect(() => setActiveProfileId(1001)).toThrow()
+        expect(() => setActiveProfileId(1001)).toThrow(NonExistingProfileIdError)
       })
     })
 

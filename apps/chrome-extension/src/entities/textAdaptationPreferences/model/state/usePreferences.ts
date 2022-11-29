@@ -3,6 +3,8 @@ import { Settings } from '@readapt/settings'
 import { TextAdaptationProfile, TextAdaptationProfileId } from '../Preferences'
 import { preferencesState } from './preferencesState'
 
+export class NonExistingProfileIdError extends Error {}
+
 export function usePreferences() {
   const reset = () => {
     preferencesState.activeProfileId = undefined
@@ -18,7 +20,6 @@ export function usePreferences() {
     return Math.max(0, ...ids) + 1
   }
 
-  // TODO: try to validate the input data using io-ts or a command with validation
   const createProfile = ({ name, settings }: { name: string; settings: Settings }): TextAdaptationProfileId => {
     const newProfileId = generateNextProfileId()
     preferencesState.profiles.push({
@@ -37,15 +38,17 @@ export function usePreferences() {
     const profile = getProfileById(profileId)
     if (profile) {
       profile.settings = settings
+    } else {
+      throw new NonExistingProfileIdError()
     }
   }
 
   const setActiveProfileId = (activeProfileId: TextAdaptationProfileId | undefined) => {
-    const isValidActoveProfileId = activeProfileId === undefined || preferencesState.profiles.some(({ id }) => id === activeProfileId)
+    const isValidActoveProfileId = activeProfileId === undefined || Boolean(getProfileById(activeProfileId))
     if (isValidActoveProfileId) {
       preferencesState.activeProfileId = activeProfileId
     } else {
-      throw new Error(`Text adaptation preferences do not contain a profile with id "${activeProfileId}"`)
+      throw new NonExistingProfileIdError()
     }
   }
 
