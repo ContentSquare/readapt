@@ -11,4 +11,4 @@ export interface TextAdaptationProfile {
   settings: Settings
 }
 
-export type TextAdaptationProfileId = string
+export type TextAdaptationProfileId = number

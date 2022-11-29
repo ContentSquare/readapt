@@ -1,6 +1,6 @@
 import { readonly } from 'vue'
 import { Settings } from '@readapt/settings'
-import { TextAdaptationProfile } from '../Preferences'
+import { TextAdaptationProfile, TextAdaptationProfileId } from '../Preferences'
 import { preferencesState } from './preferencesState'
 
 export function usePreferences() {
@@ -13,22 +13,32 @@ export function usePreferences() {
     preferencesState.profiles = profiles
   }
 
-  const addProfile = (profile: TextAdaptationProfile) => {
-    preferencesState.profiles.push(profile)
+  const generateNextProfileId = () => {
+    const ids = preferencesState.profiles.map(({ id }) => id)
+    return Math.max(0, ...ids) + 1
   }
 
-  const getProfileById = (profileId: string) => {
+  // TODO: try to validate the input data using io-ts or a command with validation
+  const createProfile = ({ name, settings }: { name: string; settings: Settings }) => {
+    preferencesState.profiles.push({
+      id: generateNextProfileId(),
+      name,
+      settings
+    })
+  }
+
+  const getProfileById = (profileId: TextAdaptationProfileId) => {
     return preferencesState.profiles.find(({ id }) => id === profileId)
   }
 
-  const updateProfileSettings = (profileId: string, settings: Settings) => {
+  const updateProfileSettings = (profileId: TextAdaptationProfileId, settings: Settings) => {
     const profile = getProfileById(profileId)
     if (profile) {
       profile.settings = settings
     }
   }
 
-  const setActiveProfileId = (activeProfileId: string | undefined) => {
+  const setActiveProfileId = (activeProfileId: TextAdaptationProfileId | undefined) => {
     const isValidActoveProfileId = activeProfileId === undefined || preferencesState.profiles.some(({ id }) => id === activeProfileId)
     if (isValidActoveProfileId) {
       preferencesState.activeProfileId = activeProfileId
@@ -43,7 +53,7 @@ export function usePreferences() {
     preferencesState: preferencesStateReadonly,
     reset,
     setProfiles,
-    addProfile,
+    createProfile,
     getProfileById,
     updateProfileSettings,
     setActiveProfileId
