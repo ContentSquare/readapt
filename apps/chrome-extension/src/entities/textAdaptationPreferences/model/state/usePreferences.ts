@@ -13,18 +13,20 @@ export function usePreferences() {
     preferencesState.profiles = profiles
   }
 
-  const generateNextProfileId = () => {
+  const generateNextProfileId = (): TextAdaptationProfileId => {
     const ids = preferencesState.profiles.map(({ id }) => id)
     return Math.max(0, ...ids) + 1
   }
 
   // TODO: try to validate the input data using io-ts or a command with validation
-  const createProfile = ({ name, settings }: { name: string; settings: Settings }) => {
+  const createProfile = ({ name, settings }: { name: string; settings: Settings }): TextAdaptationProfileId => {
+    const newProfileId = generateNextProfileId()
     preferencesState.profiles.push({
-      id: generateNextProfileId(),
+      id: newProfileId,
       name,
       settings
     })
+    return newProfileId
   }
 
   const getProfileById = (profileId: TextAdaptationProfileId) => {

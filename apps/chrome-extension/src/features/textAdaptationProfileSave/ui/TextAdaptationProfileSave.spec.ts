@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import TextAdaptationProfileSave from './TextAdaptationProfileSave.vue'
 import { TextAdaptationPreferencesFixtures, useTextAdaptationPreferences } from '@/entities/textAdaptationPreferences'
+import { mockAlert, mockPrompt } from '@/shared/test'
 
 describe('TextAdaptationProfileSave', () => {
   afterEach(() => {
@@ -13,7 +14,8 @@ describe('TextAdaptationProfileSave', () => {
         const wrapper = mount(TextAdaptationProfileSave)
         const { preferencesState } = useTextAdaptationPreferences()
         const newProfileName = 'Profile 1'
-        jest.spyOn(window, 'prompt').mockReturnValueOnce(newProfileName)
+        mockPrompt(newProfileName)
+        const alert = mockAlert()
 
         await wrapper.find('[data-test-id=save]').trigger('click')
 
@@ -23,6 +25,7 @@ describe('TextAdaptationProfileSave', () => {
             name: newProfileName
           }
         ])
+        expect(alert).toHaveBeenCalled()
       })
     })
   })
