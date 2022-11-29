@@ -7,7 +7,7 @@ import { buildDefaultProfiles } from '@readapt/settings'
 import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
 
 import { AdaptContainer, CloseSettings, PreviewContainer, SaveSettings } from '@readapt/shared-components'
-import { useTextAdaptationPreferences } from '@/entities/textAdaptationPreferences'
+import { useTextAdaptationPreferences, TextAdaptationProfileId } from '@/entities/textAdaptationPreferences'
 import { TextAdaptationProfilesDropdown } from '@/features/textAdaptationPropfilesDropdown'
 import { TextAdaptationProfileSave } from '@/features/textAdaptationProfileSave'
 
@@ -20,11 +20,11 @@ import { store, getStateFromLocalStorage } from '@/store'
 import router from '@/router'
 import utils from '@/chrome'
 import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
-import { uniqueId } from '@/shared/lib'
+// import { uniqueId } from '@/shared/lib'
 
-const selectedProfiledId = ref('')
+const selectedProfiledId = ref<TextAdaptationProfileId | undefined>(undefined)
 
-const { addProfile, updateProfileSettings, getProfileById } = useTextAdaptationPreferences()
+const { getProfileById } = useTextAdaptationPreferences()
 
 const defaultSettings = buildDefaultProfiles()['en']
 
@@ -58,20 +58,20 @@ const { closeCurrentTab } = utils
 const storedSettings = ref<Settings>()
 const isSettingsDirty = computed(() => !isEqual(storedSettings?.value, settings.value))
 
-const save = async () => {
-  if (selectedProfiledId.value === '') {
-    const id = uniqueId()
-    addProfile({
-      name: prompt('What is the profile name?'),
-      id,
-      settings: settings.value
-    })
-    await Vue.nextTick()
-    selectedProfiledId.value = id
-  } else {
-    updateProfileSettings(selectedProfiledId.value, settings.value)
-  }
-}
+// const save = async () => {
+//   if (selectedProfiledId.value === '') {
+//     const id = uniqueId()
+//     addProfile({
+//       name: prompt('What is the profile name?'),
+//       id,
+//       settings: settings.value
+//     })
+//     await Vue.nextTick()
+//     selectedProfiledId.value = id
+//   } else {
+//     updateProfileSettings(selectedProfiledId.value, settings.value)
+//   }
+// }
 const close = async () => {
   store.commit('resetState', getStateFromLocalStorage())
   await closeCurrentTab()
@@ -151,7 +151,7 @@ const changeLanguage = (language: Language) => store.commit('changeLanguage', la
           </PreviewContainer>
 
           <div class="mt-3 d-flex justify-content-between">
-            <TextAdaptationProfileSave />
+            <TextAdaptationProfileSave :value="undefined" />
             <CloseSettings :is-settings-dirty="isSettingsDirty" @close-settings="close" />
           </div>
         </div>

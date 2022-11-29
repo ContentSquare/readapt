@@ -1,16 +1,32 @@
 <script lang="ts" setup>
-import { useTextAdaptationPreferences, TextAdaptationPreferencesFixtures } from '@/entities/textAdaptationPreferences'
+import { useTextAdaptationPreferences, TextAdaptationProfileId } from '@/entities/textAdaptationPreferences'
+import { Settings } from '@readapt/settings'
 import { BButton } from 'bootstrap-vue'
 
-const { createProfile } = useTextAdaptationPreferences()
+const props = defineProps<{
+  value: TextAdaptationProfileId | undefined
+  settings: Settings
+}>()
+
+const emit = defineEmits<{
+  (event: 'input', profileId: TextAdaptationProfileId | undefined): void
+}>()
+
+const { createProfile, updateProfileSettings } = useTextAdaptationPreferences()
 
 const onSave = () => {
-  const newProfileName = prompt('What is the name of the new profile?')
-  createProfile({
-    settings: TextAdaptationPreferencesFixtures.settings,
-    name: newProfileName
-  })
-  alert('The new profile has been created!')
+  if (props.value === undefined) {
+    const newProfileName = prompt('What is the name of the new profile?')
+    const newProfileId = createProfile({
+      settings: props.settings,
+      name: newProfileName
+    })
+    alert('The new profile has been created!')
+    emit('input', newProfileId)
+  } else {
+    updateProfileSettings(props.value, props.settings)
+    alert('The profile has been updated!')
+  }
 }
 </script>
 <template>
