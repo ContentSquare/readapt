@@ -85,11 +85,11 @@ export const storageStateV1 = {
 }
 
 export const storageStateV2 = {
-  activeProfileId: '1',
+  activeProfileId: 1,
   profiles: [
     {
       name: 'Default',
-      id: '1',
+      id: 1,
       settings: storageStateV1
     }
   ]
