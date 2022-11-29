@@ -14,7 +14,7 @@ describe('TextAdaptationProfilesDropdown.vue', () => {
     useTextAdaptationPreferences().reset()
   })
 
-  const factory = (profileId?: TextAdaptationProfileId) => {
+  const factory = (profileId: TextAdaptationProfileId | null = null) => {
     const wrapper = mount(TextAdaptationProfilesDropdown, {
       propsData: {
         value: profileId
