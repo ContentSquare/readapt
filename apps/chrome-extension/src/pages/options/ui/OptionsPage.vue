@@ -9,6 +9,7 @@ import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
 import { AdaptContainer, CloseSettings, PreviewContainer, SaveSettings } from '@readapt/shared-components'
 import { useTextAdaptationPreferences } from '@/entities/textAdaptationPreferences'
 import { TextAdaptationProfilesDropdown } from '@/features/textAdaptationPropfilesDropdown'
+import { TextAdaptationProfileSave } from '@/features/textAdaptationProfileSave'
 
 import SettingsMenuGeneral from '@/views/SettingsMenuGeneral.vue'
 import SettingsMenuTableItems from '@/views/SettingsMenuTableItems.vue'
@@ -150,7 +151,7 @@ const changeLanguage = (language: Language) => store.commit('changeLanguage', la
           </PreviewContainer>
 
           <div class="mt-3 d-flex justify-content-between">
-            <SaveSettings @save-settings="save" />
+            <TextAdaptationProfileSave />
             <CloseSettings :is-settings-dirty="isSettingsDirty" @close-settings="close" />
           </div>
         </div>

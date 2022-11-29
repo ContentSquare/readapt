@@ -1,1 +1,1 @@
-export { default as TextAdaptationProfileSave } from './ui/TextAdaptationProfilesSave.vue'
+export { default as TextAdaptationProfileSave } from './ui/TextAdaptationProfileSave.vue'
