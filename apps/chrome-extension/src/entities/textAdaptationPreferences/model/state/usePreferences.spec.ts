@@ -1,4 +1,4 @@
-import { profiles } from '../preferencesFixtures'
+import { profile } from '../preferencesFixtures'
 import { usePreferences } from './usePreferences'
 
 describe('usePreferences()', () => {
@@ -10,9 +10,9 @@ describe('usePreferences()', () => {
     it('should add a profile to the state', () => {
       const { preferencesState, addProfile } = usePreferences()
 
-      addProfile(profiles)
+      addProfile(profile)
 
-      expect(preferencesState.profiles).toEqual([profiles])
+      expect(preferencesState.profiles).toEqual([profile])
     })
   })
 
@@ -21,9 +21,9 @@ describe('usePreferences()', () => {
     it('should set profiles', () => {
       const { preferencesState, setProfiles } = usePreferences()
 
-      setProfiles([profiles])
+      setProfiles([profile])
 
-      expect(preferencesState.profiles).toEqual([profiles])
+      expect(preferencesState.profiles).toEqual([profile])
     })
   })
 
@@ -31,17 +31,17 @@ describe('usePreferences()', () => {
     it('should set active profile id', async () => {
       const { preferencesState, setActiveProfileId, setProfiles } = usePreferences()
 
-      setProfiles([profiles])
-      setActiveProfileId(profiles.id)
+      setProfiles([profile])
+      setActiveProfileId(profile.id)
 
-      expect(preferencesState.activeProfileId).toEqual(profiles.id)
+      expect(preferencesState.activeProfileId).toEqual(profile.id)
     })
 
     describe('when the active profile id does not exist in profiles', () => {
       it('should throw', () => {
         const { setActiveProfileId, setProfiles } = usePreferences()
 
-        setProfiles([profiles])
+        setProfiles([profile])
 
         expect(() => setActiveProfileId('non-existing-id')).toThrow()
       })
@@ -51,8 +51,8 @@ describe('usePreferences()', () => {
       it('should not throw', () => {
         const { setActiveProfileId, setProfiles } = usePreferences()
 
-        setProfiles([profiles])
-        setActiveProfileId(profiles.id)
+        setProfiles([profile])
+        setActiveProfileId(profile.id)
 
         expect(() => setActiveProfileId(undefined)).not.toThrow()
       })
@@ -63,7 +63,7 @@ describe('usePreferences()', () => {
     it('should reset profiles state', async () => {
       const { preferencesState, reset, addProfile } = usePreferences()
 
-      addProfile(profiles)
+      addProfile(profile)
       reset()
 
       expect(preferencesState).toEqual({

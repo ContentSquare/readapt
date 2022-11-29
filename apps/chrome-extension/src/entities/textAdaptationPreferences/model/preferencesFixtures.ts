@@ -87,13 +87,13 @@ export const settings: Settings = {
   wordSpacing: 'inherit'
 }
 
-export const profiles: TextAdaptationProfile = {
+export const profile: TextAdaptationProfile = {
   name: 'Default',
   id: '1',
   settings
 }
 
 export const preferences: TextAdaptationPreferences = {
-  activeProfileId: profiles.id,
-  profiles: [profiles]
+  activeProfileId: profile.id,
+  profiles: [profile]
 }
