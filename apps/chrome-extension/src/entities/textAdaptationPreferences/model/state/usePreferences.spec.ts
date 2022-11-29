@@ -10,12 +10,13 @@ describe('usePreferences()', () => {
     it('should create a profile from name and settings', () => {
       const { preferencesState, createProfile } = usePreferences()
 
-      createProfile({
+      const newProfileId = createProfile({
         name: profile.name,
         settings: profile.settings
       })
 
       expect(preferencesState.profiles).toEqual([profile])
+      expect(newProfileId).toEqual(1)
     })
 
     it('should generate unique profile ids', () => {
