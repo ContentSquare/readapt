@@ -22,7 +22,7 @@ import utils from '@/chrome'
 import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
 // import { uniqueId } from '@/shared/lib'
 
-const selectedProfiledId = ref<TextAdaptationProfileId | undefined>(undefined)
+const selectedProfiledId = ref<TextAdaptationProfileId | null>(null)
 
 const { getProfileById } = useTextAdaptationPreferences()
 
@@ -151,7 +151,7 @@ const changeLanguage = (language: Language) => store.commit('changeLanguage', la
           </PreviewContainer>
 
           <div class="mt-3 d-flex justify-content-between">
-            <TextAdaptationProfileSave :value="undefined" />
+            <TextAdaptationProfileSave v-model="selectedProfiledId" :settings="settings" />
             <CloseSettings :is-settings-dirty="isSettingsDirty" @close-settings="close" />
           </div>
         </div>
