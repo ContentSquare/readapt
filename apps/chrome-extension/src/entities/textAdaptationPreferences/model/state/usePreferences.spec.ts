@@ -6,13 +6,34 @@ describe('usePreferences()', () => {
     usePreferences().reset()
   })
 
-  describe('addProfile()', () => {
-    it('should add a profile to the state', () => {
-      const { preferencesState, addProfile } = usePreferences()
+  describe('createProfile()', () => {
+    it('should create a profile from name and settings', () => {
+      const { preferencesState, createProfile } = usePreferences()
 
-      addProfile(profile)
+      createProfile({
+        name: profile.name,
+        settings: profile.settings
+      })
 
       expect(preferencesState.profiles).toEqual([profile])
+    })
+
+    it('should generate unique profile ids', () => {
+      const {
+        preferencesState: { profiles },
+        createProfile
+      } = usePreferences()
+
+      createProfile({
+        name: profile.name,
+        settings: profile.settings
+      })
+      createProfile({
+        name: profile.name + ' second',
+        settings: profile.settings
+      })
+
+      expect(profiles[0].id).not.toBe(profiles[1].id)
     })
   })
 
@@ -43,7 +64,7 @@ describe('usePreferences()', () => {
 
         setProfiles([profile])
 
-        expect(() => setActiveProfileId('non-existing-id')).toThrow()
+        expect(() => setActiveProfileId(1001)).toThrow()
       })
     })
 
@@ -61,9 +82,12 @@ describe('usePreferences()', () => {
 
   describe('reset()', () => {
     it('should reset profiles state', async () => {
-      const { preferencesState, reset, addProfile } = usePreferences()
+      const { preferencesState, reset, createProfile } = usePreferences()
 
-      addProfile(profile)
+      createProfile({
+        name: profile.name,
+        settings: profile.settings
+      })
       reset()
 
       expect(preferencesState).toEqual({

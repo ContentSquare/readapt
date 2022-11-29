@@ -89,7 +89,7 @@ export const settings: Settings = {
 
 export const profile: TextAdaptationProfile = {
   name: 'Default',
-  id: '1',
+  id: 1,
   settings
 }
 
