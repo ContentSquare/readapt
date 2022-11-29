@@ -47,7 +47,7 @@ describe('TextAdaptationProfileSave', () => {
 
         await wrapper.find('[data-test-id=save]').trigger('click')
 
-        expect(alert).toHaveBeenCalledTimes(1)
+        expect(alert).toHaveBeenCalledWith('The profile has been created!')
       })
 
       it('should emit "input" with the new profile id', async () => {
@@ -87,7 +87,7 @@ describe('TextAdaptationProfileSave', () => {
 
           await wrapper.find('[data-test-id=save]').trigger('click')
 
-          expect(alert).toHaveBeenCalledTimes(1)
+          expect(alert).toHaveBeenCalledWith(`A profile with "${profile.name}" name already exists! Please try another name.`)
         })
       })
     })
@@ -126,11 +126,12 @@ describe('TextAdaptationProfileSave', () => {
       })
 
       it('should notify about profile update', async () => {
-        const { wrapper, alert } = editProfileFactory()
+        const { wrapper, alert, setProfiles } = editProfileFactory()
+        setProfiles([profile])
 
         await wrapper.find('[data-test-id=save]').trigger('click')
 
-        expect(alert).toHaveBeenCalledTimes(1)
+        expect(alert).toHaveBeenCalledWith('The profile has been updated!')
       })
     })
   })
