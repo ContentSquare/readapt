@@ -1,13 +1,13 @@
 import { watchEffect } from 'vue'
 import { Storage } from '@/shared/storage'
 import { TextPreferences } from '../model/TextPreferences'
-import { STORAGE_KEY_TEXT_PREFERENCES } from '../config/storage'
+import { TEXT_PREFERENCES_STORAGE_KEY } from '../config/storage'
 import { useTextPreferences } from '../model/state/useTextPreferences'
 
-export async function persistTextPreferencesState(storage: Storage) {
+export async function textPreferencesPersistState(storage: Storage) {
   const { preferences, setProfiles, setActiveProfileId } = useTextPreferences()
 
-  const { [STORAGE_KEY_TEXT_PREFERENCES]: preferencesFromStorage } = await storage.get(STORAGE_KEY_TEXT_PREFERENCES)
+  const { [TEXT_PREFERENCES_STORAGE_KEY]: preferencesFromStorage } = await storage.get(TEXT_PREFERENCES_STORAGE_KEY)
 
   if (isTextAdaptationPreferences(preferencesFromStorage)) {
     setProfiles(preferencesFromStorage.profiles)
@@ -16,7 +16,7 @@ export async function persistTextPreferencesState(storage: Storage) {
 
   return watchEffect(() => {
     storage.set({
-      [STORAGE_KEY_TEXT_PREFERENCES]: preferences
+      [TEXT_PREFERENCES_STORAGE_KEY]: preferences
     })
   })
 }
