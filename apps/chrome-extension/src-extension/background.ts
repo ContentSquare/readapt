@@ -1,11 +1,11 @@
 /* global chrome  */
 import { broadcastMessage } from '@/chrome/utils'
-import { executeStorageMigrations, STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES } from '@/entities/textPreferences'
+import { textPreferencesStorageMigrate, TEXT_PREFERENCES_STORAGE_KEY } from '@/entities/textPreferences'
 
 chrome.runtime.onInstalled.addListener(async () => {
   console.log('readapt installed or updated')
 
-  await executeStorageMigrations(chrome.storage.local)
+  await textPreferencesStorageMigrate(chrome.storage.local)
 
   const { enabled } = await chrome.storage.sync.get('enabled')
   const isEnabled = enabled ?? true
@@ -133,7 +133,7 @@ const switchEnabledContextMenu = (enabled: boolean): void => {
 
 const hasSettingsChanged = (changes: { [p: string]: chrome.storage.StorageChange }): boolean => {
   for (const [key] of Object.entries(changes)) {
-    if (key === STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES) {
+    if (key === TEXT_PREFERENCES_STORAGE_KEY) {
       return true
     }
   }

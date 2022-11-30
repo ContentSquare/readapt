@@ -55,22 +55,7 @@ const { closeCurrentTab } = utils
 const storedSettings = ref<Settings>()
 const isSettingsDirty = computed(() => !isEqual(storedSettings?.value, settings.value))
 
-// const save = async () => {
-//   if (selectedProfiledId.value === '') {
-//     const id = uniqueId()
-//     addProfile({
-//       name: prompt('What is the profile name?'),
-//       id,
-//       settings: settings.value
-//     })
-//     await Vue.nextTick()
-//     selectedProfiledId.value = id
-//   } else {
-//     updateProfileSettings(selectedProfiledId.value, settings.value)
-//   }
-// }
 const close = async () => {
-  // store.commit('resetState', getStateFromLocalStorage())
   await closeCurrentTab()
 }
 
@@ -83,7 +68,6 @@ const letterOptions = computed<ColoredOption[]>(() => store.getters.getLetterOpt
 const phonemeOptions = computed<ColoredOption[]>(() => store.getters.getPhonemeOptions)
 
 const updateOption = (key: SettingsKey, value: unknown) => {
-  console.log(key, value)
   settings.value = {
     ...settings.value,
     [key]: value

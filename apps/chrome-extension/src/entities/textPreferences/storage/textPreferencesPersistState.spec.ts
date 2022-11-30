@@ -1,10 +1,10 @@
 import { MemoryStorage } from '@/shared/storage'
-import { persistTextPreferencesState } from './persistTextPreferencesState'
-import { STORAGE_KEY_TEXT_PREFERENCES } from '../config/storage'
+import { textPreferencesPersistState } from './textPreferencesPersistState'
+import { TEXT_PREFERENCES_STORAGE_KEY } from '../config/storage'
 import { textPreferencesFixture } from '../model/textPreferencesFixtures'
 import { useTextPreferences } from '../model/state/useTextPreferences'
 
-describe('persistsTextPreferencesState()', () => {
+describe('textPreferencesPersistState()', () => {
   afterEach(() => {
     useTextPreferences().reset()
   })
@@ -12,11 +12,11 @@ describe('persistsTextPreferencesState()', () => {
   describe('on initial run', () => {
     it('should set preferences state from storage', async () => {
       const storage = new MemoryStorage({
-        [STORAGE_KEY_TEXT_PREFERENCES]: textPreferencesFixture
+        [TEXT_PREFERENCES_STORAGE_KEY]: textPreferencesFixture
       })
       const { preferences } = useTextPreferences()
 
-      const stopWatcher = await persistTextPreferencesState(storage)
+      const stopWatcher = await textPreferencesPersistState(storage)
 
       expect(preferences).toEqual(textPreferencesFixture)
       stopWatcher()
@@ -28,12 +28,12 @@ describe('persistsTextPreferencesState()', () => {
       const storage = new MemoryStorage()
       const { setActiveProfileId, setProfiles } = useTextPreferences()
 
-      const stopWatcher = await persistTextPreferencesState(storage)
+      const stopWatcher = await textPreferencesPersistState(storage)
       setProfiles(textPreferencesFixture.profiles)
       setActiveProfileId(textPreferencesFixture.activeProfileId)
 
-      expect(await storage.get(STORAGE_KEY_TEXT_PREFERENCES)).toEqual({
-        [STORAGE_KEY_TEXT_PREFERENCES]: textPreferencesFixture
+      expect(await storage.get(TEXT_PREFERENCES_STORAGE_KEY)).toEqual({
+        [TEXT_PREFERENCES_STORAGE_KEY]: textPreferencesFixture
       })
       stopWatcher()
     })
