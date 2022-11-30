@@ -2,14 +2,10 @@
 import { TextProfileId, useTextPreferences } from '@/entities/textPreferences'
 
 const { preferences } = useTextPreferences()
-
-// const onChange = ({ target: { value } }: Event) => {
-//   const emittedValue = value ? Number(value) : undefined
-//   emit('input', emittedValue)
-// }
 </script>
 <template>
-  <select data-test-id="dropdown">
+  <select data-test-id="dropdown" :value="preferences.activeProfileId">
+    <option value="">Disable (no active profile)</option>
     <option v-for="{ name, id } in preferences.profiles" :key="id" :value="id">
       {{ name }}
     </option>
