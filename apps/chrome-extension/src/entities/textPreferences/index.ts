@@ -1,4 +1,4 @@
-export type { TextProfile, TextPreferences, TextProfileId } from './model/TextPreferences'
+export type { TextPreferences, TextProfile, TextSettings, TextProfileId } from './model/TextPreferences'
 export { textPreferencesFixture, textProfileFixture, textSettingsFixture } from './model/textPreferencesFixtures'
 export { useTextPreferences } from './model/state/useTextPreferences'
 export { textPreferencesPersistState } from './storage/textPreferencesPersistState'

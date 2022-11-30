@@ -3,7 +3,7 @@ import { computed, defineComponent, PropType, ref } from 'vue'
 import { BButton, BCard, BCardText, BFormRadio } from 'bootstrap-vue'
 import { AdaptContainer } from '@readapt/shared-components'
 import { SettingsTemplate } from '@/interfaces/settingsTemplate'
-import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
+import { adaptHtmlElementAsyncFn } from '@/features/textAdaptationPreview'
 
 const TemplateSelectorOption = defineComponent({
   components: { BButton, BCard, BCardText, BFormRadio, AdaptContainer },

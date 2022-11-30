@@ -12,3 +12,5 @@ export interface TextProfile {
 }
 
 export type TextProfileId = number
+
+export type TextSettings = Settings
