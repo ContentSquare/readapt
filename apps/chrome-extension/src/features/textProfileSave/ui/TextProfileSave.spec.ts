@@ -88,6 +88,35 @@ describe('TextProfileSave', () => {
           expect(alert).toHaveBeenCalledWith(`A profile with "${profile.name}" name already exists! Please try another name.`)
         })
       })
+
+      describe('when there are 20 profiles created', () => {
+        const profiles = Array.from(Array(20), (_, index) => {
+          const id = index + 1
+          return {
+            ...profile,
+            name: `Profile name ${id}`,
+            id
+          }
+        })
+
+        it('should not create a new profile', async () => {
+          const { wrapper, preferences, setProfiles } = newProfileFactory()
+          setProfiles(profiles)
+
+          await wrapper.find('[data-test-id=save]').trigger('click')
+
+          expect(preferences.profiles).toStrictEqual(profiles)
+        })
+
+        it('should notify about max number of profiles', async () => {
+          const { wrapper, alert, setProfiles } = newProfileFactory()
+          setProfiles(profiles)
+
+          await wrapper.find('[data-test-id=save]').trigger('click')
+
+          expect(alert).toHaveBeenCalledWith('You can have up to 20 profiles. Please delete some profiles and try again.')
+        })
+      })
     })
 
     describe('when the profile exists', () => {
