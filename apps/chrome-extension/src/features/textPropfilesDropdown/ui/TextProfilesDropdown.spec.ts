@@ -1,13 +1,11 @@
-import TextAdaptationProfilesDropdown from './TextAdaptationProfilesDropdown.vue'
+import TextAdaptationProfilesDropdown from './TextProfilesDropdown.vue'
 import { mount } from '@vue/test-utils'
-import { TextAdaptationPreferencesFixtures, useTextPreferences } from '@/entities/textPreferences'
+import { textProfileFixture as profile, useTextPreferences } from '@/entities/textPreferences'
 import { TextProfileId } from '@/entities/textPreferences/model/TextPreferences'
 
 describe('TextProfilesDropdown', () => {
-  const { textProfileFixture: profile } = TextAdaptationPreferencesFixtures
-
   beforeEach(() => {
-    useTextPreferences().createProfile(profile)
+    useTextPreferences().setProfiles([profile])
   })
 
   afterEach(() => {

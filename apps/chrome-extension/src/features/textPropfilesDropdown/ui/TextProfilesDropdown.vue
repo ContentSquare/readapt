@@ -19,7 +19,7 @@ const onChange = ({ target: { value } }: Event) => {
 <template>
   <select data-test-id="dropdown" :value="props.value" @change="onChange">
     <option value="">New Profile</option>
-    <option v-for="{ name, id } in preferencesState.profiles" :key="id" :value="id">
+    <option v-for="{ name, id } in preferences.profiles" :key="id" :value="id">
       {{ name }}
     </option>
   </select>

@@ -5,7 +5,7 @@ import { STORAGE_KEY_TEXT_PREFERENCES } from '../config/storage'
 import { useTextPreferences } from '../model/state/useTextPreferences'
 
 export async function persistTextPreferencesState(storage: Storage) {
-  const { preferences: preferencesState, setProfiles, setActiveProfileId } = useTextPreferences()
+  const { preferences, setProfiles, setActiveProfileId } = useTextPreferences()
 
   const { [STORAGE_KEY_TEXT_PREFERENCES]: preferencesFromStorage } = await storage.get(STORAGE_KEY_TEXT_PREFERENCES)
 
@@ -16,7 +16,7 @@ export async function persistTextPreferencesState(storage: Storage) {
 
   return watchEffect(() => {
     storage.set({
-      [STORAGE_KEY_TEXT_PREFERENCES]: preferencesState
+      [STORAGE_KEY_TEXT_PREFERENCES]: preferences
     })
   })
 }

@@ -1,7 +1,7 @@
 import { Settings } from '@readapt/settings'
 
 export interface TextPreferences {
-  activeProfileId?: TextProfileId
+  activeProfileId: TextProfileId | null
   profiles: TextProfile[]
 }
 

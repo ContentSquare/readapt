@@ -1,5 +1,5 @@
 import { Settings } from '@readapt/settings'
-import { textProfileFixture } from '../textPreferencesFixtures'
+import { textProfileFixture as profile } from '../textPreferencesFixtures'
 import { NonExistingIdError, useTextPreferences } from './useTextPreferences'
 
 describe('useTextPreferences()', () => {
@@ -9,23 +9,22 @@ describe('useTextPreferences()', () => {
 
   describe('createProfile()', () => {
     it('should create a profile from name and settings', () => {
-      const { preferences: preferencesState, createProfile } = useTextPreferences()
-      console.log(JSON.stringify(preferencesState))
+      const { preferences, createProfile } = useTextPreferences()
 
       createProfile({
-        name: textProfileFixture.name,
-        settings: textProfileFixture.settings
+        name: profile.name,
+        settings: profile.settings
       })
 
-      expect(preferencesState.profiles).toEqual([textProfileFixture])
+      expect(preferences.profiles).toEqual([profile])
     })
 
     it('should return the newly created profile id', () => {
       const { createProfile } = useTextPreferences()
 
       const newProfileId = createProfile({
-        name: textProfileFixture.name,
-        settings: textProfileFixture.settings
+        name: profile.name,
+        settings: profile.settings
       })
 
       expect(newProfileId).toEqual(1)
@@ -38,12 +37,12 @@ describe('useTextPreferences()', () => {
       } = useTextPreferences()
 
       createProfile({
-        name: textProfileFixture.name,
-        settings: textProfileFixture.settings
+        name: profile.name,
+        settings: profile.settings
       })
       createProfile({
-        name: textProfileFixture.name + ' second',
-        settings: textProfileFixture.settings
+        name: profile.name + ' second',
+        settings: profile.settings
       })
 
       expect(profiles[0].id).not.toBe(profiles[1].id)
@@ -52,18 +51,18 @@ describe('useTextPreferences()', () => {
 
   describe('updateProfileSettings()', () => {
     it('should update profile settings', () => {
-      const { preferences: preferencesState, setProfiles, updateProfileSettings } = useTextPreferences()
+      const { preferences, setProfiles, updateProfileSettings } = useTextPreferences()
       const newSettings: Settings = {
-        ...textProfileFixture.settings,
+        ...profile.settings,
         fontFamily: 'OpenDyslexic'
       }
-      setProfiles([textProfileFixture])
+      setProfiles([profile])
 
-      updateProfileSettings(textProfileFixture.id, newSettings)
+      updateProfileSettings(profile.id, newSettings)
 
-      expect(preferencesState.profiles).toEqual([
+      expect(preferences.profiles).toEqual([
         {
-          ...textProfileFixture,
+          ...profile,
           settings: newSettings
         }
       ])
@@ -71,10 +70,10 @@ describe('useTextPreferences()', () => {
 
     it('when profile id does not exist', () => {
       const { setProfiles, updateProfileSettings } = useTextPreferences()
-      setProfiles([textProfileFixture])
+      setProfiles([profile])
 
       expect(() => {
-        updateProfileSettings(1001, textProfileFixture.settings)
+        updateProfileSettings(1001, profile.settings)
       }).toThrow(NonExistingIdError)
     })
   })
@@ -82,29 +81,29 @@ describe('useTextPreferences()', () => {
   describe('setProfiles()', () => {
     // TODO: add active profile id validation
     it('should set profiles', () => {
-      const { preferences: preferencesState, setProfiles } = useTextPreferences()
+      const { preferences, setProfiles } = useTextPreferences()
 
-      setProfiles([textProfileFixture])
+      setProfiles([profile])
 
-      expect(preferencesState.profiles).toEqual([textProfileFixture])
+      expect(preferences.profiles).toEqual([profile])
     })
   })
 
   describe('setActiveProfileId()', () => {
     it('should set active profile id', async () => {
-      const { preferences: preferencesState, setActiveProfileId, setProfiles } = useTextPreferences()
+      const { preferences, setActiveProfileId, setProfiles } = useTextPreferences()
 
-      setProfiles([textProfileFixture])
-      setActiveProfileId(textProfileFixture.id)
+      setProfiles([profile])
+      setActiveProfileId(profile.id)
 
-      expect(preferencesState.activeProfileId).toEqual(textProfileFixture.id)
+      expect(preferences.activeProfileId).toEqual(profile.id)
     })
 
     describe('when the active profile id does not exist in profiles', () => {
       it('should throw', () => {
         const { setActiveProfileId, setProfiles } = useTextPreferences()
 
-        setProfiles([textProfileFixture])
+        setProfiles([profile])
 
         expect(() => setActiveProfileId(1001)).toThrow(NonExistingIdError)
       })
@@ -114,26 +113,26 @@ describe('useTextPreferences()', () => {
       it('should not throw', () => {
         const { setActiveProfileId, setProfiles } = useTextPreferences()
 
-        setProfiles([textProfileFixture])
-        setActiveProfileId(textProfileFixture.id)
+        setProfiles([profile])
+        setActiveProfileId(profile.id)
 
-        expect(() => setActiveProfileId(undefined)).not.toThrow()
+        expect(() => setActiveProfileId(null)).not.toThrow()
       })
     })
   })
 
   describe('reset()', () => {
     it('should reset profiles state', async () => {
-      const { preferences: preferencesState, reset, createProfile } = useTextPreferences()
+      const { preferences, reset, createProfile } = useTextPreferences()
 
       createProfile({
-        name: textProfileFixture.name,
-        settings: textProfileFixture.settings
+        name: profile.name,
+        settings: profile.settings
       })
       reset()
 
-      expect(preferencesState).toEqual({
-        activeProfileId: undefined,
+      expect(preferences).toEqual({
+        activeProfileId: null,
         profiles: []
       })
     })
