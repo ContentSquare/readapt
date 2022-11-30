@@ -7,7 +7,7 @@ import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
 
 import { CloseSettings } from '@readapt/shared-components'
 import { useTextPreferences, TextProfileId } from '@/entities/textPreferences'
-import { TextProfilesDropdown } from '@/features/textProfilesDropdown'
+import { TextProfilesEditDropdown } from '@/features/textProfilesEditDropdown'
 import { TextProfileSave } from '@/features/textProfileSave'
 import { TextAdaptationPreview } from '@/features/textAdaptationPreview'
 
@@ -76,7 +76,7 @@ const changeLanguage = (language: Language) => {
 </script>
 <template>
   <div class="container-fluid">
-    <TextProfilesDropdown v-model="selectedProfiledId" />
+    <TextProfilesEditDropdown v-model="selectedProfiledId" />
     <div class="mt-3">
       <div>
         <span class="h2">{{ $t('SETTINGS.MY_PREFERENCES') }}</span>
