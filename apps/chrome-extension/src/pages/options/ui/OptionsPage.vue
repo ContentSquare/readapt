@@ -73,7 +73,7 @@ const updateOption = (key: SettingsKey, value: unknown) => {
     [key]: value
   }
 }
-const changeLanguage = (language: Language) => store.commit('changeLanguage', language)
+const changeLanguage = (language: Language) => (settings.value.language = language)
 </script>
 <template>
   <div class="container-fluid">

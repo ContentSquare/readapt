@@ -13,9 +13,9 @@ const emit = defineEmits<{
   (event: 'input', profileId: TextProfileId | null): void
 }>()
 
-const { createProfile, updateProfileSettings, preferences } = useTextPreferences()
-
 const onClick = () => (props.value ? update() : create())
+
+const { createProfile, updateProfileSettings, preferences } = useTextPreferences()
 
 const update = () => {
   updateProfileSettings(props.value, props.settings)
@@ -27,8 +27,13 @@ const create = async () => {
   if (!newProfileName) {
     return
   }
-  if (existsProfileWithName(newProfileName)) {
+  if (profileNameExists(newProfileName)) {
     alert(`A profile with "${newProfileName}" name already exists! Please try another name.`)
+    return
+  }
+  const MAX_PROFILES = 20
+  if (preferences.profiles.length === MAX_PROFILES) {
+    alert('You can have up to 20 profiles. Please delete some profiles and try again.')
     return
   }
   const newProfileId = createProfile({
@@ -40,7 +45,7 @@ const create = async () => {
   alert('The profile has been created!')
 }
 
-const existsProfileWithName = (profileName: string): boolean => {
+const profileNameExists = (profileName: string): boolean => {
   return preferences.profiles.some(({ name }) => name === profileName)
 }
 </script>

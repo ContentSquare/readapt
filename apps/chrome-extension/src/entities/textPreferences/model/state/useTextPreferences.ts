@@ -2,6 +2,7 @@ import { readonly } from 'vue'
 import { Settings } from '@readapt/settings'
 import { TextProfile, TextProfileId } from '../TextPreferences'
 import { textPreferencesState as state } from './textPreferencesState'
+import { cloneDeep } from 'lodash'
 
 export class NonExistingIdError extends Error {}
 
@@ -12,7 +13,7 @@ export function useTextPreferences() {
   }
 
   const setProfiles = (profiles: TextProfile[]) => {
-    state.profiles = profiles
+    state.profiles = cloneDeep(profiles)
   }
 
   const generateNextProfileId = (): TextProfileId => {
@@ -25,7 +26,7 @@ export function useTextPreferences() {
     state.profiles.push({
       id: newProfileId,
       name,
-      settings
+      settings: cloneDeep(settings)
     })
     return newProfileId
   }
@@ -37,7 +38,7 @@ export function useTextPreferences() {
   const updateProfileSettings = (profileId: TextProfileId, settings: Settings) => {
     const profile = getProfileById(profileId)
     if (profile) {
-      profile.settings = settings
+      profile.settings = cloneDeep(settings)
     } else {
       throw new NonExistingIdError()
     }
