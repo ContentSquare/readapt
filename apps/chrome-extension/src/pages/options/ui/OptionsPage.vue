@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, ref, watch, watchEffect } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 import isEqual from 'lodash/isEqual'
 import { buildDefaultProfiles } from '@readapt/settings'
 
@@ -9,6 +9,7 @@ import { AdaptContainer, CloseSettings, PreviewContainer } from '@readapt/shared
 import { useTextPreferences, TextProfileId } from '@/entities/textPreferences'
 import { TextProfilesDropdown } from '@/features/textPropfilesDropdown'
 import { TextProfileSave } from '@/features/textProfileSave'
+import { useLangTextPreview } from '../../models/useLangTextPreview'
 
 import SettingsMenuGeneral from '@/views/SettingsMenuGeneral.vue'
 import SettingsMenuTableItems from '@/views/SettingsMenuTableItems.vue'
@@ -37,8 +38,6 @@ watchEffect(() => {
 
 type TabName = 'GENERAL' | 'LETTERS' | 'PHONEMES'
 
-const textPreview = computed(() => store.getters.getTextPreview)
-
 const activeTab = ref<TabName>('GENERAL')
 
 const activateTab = (tabName: TabName) => {
@@ -59,10 +58,7 @@ const close = async () => {
   await closeCurrentTab()
 }
 
-const contentToAdapt = ref(textPreview.value)
-watch(textPreview, () => (contentToAdapt.value = textPreview.value))
-
-const updateTextToAdapt = (value: string) => (contentToAdapt.value = value)
+const { text, updateText } = useLangTextPreview(computed(() => settings.value.language))
 
 const letterOptions = computed<ColoredOption[]>(() => store.getters.getLetterOptions)
 const phonemeOptions = computed<ColoredOption[]>(() => store.getters.getPhonemeOptions)
@@ -123,10 +119,10 @@ const changeLanguage = (language: Language) => (settings.value.language = langua
       <b-col lg="4">
         <div class="d-flex flex-column align-content-between h-100">
           <h3>{{ $t('SETTINGS.TEXT_PREVIEW') }}</h3>
-          <PreviewContainer class="preview-container" :content-to-adapt="contentToAdapt" @update="updateTextToAdapt">
+          <PreviewContainer class="preview-container" :content-to-adapt="text" @update="updateText">
             <AdaptContainer
               :adapt-html-element-async="adaptHtmlElementAsyncFn()"
-              :content-to-adapt="$sanitize('<p>' + contentToAdapt + '</p>')"
+              :content-to-adapt="$sanitize('<p>' + text + '</p>')"
               :settings="settings"
             />
           </PreviewContainer>

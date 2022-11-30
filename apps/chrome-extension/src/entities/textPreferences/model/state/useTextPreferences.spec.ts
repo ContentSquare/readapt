@@ -92,8 +92,8 @@ describe('useTextPreferences()', () => {
   describe('setActiveProfileId()', () => {
     it('should set active profile id', async () => {
       const { preferences, setActiveProfileId, setProfiles } = useTextPreferences()
-
       setProfiles([profile])
+
       setActiveProfileId(profile.id)
 
       expect(preferences.activeProfileId).toEqual(profile.id)
@@ -102,14 +102,13 @@ describe('useTextPreferences()', () => {
     describe('when the active profile id does not exist in profiles', () => {
       it('should throw', () => {
         const { setActiveProfileId, setProfiles } = useTextPreferences()
-
         setProfiles([profile])
 
         expect(() => setActiveProfileId(1001)).toThrow(NonExistingIdError)
       })
     })
 
-    describe('when the active profile id is undefined', () => {
+    describe('when the active profile id is null', () => {
       it('should not throw', () => {
         const { setActiveProfileId, setProfiles } = useTextPreferences()
 
@@ -123,12 +122,9 @@ describe('useTextPreferences()', () => {
 
   describe('reset()', () => {
     it('should reset profiles state', async () => {
-      const { preferences, reset, createProfile } = useTextPreferences()
+      const { preferences, reset, setProfiles } = useTextPreferences()
+      setProfiles([profile])
 
-      createProfile({
-        name: profile.name,
-        settings: profile.settings
-      })
       reset()
 
       expect(preferences).toEqual({
