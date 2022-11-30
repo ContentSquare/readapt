@@ -5,11 +5,11 @@ import { buildDefaultProfiles } from '@readapt/settings'
 
 import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
 
-import { AdaptContainer, CloseSettings, PreviewContainer } from '@readapt/shared-components'
+import { CloseSettings } from '@readapt/shared-components'
 import { useTextPreferences, TextProfileId } from '@/entities/textPreferences'
-import { TextProfilesDropdown } from '@/features/textPropfilesDropdown'
+import { TextProfilesDropdown } from '@/features/textProfilesDropdown'
 import { TextProfileSave } from '@/features/textProfileSave'
-import { useLangTextPreview } from '../../models/useLangTextPreview'
+import { TextAdaptationPreview } from '@/features/textAdaptationPreview'
 
 import SettingsMenuGeneral from '@/views/SettingsMenuGeneral.vue'
 import SettingsMenuTableItems from '@/views/SettingsMenuTableItems.vue'
@@ -18,7 +18,6 @@ import { ColoredOption, Language, Settings, SettingsKey } from '@readapt/setting
 
 import { store } from '@/store'
 import utils from '@/chrome'
-import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
 
 const selectedProfiledId = ref<TextProfileId | null>(null)
 
@@ -57,8 +56,6 @@ const isSettingsDirty = computed(() => !isEqual(storedSettings?.value, settings.
 const close = async () => {
   await closeCurrentTab()
 }
-
-const { text, updateText } = useLangTextPreview(computed(() => settings.value.language))
 
 const letterOptions = computed<ColoredOption[]>(() => store.getters.getLetterOptions)
 const phonemeOptions = computed<ColoredOption[]>(() => store.getters.getPhonemeOptions)
@@ -119,13 +116,7 @@ const changeLanguage = (language: Language) => (settings.value.language = langua
       <b-col lg="4">
         <div class="d-flex flex-column align-content-between h-100">
           <h3>{{ $t('SETTINGS.TEXT_PREVIEW') }}</h3>
-          <PreviewContainer class="preview-container" :content-to-adapt="text" @update="updateText">
-            <AdaptContainer
-              :adapt-html-element-async="adaptHtmlElementAsyncFn()"
-              :content-to-adapt="$sanitize('<p>' + text + '</p>')"
-              :settings="settings"
-            />
-          </PreviewContainer>
+          <TextAdaptationPreview class="preview-container" :settings="settings" />
 
           <div class="mt-3 d-flex justify-content-between">
             <TextProfileSave v-model="selectedProfiledId" :settings="settings" />
