@@ -66,7 +66,13 @@ const updateOption = (key: SettingsKey, value: unknown) => {
     [key]: value
   }
 }
-const changeLanguage = (language: Language) => (settings.value.language = language)
+const changeLanguage = (language: Language) => {
+  settings.value = {
+    ...buildDefaultProfiles()[language],
+    ...settings.value,
+    language
+  }
+}
 </script>
 <template>
   <div class="container-fluid">
