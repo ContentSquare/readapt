@@ -1,7 +1,7 @@
 /* global chrome */
 import { maskState, rulerState, addMask, addRuler, updateRulerSettings, removeRuler, removeMask, updateMaskSettings } from './reading-tools'
 import { loadVisualEngine } from './load-visual-engine'
-import { STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES } from '@/entities/textAdaptationPreferences'
+import { STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES } from '@/entities/textPreferences'
 
 const mousePos = {
   x: 0,

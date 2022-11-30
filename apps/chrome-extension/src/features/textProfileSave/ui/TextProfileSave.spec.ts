@@ -1,39 +1,37 @@
 import { mount } from '@vue/test-utils'
-import TextAdaptationProfileSave from './TextAdaptationProfileSave.vue'
-import { TextAdaptationPreferencesFixtures, useTextAdaptationPreferences } from '@/entities/textAdaptationPreferences'
+import TextProfileSave from './TextProfileSave.vue'
+import { textSettingsFixture as settings, textProfileFixture as profile, useTextPreferences } from '@/entities/textPreferences'
 import { mockAlert, mockPrompt } from '@/shared/test'
 import { Settings } from '@readapt/settings'
 
-describe('TextAdaptationProfileSave', () => {
+describe('TextProfileSave', () => {
   afterEach(() => {
-    useTextAdaptationPreferences().reset()
+    useTextPreferences().reset()
     jest.restoreAllMocks()
   })
-
-  const { settings, profile } = TextAdaptationPreferencesFixtures
 
   describe('when save button is clicked', () => {
     describe('when the profile is new', () => {
       const newProfileFactory = (newProfileName = 'My Profile') => {
-        const wrapper = mount(TextAdaptationProfileSave, {
+        const wrapper = mount(TextProfileSave, {
           propsData: {
             value: null,
             settings
           }
         })
-        const { preferencesState, setProfiles } = useTextAdaptationPreferences()
+        const { preferences, setProfiles } = useTextPreferences()
 
         mockPrompt(newProfileName)
 
-        return { wrapper, preferencesState, setProfiles, alert: mockAlert() }
+        return { wrapper, preferences, setProfiles, alert: mockAlert() }
       }
 
       it('should create a new profile', async () => {
-        const { wrapper, preferencesState } = newProfileFactory()
+        const { wrapper, preferences } = newProfileFactory()
 
         await wrapper.find('[data-test-id=save]').trigger('click')
 
-        expect(preferencesState.profiles).toEqual([
+        expect(preferences.profiles).toEqual([
           {
             id: expect.anything(),
             name: 'My Profile',
@@ -53,7 +51,7 @@ describe('TextAdaptationProfileSave', () => {
       it('should emit "input" with the new profile id', async () => {
         const {
           wrapper,
-          preferencesState: { profiles }
+          preferences: { profiles }
         } = newProfileFactory()
 
         await wrapper.find('[data-test-id=save]').trigger('click')
@@ -63,22 +61,22 @@ describe('TextAdaptationProfileSave', () => {
 
       describe('when user did not introduce a profile name', () => {
         it('should not create a new profile', async () => {
-          const { wrapper, preferencesState } = newProfileFactory('')
+          const { wrapper, preferences } = newProfileFactory('')
 
           await wrapper.find('[data-test-id=save]').trigger('click')
 
-          expect(preferencesState.profiles).toEqual([])
+          expect(preferences.profiles).toEqual([])
         })
       })
 
       describe('when user introduced an existing profile name', () => {
         it('should not create a new profile', async () => {
-          const { wrapper, preferencesState, setProfiles } = newProfileFactory(profile.name)
+          const { wrapper, preferences, setProfiles } = newProfileFactory(profile.name)
           setProfiles([profile])
 
           await wrapper.find('[data-test-id=save]').trigger('click')
 
-          expect(preferencesState.profiles).toEqual([profile])
+          expect(preferences.profiles).toEqual([profile])
         })
 
         it('should notify that a profile with the same name exists', async () => {
@@ -100,24 +98,24 @@ describe('TextAdaptationProfileSave', () => {
       }
 
       const editProfileFactory = () => {
-        const wrapper = mount(TextAdaptationProfileSave, {
+        const wrapper = mount(TextProfileSave, {
           propsData: {
             value: profile.id,
             settings: newSettings
           }
         })
-        const { preferencesState, setProfiles } = useTextAdaptationPreferences()
+        const { preferences, setProfiles } = useTextPreferences()
 
-        return { wrapper, preferencesState, setProfiles, alert: mockAlert() }
+        return { wrapper, preferences, setProfiles, alert: mockAlert() }
       }
 
       it('should edit the profile', async () => {
-        const { wrapper, preferencesState, setProfiles } = editProfileFactory()
+        const { wrapper, preferences, setProfiles } = editProfileFactory()
         setProfiles([profile])
 
         await wrapper.find('[data-test-id=save]').trigger('click')
 
-        expect(preferencesState.profiles).toEqual([
+        expect(preferences.profiles).toEqual([
           {
             ...profile,
             settings: newSettings

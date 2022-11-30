@@ -1,4 +1,4 @@
-export const storageStateV1 = {
+export const storageStateV1Fixture = {
   fontFamily: 'inherit',
   fontSize: '200%',
   language: 'en',
@@ -84,13 +84,13 @@ export const storageStateV1 = {
   wordSpacing: 'inherit'
 }
 
-export const storageStateV2 = {
+export const storageStateV2Fixture = {
   activeProfileId: 1,
   profiles: [
     {
       name: 'Default',
       id: 1,
-      settings: storageStateV1
+      settings: storageStateV1Fixture
     }
   ]
 }

@@ -1,7 +1,6 @@
 /* global chrome */
 import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
-// import { STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES } from '@/features/textAdaptationPreferencesPersistence'
 
 const getCurrentTab = async (): Promise<chrome.tabs.Tab> => {
   const queryOptions = { active: true, currentWindow: true }
