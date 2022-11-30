@@ -7,7 +7,7 @@ export class NonExistingIdError extends Error {}
 
 export function useTextPreferences() {
   const reset = () => {
-    state.activeProfileId = undefined
+    state.activeProfileId = null
     state.profiles = []
   }
 
@@ -43,8 +43,8 @@ export function useTextPreferences() {
     }
   }
 
-  const setActiveProfileId = (activeProfileId: TextProfileId | undefined) => {
-    const isValidActoveProfileId = activeProfileId === undefined || Boolean(getProfileById(activeProfileId))
+  const setActiveProfileId = (activeProfileId: TextProfileId | null) => {
+    const isValidActoveProfileId = activeProfileId === null || Boolean(getProfileById(activeProfileId))
     if (isValidActoveProfileId) {
       state.activeProfileId = activeProfileId
     } else {

@@ -1,26 +1,23 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref, watch, watchEffect } from 'vue'
+import { computed, ref, watch, watchEffect } from 'vue'
 import isEqual from 'lodash/isEqual'
-import Vue from 'vue'
 import { buildDefaultProfiles } from '@readapt/settings'
 
 import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
 
-import { AdaptContainer, CloseSettings, PreviewContainer, SaveSettings } from '@readapt/shared-components'
+import { AdaptContainer, CloseSettings, PreviewContainer } from '@readapt/shared-components'
 import { useTextPreferences, TextProfileId } from '@/entities/textPreferences'
-import { TextAdaptationProfilesDropdown } from '@/features/textAdaptationPropfilesDropdown'
-import { TextAdaptationProfileSave } from '@/features/textAdaptationProfileSave'
+import { TextProfilesDropdown } from '@/features/textPropfilesDropdown'
+import { TextProfileSave } from '@/features/textProfileSave'
 
 import SettingsMenuGeneral from '@/views/SettingsMenuGeneral.vue'
 import SettingsMenuTableItems from '@/views/SettingsMenuTableItems.vue'
 
 import { ColoredOption, Language, Settings, SettingsKey } from '@readapt/settings'
 
-import { store, getStateFromLocalStorage } from '@/store'
-import router from '@/router'
+import { store } from '@/store'
 import utils from '@/chrome'
 import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
-// import { uniqueId } from '@/shared/lib'
 
 const selectedProfiledId = ref<TextProfileId | null>(null)
 
@@ -73,7 +70,7 @@ const isSettingsDirty = computed(() => !isEqual(storedSettings?.value, settings.
 //   }
 // }
 const close = async () => {
-  store.commit('resetState', getStateFromLocalStorage())
+  // store.commit('resetState', getStateFromLocalStorage())
   await closeCurrentTab()
 }
 
@@ -96,7 +93,7 @@ const changeLanguage = (language: Language) => store.commit('changeLanguage', la
 </script>
 <template>
   <div class="container-fluid">
-    <text-adaptation-profiles-dropdown v-model="selectedProfiledId" />
+    <TextProfilesDropdown v-model="selectedProfiledId" />
     <div class="mt-3">
       <div>
         <span class="h2">{{ $t('SETTINGS.MY_PREFERENCES') }}</span>
@@ -151,7 +148,7 @@ const changeLanguage = (language: Language) => store.commit('changeLanguage', la
           </PreviewContainer>
 
           <div class="mt-3 d-flex justify-content-between">
-            <TextAdaptationProfileSave v-model="selectedProfiledId" :settings="settings" />
+            <TextProfileSave v-model="selectedProfiledId" :settings="settings" />
             <CloseSettings :is-settings-dirty="isSettingsDirty" @close-settings="close" />
           </div>
         </div>

@@ -1,7 +1,7 @@
 import { MemoryStorage } from '@/shared/storage'
 import { STORAGE_KEY_V1, STORAGE_KEY_V2 } from '../../config/storage'
 import { executeStorageMigrations } from './executeStorageMigrations'
-import { storageStateV1Fixture, storageStateV2Fixture } from './storageStateByVersionsFixtures'
+import { storageStateV1Fixture, storageStateV2Fixture } from './storageStateVersionsFixtures'
 
 describe('executeStorageMigrations()', () => {
   it('should execute the migration scripts', async () => {
