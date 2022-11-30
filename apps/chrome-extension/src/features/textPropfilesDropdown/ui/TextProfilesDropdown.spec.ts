@@ -1,20 +1,20 @@
 import TextAdaptationProfilesDropdown from './TextAdaptationProfilesDropdown.vue'
 import { mount } from '@vue/test-utils'
-import { TextAdaptationPreferencesFixtures, useTextAdaptationPreferences } from '@/entities/textAdaptationPreferences'
-import { TextAdaptationProfileId } from '@/entities/textAdaptationPreferences/model/Preferences'
+import { TextAdaptationPreferencesFixtures, useTextPreferences } from '@/entities/textPreferences'
+import { TextProfileId } from '@/entities/textPreferences/model/TextPreferences'
 
-describe('TextAdaptationProfilesDropdown.vue', () => {
-  const { profile } = TextAdaptationPreferencesFixtures
+describe('TextProfilesDropdown', () => {
+  const { textProfileFixture: profile } = TextAdaptationPreferencesFixtures
 
   beforeEach(() => {
-    useTextAdaptationPreferences().createProfile(profile)
+    useTextPreferences().createProfile(profile)
   })
 
   afterEach(() => {
-    useTextAdaptationPreferences().reset()
+    useTextPreferences().reset()
   })
 
-  const factory = (profileId: TextAdaptationProfileId | null = null) => {
+  const factory = (profileId: TextProfileId | null = null) => {
     const wrapper = mount(TextAdaptationProfilesDropdown, {
       propsData: {
         value: profileId

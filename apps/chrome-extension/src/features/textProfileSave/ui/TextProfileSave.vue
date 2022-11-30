@@ -1,19 +1,19 @@
 <script lang="ts" setup>
-import { useTextAdaptationPreferences, TextAdaptationProfileId } from '@/entities/textAdaptationPreferences'
+import { useTextPreferences, TextProfileId } from '@/entities/textPreferences'
 import { Settings } from '@readapt/settings'
 import { BButton } from 'bootstrap-vue'
 import { nextTick } from 'vue'
 
 const props = defineProps<{
-  value: TextAdaptationProfileId | null
+  value: TextProfileId | null
   settings: Settings
 }>()
 
 const emit = defineEmits<{
-  (event: 'input', profileId: TextAdaptationProfileId | null): void
+  (event: 'input', profileId: TextProfileId | null): void
 }>()
 
-const { createProfile, updateProfileSettings, preferencesState } = useTextAdaptationPreferences()
+const { createProfile, updateProfileSettings, preferences } = useTextPreferences()
 
 const onClick = () => (props.value ? update() : create())
 
@@ -23,7 +23,7 @@ const update = () => {
 }
 
 const create = async () => {
-  const newProfileName = prompt('What\'s the new profile name?')
+  const newProfileName = prompt("What's the new profile name?")
   if (!newProfileName) {
     return
   }
@@ -41,7 +41,7 @@ const create = async () => {
 }
 
 const existsProfileWithName = (profileName: string): boolean => {
-  return preferencesState.profiles.some(({ name }) => name === profileName)
+  return preferences.profiles.some(({ name }) => name === profileName)
 }
 </script>
 <template>

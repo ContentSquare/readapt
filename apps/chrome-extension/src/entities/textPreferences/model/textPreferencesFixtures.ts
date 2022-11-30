@@ -1,7 +1,7 @@
 import { Settings } from '@readapt/settings'
-import { TextAdaptationPreferences, TextAdaptationProfile } from './Preferences'
+import { TextPreferences, TextProfile } from './TextPreferences'
 
-export const settings: Settings = {
+export const textSettingsFixture: Settings = {
   fontFamily: 'inherit',
   fontSize: '200%',
   language: 'en',
@@ -87,13 +87,13 @@ export const settings: Settings = {
   wordSpacing: 'inherit'
 }
 
-export const profile: TextAdaptationProfile = {
+export const textProfileFixture: TextProfile = {
   name: 'Default',
   id: 1,
-  settings
+  settings: textSettingsFixture
 }
 
-export const preferences: TextAdaptationPreferences = {
-  activeProfileId: profile.id,
-  profiles: [profile]
+export const textPreferencesFixture: TextPreferences = {
+  activeProfileId: textProfileFixture.id,
+  profiles: [textProfileFixture]
 }

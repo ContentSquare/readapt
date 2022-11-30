@@ -6,7 +6,7 @@ import i18n from './i18n'
 import router from './router'
 import { store } from './store'
 
-import { persistStateToStorage } from '@/entities/textAdaptationPreferences'
+import { persistTextPreferencesState } from '@/entities/textPreferences'
 import { LocalStorage } from '@/shared/storage'
 
 import './theme.scss'
@@ -16,7 +16,7 @@ Vue.config.productionTip = false
 Vue.use(VueSanitize)
 
 const mountApp = async () => {
-  await persistStateToStorage(chrome.extension ? chrome.storage.local : new LocalStorage())
+  await persistTextPreferencesState(chrome.extension ? chrome.storage.local : new LocalStorage())
 
   new Vue({
     i18n,

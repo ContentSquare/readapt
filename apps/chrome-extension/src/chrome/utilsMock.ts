@@ -1,8 +1,6 @@
 import router from '@/router'
 import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
-import { Settings } from '@readapt/settings'
-import { TextAdaptationPreferences } from '@/entities/textAdaptationPreferences'
 
 const getCurrentTab = async (): Promise<chrome.tabs.Tab> => {
   console.log('getCurrentTab mock')

@@ -7,7 +7,7 @@ import { buildDefaultProfiles } from '@readapt/settings'
 import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
 
 import { AdaptContainer, CloseSettings, PreviewContainer, SaveSettings } from '@readapt/shared-components'
-import { useTextAdaptationPreferences, TextAdaptationProfileId } from '@/entities/textAdaptationPreferences'
+import { useTextPreferences, TextProfileId } from '@/entities/textPreferences'
 import { TextAdaptationProfilesDropdown } from '@/features/textAdaptationPropfilesDropdown'
 import { TextAdaptationProfileSave } from '@/features/textAdaptationProfileSave'
 
@@ -22,9 +22,9 @@ import utils from '@/chrome'
 import { adaptHtmlElementAsyncFn } from '@/visualEngine/adaptHtmlElementAsync'
 // import { uniqueId } from '@/shared/lib'
 
-const selectedProfiledId = ref<TextAdaptationProfileId | null>(null)
+const selectedProfiledId = ref<TextProfileId | null>(null)
 
-const { getProfileById } = useTextAdaptationPreferences()
+const { getProfileById } = useTextPreferences()
 
 const defaultSettings = buildDefaultProfiles()['en']
 

@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { TextAdaptationProfileId, useTextAdaptationPreferences } from '@/entities/textAdaptationPreferences'
+import { TextProfileId, useTextPreferences } from '@/entities/textPreferences'
 
-const { preferencesState } = useTextAdaptationPreferences()
+const { preferences } = useTextPreferences()
 
 const props = defineProps<{
-  value: TextAdaptationProfileId | undefined
+  value: TextProfileId | undefined
 }>()
 
 const emit = defineEmits<{
-  (event: 'input', profileId: TextAdaptationProfileId | undefined): void
+  (event: 'input', profileId: TextProfileId | undefined): void
 }>()
 
 const onChange = ({ target: { value } }: Event) => {

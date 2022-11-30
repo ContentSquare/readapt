@@ -1,0 +1,6 @@
+export type { TextProfile, TextPreferences, TextProfileId } from './model/TextPreferences'
+export { textPreferencesFixture, textProfileFixture, textSettingsFixture } from './model/textPreferencesFixtures'
+export { useTextPreferences } from './model/state/useTextPreferences'
+export { persistTextPreferencesState } from './storage/persistTextPreferencesState'
+export { executeStorageMigrations } from './storage/migrations/executeStorageMigrations'
+export { STORAGE_KEY_TEXT_PREFERENCES as STORAGE_KEY_TEXT_ADAPTATION_PREFERENCES } from './config/storage'
