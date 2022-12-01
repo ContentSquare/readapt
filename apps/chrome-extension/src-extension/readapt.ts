@@ -118,9 +118,10 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 })
 
 const requestSettings = async () => {
-  const { [TEXT_PREFERENCES_STORAGE_KEY]: textAdaptationPreferences } = (await chrome.storage.local.get(TEXT_PREFERENCES_STORAGE_KEY)) as any
-  if (textAdaptationPreferences && textAdaptationPreferences?.profiles?.length > 1) {
-    return textAdaptationPreferences.profiles[0].settings
+  const { [TEXT_PREFERENCES_STORAGE_KEY]: preferences } = (await chrome.storage.local.get(TEXT_PREFERENCES_STORAGE_KEY)) as any
+  if (preferences && preferences.profiles.length > 1) {
+    const profile = preferences.profiles.find((profile: any) => profile.id === preferences.activeProfileId)
+    return profile?.settings
   }
 }
 
