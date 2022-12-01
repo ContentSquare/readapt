@@ -19,17 +19,18 @@ describe('TextProfileSave', () => {
             settings
           }
         })
-        const { preferences, setProfiles } = useTextPreferences()
+        const { preferences, setProfiles, setActiveProfileId } = useTextPreferences()
 
         mockPrompt(newProfileName)
+        const save = async () => await wrapper.find('[data-test-id=save]').trigger('click')
 
-        return { wrapper, preferences, setProfiles, alert: mockAlert() }
+        return { wrapper, preferences, setProfiles, setActiveProfileId, alert: mockAlert(), save }
       }
 
       it('should create a new profile', async () => {
-        const { wrapper, preferences } = newProfileFactory()
+        const { save, preferences } = newProfileFactory()
 
-        await wrapper.find('[data-test-id=save]').trigger('click')
+        await save()
 
         expect(preferences.profiles).toEqual([
           {
@@ -41,9 +42,9 @@ describe('TextProfileSave', () => {
       })
 
       it('should notify about new profile creation', async () => {
-        const { wrapper, alert } = newProfileFactory()
+        const { save, alert } = newProfileFactory()
 
-        await wrapper.find('[data-test-id=save]').trigger('click')
+        await save()
 
         expect(alert).toHaveBeenCalledWith('The profile has been created!')
       })
@@ -51,19 +52,42 @@ describe('TextProfileSave', () => {
       it('should emit "input" with the new profile id', async () => {
         const {
           wrapper,
+          save,
           preferences: { profiles }
         } = newProfileFactory()
 
-        await wrapper.find('[data-test-id=save]').trigger('click')
+        await save()
 
         expect(wrapper.emitted('input')).toEqual([[profiles[0].id]])
       })
 
+      describe('when having no profiles saved', () => {
+        it('should mark the created profile as active', async () => {
+          const { save, preferences } = newProfileFactory()
+
+          await save()
+
+          expect(preferences.activeProfileId).toBe(1)
+        })
+      })
+
+      describe('when having profiles saved', () => {
+        it('should not mark the created profile as active', async () => {
+          const { preferences, setProfiles, setActiveProfileId, save } = newProfileFactory()
+          setProfiles([profile])
+          setActiveProfileId(profile.id)
+
+          await save()
+
+          expect(preferences.activeProfileId).toBe(profile.id)
+        })
+      })
+
       describe('when user did not introduce a profile name', () => {
         it('should not create a new profile', async () => {
-          const { wrapper, preferences } = newProfileFactory('')
+          const { save, preferences } = newProfileFactory('')
 
-          await wrapper.find('[data-test-id=save]').trigger('click')
+          await save()
 
           expect(preferences.profiles).toEqual([])
         })
@@ -71,25 +95,25 @@ describe('TextProfileSave', () => {
 
       describe('when user introduced an existing profile name', () => {
         it('should not create a new profile', async () => {
-          const { wrapper, preferences, setProfiles } = newProfileFactory(profile.name)
+          const { save, preferences, setProfiles } = newProfileFactory(profile.name)
           setProfiles([profile])
 
-          await wrapper.find('[data-test-id=save]').trigger('click')
+          await save()
 
           expect(preferences.profiles).toEqual([profile])
         })
 
         it('should notify that a profile with the same name exists', async () => {
-          const { wrapper, setProfiles, alert } = newProfileFactory(profile.name)
+          const { save, setProfiles, alert } = newProfileFactory(profile.name)
           setProfiles([profile])
 
-          await wrapper.find('[data-test-id=save]').trigger('click')
+          await save()
 
           expect(alert).toHaveBeenCalledWith(`A profile with "${profile.name}" name already exists! Please try another name.`)
         })
       })
 
-      describe('when there are 20 profiles created', () => {
+      describe('when having 20 profiles', () => {
         const profiles = Array.from(Array(20), (_, index) => {
           const id = index + 1
           return {
@@ -100,19 +124,19 @@ describe('TextProfileSave', () => {
         })
 
         it('should not create a new profile', async () => {
-          const { wrapper, preferences, setProfiles } = newProfileFactory()
+          const { save, preferences, setProfiles } = newProfileFactory()
           setProfiles(profiles)
 
-          await wrapper.find('[data-test-id=save]').trigger('click')
+          await save()
 
           expect(preferences.profiles).toStrictEqual(profiles)
         })
 
         it('should notify about max number of profiles', async () => {
-          const { wrapper, alert, setProfiles } = newProfileFactory()
+          const { save, alert, setProfiles } = newProfileFactory()
           setProfiles(profiles)
 
-          await wrapper.find('[data-test-id=save]').trigger('click')
+          await save()
 
           expect(alert).toHaveBeenCalledWith('You can have up to 20 profiles. Please delete some profiles and try again.')
         })
@@ -135,14 +159,16 @@ describe('TextProfileSave', () => {
         })
         const { preferences, setProfiles } = useTextPreferences()
 
-        return { wrapper, preferences, setProfiles, alert: mockAlert() }
+        const save = async () => await wrapper.find('[data-test-id=save]').trigger('click')
+
+        return { wrapper, preferences, setProfiles, alert: mockAlert(), save }
       }
 
       it('should edit the profile', async () => {
-        const { wrapper, preferences, setProfiles } = editProfileFactory()
+        const { save, preferences, setProfiles } = editProfileFactory()
         setProfiles([profile])
 
-        await wrapper.find('[data-test-id=save]').trigger('click')
+        await save()
 
         expect(preferences.profiles).toEqual([
           {
@@ -153,10 +179,10 @@ describe('TextProfileSave', () => {
       })
 
       it('should notify about profile update', async () => {
-        const { wrapper, alert, setProfiles } = editProfileFactory()
+        const { save, alert, setProfiles } = editProfileFactory()
         setProfiles([profile])
 
-        await wrapper.find('[data-test-id=save]').trigger('click')
+        await save()
 
         expect(alert).toHaveBeenCalledWith('The profile has been updated!')
       })

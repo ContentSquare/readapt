@@ -15,7 +15,7 @@ const emit = defineEmits<{
 
 const onClick = () => (props.value ? update() : create())
 
-const { createProfile, updateProfileSettings, preferences } = useTextPreferences()
+const { preferences, createProfile, updateProfileSettings, setActiveProfileId } = useTextPreferences()
 
 const update = () => {
   updateProfileSettings(props.value, props.settings)
@@ -40,6 +40,9 @@ const create = async () => {
     settings: props.settings,
     name: newProfileName
   })
+  if (preferences.profiles.length === 1) {
+    setActiveProfileId(newProfileId)
+  }
   await nextTick()
   emit('input', newProfileId)
   alert('The profile has been created!')
