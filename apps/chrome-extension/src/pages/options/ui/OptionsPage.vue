@@ -77,10 +77,10 @@ const changeLanguage = (language: Language) => {
 </script>
 <template>
   <div class="container-fluid">
-    <TextProfileEditDropdown v-model="selectedProfiledId" />
     <div class="mt-3">
-      <div>
-        <span class="h2">{{ $t('SETTINGS.MY_PREFERENCES') }}</span>
+      <div class="mb-2">
+        <h2 class="options-page__title mr-2">Profile:</h2>
+        <TextProfileEditDropdown class="options-page__profiles-dropdown" v-model="selectedProfiledId" />
         <a class="ml-2 float-right" :href="settingsFile" download="settings.json" target="_blank">{{ $t('SETTINGS.DOWNLOAD_SETTINGS') }}</a>
       </div>
       <b-nav class="d-flex flex-row">
@@ -136,6 +136,16 @@ const changeLanguage = (language: Language) => {
 </template>
 
 <style lang="scss" scoped>
+.options-page {
+  &__title {
+    display: inline;
+  }
+
+  &__profiles-dropdown {
+    font-size: 24px;
+    width: 200px;
+  }
+}
 .nav-item {
   a {
     font-weight: bold;
