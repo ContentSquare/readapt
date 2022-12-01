@@ -4,15 +4,12 @@ import { textProfileFixture as profile, useTextPreferences } from '@/entities/te
 import { TextProfileId } from '@/entities/textPreferences/model/TextPreferences'
 
 describe('TextProfileEditDropdown', () => {
-  beforeEach(() => {
-    useTextPreferences().setProfiles([profile])
-  })
-
   afterEach(() => {
     useTextPreferences().reset()
   })
 
   const factory = (profileId: TextProfileId | null = null) => {
+    useTextPreferences().setProfiles([profile])
     const wrapper = mount(TextProfileEditDropdown, {
       propsData: {
         value: profileId
