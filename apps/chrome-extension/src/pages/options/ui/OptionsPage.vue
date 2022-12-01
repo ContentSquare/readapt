@@ -7,7 +7,7 @@ import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
 
 import { CloseSettings } from '@readapt/shared-components'
 import { useTextPreferences, TextProfileId } from '@/entities/textPreferences'
-import { TextProfilesEditDropdown } from '@/features/textProfilesEditDropdown'
+import { TextProfileEditDropdown } from '@/features/textProfileEditDropdown'
 import { TextProfileSave } from '@/features/textProfileSave'
 import { TextAdaptationPreview } from '@/features/textAdaptationPreview'
 
@@ -25,7 +25,7 @@ const { getProfileById } = useTextPreferences()
 
 const defaultSettings = buildDefaultProfiles()['en']
 
-const settings = ref(defaultSettings) //computed(() => store.getters.getSettings)
+const settings = ref(defaultSettings)
 
 watchEffect(() => {
   if (selectedProfiledId.value) {
@@ -67,6 +67,7 @@ const updateOption = (key: SettingsKey, value: unknown) => {
   }
 }
 const changeLanguage = (language: Language) => {
+  // TODO: does the logic belong here?
   settings.value = {
     ...buildDefaultProfiles()[language],
     ...settings.value,
@@ -76,7 +77,7 @@ const changeLanguage = (language: Language) => {
 </script>
 <template>
   <div class="container-fluid">
-    <TextProfilesEditDropdown v-model="selectedProfiledId" />
+    <TextProfileEditDropdown v-model="selectedProfiledId" />
     <div class="mt-3">
       <div>
         <span class="h2">{{ $t('SETTINGS.MY_PREFERENCES') }}</span>

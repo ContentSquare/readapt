@@ -4,7 +4,7 @@ import TextProfilesActiveDropdown from './TextProfilesActiveDropdown.vue'
 import { textProfileFixture as profile, useTextPreferences } from '@/entities/textPreferences'
 import { TextProfileId } from '@/entities/textPreferences/model/TextPreferences'
 
-describe('TextProfilesActiveDropdown', () => {
+describe('TextProfileActiveDropdown', () => {
   beforeEach(() => {
     useTextPreferences().setProfiles([profile])
   })
