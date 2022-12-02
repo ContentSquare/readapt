@@ -24,78 +24,78 @@ jobs:
 
       - uses: ./.github/actions/bootstrap
 
-  build:
-    needs: bootstrap
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
+  # build:
+  #   needs: bootstrap
+  #   name: Build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16.x
 
       - uses: ./.github/actions/chrome-extension-build
       - uses: ./.github/actions/ms-word-addin-build
 
-  lint:
-    needs: build
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
+  # lint:
+  #   needs: build
+  #   name: Lint
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16.x
 
       - run: yarn lint
 
-  test:
-    needs: build
-    name: Test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
+  # test:
+  #   needs: build
+  #   name: Test
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16.x
 
       - run: yarn test --ci
 
-  version:
-    needs: build
-    name: Version
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
+  # version:
+  #   needs: build
+  #   name: Version
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16.x
 
       - uses: ./.github/actions/lerna-version
         with:
           version: ${{ inputs.version }}
 
-  package:
-    needs: version
-    name: Package
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
+  # package:
+  #   needs: version
+  #   name: Package
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16.x
 
       - uses: ./.github/actions/chrome-extension-package
 
-  deploy:
-    needs: package
-    name: Deploy
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
+  # deploy:
+  #   needs: package
+  #   name: Deploy
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16.x
 
       - uses: ./.github/actions/lerna-publish
       - uses: ./.github/actions/gh-create-release
