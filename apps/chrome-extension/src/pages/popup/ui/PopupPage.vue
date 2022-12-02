@@ -1,15 +1,13 @@
 <script lang="ts" setup>
 import { computed, ref, watchEffect } from 'vue'
 import { BButton, BFormCheckbox, BImg } from 'bootstrap-vue'
-import isEqual from 'lodash/isEqual'
 
-import { buildDefaultProfiles, Profiles } from '@readapt/settings'
 import { useVersion } from '@readapt/shared-components'
 import { TextProfileActiveDropdown } from '@/features/textProfileActiveDropdown'
+import { useTextPreferences } from '@/entities/textPreferences'
 
 import utils from '@/chrome'
 import i18n from '@/i18n'
-import { store } from '@/store'
 
 import QuickActivate from '@/components/QuickActivate.vue'
 
@@ -17,15 +15,8 @@ const readaptEnabled = ref(true)
 
 const { openSettings, sendMessageToCurrentTab, newSettings, openTemplates, broadcastMessage, getEnabled, saveEnabled, saveLocale } = utils
 
-// const settings = computed(() => store.getters.getSettings)
-const defaultProfiles = buildDefaultProfiles()
-
-const isDefaultSettings = computed(() => {
-  // const lang = settings.value.language as keyof Profiles
-  // const defaultSettings = defaultProfiles[lang]
-  // return isEqual(settings.value, defaultSettings)
-  return true
-})
+const { preferences } = useTextPreferences()
+const hasActiveProfile = computed(() => Boolean(preferences.activeProfileId))
 
 watchEffect(async () => (readaptEnabled.value = await getEnabled()))
 
@@ -55,7 +46,7 @@ const { version } = useVersion()
         <!--<b-button class="mr-2" size="sm" variant="primary" @click="adapt()" :disabled="!readaptEnabled">-->
         <!--  {{ $t('MAIN_MENU.ADAPT_PAGE') }}-->
         <!--</b-button>-->
-        <b-button v-if="!isDefaultSettings" size="sm" variant="outline-primary" @click="reset()" :disabled="!readaptEnabled">
+        <b-button v-if="hasActiveProfile" size="sm" variant="outline-primary" @click="reset()" :disabled="!readaptEnabled">
           {{ $t('MAIN_MENU.RESET') }}
         </b-button>
       </div>
@@ -72,12 +63,12 @@ const { version } = useVersion()
       </div>
     </div>
 
-    <div class="d-flex justify-content-start align-items-center mt-2" v-if="!isDefaultSettings">
+    <div class="d-flex justify-content-start align-items-center mt-2" v-if="hasActiveProfile">
       <label class="form-check-label mr-2">{{ $t('MAIN_MENU.READAPT_ACTIVE') }}</label>
       <b-form-checkbox switch :checked="readaptEnabled" @change="switchEnabled" />
     </div>
 
-    <div class="mt-3" v-if="!isDefaultSettings">
+    <div class="mt-3" v-if="hasActiveProfile">
       <h5>{{ $t('MAIN_MENU.ADAPT_TEXT_BY') }}</h5>
       <ul class="help">
         <!-- <li>-->
@@ -90,13 +81,17 @@ const { version } = useVersion()
     </div>
     <div v-else class="text-center my-3">{{ $t('MAIN_MENU.FIRST_RUN') }}</div>
 
-    <div class="mt-3 mb-auto d-flex align-items-center" :class="isDefaultSettings ? 'justify-content-center' : 'justify-content-between'">
-      <TextProfileActiveDropdown />
-      <b-button v-if="!isDefaultSettings" size="sm" variant="primary" @click="openSettings" style="max-width: 150px">
-        {{ $t('MAIN_MENU.SEE_MODIFY_CURRENT_PROFILE') }}
-      </b-button>
+    <div class="mt-3 mb-4 d-flex justify-content-between align-items-center">
+      <div class="popup-page__active-profile mr-3">
+        <div class="popup-page__active-profile-title mb-1">Active profile:</div>
+        <TextProfileActiveDropdown class="popup-page__active-profile-dropdown" />
+      </div>
 
-      <b-button size="sm" variant="primary" :class="{ 'mr-4': isDefaultSettings }" @click="newSettings" style="max-width: 150px">
+      <!-- <b-button v-if="hasActiveProfile" size="sm" variant="primary" @click="openSettings" style="max-width: 150px">
+        {{ $t('MAIN_MENU.SEE_MODIFY_CURRENT_PROFILE') }}
+      </b-button> -->
+
+      <b-button size="sm" variant="primary" :class="{ 'mr-4': !hasActiveProfile }" @click="newSettings" style="max-width: 150px">
         {{ $t('MAIN_MENU.CREATE_BRAND_NEW_PROFILE') }}
       </b-button>
 
@@ -125,6 +120,21 @@ const { version } = useVersion()
 </template>
 
 <style lang="scss">
+.popup-page {
+  &__active-profile {
+    width: 150px;
+  }
+
+  &__active-profile-title {
+    font-size: 20px;
+  }
+
+  &__active-profile-dropdown {
+    width: 100%;
+    font-size: 18px;
+  }
+}
+
 .help {
   font-size: 12px;
 }
