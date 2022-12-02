@@ -12,12 +12,11 @@ const closeCurrentTab = async (): Promise<void> => {
   await router.push('/')
 }
 
-const openSettings = async (): Promise<void> => {
-  await router.push('settings')
-}
-
-const newSettings = async (): Promise<void> => {
-  await router.push('new-settings')
+const openOptionsPage = async (params?: Record<string, string>): Promise<void> => {
+  await router.push({
+    name: 'options',
+    query: params
+  })
 }
 
 const openTemplates = async (): Promise<void> => {
@@ -83,8 +82,7 @@ const getRuleSettings = async (): Promise<SettingsReadingTool> => {
 export {
   getCurrentTab,
   closeCurrentTab,
-  openSettings,
-  newSettings,
+  openOptionsPage,
   openTemplates,
   sendMessageToCurrentTab,
   saveLocale,

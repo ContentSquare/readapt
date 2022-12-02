@@ -15,7 +15,7 @@
   "background": {
     "service_worker": "scripts/background.js"
   },
-  "options_page": "index.html#/settings",
+  "options_page": "index.html#/options",
   "content_scripts": [
     {
       "matches": ["https://*/*", "http://*/*"],

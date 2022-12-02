@@ -17,11 +17,8 @@ const routes: Array<RouteConfig> = [
     component: () => import('@/views/TemplateSelect.vue')
   },
   {
-    path: '/new-settings',
-    redirect: { path: '/settings', query: { newSettings: 'true' } }
-  },
-  {
-    path: '/settings',
+    path: '/options',
+    name: 'options',
     component: async () => (await import('@/pages/options')).OptionsPage
   }
 ]

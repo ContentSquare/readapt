@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, ref, watchEffect } from 'vue'
+import { computed, onMounted, ref, watchEffect } from 'vue'
 import isEqual from 'lodash/isEqual'
 import { buildDefaultProfiles } from '@readapt/settings'
 
@@ -18,10 +18,16 @@ import { ColoredOption, Language, Settings, SettingsKey } from '@readapt/setting
 
 import { store } from '@/store'
 import utils from '@/chrome'
+import router from '@/router'
 
 const selectedProfiledId = ref<TextProfileId | null>(null)
+const { getProfileById, preferences } = useTextPreferences()
 
-const { getProfileById } = useTextPreferences()
+onMounted(() => {
+  if ('editActiveProfile' in router.currentRoute.query) {
+    selectedProfiledId.value = parseInt(preferences.activeProfileId)
+  }
+})
 
 const defaultSettings = buildDefaultProfiles()['en']
 

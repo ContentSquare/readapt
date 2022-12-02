@@ -1,6 +1,7 @@
 /* global chrome */
 import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
+import { Url } from '@/shared/lib'
 
 const getCurrentTab = async (): Promise<chrome.tabs.Tab> => {
   const queryOptions = { active: true, currentWindow: true }
@@ -15,18 +16,11 @@ const closeCurrentTab = async (): Promise<void> => {
   }
 }
 
-const openSettings = async (): Promise<void> => {
-  try {
-    await chrome.runtime.openOptionsPage()
-  } catch (e) {
-    console.error(e)
-  }
-}
-
-const newSettings = async (): Promise<void> => {
+const openOptionsPage = async (params?: Record<string, string>): Promise<void> => {
   try {
     await chrome.tabs.create({
-      url: 'index.html#/new-settings'
+      // TODO: use router as a single source of truth for URLs
+      url: `index.html#/options${Url.getQueryString(params)}`
     })
   } catch (e) {
     console.error(e)
@@ -104,8 +98,7 @@ const getRuleSettings = async (): Promise<SettingsReadingTool> => {
 export {
   getCurrentTab,
   closeCurrentTab,
-  openSettings,
-  newSettings,
+  openOptionsPage,
   openTemplates,
   sendMessageToCurrentTab,
   broadcastMessage,

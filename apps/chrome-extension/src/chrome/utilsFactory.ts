@@ -4,8 +4,7 @@ import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 
 export interface ChromeUtils {
   getCurrentTab: () => Promise<chrome.tabs.Tab>
-  openSettings: () => Promise<void>
-  newSettings: () => Promise<void>
+  openOptionsPage: (params?: Record<string, string>) => Promise<void>
   openTemplates: () => Promise<void>
   closeCurrentTab: () => Promise<void>
   sendMessageToCurrentTab: (message: unknown) => Promise<void>
