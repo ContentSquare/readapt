@@ -1,0 +1,62 @@
+name: Release a new version/tag
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version/tag to release
+        required: true
+        type: string
+
+  # push:
+  #   tags:
+  #     - v[0-9]+.[0-9]+.[0-9]+
+
+jobs:
+  bootstrap:
+    name: Bootstrap
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/bootstrap
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/chrome-extension-build
+      - uses: ./.github/actions/ms-word-addin-build
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - run: yarn lint
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - run: yarn test --ci
+
+  version:
+    name: Version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/lerna-version
+        with:
+          version: ${{ inputs.version }}
+
+  package:
+    name: Package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/chrome-extension-package
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/lerna-publish
+      - uses: ./.github/actions/gh-create-release
+        with:
+          version: ${{ inputs.version }}
