@@ -81,9 +81,12 @@ const { version } = useVersion()
     </div>
     <div v-else class="text-center my-3">{{ $t('MAIN_MENU.FIRST_RUN') }}</div>
 
-    <div class="mt-3 mb-4 d-flex justify-content-between align-items-center">
-      <div class="popup-page__active-profile mr-3">
-        <div class="popup-page__active-profile-title mb-1">Active profile:</div>
+    <div
+      class="popup-page__buttons mt-3 mb-4 d-flex align-items-center"
+      :class="hasActiveProfile ? 'justify-content-between' : 'justify-content-center'"
+    >
+      <div v-if="hasActiveProfile">
+        <h5 class="mb-1">Active profile:</h5>
         <TextProfileActiveDropdown class="popup-page__active-profile-dropdown" />
       </div>
 
@@ -91,7 +94,7 @@ const { version } = useVersion()
         {{ $t('MAIN_MENU.SEE_MODIFY_CURRENT_PROFILE') }}
       </b-button> -->
 
-      <b-button size="sm" variant="primary" :class="{ 'mr-4': !hasActiveProfile }" @click="newSettings" style="max-width: 150px">
+      <b-button size="sm" variant="primary" @click="newSettings" style="max-width: 150px">
         {{ $t('MAIN_MENU.CREATE_BRAND_NEW_PROFILE') }}
       </b-button>
 
@@ -106,7 +109,7 @@ const { version } = useVersion()
 
     <QuickActivate class="mb-auto" />
 
-    <div class="footer">
+    <div class="footer my-2">
       <strong class="version">Version {{ version }}</strong>
 
       <a class="about-you" href="https://forms.gle/ciWCnYnkFjutwEHWA" target="_blank">
@@ -121,16 +124,12 @@ const { version } = useVersion()
 
 <style lang="scss">
 .popup-page {
-  &__active-profile {
-    width: 150px;
-  }
-
-  &__active-profile-title {
-    font-size: 20px;
+  &__buttons {
+    gap: 32px;
   }
 
   &__active-profile-dropdown {
-    width: 100%;
+    width: 150px;
     font-size: 18px;
   }
 }
