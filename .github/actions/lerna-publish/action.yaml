@@ -1,0 +1,8 @@
+name: Publish packages
+description: Publish package to npm
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: lerna publish from-package --force-publish

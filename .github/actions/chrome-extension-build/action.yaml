@@ -1,0 +1,9 @@
+name: Build Chrome Extension
+description: Building Chrome Extension source code
+
+runs:
+  using: composite
+  steps:
+    - name: Build
+      shell: bash
+      run: yarn build-chrome-extension

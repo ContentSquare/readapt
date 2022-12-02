@@ -1,0 +1,16 @@
+name: Create release
+description: Create release on Github Release
+
+inputs:
+  version:
+    description: Bumped version
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: gh release create v${{ inputs.version }} -t 'readapt v${{ inputs.version }}' --generate-notes ./apps/chrome-extension/dist/readapt-chrome-extension-v${{ inputs.version }}.zip
+      # run: gh release create v${{ inputs.version }} -t 'readapt v${{ inputs.version }}' -F ./CHANGELOG-v${{ inputs.version }}.md ./apps/chrome-extension/dist/readapt-chrome-extension-v${{ inputs.version }}.zip
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
