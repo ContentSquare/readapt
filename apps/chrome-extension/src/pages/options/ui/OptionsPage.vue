@@ -8,7 +8,7 @@ import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
 import { CloseSettings } from '@readapt/shared-components'
 import { useTextPreferences, TextProfileId } from '@/entities/textPreferences'
 import { TextProfileEditDropdown } from '@/features/textProfileEditDropdown'
-import { TextProfileSave } from '@/features/textProfileSave'
+import { TextProfileSaveButton } from '@/features/textProfileSaveButton'
 import { TextAdaptationPreview } from '@/features/textAdaptationPreview'
 
 import SettingsMenuGeneral from '@/views/SettingsMenuGeneral.vue'
@@ -126,7 +126,7 @@ const changeLanguage = (language: Language) => {
           <TextAdaptationPreview class="preview-container" :settings="settings" />
 
           <div class="mt-3 d-flex justify-content-between">
-            <TextProfileSave v-model="selectedProfiledId" :settings="settings" />
+            <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
             <CloseSettings :is-settings-dirty="isSettingsDirty" @close-settings="close" />
           </div>
         </div>
