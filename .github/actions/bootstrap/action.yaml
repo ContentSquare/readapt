@@ -1,0 +1,11 @@
+name: Bootstrap
+description: Bootstrap env and dependencies
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: npm i -g --force yarn
+
+    - shell: bash
+      run: yarn install --frozen-lockfile
