@@ -5,7 +5,7 @@ import isEqual from 'lodash/isEqual'
 
 import { buildDefaultProfiles, Profiles } from '@readapt/settings'
 import { useVersion } from '@readapt/shared-components'
-import { TextProfileActiveEdit } from '@/features/textProfileActiveEdit'
+import { TextProfileActiveDropdown } from '@/features/textProfileActiveDropdown'
 
 import utils from '@/chrome'
 import i18n from '@/i18n'
@@ -91,7 +91,7 @@ const { version } = useVersion()
     <div v-else class="text-center my-3">{{ $t('MAIN_MENU.FIRST_RUN') }}</div>
 
     <div class="mt-3 mb-auto d-flex align-items-center" :class="isDefaultSettings ? 'justify-content-center' : 'justify-content-between'">
-      <TextProfileActiveEdit />
+      <TextProfileActiveDropdown />
       <b-button v-if="!isDefaultSettings" size="sm" variant="primary" @click="openSettings" style="max-width: 150px">
         {{ $t('MAIN_MENU.SEE_MODIFY_CURRENT_PROFILE') }}
       </b-button>

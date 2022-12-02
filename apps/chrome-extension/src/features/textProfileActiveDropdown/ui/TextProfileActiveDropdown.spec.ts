@@ -1,8 +1,8 @@
 import { mount } from '@vue/test-utils'
-import TextProfileActiveEditDropdown from './TextProfileActiveEditDropdown.vue'
+import TextProfileActiveDropdown from './TextProfileActiveDropdown.vue'
 import { textProfileFixture as profile, useTextPreferences } from '@/entities/textPreferences'
 
-describe('TextProfileActiveEditDropdown', () => {
+describe('TextProfileActiveDropdown', () => {
   afterEach(() => {
     useTextPreferences().reset()
   })
@@ -13,7 +13,7 @@ describe('TextProfileActiveEditDropdown', () => {
     setProfiles(profiles)
     setActiveProfileId(profiles[0].id)
 
-    const wrapper = mount(TextProfileActiveEditDropdown)
+    const wrapper = mount(TextProfileActiveDropdown)
     const dropdown = wrapper.find<HTMLSelectElement>('[data-test-id=dropdown]')
 
     return { wrapper, dropdown, preferences, setActiveProfileId }
