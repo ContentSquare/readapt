@@ -10,4 +10,4 @@ runs:
   using: composite
   steps:
     - shell: bash
-      run: lerna version ${{ inputs.version }}
+      run: lerna version ${{ inputs.version }} -y
