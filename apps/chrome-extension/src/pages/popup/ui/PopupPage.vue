@@ -13,7 +13,7 @@ import QuickActivate from '@/components/QuickActivate.vue'
 
 const readaptEnabled = ref(true)
 
-const { openSettings, sendMessageToCurrentTab, newSettings, openTemplates, broadcastMessage, getEnabled, saveEnabled, saveLocale } = utils
+const { openOptionsPage, sendMessageToCurrentTab, openTemplates, broadcastMessage, getEnabled, saveEnabled, saveLocale } = utils
 
 const { preferences } = useTextPreferences()
 const hasActiveProfile = computed(() => Boolean(preferences.activeProfileId))
@@ -88,13 +88,10 @@ const { version } = useVersion()
       <div v-if="hasActiveProfile">
         <h5 class="mb-1">Active profile:</h5>
         <TextProfileActiveDropdown class="popup-page__active-profile-dropdown" />
+        <span class="popup-page__edit-profile ml-2" @click="openOptionsPage({ editActiveProfile: null })">&#x270e;</span>
       </div>
 
-      <!-- <b-button v-if="hasActiveProfile" size="sm" variant="primary" @click="openSettings" style="max-width: 150px">
-        {{ $t('MAIN_MENU.SEE_MODIFY_CURRENT_PROFILE') }}
-      </b-button> -->
-
-      <b-button size="sm" variant="primary" @click="newSettings" style="max-width: 150px">
+      <b-button size="sm" variant="primary" @click="openOptionsPage" style="max-width: 150px">
         {{ $t('MAIN_MENU.CREATE_BRAND_NEW_PROFILE') }}
       </b-button>
 
@@ -126,6 +123,12 @@ const { version } = useVersion()
 .popup-page {
   &__buttons {
     gap: 32px;
+  }
+
+  &__edit-profile {
+    font-weight: bold;
+    font-size: 20px;
+    cursor: pointer;
   }
 
   &__active-profile-dropdown {
