@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref, watchEffect } from 'vue'
+import { computed, onMounted, ref, watchEffect, watch } from 'vue'
 import isEqual from 'lodash/isEqual'
-import { buildDefaultProfiles } from '@readapt/settings'
+import { buildDefaultProfiles, getLangConfig } from '@readapt/settings'
 
 import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
 
@@ -29,15 +29,13 @@ onMounted(() => {
   }
 })
 
-const defaultSettings = buildDefaultProfiles()['en']
-
-const settings = ref(defaultSettings)
+const settings = ref<Settings>()
 
 watchEffect(() => {
   if (selectedProfiledId.value) {
     settings.value = getProfileById(selectedProfiledId.value).settings
   } else {
-    settings.value = defaultSettings
+    settings.value = buildDefaultProfiles()['en']
   }
 })
 
@@ -56,15 +54,11 @@ const settingsFile = computed(() => {
 
 const { closeCurrentTab } = utils
 
-const storedSettings = ref<Settings>()
-const isSettingsDirty = computed(() => !isEqual(storedSettings?.value, settings.value))
-
 const close = async () => {
   await closeCurrentTab()
 }
 
-const letterOptions = computed<ColoredOption[]>(() => store.getters.getLetterOptions)
-const phonemeOptions = computed<ColoredOption[]>(() => store.getters.getPhonemeOptions)
+const langConfig = computed(() => getLangConfig(settings.value.language))
 
 const updateOption = (key: SettingsKey, value: unknown) => {
   settings.value = {
@@ -74,11 +68,7 @@ const updateOption = (key: SettingsKey, value: unknown) => {
 }
 const changeLanguage = (language: Language) => {
   // TODO: does the logic belong here?
-  settings.value = {
-    ...buildDefaultProfiles()[language],
-    ...settings.value,
-    language
-  }
+  settings.value = buildDefaultProfiles()[language]
 }
 </script>
 <template>
@@ -110,7 +100,7 @@ const changeLanguage = (language: Language) => {
           switch-all-label="SETTINGS.ALL_PHONEMES_SETTINGS"
           :all-items-active="settings.phonemesActive"
           :items="settings.phonemes"
-          :options="phonemeOptions"
+          :options="langConfig.phonemeOptions"
           @update-items="updateOption('phonemes', $event)"
           @update-active="updateOption('phonemesActive', $event)"
         >
@@ -121,7 +111,7 @@ const changeLanguage = (language: Language) => {
           switch-all-label="SETTINGS.ALL_LETTERS_SETTINGS"
           :all-items-active="settings.lettersActive"
           :items="settings.letters"
-          :options="letterOptions"
+          :options="langConfig.letterOptions"
           @update-items="updateOption('letters', $event)"
           @update-active="updateOption('lettersActive', $event)"
         ></SettingsMenuTableItems>
@@ -133,7 +123,8 @@ const changeLanguage = (language: Language) => {
 
           <div class="mt-3 d-flex justify-content-between">
             <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
-            <CloseSettings :is-settings-dirty="isSettingsDirty" @close-settings="close" />
+            <!-- TODO: review dirty settings calculation -->
+            <CloseSettings :is-settings-dirty="false" @close-settings="close" />
           </div>
         </div>
       </b-col>
