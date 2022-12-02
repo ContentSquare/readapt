@@ -17,12 +17,22 @@ jobs:
     name: Bootstrap
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
       - uses: ./.github/actions/bootstrap
 
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
       - uses: ./.github/actions/chrome-extension-build
       - uses: ./.github/actions/ms-word-addin-build
 
@@ -30,18 +40,33 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
       - run: yarn lint
 
   test:
     name: Test
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
       - run: yarn test --ci
 
   version:
     name: Version
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
       - uses: ./.github/actions/lerna-version
         with:
           version: ${{ inputs.version }}
@@ -50,12 +75,22 @@ jobs:
     name: Package
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
       - uses: ./.github/actions/chrome-extension-package
 
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
       - uses: ./.github/actions/lerna-publish
       - uses: ./.github/actions/gh-create-release
         with:
