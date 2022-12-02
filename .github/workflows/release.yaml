@@ -25,6 +25,7 @@ jobs:
       - uses: ./.github/actions/bootstrap
 
   build:
+    needs: bootstrap
     name: Build
     runs-on: ubuntu-latest
     steps:
@@ -37,6 +38,7 @@ jobs:
       - uses: ./.github/actions/ms-word-addin-build
 
   lint:
+    needs: build
     name: Lint
     runs-on: ubuntu-latest
     steps:
@@ -48,6 +50,7 @@ jobs:
       - run: yarn lint
 
   test:
+    needs: build
     name: Test
     runs-on: ubuntu-latest
     steps:
@@ -59,6 +62,7 @@ jobs:
       - run: yarn test --ci
 
   version:
+    needs: build
     name: Version
     runs-on: ubuntu-latest
     steps:
@@ -72,6 +76,7 @@ jobs:
           version: ${{ inputs.version }}
 
   package:
+    needs: version
     name: Package
     runs-on: ubuntu-latest
     steps:
@@ -83,6 +88,7 @@ jobs:
       - uses: ./.github/actions/chrome-extension-package
 
   deploy:
+    needs: package
     name: Deploy
     runs-on: ubuntu-latest
     steps:
