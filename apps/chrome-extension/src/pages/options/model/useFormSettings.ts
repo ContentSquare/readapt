@@ -13,11 +13,10 @@ export function useFormSettings(language: Ref<Language>, baseSettings: Ref<Setti
   }
 
   watchEffect(() => {
+    reset()
     if (baseSettings.value) {
       const { language } = baseSettings.value
       settingsByLanguage.value[language] = cloneDeep(baseSettings.value)
-    } else {
-      reset()
     }
   })
 
