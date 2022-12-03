@@ -49,7 +49,7 @@ describe('useFormSettings()', () => {
       })
     })
 
-    describe('when base settings becomes null', () => {
+    describe('when base settings changes', () => {
       it('should reset the settings', async () => {
         const baseSettings = ref<Settings | null>(buildDefaultProfiles()['en'])
         const { settings } = useFormSettings(language, baseSettings)
