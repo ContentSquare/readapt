@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref, watchEffect, watch } from 'vue'
-import isEqual from 'lodash/isEqual'
-import { buildDefaultProfiles, getLangConfig } from '@readapt/settings'
+import { onMounted, ref, watchEffect } from 'vue'
 
 import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
 
@@ -10,66 +8,45 @@ import { useTextPreferences, TextProfileId } from '@/entities/textPreferences'
 import { TextProfileEditDropdown } from '@/features/textProfileEditDropdown'
 import { TextProfileSaveButton } from '@/features/textProfileSaveButton'
 import { TextAdaptationPreview } from '@/features/textAdaptationPreview'
+import { useFormSettings } from '../model/useFormSettings'
+import { useLanguage } from '../model/useLanguage'
+import { TextSettings } from '@/entities/textPreferences'
 
 import SettingsMenuGeneral from '@/views/SettingsMenuGeneral.vue'
 import SettingsMenuTableItems from '@/views/SettingsMenuTableItems.vue'
+import { TextSettingsFileDownload } from '@/features/textSettingsFileDownload'
 
-import { ColoredOption, Language, Settings, SettingsKey } from '@readapt/settings'
-
-import { store } from '@/store'
 import utils from '@/chrome'
 import router from '@/router'
 
 const selectedProfiledId = ref<TextProfileId | null>(null)
-const { getProfileById, preferences } = useTextPreferences()
-
 onMounted(() => {
   if ('editActiveProfile' in router.currentRoute.query) {
-    selectedProfiledId.value = parseInt(preferences.activeProfileId)
+    selectedProfiledId.value = preferences.activeProfileId
   }
 })
 
-const settings = ref<Settings>()
+const { language, languageConfig, setLanguage } = useLanguage()
 
+const { getProfileById, preferences } = useTextPreferences()
+const baseSettings = ref<TextSettings>()
 watchEffect(() => {
   if (selectedProfiledId.value) {
-    settings.value = getProfileById(selectedProfiledId.value).settings
+    baseSettings.value = getProfileById(selectedProfiledId.value).settings
+    setLanguage(baseSettings.value.language)
   } else {
-    settings.value = buildDefaultProfiles()['en']
+    baseSettings.value = null
+    setLanguage('en')
   }
 })
+
+const { settings, updateSettings } = useFormSettings(language, baseSettings)
 
 type TabName = 'GENERAL' | 'LETTERS' | 'PHONEMES'
-
 const activeTab = ref<TabName>('GENERAL')
+const activateTab = (tabName: TabName) => (activeTab.value = tabName)
 
-const activateTab = (tabName: TabName) => {
-  activeTab.value = tabName
-}
-
-const settingsFile = computed(() => {
-  const settingsFile = encodeURIComponent(JSON.stringify(settings.value, null, 2))
-  return `data:application/json;charset=utf-8,${settingsFile}`
-})
-
-const { closeCurrentTab } = utils
-
-const close = async () => {
-  await closeCurrentTab()
-}
-
-const langConfig = computed(() => getLangConfig(settings.value.language))
-
-const updateOption = (key: SettingsKey, value: unknown) => {
-  settings.value = {
-    ...settings.value,
-    [key]: value
-  }
-}
-const changeLanguage = (language: Language) => {
-  // TODO: does the logic belong here?
-  settings.value = buildDefaultProfiles()[language]
-}
+const close = async () => await utils.closeCurrentTab()
 </script>
 <template>
   <div class="container-fluid">
@@ -77,7 +54,7 @@ const changeLanguage = (language: Language) => {
       <div class="mb-2">
         <h2 class="options-page__title mr-2">Profile:</h2>
         <TextProfileEditDropdown class="options-page__profiles-dropdown" v-model="selectedProfiledId" />
-        <a class="ml-2 float-right" :href="settingsFile" download="settings.json" target="_blank">{{ $t('SETTINGS.DOWNLOAD_SETTINGS') }}</a>
+        <TextSettingsFileDownload class="ml-2 float-right" :settings="settings" />
       </div>
       <b-nav class="d-flex flex-row">
         <b-nav-item @click="activateTab('GENERAL')" :active="activeTab === 'GENERAL'">{{ $t('SETTINGS.GENERAL_SETTINGS') }}</b-nav-item>
@@ -90,8 +67,8 @@ const changeLanguage = (language: Language) => {
         <SettingsMenuGeneral
           v-if="activeTab === 'GENERAL'"
           :settings="settings"
-          @update="updateOption($event.key, $event.value)"
-          @change-language="changeLanguage($event)"
+          @update="updateSettings($event.key, $event.value)"
+          @change-language="setLanguage($event)"
         >
         </SettingsMenuGeneral>
         <SettingsMenuTableItems
@@ -100,9 +77,9 @@ const changeLanguage = (language: Language) => {
           switch-all-label="SETTINGS.ALL_PHONEMES_SETTINGS"
           :all-items-active="settings.phonemesActive"
           :items="settings.phonemes"
-          :options="langConfig.phonemeOptions"
-          @update-items="updateOption('phonemes', $event)"
-          @update-active="updateOption('phonemesActive', $event)"
+          :options="languageConfig.phonemeOptions"
+          @update-items="updateSettings('phonemes', $event)"
+          @update-active="updateSettings('phonemesActive', $event)"
         >
         </SettingsMenuTableItems>
         <SettingsMenuTableItems
@@ -111,9 +88,9 @@ const changeLanguage = (language: Language) => {
           switch-all-label="SETTINGS.ALL_LETTERS_SETTINGS"
           :all-items-active="settings.lettersActive"
           :items="settings.letters"
-          :options="langConfig.letterOptions"
-          @update-items="updateOption('letters', $event)"
-          @update-active="updateOption('lettersActive', $event)"
+          :options="languageConfig.letterOptions"
+          @update-items="updateSettings('letters', $event)"
+          @update-active="updateSettings('lettersActive', $event)"
         ></SettingsMenuTableItems>
       </b-col>
       <b-col lg="4">
