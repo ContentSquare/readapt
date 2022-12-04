@@ -1,8 +1,12 @@
-import { reactive } from 'vue'
+import { reactive, InjectionKey } from 'vue'
 import { TextPreferences } from '../TextPreferences'
 
-// TODO: try to find a more performant solution
-export const textPreferencesState = /*#__PURE__*/ reactive<TextPreferences>({
-  activeProfileId: null,
-  profiles: []
-})
+export const textPreferencesStateFactory = () => {
+  // TODO: try to find a more performant solution
+  return reactive<TextPreferences>({
+    activeProfileId: null,
+    profiles: []
+  })
+}
+
+export const textPreferencesStateKey: InjectionKey<TextPreferences> = Symbol()

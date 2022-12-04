@@ -1,3 +1,9 @@
+<script lang="ts" setup>
+import { useSetup } from '../model/useSetup'
+
+useSetup()
+</script>
+
 <template>
   <div id="app">
     <router-view />
