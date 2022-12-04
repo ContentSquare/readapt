@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, ref, watchEffect } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n-composable'
 
 import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
@@ -10,8 +10,6 @@ import { TextProfileEditDropdown } from '@/features/textProfileEditDropdown'
 import { TextProfileSaveButton } from '@/features/textProfileSaveButton'
 import { TextAdaptationPreview } from '@/features/textAdaptationPreview'
 import { useFormSettings } from '../model/useFormSettings'
-import { useLanguage } from '../model/useLanguage'
-import { TextSettings } from '@/entities/textPreferences'
 
 import SettingsMenuGeneral from '@/views/SettingsMenuGeneral.vue'
 import SettingsMenuTableItems from '@/views/SettingsMenuTableItems.vue'
@@ -19,9 +17,11 @@ import { TextSettingsFileDownload } from '@/features/textSettingsFileDownload'
 
 import utils from '@/chrome'
 import { useRouter } from 'vue-router/composables'
+import { getLangConfig } from '@readapt/settings'
 
 const router = useRouter()
 
+const { preferences } = useTextPreferences()
 const selectedProfiledId = ref<TextProfileId | null>(null)
 onMounted(() => {
   if ('editActiveProfile' in router.currentRoute.query) {
@@ -29,21 +29,8 @@ onMounted(() => {
   }
 })
 
-const { language, languageConfig, setLanguage } = useLanguage()
-
-const { getProfileById, preferences } = useTextPreferences()
-const baseSettings = ref<TextSettings>()
-watchEffect(() => {
-  if (selectedProfiledId.value) {
-    baseSettings.value = getProfileById(selectedProfiledId.value).settings
-    setLanguage(baseSettings.value.language)
-  } else {
-    baseSettings.value = null
-    setLanguage('en')
-  }
-})
-
-const { settings, updateSettings } = useFormSettings(language, baseSettings)
+const { settings, language, setLanguage, updateSettings } = useFormSettings(selectedProfiledId)
+const languageConfig = computed(() => getLangConfig(language.value))
 
 type TabName = 'GENERAL' | 'LETTERS' | 'PHONEMES'
 const activeTab = ref<TabName>('GENERAL')

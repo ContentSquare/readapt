@@ -13,7 +13,7 @@ export function useTextPreferences() {
   }
 
   const setProfiles = (profiles: TextProfile[]) => {
-    state.profiles = cloneDeep(profiles)
+    state.profiles = profiles
   }
 
   const generateNextProfileId = (): TextProfileId => {
@@ -38,7 +38,7 @@ export function useTextPreferences() {
   const updateProfileSettings = (profileId: TextProfileId, settings: Settings) => {
     const profile = getProfileById(profileId)
     if (profile) {
-      profile.settings = cloneDeep(settings)
+      profile.settings = settings
     } else {
       throw new NonExistingIdError()
     }
