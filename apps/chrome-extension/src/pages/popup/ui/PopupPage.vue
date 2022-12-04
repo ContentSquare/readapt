@@ -7,7 +7,7 @@ import { TextProfileActiveDropdown } from '@/features/textProfileActiveDropdown'
 import { useTextPreferences } from '@/entities/textPreferences'
 
 import utils from '@/chrome'
-import i18n from '@/i18n'
+import { useI18n } from 'vue-i18n-composable'
 
 import QuickActivate from '@/components/QuickActivate.vue'
 
@@ -31,8 +31,10 @@ const adapt = async () => await sendMessageToCurrentTab('ADAPT')
 const reset = async () => await sendMessageToCurrentTab('RESET')
 const selectTemplate = async () => await openTemplates()
 
+const { locale, t } = useI18n()
+
 const changeLocale = async (lang: 'en' | 'fr') => {
-  i18n.locale = lang
+  locale.value = lang
   await saveLocale(lang)
 }
 
@@ -44,42 +46,42 @@ const { version } = useVersion()
     <div class="mt-2 d-flex justify-content-between align-items-center">
       <div>
         <!--<b-button class="mr-2" size="sm" variant="primary" @click="adapt()" :disabled="!readaptEnabled">-->
-        <!--  {{ $t('MAIN_MENU.ADAPT_PAGE') }}-->
+        <!--  {{ t('MAIN_MENU.ADAPT_PAGE') }}-->
         <!--</b-button>-->
         <b-button v-if="hasActiveProfile" size="sm" variant="outline-primary" @click="reset()" :disabled="!readaptEnabled">
-          {{ $t('MAIN_MENU.RESET') }}
+          {{ t('MAIN_MENU.RESET') }}
         </b-button>
       </div>
       <div class="d-flex justify-content-between align-items-center">
         <div class="mr-3" style="font-size: 14px">
-          <span class="mr-2"> {{ $t('MAIN_MENU.MENU_LANGUAGE') }}</span>
-          <span v-if="$i18n.locale === 'fr'">FR</span>
-          <a v-if="$i18n.locale !== 'fr'" href="#" @click="changeLocale('fr')">FR</a>
+          <span class="mr-2"> {{ t('MAIN_MENU.MENU_LANGUAGE') }}</span>
+          <span v-if="locale === 'fr'">FR</span>
+          <a v-if="locale !== 'fr'" href="#" @click="changeLocale('fr')">FR</a>
           /
-          <span v-if="$i18n.locale === 'en'">EN</span>
-          <a v-if="$i18n.locale !== 'en'" href="#" @click="changeLocale('en')">EN</a>
+          <span v-if="locale === 'en'">EN</span>
+          <a v-if="locale !== 'en'" href="#" @click="changeLocale('en')">EN</a>
         </div>
         <b-img class="logo" :src="require('@/assets/logo.png')" alt="readapt-logo" />
       </div>
     </div>
 
     <div class="d-flex justify-content-start align-items-center mt-2" v-if="hasActiveProfile">
-      <label class="form-check-label mr-2">{{ $t('MAIN_MENU.READAPT_ACTIVE') }}</label>
+      <label class="form-check-label mr-2">{{ t('MAIN_MENU.READAPT_ACTIVE') }}</label>
       <b-form-checkbox switch :checked="readaptEnabled" @change="switchEnabled" />
     </div>
 
     <div class="mt-3" v-if="hasActiveProfile">
-      <h5>{{ $t('MAIN_MENU.ADAPT_TEXT_BY') }}</h5>
+      <h5>{{ t('MAIN_MENU.ADAPT_TEXT_BY') }}</h5>
       <ul class="help">
         <!-- <li>-->
         <!--   <b-icon-hand-index-thumb />-->
-        <!--   {{ $t('MAIN_MENU.CLICKING_ADAPT_PAGE_BUTTON') }}-->
+        <!--   {{ t('MAIN_MENU.CLICKING_ADAPT_PAGE_BUTTON') }}-->
         <!-- </li>-->
-        <!-- <li>{{ $t('MAIN_MENU.RIGHT_CLICK_AND_SELECT_ADAPT') }}</li>-->
-        <li>{{ $t('MAIN_MENU.HOLD_CMD_AND_CLICK_TARGET') }}</li>
+        <!-- <li>{{ t('MAIN_MENU.RIGHT_CLICK_AND_SELECT_ADAPT') }}</li>-->
+        <li>{{ t('MAIN_MENU.HOLD_CMD_AND_CLICK_TARGET') }}</li>
       </ul>
     </div>
-    <div v-else class="text-center my-3">{{ $t('MAIN_MENU.FIRST_RUN') }}</div>
+    <div v-else class="text-center my-3">{{ t('MAIN_MENU.FIRST_RUN') }}</div>
 
     <div
       class="popup-page__buttons mt-3 mb-4 d-flex align-items-center"
@@ -92,15 +94,15 @@ const { version } = useVersion()
       </div>
 
       <b-button size="sm" variant="primary" @click="openOptionsPage" style="max-width: 150px">
-        {{ $t('MAIN_MENU.CREATE_BRAND_NEW_PROFILE') }}
+        {{ t('MAIN_MENU.CREATE_BRAND_NEW_PROFILE') }}
       </b-button>
 
       <b-button size="sm" variant="primary" @click="selectTemplate" style="max-width: 150px">
-        {{ $t('MAIN_MENU.BASE_YOUR_PROFILE_FROM_TEMPLATE') }}
+        {{ t('MAIN_MENU.BASE_YOUR_PROFILE_FROM_TEMPLATE') }}
       </b-button>
 
       <!--            <b-button size="sm" variant="primary" disabled>-->
-      <!--              {{ $t('MAIN_MENU.I_HAVE_PROFILE_CODE') }}-->
+      <!--              {{ t('MAIN_MENU.I_HAVE_PROFILE_CODE') }}-->
       <!--            </b-button>-->
     </div>
 
@@ -110,10 +112,10 @@ const { version } = useVersion()
       <strong class="version">Version {{ version }}</strong>
 
       <a class="about-you" href="https://forms.gle/ciWCnYnkFjutwEHWA" target="_blank">
-        <b-button size="sm" variant="primary">{{ $t('MAIN_MENU.TELL_US_ABOUT_YOU') }}</b-button>
+        <b-button size="sm" variant="primary">{{ t('MAIN_MENU.TELL_US_ABOUT_YOU') }}</b-button>
       </a>
       <a class="contact-us" href="https://forms.gle/9pv3HCmtPQN8Akpn9" target="_blank">
-        <b-button size="sm" variant="primary">{{ $t('MAIN_MENU.CONTACT_US') }}</b-button>
+        <b-button size="sm" variant="primary">{{ t('MAIN_MENU.CONTACT_US') }}</b-button>
       </a>
     </div>
   </div>

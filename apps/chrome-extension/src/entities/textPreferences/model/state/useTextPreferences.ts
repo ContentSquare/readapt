@@ -1,12 +1,14 @@
-import { readonly } from 'vue'
+import { readonly, inject } from 'vue'
 import { Settings } from '@readapt/settings'
 import { TextProfile, TextProfileId } from '../TextPreferences'
-import { textPreferencesState as state } from './textPreferencesState'
+import { textPreferencesStateFactory, textPreferencesStateKey } from './textPreferencesState'
 import cloneDeep from 'lodash/cloneDeep'
 
 export class NonExistingIdError extends Error {}
 
 export function useTextPreferences() {
+  const state = inject(textPreferencesStateKey, textPreferencesStateFactory, true)
+
   const reset = () => {
     state.activeProfileId = null
     state.profiles = []

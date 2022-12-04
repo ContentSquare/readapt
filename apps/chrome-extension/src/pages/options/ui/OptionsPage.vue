@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref, watchEffect } from 'vue'
+import { useI18n } from 'vue-i18n-composable'
 
 import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
 
@@ -47,6 +48,8 @@ const activeTab = ref<TabName>('GENERAL')
 const activateTab = (tabName: TabName) => (activeTab.value = tabName)
 
 const close = async () => await utils.closeCurrentTab()
+
+const { t } = useI18n()
 </script>
 <template>
   <div class="container-fluid">
@@ -57,9 +60,9 @@ const close = async () => await utils.closeCurrentTab()
         <TextSettingsFileDownload class="ml-2 float-right" :settings="settings" />
       </div>
       <b-nav class="d-flex flex-row">
-        <b-nav-item @click="activateTab('GENERAL')" :active="activeTab === 'GENERAL'">{{ $t('SETTINGS.GENERAL_SETTINGS') }}</b-nav-item>
-        <b-nav-item @click="activateTab('PHONEMES')" :active="activeTab === 'PHONEMES'">{{ $t('SETTINGS.PHONEME_SETTINGS') }}</b-nav-item>
-        <b-nav-item @click="activateTab('LETTERS')" :active="activeTab === 'LETTERS'">{{ $t('SETTINGS.LETTER_SETTINGS') }}</b-nav-item>
+        <b-nav-item @click="activateTab('GENERAL')" :active="activeTab === 'GENERAL'">{{ t('SETTINGS.GENERAL_SETTINGS') }}</b-nav-item>
+        <b-nav-item @click="activateTab('PHONEMES')" :active="activeTab === 'PHONEMES'">{{ t('SETTINGS.PHONEME_SETTINGS') }}</b-nav-item>
+        <b-nav-item @click="activateTab('LETTERS')" :active="activeTab === 'LETTERS'">{{ t('SETTINGS.LETTER_SETTINGS') }}</b-nav-item>
       </b-nav>
     </div>
     <b-row class="mt-2" style="max-height: 80vh; height: 80vh">
@@ -95,7 +98,7 @@ const close = async () => await utils.closeCurrentTab()
       </b-col>
       <b-col lg="4">
         <div class="d-flex flex-column align-content-between h-100">
-          <h3>{{ $t('SETTINGS.TEXT_PREVIEW') }}</h3>
+          <h3>{{ t('SETTINGS.TEXT_PREVIEW') }}</h3>
           <TextAdaptationPreview class="preview-container" :settings="settings" />
 
           <div class="mt-3 d-flex justify-content-between">

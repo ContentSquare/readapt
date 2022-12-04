@@ -1,10 +1,10 @@
 import { MemoryStorage } from '@/shared/storage'
-import { textPreferencesPersistState } from './textPreferencesPersistState'
+import { textPreferencesStatePersist } from './textPreferencesStatePersist'
 import { TEXT_PREFERENCES_STORAGE_KEY } from '../config/storage'
 import { textPreferencesFixture } from '../model/textPreferencesFixtures'
 import { useTextPreferences } from '../model/state/useTextPreferences'
 
-describe('textPreferencesPersistState()', () => {
+describe('textPreferencesStatePersist()', () => {
   afterEach(() => {
     useTextPreferences().reset()
   })
@@ -16,7 +16,7 @@ describe('textPreferencesPersistState()', () => {
       })
       const { preferences } = useTextPreferences()
 
-      const stopWatcher = await textPreferencesPersistState(storage)
+      const stopWatcher = await textPreferencesStatePersist(storage)
 
       expect(preferences).toEqual(textPreferencesFixture)
       stopWatcher()
@@ -28,7 +28,7 @@ describe('textPreferencesPersistState()', () => {
       const storage = new MemoryStorage()
       const { setActiveProfileId, setProfiles } = useTextPreferences()
 
-      const stopWatcher = await textPreferencesPersistState(storage)
+      const stopWatcher = await textPreferencesStatePersist(storage)
       setProfiles(textPreferencesFixture.profiles)
       setActiveProfileId(textPreferencesFixture.activeProfileId)
 
