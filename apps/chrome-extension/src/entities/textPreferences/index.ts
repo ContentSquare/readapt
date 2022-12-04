@@ -2,7 +2,7 @@ export type { TextPreferences, TextProfile, TextSettings, TextProfileId } from '
 export { textPreferencesFixture, textProfileFixture, textSettingsFixture } from './model/textPreferencesFixtures'
 
 export { useTextPreferences } from './model/state/useTextPreferences'
-export { textPreferencesStateFactory, textPreferencesStateKey } from './model/state/textPreferencesState'
+export { textPreferencesState } from './model/state/textPreferencesState'
 
 export { textPreferencesStatePersist } from './storage/textPreferencesStatePersist'
 export { textPreferencesStorageMigrate } from './storage/migrations/textPreferencesStorageMigrate'

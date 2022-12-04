@@ -7,7 +7,7 @@ import { templates } from '@/constants/templates'
 import { SettingsTemplate } from '@/interfaces'
 import { store } from '@/store'
 import utils from '@/chrome'
-import router from '@/router'
+import { useRouter } from 'vue-router/composables'
 import { LanguageSelector } from '@readapt/shared-components'
 
 const isSameLanguage = (language: Language) => {
@@ -30,6 +30,7 @@ const TemplateSelect = defineComponent({
 
     const onChangeTemplate = (value: SettingsTemplate) => (selectedTemplate.value = value)
 
+    const router = useRouter()
     const onModifyTemplate = (settings: Settings) => {
       store.commit('updateSettings', settings) // FIXME must be a deepClone
       router.push({ path: 'settings' })
@@ -38,7 +39,7 @@ const TemplateSelect = defineComponent({
     const saveTemplate = () => {
       const selectedSettings = unref(selectedTemplate).settings
       store.commit('updateSettings', selectedSettings) // FIXME must be a deepClone
-      closeCurrentTab()
+      closeCurrentTab(router)
     }
 
     return {
@@ -52,7 +53,9 @@ const TemplateSelect = defineComponent({
       filteredTemplates,
 
       saveTemplate,
-      closeCurrentTab
+      closeCurrentTab,
+
+      router
     }
   }
 })
@@ -76,7 +79,7 @@ export default TemplateSelect
 
     <div class="mt-2 d-flex justify-content-end">
       <b-button class="mr-3" size="sm" variant="primary" @click="saveTemplate()">{{ $t('SELECT_TEMPLATE.SELECT') }}</b-button>
-      <b-button size="sm" variant="outline-primary" @click="closeCurrentTab()">{{ $t('SELECT_TEMPLATE.CANCEL') }}</b-button>
+      <b-button size="sm" variant="outline-primary" @click="closeCurrentTab(router)">{{ $t('SELECT_TEMPLATE.CANCEL') }}</b-button>
     </div>
   </div>
 </template>

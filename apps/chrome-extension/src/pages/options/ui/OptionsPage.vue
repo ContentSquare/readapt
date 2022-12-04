@@ -18,7 +18,9 @@ import SettingsMenuTableItems from '@/views/SettingsMenuTableItems.vue'
 import { TextSettingsFileDownload } from '@/features/textSettingsFileDownload'
 
 import utils from '@/chrome'
-import router from '@/router'
+import { useRouter } from 'vue-router/composables'
+
+const router = useRouter()
 
 const selectedProfiledId = ref<TextProfileId | null>(null)
 onMounted(() => {

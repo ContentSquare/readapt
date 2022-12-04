@@ -8,8 +8,11 @@ import { useTextPreferences } from '@/entities/textPreferences'
 
 import utils from '@/chrome'
 import { useI18n } from 'vue-i18n-composable'
+import { useRouter } from 'vue-router/composables'
 
 import QuickActivate from '@/components/QuickActivate.vue'
+
+const router = useRouter()
 
 const readaptEnabled = ref(true)
 
@@ -29,7 +32,7 @@ const switchEnabled = async () => {
 
 const adapt = async () => await sendMessageToCurrentTab('ADAPT')
 const reset = async () => await sendMessageToCurrentTab('RESET')
-const selectTemplate = async () => await openTemplates()
+const selectTemplate = async () => await openTemplates(router)
 
 const { locale, t } = useI18n()
 
@@ -90,10 +93,10 @@ const { version } = useVersion()
       <div v-if="hasActiveProfile">
         <h5 class="mb-1">Active profile:</h5>
         <TextProfileActiveDropdown class="popup-page__active-profile-dropdown" />
-        <span class="popup-page__edit-profile ml-2" @click="openOptionsPage({ editActiveProfile: null })">&#x270e;</span>
+        <span class="popup-page__edit-profile ml-2" @click="openOptionsPage({ editActiveProfile: null }, router)">&#x270e;</span>
       </div>
 
-      <b-button size="sm" variant="primary" @click="openOptionsPage" style="max-width: 150px">
+      <b-button size="sm" variant="primary" @click="openOptionsPage({}, router)" style="max-width: 150px">
         {{ t('MAIN_MENU.CREATE_BRAND_NEW_PROFILE') }}
       </b-button>
 
