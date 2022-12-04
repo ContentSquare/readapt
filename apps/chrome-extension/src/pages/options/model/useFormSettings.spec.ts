@@ -1,76 +1,84 @@
-import { ref, nextTick, Ref } from 'vue'
-import { Language } from '@readapt/settings'
+import { ref } from 'vue'
 import { buildDefaultProfiles } from '@readapt/settings'
 import { useFormSettings } from './useFormSettings'
-import { Settings } from '@readapt/settings'
+import { textProfileFixture as profile, TextProfileId, useTextPreferences } from '@/entities/textPreferences'
 
 describe('useFormSettings()', () => {
-  let language: Ref<Language>
+  const emptyProfileId = ref<TextProfileId | null>(null)
 
   beforeEach(() => {
-    language = ref('en')
+    useTextPreferences().setProfiles([profile])
   })
 
-  it.each(['en', 'fr'] as Language[])('should return default settings for %s', (language: Language) => {
-    const { settings } = useFormSettings(ref(language))
-
-    expect(settings.value).toEqual(buildDefaultProfiles()[language])
+  afterEach(() => {
+    useTextPreferences().reset()
   })
 
-  describe('when the language changes', () => {
-    it('should return settings for the new language', () => {
-      const { settings } = useFormSettings(language)
+  describe('when active profile id is null', () => {
+    it('should provide settings in english', () => {
+      const { settings } = useFormSettings(emptyProfileId)
 
-      language.value = 'fr'
+      expect(settings.value).toEqual(buildDefaultProfiles()['en'])
+    })
+
+    it('should set language to english', () => {
+      const { language } = useFormSettings(emptyProfileId)
+
+      expect(language.value).toBe('en')
+    })
+  })
+
+  describe('setLanguage()', () => {
+    it('should change language', () => {
+      const { language, setLanguage } = useFormSettings(emptyProfileId)
+
+      setLanguage('fr')
+
+      expect(language.value).toEqual('fr')
+    })
+
+    it('should change pick settings of the changed language', () => {
+      const { settings, setLanguage } = useFormSettings(emptyProfileId)
+
+      setLanguage('fr')
 
       expect(settings.value).toEqual(buildDefaultProfiles()['fr'])
     })
   })
 
-  describe('when provided with the base settings', () => {
-    it('should use the base settings', () => {
-      const baseSettings = ref<Settings>({
-        ...buildDefaultProfiles()['en'],
-        fontFamily: 'OpenDyslexic'
-      })
-      const { settings } = useFormSettings(language, baseSettings)
+  describe('when having selected profile id', () => {
+    it('should provide settings from the selected profile', () => {
+      const selectedProfileId = ref<TextProfileId>(profile.id)
+      const { settings } = useFormSettings(selectedProfileId)
 
-      expect(settings.value).toEqual(baseSettings.value)
+      expect(settings.value).toEqual(profile.settings)
     })
 
-    describe('when modifying settings', () => {
-      it('should not modify the base settings', () => {
-        const baseSettings = ref<Settings | null>(buildDefaultProfiles()['en'])
-        const { settings } = useFormSettings(language, baseSettings)
+    it('should provide language from the selected profile settings', () => {
+      const selectedProfileId = ref<TextProfileId>(profile.id)
+      const { language } = useFormSettings(selectedProfileId)
 
-        settings.value.fontFamily = 'OpenDyslexic'
-
-        expect(baseSettings.value).toEqual(buildDefaultProfiles()['en'])
-      })
-    })
-
-    describe('when base settings changes', () => {
-      it('should reset the settings', async () => {
-        const baseSettings = ref<Settings | null>(buildDefaultProfiles()['en'])
-        const { settings } = useFormSettings(language, baseSettings)
-
-        settings.value.fontFamily = 'OpenDyslexic'
-        baseSettings.value = null
-
-        await nextTick()
-
-        expect(settings.value).toEqual(buildDefaultProfiles()['en'])
-      })
+      expect(language.value).toEqual(profile.settings.language)
     })
   })
 
-  describe('update()', () => {
+  describe('updateSettings()', () => {
     it('should update the settings', () => {
-      const { settings, updateSettings } = useFormSettings(language)
+      const { settings, updateSettings } = useFormSettings(emptyProfileId)
 
       updateSettings('fontFamily', 'OpenDyslexic')
 
       expect(settings.value.fontFamily).toBe('OpenDyslexic')
+    })
+
+    describe('when having a selected profile', () => {
+      it('should not change original selected profile settings', async () => {
+        const { settings, updateSettings } = useFormSettings(ref<TextProfileId>(profile.id))
+
+        updateSettings('fontFamily', 'OpenDyslexic')
+
+        expect(settings.value.fontFamily).not.toBe(profile.settings.fontFamily)
+      })
     })
   })
 })
