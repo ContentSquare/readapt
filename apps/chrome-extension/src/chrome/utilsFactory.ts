@@ -1,12 +1,13 @@
 import * as chromeUtils from '@/chrome/utils'
 import * as chromeMock from './utilsMock'
 import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
+import VueRouter from 'vue-router'
 
 export interface ChromeUtils {
   getCurrentTab: () => Promise<chrome.tabs.Tab>
-  openOptionsPage: (params?: Record<string, string>) => Promise<void>
-  openTemplates: () => Promise<void>
-  closeCurrentTab: () => Promise<void>
+  openOptionsPage: (params?: Record<string, string>, router?: VueRouter) => Promise<void>
+  openTemplates: (router?: VueRouter) => Promise<void>
+  closeCurrentTab: (router?: VueRouter) => Promise<void>
   sendMessageToCurrentTab: (message: unknown) => Promise<void>
   broadcastMessage: (message: unknown) => Promise<void>
   saveLocale: (locale: string) => Promise<void>
