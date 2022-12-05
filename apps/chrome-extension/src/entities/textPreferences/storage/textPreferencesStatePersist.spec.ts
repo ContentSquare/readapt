@@ -30,7 +30,9 @@ describe('textPreferencesStatePersist()', () => {
 
       const stopWatcher = await textPreferencesStatePersist(storage)
       setProfiles(textPreferencesFixture.profiles)
-      setActiveProfileId(textPreferencesFixture.activeProfileId)
+      if (textPreferencesFixture.activeProfileId) {
+        setActiveProfileId(textPreferencesFixture.activeProfileId)
+      }
 
       expect(await storage.get(TEXT_PREFERENCES_STORAGE_KEY)).toEqual({
         [TEXT_PREFERENCES_STORAGE_KEY]: textPreferencesFixture
