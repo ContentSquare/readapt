@@ -47,7 +47,7 @@ const { t } = useI18n()
     <div class="mt-3">
       <div class="mb-2">
         <h2 class="options-page__title mr-2">Profile:</h2>
-        <TextProfileEditDropdown class="options-page__profiles-dropdown" v-model="selectedProfiledId" />
+        <TextProfileEditDropdown class="options-page__profiles-dropdown" v-model="selectedProfiledId" :settings="settings" />
         <TextSettingsFileDownload class="ml-2 float-right" :settings="settings" />
       </div>
       <b-nav class="d-flex flex-row">
