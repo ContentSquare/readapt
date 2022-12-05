@@ -111,7 +111,7 @@ const { t } = useI18n()
 
   &__profiles-dropdown {
     font-size: 24px;
-    width: 200px;
+    width: 250px;
   }
 }
 .nav-item {
