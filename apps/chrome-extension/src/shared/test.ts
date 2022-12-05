@@ -5,3 +5,7 @@ export const mockPrompt = (result: string) => {
 export const mockAlert = () => {
   return jest.spyOn(window, 'alert').mockReset().mockReturnValueOnce(undefined)
 }
+
+export const mockConfirm = (result: boolean) => {
+  return jest.spyOn(window, 'confirm').mockReset().mockReturnValueOnce(result)
+}
