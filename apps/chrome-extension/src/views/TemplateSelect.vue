@@ -1,14 +1,15 @@
 <script lang="ts">
-import { computed, defineComponent, ref, unref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import { BButton, BIconExclamationTriangle } from 'bootstrap-vue'
 import { Language, Settings } from '@readapt/settings'
 import TemplateSelector from '@/components/TemplateSelector.vue'
 import { templates } from '@/constants/templates'
 import { SettingsTemplate } from '@/interfaces'
-import { store } from '@/store'
 import utils from '@/chrome'
-import router from '@/router'
+import { useRouter } from 'vue-router/composables'
 import { LanguageSelector } from '@readapt/shared-components'
+import { useTextPreferences } from '@/entities/textPreferences'
+import cloneDeep from 'lodash/cloneDeep'
 
 const isSameLanguage = (language: Language) => {
   return (template: SettingsTemplate) => template.settings.language === language
@@ -22,24 +23,31 @@ const TemplateSelect = defineComponent({
       selectedLanguage.value = lang
       selectedTemplate.value = filteredTemplates.value[0]
     }
-
-    const { closeCurrentTab, saveSettings } = utils
+    const { closeCurrentTab } = utils
 
     const filteredTemplates = computed(() => templates.filter(isSameLanguage(selectedLanguage.value)))
     const selectedTemplate = ref<SettingsTemplate>(filteredTemplates.value[0])
 
     const onChangeTemplate = (value: SettingsTemplate) => (selectedTemplate.value = value)
 
+    const { createProfile, generateNextProfileId } = useTextPreferences()
+    const createProfileFromTemplate = (settings: Settings) => {
+      const newProfileId = generateNextProfileId()
+      createProfile({
+        name: 'From template ' + newProfileId,
+        settings: cloneDeep(settings)
+      })
+      router.push({ path: 'options?profileId=' + newProfileId })
+    }
+
+    const router = useRouter()
+
     const onModifyTemplate = (settings: Settings) => {
-      store.commit('updateSettings', settings) // FIXME must be a deepClone
-      router.push({ path: 'settings' })
+      createProfileFromTemplate(settings)
     }
 
     const saveTemplate = () => {
-      const selectedSettings = unref(selectedTemplate).settings
-      store.commit('updateSettings', selectedSettings) // FIXME must be a deepClone
-      saveSettings(selectedSettings)
-      closeCurrentTab()
+      createProfileFromTemplate(selectedTemplate.value.settings)
     }
 
     return {
@@ -53,7 +61,9 @@ const TemplateSelect = defineComponent({
       filteredTemplates,
 
       saveTemplate,
-      closeCurrentTab
+      closeCurrentTab,
+
+      router
     }
   }
 })
@@ -77,7 +87,7 @@ export default TemplateSelect
 
     <div class="mt-2 d-flex justify-content-end">
       <b-button class="mr-3" size="sm" variant="primary" @click="saveTemplate()">{{ $t('SELECT_TEMPLATE.SELECT') }}</b-button>
-      <b-button size="sm" variant="outline-primary" @click="closeCurrentTab()">{{ $t('SELECT_TEMPLATE.CANCEL') }}</b-button>
+      <b-button size="sm" variant="outline-primary" @click="closeCurrentTab(router)">{{ $t('SELECT_TEMPLATE.CANCEL') }}</b-button>
     </div>
   </div>
 </template>

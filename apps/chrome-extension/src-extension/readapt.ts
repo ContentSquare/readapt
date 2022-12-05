@@ -1,7 +1,7 @@
 /* global chrome */
 import { maskState, rulerState, addMask, addRuler, updateRulerSettings, removeRuler, removeMask, updateMaskSettings } from './reading-tools'
 import { loadVisualEngine } from './load-visual-engine'
-import { STORAGE_SETTINGS_KEY } from '@/settings'
+import { TEXT_PREFERENCES_STORAGE_KEY } from '@/entities/textPreferences'
 
 const mousePos = {
   x: 0,
@@ -118,8 +118,12 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 })
 
 const requestSettings = async () => {
-  const { settings } = await chrome.storage.local.get(STORAGE_SETTINGS_KEY)
-  return settings
+  const { [TEXT_PREFERENCES_STORAGE_KEY]: preferences } = (await chrome.storage.local.get(TEXT_PREFERENCES_STORAGE_KEY)) as any
+  if (preferences && preferences.profiles.length > 0) {
+    const profile = preferences.profiles.find((profile: any) => profile.id === preferences.activeProfileId)
+    const result = profile?.settings
+    return result
+  }
 }
 
 const listenKeyDown = (event: KeyboardEvent) => {

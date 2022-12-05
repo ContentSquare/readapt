@@ -1,29 +1,26 @@
-import router from '@/router'
 import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
-import { Settings } from '@readapt/settings'
-import { SettingsStorageModel, STORAGE_SETTINGS_KEY } from '@/settings'
+import VueRouter from 'vue-router'
 
 const getCurrentTab = async (): Promise<chrome.tabs.Tab> => {
   console.log('getCurrentTab mock')
   return { id: 0 } as chrome.tabs.Tab
 }
 
-const closeCurrentTab = async (): Promise<void> => {
+const closeCurrentTab = async (router?: VueRouter): Promise<void> => {
   console.log('closeCurrentTab mock')
-  await router.push('/')
+  router?.push('/')
 }
 
-const openSettings = async (): Promise<void> => {
-  await router.push('settings')
+const openOptionsPage = async (params?: Record<string, string>, router?: VueRouter): Promise<void> => {
+  router?.push({
+    name: 'options',
+    query: params
+  })
 }
 
-const newSettings = async (): Promise<void> => {
-  await router.push('new-settings')
-}
-
-const openTemplates = async (): Promise<void> => {
-  await router.push('templates')
+const openTemplates = async (router?: VueRouter): Promise<void> => {
+  router?.push('templates')
 }
 
 const sendMessageToCurrentTab = async (message: unknown): Promise<void> => {
@@ -32,17 +29,6 @@ const sendMessageToCurrentTab = async (message: unknown): Promise<void> => {
 
 const broadcastMessage = async (message: unknown): Promise<void> => {
   console.log('brodcastMessage: ', message)
-}
-
-const getStoredSettings = async (): Promise<Settings | undefined> => {
-  const settingsJson = localStorage.getItem(STORAGE_SETTINGS_KEY) ?? 'null'
-  const settingsStorageModel = JSON.parse(settingsJson) ?? []
-  return settingsStorageModel[0]?.settings
-}
-
-const saveSettings = (settings: Settings): void => {
-  const settingsStorageModel: SettingsStorageModel = [{ name: 'Default', settings }]
-  localStorage.setItem(STORAGE_SETTINGS_KEY, JSON.stringify(settingsStorageModel))
 }
 
 const saveLocale = async (locale: string): Promise<void> => {
@@ -96,12 +82,9 @@ const getRuleSettings = async (): Promise<SettingsReadingTool> => {
 export {
   getCurrentTab,
   closeCurrentTab,
-  openSettings,
-  newSettings,
+  openOptionsPage,
   openTemplates,
   sendMessageToCurrentTab,
-  getStoredSettings,
-  saveSettings,
   saveLocale,
   getLocale,
   broadcastMessage,

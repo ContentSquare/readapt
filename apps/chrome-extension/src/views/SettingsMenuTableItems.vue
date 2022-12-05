@@ -6,7 +6,7 @@ import { ColoredItem, ColoredOption, ColorOption } from '@readapt/settings'
 import { buildItemPreview } from '@readapt/visual-engine'
 import { ColorPicker } from '@readapt/shared-components'
 
-import i18n from '@/i18n'
+import { useI18n } from 'vue-i18n-composable'
 import { SettingsTableItem } from '@/interfaces'
 
 const SettingsMenuTableItems = defineComponent({
@@ -19,13 +19,16 @@ const SettingsMenuTableItems = defineComponent({
   },
   components: { BFormCheckbox, BTable, ColorPicker },
   setup(props, { emit }) {
-    const tableFields = [
-      { key: 'value', label: i18n.t(props.tableLabel) },
-      { key: 'example', label: i18n.t('SETTINGS.EXAMPLE') },
-      { key: 'color', label: i18n.t('SETTINGS.TEXT_COLOR') },
-      { key: 'bold', label: i18n.t('SETTINGS.BOLD') },
-      { key: 'activate', label: i18n.t('SETTINGS.ACTIVATE') }
-    ]
+    const { t } = useI18n()
+    const tableFields = computed(() => {
+      return [
+        { key: 'value', label: t(props.tableLabel) },
+        { key: 'example', label: t('SETTINGS.EXAMPLE') },
+        { key: 'color', label: t('SETTINGS.TEXT_COLOR') },
+        { key: 'bold', label: t('SETTINGS.BOLD') },
+        { key: 'activate', label: t('SETTINGS.ACTIVATE') }
+      ]
+    })
 
     const tableItems = computed<SettingsTableItem[]>(() => {
       return props.items.map((item) => {
@@ -82,7 +85,8 @@ const SettingsMenuTableItems = defineComponent({
       switchBold,
       switchActive,
       setColor,
-      switchAllItems
+      switchAllItems,
+      t
     }
   }
 })
@@ -93,7 +97,7 @@ export default SettingsMenuTableItems
   <div>
     <div class="d-flex pt-2 pb-2">
       <b-form-checkbox :checked="allItemsActive" @change="switchAllItems" switch />
-      <h5 class="ml-2">{{ $t(switchAllLabel) }}</h5>
+      <h5 class="ml-2">{{ t(switchAllLabel) }}</h5>
     </div>
     <b-table small striped sticky-header="73vh" :items="tableItems" :fields="tableFields" responsive="sm">
       <template #head(color)="color">

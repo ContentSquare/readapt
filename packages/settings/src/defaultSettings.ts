@@ -39,6 +39,8 @@ const buildDefaultSettings = (language: Language): Settings => {
     wordSpacing: wordSpacingOptions[0].value,
     lineSpacing: lineSpacingOptions[0].value,
     syllableActive: false,
+    syllableColor1: undefined,
+    syllableColor2: undefined,
     syllableOpacity: opacityOptions[0].value,
     silentLetterActive: false,
     silentLetterOpacity: silentLetterOpacityOptions[0].value,

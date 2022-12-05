@@ -1,8 +1,7 @@
 /* global chrome */
-import { Settings } from '@readapt/settings'
 import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
-import { SettingsStorageModel, STORAGE_SETTINGS_KEY } from '@/settings'
+import { Url } from '@/shared/lib'
 
 const getCurrentTab = async (): Promise<chrome.tabs.Tab> => {
   const queryOptions = { active: true, currentWindow: true }
@@ -17,18 +16,11 @@ const closeCurrentTab = async (): Promise<void> => {
   }
 }
 
-const openSettings = async (): Promise<void> => {
-  try {
-    await chrome.runtime.openOptionsPage()
-  } catch (e) {
-    console.error(e)
-  }
-}
-
-const newSettings = async (): Promise<void> => {
+const openOptionsPage = async (params?: Record<string, string>): Promise<void> => {
   try {
     await chrome.tabs.create({
-      url: 'index.html#/new-settings'
+      // TODO: use router as a single source of truth for URLs
+      url: `index.html#/options${Url.getQueryString(params)}`
     })
   } catch (e) {
     console.error(e)
@@ -65,16 +57,6 @@ const openTemplates = async (): Promise<void> => {
   } catch (e) {
     console.error(e)
   }
-}
-
-const getStoredSettings = async (): Promise<Settings | undefined> => {
-  const { [STORAGE_SETTINGS_KEY]: settingsStorageModel = [] } = await chrome.storage.local.get(STORAGE_SETTINGS_KEY)
-  return settingsStorageModel[0]?.settings
-}
-
-const saveSettings = async (settings: Settings): Promise<void> => {
-  const settingsStorageModel: SettingsStorageModel = [{ name: 'Default', settings }]
-  await chrome.storage.local.set({ [STORAGE_SETTINGS_KEY]: settingsStorageModel })
 }
 
 const saveLocale = async (locale: string): Promise<void> => {
@@ -116,13 +98,10 @@ const getRuleSettings = async (): Promise<SettingsReadingTool> => {
 export {
   getCurrentTab,
   closeCurrentTab,
-  openSettings,
-  newSettings,
+  openOptionsPage,
   openTemplates,
   sendMessageToCurrentTab,
   broadcastMessage,
-  getStoredSettings,
-  saveSettings,
   saveLocale,
   getLocale,
   saveEnabled,
