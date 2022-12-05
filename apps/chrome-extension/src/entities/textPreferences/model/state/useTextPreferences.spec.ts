@@ -47,6 +47,33 @@ describe('useTextPreferences()', () => {
 
       expect(profiles[0].id).not.toBe(profiles[1].id)
     })
+
+    describe('when the first profile was created', () => {
+      it('should set the new profile as active', () => {
+        const { createProfile, preferences } = useTextPreferences()
+
+        createProfile({
+          name: profile.name,
+          settings: profile.settings
+        })
+
+        expect(preferences.activeProfileId).toBe(preferences.profiles[0].id)
+      })
+    })
+
+    describe('when saved profiles already exist', () => {
+      it('should not modify active profile id', () => {
+        const { createProfile, preferences, setProfiles } = useTextPreferences()
+        setProfiles([profile])
+
+        createProfile({
+          name: profile.name,
+          settings: profile.settings
+        })
+
+        expect(preferences.activeProfileId).toBe(profile.id)
+      })
+    })
   })
 
   describe('updateProfileSettings()', () => {
@@ -79,13 +106,30 @@ describe('useTextPreferences()', () => {
   })
 
   describe('setProfiles()', () => {
-    // TODO: add active profile id validation
     it('should set profiles', () => {
       const { preferences, setProfiles } = useTextPreferences()
 
       setProfiles([profile])
 
       expect(preferences.profiles).toEqual([profile])
+    })
+
+    it('should update the active profile', () => {
+      const { preferences, setProfiles } = useTextPreferences()
+
+      setProfiles([profile])
+
+      expect(preferences.activeProfileId).toBe(profile.id)
+    })
+
+    describe('when settings an empty list of profiles', () => {
+      it('should clear the active profile id', () => {
+        const { preferences, setProfiles } = useTextPreferences()
+
+        setProfiles([profile])
+        setProfiles([])
+        expect(preferences.activeProfileId).toBeNull()
+      })
     })
   })
 
@@ -105,17 +149,6 @@ describe('useTextPreferences()', () => {
         setProfiles([profile])
 
         expect(() => setActiveProfileId(1001)).toThrow(NonExistingIdError)
-      })
-    })
-
-    describe('when the active profile id is null', () => {
-      it('should not throw', () => {
-        const { setActiveProfileId, setProfiles } = useTextPreferences()
-
-        setProfiles([profile])
-        setActiveProfileId(profile.id)
-
-        expect(() => setActiveProfileId(null)).not.toThrow()
       })
     })
   })

@@ -14,6 +14,11 @@ export function useTextPreferences() {
 
   const setProfiles = (profiles: TextProfile[]) => {
     state.profiles = profiles
+    if (profiles.length === 0) {
+      state.activeProfileId = null
+    } else if (!state.activeProfileId || !getProfileById(state.activeProfileId)) {
+      state.activeProfileId = profiles[0].id
+    }
   }
 
   const generateNextProfileId = (): TextProfileId => {
@@ -28,6 +33,9 @@ export function useTextPreferences() {
       name,
       settings: cloneDeep(settings)
     })
+    if (state.profiles.length === 1) {
+      state.activeProfileId = newProfileId
+    }
     return newProfileId
   }
 
@@ -44,8 +52,8 @@ export function useTextPreferences() {
     }
   }
 
-  const setActiveProfileId = (activeProfileId: TextProfileId | null) => {
-    const isValidActoveProfileId = activeProfileId === null || Boolean(getProfileById(activeProfileId))
+  const setActiveProfileId = (activeProfileId: TextProfileId) => {
+    const isValidActoveProfileId = getProfileById(activeProfileId)
     if (isValidActoveProfileId) {
       state.activeProfileId = activeProfileId
     } else {
