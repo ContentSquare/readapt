@@ -1,14 +1,15 @@
 <script lang="ts">
-import { computed, defineComponent, ref, unref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import { BButton, BIconExclamationTriangle } from 'bootstrap-vue'
 import { Language, Settings } from '@readapt/settings'
 import TemplateSelector from '@/components/TemplateSelector.vue'
 import { templates } from '@/constants/templates'
 import { SettingsTemplate } from '@/interfaces'
-import { store } from '@/store'
 import utils from '@/chrome'
 import { useRouter } from 'vue-router/composables'
 import { LanguageSelector } from '@readapt/shared-components'
+import { useTextPreferences } from '@/entities/textPreferences'
+import cloneDeep from 'lodash/cloneDeep'
 
 const isSameLanguage = (language: Language) => {
   return (template: SettingsTemplate) => template.settings.language === language
@@ -22,7 +23,6 @@ const TemplateSelect = defineComponent({
       selectedLanguage.value = lang
       selectedTemplate.value = filteredTemplates.value[0]
     }
-
     const { closeCurrentTab } = utils
 
     const filteredTemplates = computed(() => templates.filter(isSameLanguage(selectedLanguage.value)))
@@ -30,16 +30,30 @@ const TemplateSelect = defineComponent({
 
     const onChangeTemplate = (value: SettingsTemplate) => (selectedTemplate.value = value)
 
+    const { createProfile, generateNextProfileId } = useTextPreferences()
+    const createProfileFromTemplate = (settings: Settings) => {
+      const newProfileId = generateNextProfileId()
+      createProfile({
+        name: 'From template ' + newProfileId,
+        settings: cloneDeep(settings)
+      })
+      router.push({ path: 'options?profileId=' + newProfileId })
+    }
+
     const router = useRouter()
+
     const onModifyTemplate = (settings: Settings) => {
-      store.commit('updateSettings', settings) // FIXME must be a deepClone
-      router.push({ path: 'settings' })
+      createProfileFromTemplate(settings)
+      const newProfileId = generateNextProfileId()
+      createProfile({
+        name: `From template (${newProfileId})`,
+        settings: cloneDeep(settings)
+      })
+      router.push({ path: 'options?profileId=' + newProfileId })
     }
 
     const saveTemplate = () => {
-      const selectedSettings = unref(selectedTemplate).settings
-      store.commit('updateSettings', selectedSettings) // FIXME must be a deepClone
-      closeCurrentTab(router)
+      createProfileFromTemplate(selectedTemplate.value.settings)
     }
 
     return {

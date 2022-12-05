@@ -26,6 +26,8 @@ const selectedProfiledId = ref<TextProfileId | null>(null)
 onMounted(() => {
   if ('editActiveProfile' in router.currentRoute.query) {
     selectedProfiledId.value = preferences.activeProfileId
+  } else if ('profileId' in router.currentRoute.query) {
+    selectedProfiledId.value = parseInt(router.currentRoute.query.profileId)
   }
 })
 
@@ -109,7 +111,7 @@ const { t } = useI18n()
 
   &__profiles-dropdown {
     font-size: 24px;
-    width: 200px;
+    width: 250px;
   }
 }
 .nav-item {

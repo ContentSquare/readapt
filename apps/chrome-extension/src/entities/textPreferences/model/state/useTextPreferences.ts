@@ -62,6 +62,7 @@ export function useTextPreferences() {
     createProfile,
     getProfileById,
     updateProfileSettings,
-    setActiveProfileId
+    setActiveProfileId,
+    generateNextProfileId
   }
 }
