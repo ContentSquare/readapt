@@ -44,12 +44,6 @@ const TemplateSelect = defineComponent({
 
     const onModifyTemplate = (settings: Settings) => {
       createProfileFromTemplate(settings)
-      const newProfileId = generateNextProfileId()
-      createProfile({
-        name: `From template (${newProfileId})`,
-        settings: cloneDeep(settings)
-      })
-      router.push({ path: 'options?profileId=' + newProfileId })
     }
 
     const saveTemplate = () => {
