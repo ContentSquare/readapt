@@ -2,23 +2,27 @@ import TextProfileEditDropdown from './TextProfileEditDropdown.vue'
 import { mount } from '@vue/test-utils'
 import { textProfileFixture as profile, useTextPreferences } from '@/entities/textPreferences'
 import { TextProfileId, TextSettings } from '@/entities/textPreferences/model/TextPreferences'
-import {  } from 'module';
+import { mockConfirm } from '@/shared/test'
 
 describe('TextProfileEditDropdown', () => {
+  beforeEach(() => {
+    useTextPreferences().setProfiles([profile])
+  })
   afterEach(() => {
     useTextPreferences().reset()
   })
 
   interface FactoryProps {
-    profileId: TextProfileId | null
-    settings: TextSettings
+    value?: TextProfileId | null
+    settings?: TextSettings
+    confirmResult?: boolean
   }
 
-  const factory = ({ profileId, settings }: FactoryProps) => {
-    useTextPreferences().setProfiles([profile])
+  const factory = ({ value = profile.id, settings = profile.settings, confirmResult = true }: FactoryProps = {}) => {
+    mockConfirm(confirmResult)
     const wrapper = mount(TextProfileEditDropdown, {
       propsData: {
-        value: profileId,
+        value,
         settings
       }
     })
@@ -27,30 +31,30 @@ describe('TextProfileEditDropdown', () => {
     return { wrapper, dropdown }
   }
 
-  describe('profiles dropdown', () => {
-    it('should render profiles as options', () => {
-      const { dropdown } = factory({ profileId: null, settings: profile.settings })
+  describe('options', () => {
+    it('should render profiles options', () => {
+      const { dropdown } = factory()
 
       expect(dropdown.find(`[value="${profile.id}"]`).text()).toBe(profile.name)
     })
 
-    it('should render new profile as option', () => {
-      const { dropdown } = factory({ profileId: null, settings: profile.settings })
+    it('should render new profile option', () => {
+      const { dropdown } = factory()
 
       expect(dropdown.find('option[value=""]').text()).toBe('New Profile')
     })
   })
 
-  describe('v-model binding', () => {
-    it('should select a profile using "value" as profile id', () => {
-      const { dropdown } = factory({ profileId: profile.id, settings: profile.settings })
+  describe('when changing selection with saved changes', () => {
+    it('should select a profile using "value" prop', () => {
+      const { dropdown } = factory()
 
       expect(dropdown.element.value).toBe(profile.id.toString())
     })
 
-    describe('when an existing profile option is selected', () => {
+    describe('when selecting an existing profile', () => {
       it('should trigger "input" with selected profile id', () => {
-        const { wrapper, dropdown } = factory({ profileId: null, settings: profile.settings })
+        const { wrapper, dropdown } = factory({ value: null })
 
         dropdown.setValue(profile.id)
 
@@ -58,30 +62,70 @@ describe('TextProfileEditDropdown', () => {
       })
     })
 
-    describe('when a new profile option is selected', () => {
-      it('should trigger "input" with undefined', () => {
-        const { wrapper, dropdown } = factory({ profileId: profile.id, settings: profile.settings })
+    describe('when selecting a new profile', () => {
+      it('should trigger "input" with null', () => {
+        const { wrapper, dropdown } = factory()
 
         dropdown.setValue('')
 
         expect(wrapper.emitted('input')).toEqual([[null]])
       })
     })
+  })
 
-    describe('when changing selection with unsaved changes', () => {
-      it('should open a confirmation dialog', () => {
-        const { wrapper, dropdown } = factory({ profileId: profile.id, settings: profile.settings })
+  describe('when selecting with unsaved changes', () => {
+    const dirtySettings: TextSettings = { ...profile.settings, fontFamily: 'OpenDyslexic' }
+    const cases = [
+      { profileId: profile.id, newProfileId: null },
+      { profileId: null, newProfileId: profile.id }
+    ]
 
-        wrapper.setProps({
-          settings: {
-            ...profile.settings,
-            fontFamily: 'OpenDyslexic'
-          }
-        })
-        dropdown.setValue(null)
+    it.each(cases)('should open a confirmation dialog', async ({ profileId, newProfileId }) => {
+      const { dropdown } = factory({ value: profileId, settings: dirtySettings })
 
+      await dropdown.setValue(newProfileId)
 
+      expect(confirm).toHaveBeenCalled()
+    })
+
+    describe('when user confirms the selection change', () => {
+      it.each(cases)('should trigger "input"', async ({ profileId, newProfileId }) => {
+        const { wrapper, dropdown } = factory({ value: profileId, settings: dirtySettings })
+
+        await dropdown.setValue(newProfileId)
+
+        expect(wrapper.emitted('input')).toEqual([[newProfileId]])
       })
+    })
+
+    describe('when user cancels the selection change', () => {
+      it.each(cases)('should not trigger "input"', async ({ profileId, newProfileId }) => {
+        const { wrapper, dropdown } = factory({ value: profileId, settings: dirtySettings })
+        mockConfirm(false)
+
+        await dropdown.setValue(newProfileId)
+
+        expect(wrapper.emitted('input')).toBeUndefined()
+      })
+
+      it.each(cases)('should keep the selection', async ({ profileId, newProfileId }) => {
+        const { dropdown } = factory({ value: profileId, settings: dirtySettings })
+        mockConfirm(false)
+
+        await dropdown.setValue(newProfileId)
+
+        expect(dropdown.element.value).toBe(String(profileId ?? ''))
+      })
+    })
+  })
+
+  describe('when changing selection with saved changes', () => {
+    it('should not open a confirmation dialog', async () => {
+      const { dropdown } = factory()
+
+      await dropdown.setValue(null)
+
+      expect(confirm).not.toHaveBeenCalled()
     })
   })
 })

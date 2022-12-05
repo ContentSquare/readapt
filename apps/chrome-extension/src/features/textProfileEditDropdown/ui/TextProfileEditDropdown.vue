@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { TextProfileId, TextSettings, useTextPreferences } from '@/entities/textPreferences'
+import { buildDefaultSettings } from '@readapt/settings'
+import isEqual from 'lodash/isEqual'
 
-const { preferences } = useTextPreferences()
+const { preferences, getProfileById } = useTextPreferences()
 
 const props = defineProps<{
   value: TextProfileId | null
@@ -9,12 +11,24 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (event: 'input', profileId: TextProfileId | undefined): void
+  (event: 'input', profileId: TextProfileId | null): void
 }>()
 
-const onChange = ({ target: { value } }: Event) => {
-  const emittedValue = value ? Number(value) : null
-  emit('input', emittedValue)
+const onChange = ({ target }: Event) => {
+  const emittedValue = target.value ? Number(target.value) : null
+  if (validateUnsavedChanges()) {
+    emit('input', emittedValue)
+  } else {
+    event.target.value = String(props.value ?? '')
+  }
+}
+
+const validateUnsavedChanges = () => {
+  const defaultSettings = props.value ? getProfileById(props.value)?.settings : buildDefaultSettings('en')
+  if (defaultSettings && isEqual(defaultSettings, props.settings)) {
+    return true
+  }
+  return confirm('You have unsaved changes. Do you to continue?')
 }
 </script>
 <template>
