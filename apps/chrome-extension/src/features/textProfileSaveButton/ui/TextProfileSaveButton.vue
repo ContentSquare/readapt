@@ -40,9 +40,6 @@ const create = async () => {
     settings: props.settings,
     name: newProfileName
   })
-  if (preferences.profiles.length === 1) {
-    setActiveProfileId(newProfileId)
-  }
   await nextTick()
   emit('input', newProfileId)
   alert('The profile has been created!')

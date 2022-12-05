@@ -11,7 +11,9 @@ export async function textPreferencesStatePersist(storage: Storage) {
 
   if (isTextAdaptationPreferences(preferencesFromStorage)) {
     setProfiles(preferencesFromStorage.profiles)
-    setActiveProfileId(preferencesFromStorage.activeProfileId)
+    if (preferencesFromStorage.activeProfileId) {
+      setActiveProfileId(preferencesFromStorage.activeProfileId)
+    }
   }
 
   return watchEffect(() => {
