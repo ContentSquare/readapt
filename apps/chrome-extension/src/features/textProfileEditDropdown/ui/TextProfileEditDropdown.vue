@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { TextProfileId, useTextPreferences } from '@/entities/textPreferences'
+import { TextProfileId, TextSettings, useTextPreferences } from '@/entities/textPreferences'
 
 const { preferences } = useTextPreferences()
 
 const props = defineProps<{
-  value: TextProfileId | undefined
+  value: TextProfileId | null
+  settings: TextSettings
 }>()
 
 const emit = defineEmits<{
@@ -12,7 +13,7 @@ const emit = defineEmits<{
 }>()
 
 const onChange = ({ target: { value } }: Event) => {
-  const emittedValue = value ? Number(value) : undefined
+  const emittedValue = value ? Number(value) : null
   emit('input', emittedValue)
 }
 </script>
