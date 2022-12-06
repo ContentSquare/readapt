@@ -1,6 +1,6 @@
 import { Settings } from '@readapt/settings'
 import { textProfileFixture as profile } from '../textPreferencesFixtures'
-import { NonExistingIdError, useTextPreferences } from './useTextPreferences'
+import { useTextPreferences } from './useTextPreferences'
 
 describe('useTextPreferences()', () => {
   afterEach(async () => {
@@ -109,14 +109,38 @@ describe('useTextPreferences()', () => {
         }
       ])
     })
+  })
 
-    it('when profile id does not exist', () => {
-      const { setProfiles, updateProfile } = useTextPreferences()
+  describe('deleteProfile()', () => {
+    it('should delete a profile by id', () => {
+      const { preferences, deleteProfile, setProfiles } = useTextPreferences()
       setProfiles([profile])
 
-      expect(() => {
-        updateProfile(1001, { settings: profile.settings })
-      }).toThrow(NonExistingIdError)
+      deleteProfile(profile.id)
+
+      expect(preferences.profiles).toEqual([])
+    })
+
+    describe('when after deletion no profiles are left', () => {
+      it('should set active profile id to null', () => {
+        const { preferences, deleteProfile, setProfiles } = useTextPreferences()
+        setProfiles([profile])
+
+        deleteProfile(profile.id)
+
+        expect(preferences.activeProfileId).toEqual(null)
+      })
+    })
+
+    describe('when the deleted profile is active', () => {
+      it('should set the first profile as active', () => {
+        const { preferences, deleteProfile, setProfiles } = useTextPreferences()
+        setProfiles([profile, { ...profile, name: 'Other', id: 2 }])
+
+        deleteProfile(2)
+
+        expect(preferences.activeProfileId).toEqual(profile.id)
+      })
     })
   })
 
@@ -156,15 +180,6 @@ describe('useTextPreferences()', () => {
       setActiveProfileId(profile.id)
 
       expect(preferences.activeProfileId).toEqual(profile.id)
-    })
-
-    describe('when the active profile id does not exist in profiles', () => {
-      it('should throw', () => {
-        const { setActiveProfileId, setProfiles } = useTextPreferences()
-        setProfiles([profile])
-
-        expect(() => setActiveProfileId(1001)).toThrow(NonExistingIdError)
-      })
     })
   })
 
