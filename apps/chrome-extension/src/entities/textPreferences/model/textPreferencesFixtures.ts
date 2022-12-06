@@ -82,6 +82,8 @@ export const textSettingsFixture: Settings = {
   shadeAlternateLinesOpacity: '33',
   silentLetterActive: false,
   silentLetterOpacity: '0.2',
+  syllableColor1: null,
+  syllableColor2: null,
   syllableActive: false,
   syllableOpacity: '33',
   wordSpacing: 'inherit'
