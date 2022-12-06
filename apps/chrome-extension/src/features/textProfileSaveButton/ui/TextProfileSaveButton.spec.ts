@@ -5,6 +5,10 @@ import { mockAlert, mockPrompt } from '@/shared/test'
 import { Settings } from '@readapt/settings'
 
 describe('TextProfileSaveButton', () => {
+  beforeEach(() => {
+    mockAlert()
+  })
+
   afterEach(() => {
     useTextPreferences().reset()
     jest.restoreAllMocks()
@@ -13,6 +17,8 @@ describe('TextProfileSaveButton', () => {
   describe('when save button is clicked', () => {
     describe('when the profile is new', () => {
       const newProfileFactory = (newProfileName = 'My Profile') => {
+        mockPrompt(newProfileName)
+
         const wrapper = mount(TextProfileSave, {
           propsData: {
             value: null,
@@ -21,10 +27,9 @@ describe('TextProfileSaveButton', () => {
         })
         const { preferences, setProfiles, setActiveProfileId } = useTextPreferences()
 
-        mockPrompt(newProfileName)
         const save = async () => await wrapper.find('[data-test-id=save]').trigger('click')
 
-        return { wrapper, preferences, setProfiles, setActiveProfileId, alert: mockAlert(), save }
+        return { wrapper, preferences, setProfiles, setActiveProfileId, save }
       }
 
       it('should create a new profile', async () => {
@@ -42,7 +47,7 @@ describe('TextProfileSaveButton', () => {
       })
 
       it('should notify about new profile creation', async () => {
-        const { save, alert } = newProfileFactory()
+        const { save } = newProfileFactory()
 
         await save()
 
@@ -104,7 +109,7 @@ describe('TextProfileSaveButton', () => {
         })
 
         it('should notify that a profile with the same name exists', async () => {
-          const { save, setProfiles, alert } = newProfileFactory(profile.name)
+          const { save, setProfiles } = newProfileFactory(profile.name)
           setProfiles([profile])
 
           await save()
@@ -133,7 +138,7 @@ describe('TextProfileSaveButton', () => {
         })
 
         it('should notify about max number of profiles', async () => {
-          const { save, alert, setProfiles } = newProfileFactory()
+          const { save, setProfiles } = newProfileFactory()
           setProfiles(profiles)
 
           await save()
@@ -161,7 +166,7 @@ describe('TextProfileSaveButton', () => {
 
         const save = async () => await wrapper.find('[data-test-id=save]').trigger('click')
 
-        return { wrapper, preferences, setProfiles, alert: mockAlert(), save }
+        return { wrapper, preferences, setProfiles, save }
       }
 
       it('should edit the profile', async () => {
@@ -179,7 +184,7 @@ describe('TextProfileSaveButton', () => {
       })
 
       it('should notify about profile update', async () => {
-        const { save, alert, setProfiles } = editProfileFactory()
+        const { save, setProfiles } = editProfileFactory()
         setProfiles([profile])
 
         await save()

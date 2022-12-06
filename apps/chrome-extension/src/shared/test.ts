@@ -1,4 +1,4 @@
-export const mockPrompt = (result: string) => {
+export const mockPrompt = (result: string | null) => {
   return jest.spyOn(window, 'prompt').mockReset().mockReturnValueOnce(result)
 }
 

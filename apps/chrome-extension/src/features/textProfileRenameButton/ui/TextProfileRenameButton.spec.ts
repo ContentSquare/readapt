@@ -1,50 +1,101 @@
 import { mount } from '@vue/test-utils'
 import TextProfileRenameButton from './TextProfileRenameButton.vue'
-import { textSettingsFixture as settings, textProfileFixture as profile, useTextPreferences } from '@/entities/textPreferences'
+import { textProfileFixture as profile, useTextPreferences, TextProfileId } from '@/entities/textPreferences'
 import { mockAlert, mockPrompt } from '@/shared/test'
-import { Settings } from '@readapt/settings'
 
 describe('TextProfileRenameButton', () => {
-  // afterEach(() => {
-  //   useTextPreferences().reset()
-  //   jest.restoreAllMocks()
-  // })
-
-  interface FactoryProps {}
-
-  const factory = () => {}
-
-  describe('when the profile is new', () => {
-    it('should not render the button', () => {
-      const wrapper = mount(TextProfileRenameButton, {
-        propsData: {
-          profileId: null
-        }
-      })
-
-      expect(wrapper.find('[data-test-id=rename]').exists()).toBe(false)
-    })
+  beforeEach(() => {
+    mockAlert()
+    useTextPreferences().setProfiles([profile])
   })
 
-  describe('when the profile exists', () => {
-    it('should render the button', () => {
-      const wrapper = mount(TextProfileRenameButton, {
-        propsData: {
-          profileId: profile.id
-        }
-      })
-
-      expect(wrapper.find('[data-test-id=rename]').exists()).toBe(true)
-    })
+  afterEach(() => {
+    useTextPreferences().reset()
+    jest.restoreAllMocks()
   })
 
-  // describe('when clicking the button', () => {
-  //   it('should show a pri')
-  // })
+  interface FactoryProps {
+    profileId: TextProfileId | null
+    newProfileName?: string | null
+  }
 
-  // it('should render a button', () => {})
+  const factory = ({ profileId, newProfileName = '' }: FactoryProps) => {
+    mockPrompt(newProfileName)
+    const wrapper = mount(TextProfileRenameButton, {
+      propsData: { profileId }
+    })
 
-  // describe('when the button is clicked', () => {
-  //   it('should open a proble')
-  // });
+    const rename = async () => await wrapper.find('[data-test-id=rename]').trigger('click')
+
+    return { wrapper, rename }
+  }
+
+  it.each([
+    { profileId: null, renders: false },
+    { profileId: profile.id, renders: true }
+  ])('should render or not the button', ({ profileId, renders }) => {
+    const { wrapper } = factory({ profileId })
+
+    expect(wrapper.find('[data-test-id=rename]').exists()).toBe(renders)
+  })
+
+  describe('when clicking the button', () => {
+    it('should show a prompt with the profile name', async () => {
+      const { rename } = factory({ profileId: profile.id })
+
+      await rename()
+
+      expect(prompt).toHaveBeenCalledWith("How you'd like to name the profile?", profile.name)
+    })
+
+    describe('when user introduces a new profile name', () => {
+      it('should rename the profile', async () => {
+        const newProfileName = 'New profile name'
+        const { rename } = factory({ profileId: profile.id, newProfileName })
+        const { preferences } = useTextPreferences()
+
+        await rename()
+
+        expect(preferences.profiles[0].name).toBe(newProfileName)
+      })
+
+      describe('when a profile with the introduced name already exists', () => {
+        const nameExistsFactory = () => {
+          const { preferences, setProfiles } = useTextPreferences()
+          setProfiles([profile, { ...profile, name: 'New profile name', id: 2 }])
+          const { rename } = factory({ profileId: profile.id, newProfileName: 'New profile name' })
+
+          return { rename, preferences }
+        }
+
+        it('should not rename the profile', async () => {
+          const { rename, preferences } = nameExistsFactory()
+
+          await rename()
+
+          expect(preferences.profiles[0].name).toBe(profile.name)
+        })
+
+        it('should show a notification message', async () => {
+          const { rename } = nameExistsFactory()
+
+          await rename()
+
+          expect(alert).toHaveBeenCalledWith(`A profile "New profile name" already exists. Please try another name.`)
+        })
+      })
+    })
+
+    describe('when user cancels the prompt', () => {
+      it('should not change the profile name', async () => {
+        const { rename } = factory({ profileId: profile.id, newProfileName: null })
+        const { preferences } = useTextPreferences()
+        const originalName = preferences.profiles[0].name
+
+        await rename()
+
+        expect(preferences.profiles[0].name).toBe(originalName)
+      })
+    })
+  })
 })
