@@ -9,6 +9,7 @@ import { useTextPreferences, TextProfileId } from '@/entities/textPreferences'
 import { TextProfileEditDropdown } from '@/features/textProfileEditDropdown'
 import { TextProfileSaveButton } from '@/features/textProfileSaveButton'
 import { TextAdaptationPreview } from '@/features/textAdaptationPreview'
+import { TextProfileRenameButton } from '@/features/textProfileRenameButton'
 import { useFormSettings } from '../model/useFormSettings'
 
 import SettingsMenuGeneral from '@/views/SettingsMenuGeneral.vue'
@@ -48,6 +49,7 @@ const { t } = useI18n()
       <div class="mb-2">
         <h2 class="options-page__title mr-2">Profile:</h2>
         <TextProfileEditDropdown class="options-page__profiles-dropdown" v-model="selectedProfiledId" :settings="settings" />
+        <TextProfileRenameButton class="options-page__profile-rename ml-3" :profile-id="selectedProfiledId" />
         <TextSettingsFileDownload class="ml-2 float-right" :settings="settings" />
       </div>
       <b-nav class="d-flex flex-row">
@@ -112,6 +114,12 @@ const { t } = useI18n()
   &__profiles-dropdown {
     font-size: 24px;
     width: 250px;
+  }
+
+  &__profile-rename {
+    font-weight: bold;
+    font-size: 32px;
+    cursor: pointer;
   }
 }
 .nav-item {

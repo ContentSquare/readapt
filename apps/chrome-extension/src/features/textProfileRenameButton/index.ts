@@ -1,1 +1,1 @@
-export { default as TextProfileSaveButton } from './ui/TextProfileSaveButton.vue'
+export { default as TextProfileRenameButton } from './ui/TextProfileRenameButton.vue'

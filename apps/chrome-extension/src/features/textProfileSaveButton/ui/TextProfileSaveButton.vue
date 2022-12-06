@@ -15,10 +15,10 @@ const emit = defineEmits<{
 
 const onClick = () => (props.value ? update() : create())
 
-const { preferences, createProfile, updateProfileSettings, setActiveProfileId } = useTextPreferences()
+const { preferences, createProfile, updateProfile } = useTextPreferences()
 
 const update = () => {
-  updateProfileSettings(props.value, props.settings)
+  updateProfile(props.value, { settings: props.settings })
   alert('The profile has been updated!')
 }
 
