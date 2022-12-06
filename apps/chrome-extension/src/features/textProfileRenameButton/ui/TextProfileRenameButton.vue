@@ -13,7 +13,7 @@ const onClick = () => {
   }
   if (isNameUnique(newProfileName)) {
     updateProfile(props.profileId, { name: newProfileName })
-    alert('The profile has been renamed!')
+    alert('The profile has been renamed')
   } else {
     alert(`A profile "${newProfileName}" already exists. Please try another name.`)
   }
