@@ -76,16 +76,16 @@ describe('useTextPreferences()', () => {
     })
   })
 
-  describe('updateProfileSettings()', () => {
+  describe('updateProfile()', () => {
     it('should update profile settings', () => {
-      const { preferences, setProfiles, updateProfileSettings } = useTextPreferences()
+      const { preferences, setProfiles, updateProfile } = useTextPreferences()
       const newSettings: Settings = {
         ...profile.settings,
         fontFamily: 'OpenDyslexic'
       }
       setProfiles([profile])
 
-      updateProfileSettings(profile.id, newSettings)
+      updateProfile(profile.id, { settings: newSettings })
 
       expect(preferences.profiles).toEqual([
         {
@@ -95,12 +95,27 @@ describe('useTextPreferences()', () => {
       ])
     })
 
+    it('should update profile name', () => {
+      const { preferences, setProfiles, updateProfile } = useTextPreferences()
+      const newProfileName = 'New profile name'
+      setProfiles([profile])
+
+      updateProfile(profile.id, { name: newProfileName })
+
+      expect(preferences.profiles).toEqual([
+        {
+          ...profile,
+          name: newProfileName
+        }
+      ])
+    })
+
     it('when profile id does not exist', () => {
-      const { setProfiles, updateProfileSettings } = useTextPreferences()
+      const { setProfiles, updateProfile } = useTextPreferences()
       setProfiles([profile])
 
       expect(() => {
-        updateProfileSettings(1001, profile.settings)
+        updateProfile(1001, { settings: profile.settings })
       }).toThrow(NonExistingIdError)
     })
   })
