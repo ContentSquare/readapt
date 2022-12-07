@@ -41,7 +41,7 @@ describe('TextProfileEditDropdown', () => {
     it('should render new profile option', () => {
       const { dropdown } = factory()
 
-      expect(dropdown.find('option[value=""]').text()).toBe('New Profile')
+      expect(dropdown.find('option[value=""]').text()).toBe('SETTINGS.PROFILE_NEW')
     })
   })
 
@@ -85,7 +85,7 @@ describe('TextProfileEditDropdown', () => {
 
       await dropdown.setValue(newProfileId)
 
-      expect(confirm).toHaveBeenCalled()
+      expect(confirm).toHaveBeenCalledWith('SETTINGS.PROFILE_UNSAVED_CHANGES')
     })
 
     describe('when user confirms the selection change', () => {
