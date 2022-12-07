@@ -45,7 +45,7 @@ describe('TextProfileRenameButton', () => {
 
       await rename()
 
-      expect(prompt).toHaveBeenCalledWith("How you'd like to name the profile?", profile.name)
+      expect(prompt).toHaveBeenCalledWith('SETTINGS.PROFILE_RENAME_TO', profile.name)
     })
 
     describe('when user introduces a new profile name', () => {
@@ -65,7 +65,7 @@ describe('TextProfileRenameButton', () => {
 
         await rename()
 
-        expect(alert).toBeCalledWith('The profile has been renamed')
+        expect(alert).toBeCalledWith('SETTINGS.PROFILE_RENAMED')
       })
 
       describe('when a profile with the introduced name already exists', () => {
@@ -90,7 +90,7 @@ describe('TextProfileRenameButton', () => {
 
           await rename()
 
-          expect(alert).toHaveBeenCalledWith(`A profile "New profile name" already exists. Please try another name.`)
+          expect(alert).toHaveBeenCalledWith('SETTINGS.PROFILE_NAME_EXISTS')
         })
       })
     })
