@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import { useTextPreferences, TextProfileId } from '@/entities/textPreferences'
+import { useI18n } from 'vue-i18n-composable'
 
 const { preferences, updateProfile, getProfileById } = useTextPreferences()
 
 const props = defineProps<{ profileId: TextProfileId | null }>()
+const { t } = useI18n()
 
 const onClick = () => {
   const profileName = getProfileById(props.profileId)?.name
@@ -15,7 +17,7 @@ const onClick = () => {
     updateProfile(props.profileId, { name: newProfileName })
     alert('The profile has been renamed')
   } else {
-    alert(`A profile "${newProfileName}" already exists. Please try another name.`)
+    alert(t('SETTINGS.PROFILE_NAME_EXISTS', { name: newProfileName }))
   }
 }
 

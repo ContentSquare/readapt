@@ -3,6 +3,7 @@ import { useTextPreferences, TextProfileId } from '@/entities/textPreferences'
 import { Settings } from '@readapt/settings'
 import { BButton } from 'bootstrap-vue'
 import { nextTick } from 'vue'
+import { useI18n } from 'vue-i18n-composable'
 
 const props = defineProps<{
   value: TextProfileId | null
@@ -16,24 +17,25 @@ const emit = defineEmits<{
 const onClick = () => (props.value ? update() : create())
 
 const { preferences, createProfile, updateProfile } = useTextPreferences()
+const { t } = useI18n()
 
 const update = () => {
   updateProfile(props.value, { settings: props.settings })
-  alert('The profile has been updated!')
+  alert(t('SETTINGS.PROFILE_UPDATED'))
 }
 
 const create = async () => {
-  const newProfileName = prompt("What's the new profile name?")
+  const MAX_PROFILES = 20
+  if (preferences.profiles.length === MAX_PROFILES) {
+    alert(t('SETTINGS.PROFILES_MAX'))
+    return
+  }
+  const newProfileName = prompt(t('SETTINGS.PROFILE_GIVE_NAME'))
   if (!newProfileName) {
     return
   }
   if (profileNameExists(newProfileName)) {
-    alert(`A profile with "${newProfileName}" name already exists! Please try another name.`)
-    return
-  }
-  const MAX_PROFILES = 20
-  if (preferences.profiles.length === MAX_PROFILES) {
-    alert('You can have up to 20 profiles. Please delete some profiles and try again.')
+    alert(t('SETTINGS.PROFILE_NAME_EXISTS', { name: newProfileName }))
     return
   }
   const newProfileId = createProfile({
@@ -42,7 +44,7 @@ const create = async () => {
   })
   await nextTick()
   emit('input', newProfileId)
-  alert('The profile has been created!')
+  alert(t('SETTINGS.PROFILE_CREATED'))
 }
 
 const profileNameExists = (profileName: string): boolean => {
