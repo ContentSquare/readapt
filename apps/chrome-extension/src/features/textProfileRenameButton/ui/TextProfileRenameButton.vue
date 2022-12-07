@@ -9,13 +9,13 @@ const { t } = useI18n()
 
 const onClick = () => {
   const profileName = getProfileById(props.profileId)?.name
-  const newProfileName = prompt("How you'd like to name the profile?", profileName)
+  const newProfileName = prompt(t('SETTINGS.PROFILE_RENAME_TO'), profileName)
   if (!newProfileName) {
     return
   }
   if (isNameUnique(newProfileName)) {
     updateProfile(props.profileId, { name: newProfileName })
-    alert('The profile has been renamed')
+    alert(t('SETTINGS.PROFILE_RENAMED'))
   } else {
     alert(t('SETTINGS.PROFILE_NAME_EXISTS', { name: newProfileName }))
   }
@@ -23,10 +23,7 @@ const onClick = () => {
 
 const isNameUnique = (newProfileName: string) => {
   const profileWithNameExists = preferences.profiles.some(({ name, id }) => {
-    if (id === props.profileId) {
-      return false
-    }
-    return name === newProfileName
+    return id !== props.profileId && name === newProfileName
   })
 
   return !profileWithNameExists

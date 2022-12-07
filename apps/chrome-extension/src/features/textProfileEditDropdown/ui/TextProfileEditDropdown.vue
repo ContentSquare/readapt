@@ -2,6 +2,7 @@
 import { TextProfileId, TextSettings, useTextPreferences } from '@/entities/textPreferences'
 import { buildDefaultSettings } from '@readapt/settings'
 import isEqual from 'lodash/isEqual'
+import { useI18n } from 'vue-i18n-composable'
 
 const { preferences, getProfileById } = useTextPreferences()
 
@@ -23,17 +24,19 @@ const onChange = ({ target }: Event) => {
   }
 }
 
+const { t } = useI18n()
+
 const validateUnsavedChanges = () => {
   const defaultSettings = props.value ? getProfileById(props.value)?.settings : buildDefaultSettings('en')
   if (defaultSettings && isEqual(defaultSettings, props.settings)) {
     return true
   }
-  return confirm('You have unsaved changes. Do you to continue?')
+  return confirm(t('SETTINGS.PROFILE_UNSAVED_CHANGES'))
 }
 </script>
 <template>
   <select data-test-id="dropdown" :value="props.value" @change="onChange">
-    <option value="">{{ $t('SETTINGS.PROFILE_NEW') }}</option>
+    <option value="">{{ t('SETTINGS.PROFILE_NEW') }}</option>
     <option v-for="{ name, id } in preferences.profiles" :key="id" :value="id">
       {{ name }}
     </option>
