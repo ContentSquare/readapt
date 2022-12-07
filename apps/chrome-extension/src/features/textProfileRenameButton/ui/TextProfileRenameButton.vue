@@ -25,7 +25,6 @@ const isNameUnique = (newProfileName: string) => {
   const profileWithNameExists = preferences.profiles.some(({ name, id }) => {
     return id !== props.profileId && name === newProfileName
   })
-
   return !profileWithNameExists
 }
 </script>
