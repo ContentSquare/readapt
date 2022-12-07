@@ -91,7 +91,7 @@ const { version } = useVersion()
       :class="hasActiveProfile ? 'justify-content-between' : 'justify-content-center'"
     >
       <div v-if="hasActiveProfile">
-        <h5 class="mb-1">Active profile:</h5>
+        <h5 class="mb-1">{{ $t('MAIN_MENU.ACTIVE_PROFILE') }}:</h5>
         <TextProfileActiveDropdown class="popup-page__active-profile-dropdown" />
         <span class="popup-page__edit-profile ml-2" @click="openOptionsPage({ editActiveProfile: null }, router)">&#x270e;</span>
       </div>
