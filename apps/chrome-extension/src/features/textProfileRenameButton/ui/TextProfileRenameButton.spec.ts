@@ -59,6 +59,15 @@ describe('TextProfileRenameButton', () => {
         expect(preferences.profiles[0].name).toBe(newProfileName)
       })
 
+      it('should notify about the profile rename', async () => {
+        const newProfileName = 'New profile name'
+        const { rename } = factory({ profileId: profile.id, newProfileName })
+
+        await rename()
+
+        expect(alert).toBeCalledWith('The profile has been renamed')
+      })
+
       describe('when a profile with the introduced name already exists', () => {
         const nameExistsFactory = () => {
           const { preferences, setProfiles } = useTextPreferences()

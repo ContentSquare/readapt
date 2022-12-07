@@ -4,8 +4,6 @@ import { TextProfile, TextProfileId } from '../TextPreferences'
 import { textPreferencesState as state } from './textPreferencesState'
 import cloneDeep from 'lodash/cloneDeep'
 
-export class NonExistingIdError extends Error {}
-
 export function useTextPreferences() {
   const reset = () => {
     state.activeProfileId = null
@@ -39,15 +37,13 @@ export function useTextPreferences() {
     return newProfileId
   }
 
-  const getProfileById = (profileId: TextProfileId) => {
-    return state.profiles.find(({ id }) => id === profileId)
+  const getProfileById = (profileId: TextProfileId): TextProfile => {
+    return state.profiles.find(({ id }) => id === profileId) as TextProfile
   }
 
   const updateProfile = (profileId: TextProfileId, { settings, name }: { settings?: Settings; name?: string }) => {
     const profile = getProfileById(profileId)
-    if (!profile) {
-      throw new NonExistingIdError()
-    }
+
     if (settings) {
       profile.settings = cloneDeep(settings)
     }
@@ -56,13 +52,18 @@ export function useTextPreferences() {
     }
   }
 
-  const setActiveProfileId = (activeProfileId: TextProfileId) => {
-    const isValidActoveProfileId = getProfileById(activeProfileId)
-    if (isValidActoveProfileId) {
-      state.activeProfileId = activeProfileId
-    } else {
-      throw new NonExistingIdError()
+  const deleteProfile = (profileId: TextProfileId) => {
+    state.profiles = state.profiles.filter(({ id }) => id !== profileId)
+
+    if (state.profiles.length === 0) {
+      state.activeProfileId = null
+    } else if (profileId === state.activeProfileId) {
+      state.activeProfileId = state.profiles[0].id
     }
+  }
+
+  const setActiveProfileId = (activeProfileId: TextProfileId) => {
+    state.activeProfileId = activeProfileId
   }
 
   const preferencesReadonly = readonly(state)
@@ -74,6 +75,7 @@ export function useTextPreferences() {
     createProfile,
     getProfileById,
     updateProfile,
+    deleteProfile,
     setActiveProfileId,
     generateNextProfileId
   }

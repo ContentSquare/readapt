@@ -10,6 +10,7 @@ import { TextProfileEditDropdown } from '@/features/textProfileEditDropdown'
 import { TextProfileSaveButton } from '@/features/textProfileSaveButton'
 import { TextAdaptationPreview } from '@/features/textAdaptationPreview'
 import { TextProfileRenameButton } from '@/features/textProfileRenameButton'
+import { TextProfileDeleteButton } from '@/features/textProfileDeleteButton'
 import { useFormSettings } from '../model/useFormSettings'
 
 import SettingsMenuGeneral from '@/views/SettingsMenuGeneral.vue'
@@ -96,6 +97,7 @@ const { t } = useI18n()
 
           <div class="mt-3 d-flex justify-content-between">
             <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
+            <TextProfileDeleteButton class="ml-3 mr-auto" v-model="selectedProfiledId" />
             <!-- TODO: review dirty settings calculation -->
             <CloseSettings :is-settings-dirty="false" @close-settings="close" />
           </div>
@@ -119,6 +121,7 @@ const { t } = useI18n()
   &__profile-rename {
     font-weight: bold;
     font-size: 32px;
+    line-height: 1;
     cursor: pointer;
   }
 }

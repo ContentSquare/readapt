@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { useTextPreferences, TextProfileId } from '@/entities/textPreferences'
-import { BButton } from 'bootstrap-vue'
 
 const { preferences, updateProfile, getProfileById } = useTextPreferences()
 
@@ -14,6 +13,7 @@ const onClick = () => {
   }
   if (isNameUnique(newProfileName)) {
     updateProfile(props.profileId, { name: newProfileName })
+    alert('The profile has been renamed')
   } else {
     alert(`A profile "${newProfileName}" already exists. Please try another name.`)
   }
