@@ -22,7 +22,10 @@ describe('TextProfileDeleteButton', () => {
     mockAlert()
     mockConfirm(confirmValue)
     const wrapper = mount(TextProfileDeleteButton, {
-      propsData: { value }
+      propsData: { value },
+      mocks: {
+        $t: (value: string) => value
+      }
     })
 
     const triggerDelete = async () => await wrapper.find('[data-test-id=delete]').trigger('click')
@@ -45,7 +48,7 @@ describe('TextProfileDeleteButton', () => {
 
       await triggerDelete()
 
-      expect(confirm).toHaveBeenCalledWith('Are you sure you want to delete this profile? This is irreversible.')
+      expect(confirm).toHaveBeenCalledWith('SETTINGS.PROFILE_DELETE_CONFIRM')
     })
 
     describe('when user confirms the profile deletion', () => {
@@ -63,7 +66,7 @@ describe('TextProfileDeleteButton', () => {
 
         await triggerDelete()
 
-        expect(alert).toHaveBeenCalledWith('The profile has been deleted')
+        expect(alert).toHaveBeenCalledWith('SETTINGS.PROFILE_DELETED')
       })
 
       it('should emit "input" with null', async () => {
