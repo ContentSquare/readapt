@@ -12,12 +12,13 @@ const emit = defineEmits<{
 }>()
 
 const { deleteProfile } = useTextPreferences()
+const { t } = useI18n()
 
 const onClick = async () => {
-  if (confirm('Are you sure you want to delete this profile? This is irreversible.')) {
+  if (confirm(t('SETTINGS.PROFILE_DELETE_CONFIRM'))) {
     deleteProfile(props.value)
     emit('input', null)
-    alert('The profile has been deleted')
+    alert(t('SETTINGS.PROFILE_DELETED'))
   }
 }
 </script>
