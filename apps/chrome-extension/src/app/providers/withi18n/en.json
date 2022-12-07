@@ -14,7 +14,8 @@
     "MENU_LANGUAGE": "Menu language:",
     "CONTACT_US": "Contact us!",
     "TELL_US_ABOUT_YOU": "Tell us about you",
-    "FIRST_RUN": "To get started please select one of the two options below:"
+    "FIRST_RUN": "To get started please select one of the two options below:",
+    "ACTIVE_PROFILE": "Active profile"
   },
   "QUICK_ACTIVATE": {
     "QUICK_ACTIVATE": "Quick activate",
@@ -38,6 +39,7 @@
     "LETTER_SETTINGS": "Letter settings",
     "TEXT_PREVIEW": "Text preview",
     "SAVE": "Save",
+    "DELETE": "Delete",
     "CLOSE": "Close",
     "CONFIRMATION_TITLE": "Your settings have been saved",
     "CONFIRMATION_MESSAGE": "You can close this tab and start using your profile",
@@ -53,7 +55,9 @@
     "BOLD": "Bold",
     "ACTIVATE": "Activate",
     "ALL_PHONEMES_SETTINGS": "All phonemes settings",
-    "ALL_LETTERS_SETTINGS": "All letters settings"
+    "ALL_LETTERS_SETTINGS": "All letters settings",
+    "PROFILE": "Profile",
+    "NEW_PROFILE": "New profile"
   },
   "GENERAL": {
     "SETTING": "Setting",

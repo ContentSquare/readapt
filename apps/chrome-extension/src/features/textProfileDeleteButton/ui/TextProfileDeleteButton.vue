@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useTextPreferences, TextProfileId } from '@/entities/textPreferences'
 import { BButton } from 'bootstrap-vue'
-import { nextTick } from 'vue'
+import { useI18n } from 'vue-i18n-composable'
 
 const props = defineProps<{
   value: TextProfileId | null
@@ -22,8 +22,5 @@ const onClick = async () => {
 }
 </script>
 <template>
-  <b-button v-if="props.value" data-test-id="delete" size="sm" variant="danger" @click="onClick">
-    <!-- {{ $t('SETTINGS.SAVE') }} -->
-    Delete
-  </b-button>
+  <b-button v-if="props.value" data-test-id="delete" size="sm" variant="danger" @click="onClick"> {{ $t('SETTINGS.DELETE') }}</b-button>
 </template>

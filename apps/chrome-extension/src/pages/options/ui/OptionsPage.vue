@@ -48,7 +48,7 @@ const { t } = useI18n()
   <div class="container-fluid">
     <div class="mt-3">
       <div class="mb-2">
-        <h2 class="options-page__title mr-2">Profile:</h2>
+        <h2 class="options-page__title mr-2">{{ $t('SETTINGS.PROFILE') }}:</h2>
         <TextProfileEditDropdown class="options-page__profiles-dropdown" v-model="selectedProfiledId" :settings="settings" />
         <TextProfileRenameButton class="options-page__profile-rename ml-3" :profile-id="selectedProfiledId" />
         <TextSettingsFileDownload class="ml-2 float-right" :settings="settings" />

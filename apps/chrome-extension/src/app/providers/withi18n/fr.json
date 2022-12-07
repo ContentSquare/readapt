@@ -14,7 +14,8 @@
     "MENU_LANGUAGE": "Langue du menu :",
     "CONTACT_US": "Contactez-nous !",
     "TELL_US_ABOUT_YOU": "Dites nous en plus sur vous",
-    "FIRST_RUN": "Pour configurer votre profil, veuillez choisir une des options suivantes :"
+    "FIRST_RUN": "Pour configurer votre profil, veuillez choisir une des options suivantes :",
+    "ACTIVE_PROFILE": "Profil en cours"
   },
   "QUICK_ACTIVATE": {
     "QUICK_ACTIVATE": "Activation rapide",
@@ -38,6 +39,7 @@
     "LETTER_SETTINGS": "Paramètres des lettres",
     "TEXT_PREVIEW": "Pré-visualisation du texte",
     "SAVE": "Sauvegarder",
+    "DELETE": "Supprimer",
     "CLOSE": "Fermer",
     "CONFIRMATION_TITLE": "Votre profil a été enregistré",
     "CONFIRMATION_MESSAGE": "Vous pouvez fermer cet onglet et commencer à utiliser votre profil",
@@ -53,7 +55,9 @@
     "BOLD": "Texte Gras",
     "ACTIVATE": "Activer",
     "ALL_PHONEMES_SETTINGS": "Tous les paramètres des phonèmes",
-    "ALL_LETTERS_SETTINGS": "Tous les paramètres des lettres"
+    "ALL_LETTERS_SETTINGS": "Tous les paramètres des lettres",
+    "PROFILE": "Profil",
+    "NEW_PROFILE": "Nouveau profil"
   },
   "GENERAL": {
     "SETTING": "Paramètres",
