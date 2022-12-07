@@ -33,7 +33,7 @@ const validateUnsavedChanges = () => {
 </script>
 <template>
   <select data-test-id="dropdown" :value="props.value" @change="onChange">
-    <option value="">{{ $t('SETTINGS.NEW_PROFILE') }}</option>
+    <option value="">{{ $t('SETTINGS.PROFILE_NEW') }}</option>
     <option v-for="{ name, id } in preferences.profiles" :key="id" :value="id">
       {{ name }}
     </option>

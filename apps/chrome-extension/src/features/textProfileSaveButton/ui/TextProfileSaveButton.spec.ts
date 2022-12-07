@@ -23,6 +23,9 @@ describe('TextProfileSaveButton', () => {
           propsData: {
             value: null,
             settings
+          },
+          mocks: {
+            $t: (v: string) => v
           }
         })
         const { preferences, setProfiles, setActiveProfileId } = useTextPreferences()
@@ -51,7 +54,7 @@ describe('TextProfileSaveButton', () => {
 
         await save()
 
-        expect(alert).toHaveBeenCalledWith('The profile has been created!')
+        expect(alert).toHaveBeenCalledWith('SETTINGS.PROFILE_CREATED')
       })
 
       it('should emit "input" with the new profile id', async () => {
@@ -114,7 +117,8 @@ describe('TextProfileSaveButton', () => {
 
           await save()
 
-          expect(alert).toHaveBeenCalledWith(`A profile with "${profile.name}" name already exists! Please try another name.`)
+          // TODO: check also if the profile name was supplied
+          expect(alert).toHaveBeenCalledWith('SETTINGS.PROFILE_NAME_EXISTS')
         })
       })
 
@@ -143,7 +147,7 @@ describe('TextProfileSaveButton', () => {
 
           await save()
 
-          expect(alert).toHaveBeenCalledWith('You can have up to 20 profiles. Please delete some profiles and try again.')
+          expect(alert).toHaveBeenCalledWith('SETTINGS.PROFILES_MAX')
         })
       })
     })
@@ -160,6 +164,9 @@ describe('TextProfileSaveButton', () => {
           propsData: {
             value: profile.id,
             settings: newSettings
+          },
+          mocks: {
+            $t: (v: string) => v
           }
         })
         const { preferences, setProfiles } = useTextPreferences()
@@ -189,7 +196,7 @@ describe('TextProfileSaveButton', () => {
 
         await save()
 
-        expect(alert).toHaveBeenCalledWith('The profile has been updated!')
+        expect(alert).toHaveBeenCalledWith('SETTINGS.PROFILE_UPDATED')
       })
     })
   })
