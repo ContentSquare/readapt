@@ -1,5 +1,5 @@
-name: Bootstrap
-description: Install dependencies
+name: Lint
+description: Lint sources
 
 inputs:
   version:
@@ -16,4 +16,4 @@ runs:
     - uses: ./.github/actions/cache-dependencies
 
     - shell: bash
-      run: yarn install --frozen-lockfile
+      run: yarn lint

@@ -1,0 +1,36 @@
+name: Build
+description: Build sources
+
+inputs:
+  version:
+    description: Bumped version
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: ./.github/actions/setup
+      with:
+        version: ${{ inputs.version }}
+
+    - uses: ./.github/actions/cache-dependencies
+
+    - uses: ./.github/actions/cache-build
+
+    - shell: bash
+      run: yarn lerna version ${{ inputs.version }} -y --no-git-tag-version
+
+    - shell: bash
+      run: yarn build-deps
+
+    - shell: bash
+      run: yarn workspace chrome-extension build
+
+    - shell: bash
+      run: yarn workspace ms-word-addin build
+
+    - shell: bash
+      run: ls ./apps/chrome-extension
+
+    - shell: bash
+      run: ls ./apps/chrome-extension/dist

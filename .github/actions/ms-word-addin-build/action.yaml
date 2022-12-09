@@ -1,8 +1,0 @@
-name: Build MS Word Addin
-description: Building MS Word Addin source code
-
-runs:
-  using: composite
-  steps:
-    - shell: bash
-      run: yarn build-ms-word-addin

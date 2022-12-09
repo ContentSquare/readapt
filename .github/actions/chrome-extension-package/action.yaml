@@ -1,8 +1,0 @@
-name: Package Chrome Extension
-description: Packaging Chrome Extension source code
-
-runs:
-  using: composite
-  steps:
-    - shell: bash
-      run: cd ./apps/chrome-extension && yarn package

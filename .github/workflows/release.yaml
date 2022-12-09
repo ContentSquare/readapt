@@ -11,93 +11,63 @@ on:
   # push:
   #   tags:
   #     - v[0-9]+.[0-9]+.[0-9]+
+  ## get version by github.ref_name or github.head_ref
+
+# Add concurrency to cancel running workflow when a new commit come in
+# concurrency:
 
 jobs:
   bootstrap:
-    name: Bootstrap
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
-
       - uses: ./.github/actions/bootstrap
-
-  # build:
-  #   needs: bootstrap
-  #   name: Build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 16.x
-
-      - uses: ./.github/actions/chrome-extension-build
-      - uses: ./.github/actions/ms-word-addin-build
-
-  # lint:
-  #   needs: build
-  #   name: Lint
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 16.x
-
-      - run: yarn lint
-
-  # test:
-  #   needs: build
-  #   name: Test
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 16.x
-
-      - run: yarn test --ci
-
-  # version:
-  #   needs: build
-  #   name: Version
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 16.x
-
-      - uses: ./.github/actions/lerna-version
         with:
           version: ${{ inputs.version }}
 
-  # package:
-  #   needs: version
-  #   name: Package
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 16.x
-
-      - uses: ./.github/actions/chrome-extension-package
-
-  # deploy:
-  #   needs: package
-  #   name: Deploy
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 16.x
-
-      - uses: ./.github/actions/lerna-publish
-      - uses: ./.github/actions/gh-create-release
+  lint:
+    needs: bootstrap
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/lint
         with:
           version: ${{ inputs.version }}
+
+  build:
+    needs: bootstrap
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/build
+        with:
+          version: ${{ inputs.version }}
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/test
+        with:
+          version: ${{ inputs.version }}
+
+  package:
+    needs: [lint, build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/package
+        with:
+          version: ${{ inputs.version }}
+
+  deploy:
+    needs: [test, package]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/deploy
+        with:
+          version: ${{ inputs.version }}
+          npm_token: ${{ secrets.NPM_TOKEN }}
+          gh_token: ${{ secrets.GH_TOKEN_FOR_GA }}

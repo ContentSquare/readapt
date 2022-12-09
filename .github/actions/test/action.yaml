@@ -1,5 +1,5 @@
-name: Bootstrap
-description: Install dependencies
+name: Test
+description: Test sources
 
 inputs:
   version:
@@ -15,5 +15,7 @@ runs:
 
     - uses: ./.github/actions/cache-dependencies
 
+    - uses: ./.github/actions/cache-build
+
     - shell: bash
-      run: yarn install --frozen-lockfile
+      run: yarn test --ci

@@ -1,0 +1,46 @@
+name: Deploy
+description: Deploy sources
+
+inputs:
+  version:
+    description: Bumped version
+    required: true
+  npm_token:
+    description: NPM Token
+    required: true
+  gh_token:
+    description: Github Token
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: ./.github/actions/setup
+      with:
+        version: ${{ inputs.version }}
+
+    - uses: ./.github/actions/cache-dependencies
+
+    - uses: ./.github/actions/cache-packages
+      with:
+        version: ${{ inputs.version }}
+
+    - shell: bash
+      run: git config user.name "github-ci"
+
+    - shell: bash
+      run: git config user.email "${{ github.server_url }}"
+
+    # This not working yet, we need a token that have access to push tag on master
+    - shell: bash
+      run: yarn lerna publish ${{ inputs.version }} -y --force
+      env:
+        GH_TOKEN: ${{ github.token }}
+        GITHUB_TOKEN: ${{ github.token }}
+        NPM_TOKEN: ${{ inputs.npm_token }}
+
+    - shell: bash
+      run: gh release create v${{ inputs.version }} -t 'readapt v${{ inputs.version }}' --generate-notes ./apps/chrome-extension/dist/readapt-chrome-extension-v${{ inputs.version }}.zip
+      # run: gh release create v${{ inputs.version }} -t 'readapt v${{ inputs.version }}' -F ./CHANGELOG-v${{ inputs.version }}.md ./apps/chrome-extension/dist/readapt-chrome-extension-v${{ inputs.version }}.zip
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
