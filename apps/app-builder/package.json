@@ -1,5 +1,5 @@
 {
-  "name": "chrome-extension",
+  "name": "app-builder",
   "version": "1.5.0",
   "private": true,
   "scripts": {
@@ -32,7 +32,6 @@
     "vuex": "~3.6.2"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.181",
     "@types/jest": "^29.2.3",
     "@types/lodash": "^4.14.179",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
@@ -53,7 +52,6 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^9.6.0",
     "jest": "^29.3.1",
-    "jest-chrome": "^0.8.0",
     "prettier": "^2.4.1",
     "sass": "^1.32.7",
     "sass-loader": "^12.0.0",
