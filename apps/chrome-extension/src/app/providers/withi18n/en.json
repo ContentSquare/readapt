@@ -59,6 +59,7 @@
     "ALL_LETTERS_SETTINGS": "All letters settings",
     "PROFILE": "Profile",
     "PROFILE_NEW": "New profile",
+    "PROFILE_RENAME": "Rename profile",
     "PROFILE_GIVE_NAME": "Give this profile a name",
     "PROFILE_UPDATED": "The profile has been updated",
     "PROFILE_NAME_EXISTS": "A profile named \"{name}\" already exists! Please try another name.",

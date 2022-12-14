@@ -93,7 +93,11 @@ const { version } = useVersion()
       <div v-if="hasActiveProfile">
         <h5 class="mb-1">{{ $t('MAIN_MENU.ACTIVE_PROFILE') }}:</h5>
         <TextProfileActiveDropdown class="popup-page__active-profile-dropdown" />
-        <span class="popup-page__edit-profile ml-2" @click="openOptionsPage({ editActiveProfile: null }, router)">
+        <span
+          :title="$t('MAIN_MENU.SEE_MODIFY_CURRENT_PROFILE')"
+          class="popup-page__edit-profile ml-2"
+          @click="openOptionsPage({ editActiveProfile: null }, router)"
+        >
           <img class="popup-page__edit-icon" src="/icons/edit.svg" />
         </span>
       </div>

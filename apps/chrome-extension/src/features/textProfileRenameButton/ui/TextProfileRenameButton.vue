@@ -29,7 +29,7 @@ const isNameUnique = (newProfileName: string) => {
 }
 </script>
 <template>
-  <span v-if="props.profileId" data-test-id="rename" @click="onClick">
+  <span :title="t('SETTINGS.PROFILE_RENAME')" v-if="props.profileId" data-test-id="rename" @click="onClick">
     <img class="text-profile-rename-button__edit-icon" src="/icons/edit.svg" />
   </span>
 </template>
