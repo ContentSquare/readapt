@@ -115,7 +115,7 @@ const { version } = useVersion()
       <strong class="version">Version {{ version }}</strong>
 
       <a class="about-you" href="https://forms.gle/ciWCnYnkFjutwEHWA" target="_blank">
-        <b-button size="sm" variant="primary">{{ t('MAIN_MENU.TELL_US_ABOUT_YOU') }}</b-button>
+        <b-button size="sm" variant="primary">{{ t('MAIN_MENU.WHAT_IS_NEW') }}</b-button>
       </a>
       <a class="contact-us" href="https://forms.gle/9pv3HCmtPQN8Akpn9" target="_blank">
         <b-button size="sm" variant="primary">{{ t('MAIN_MENU.CONTACT_US') }}</b-button>
