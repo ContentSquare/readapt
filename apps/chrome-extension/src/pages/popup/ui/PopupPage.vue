@@ -93,7 +93,9 @@ const { version } = useVersion()
       <div v-if="hasActiveProfile">
         <h5 class="mb-1">{{ $t('MAIN_MENU.ACTIVE_PROFILE') }}:</h5>
         <TextProfileActiveDropdown class="popup-page__active-profile-dropdown" />
-        <span class="popup-page__edit-profile ml-2" @click="openOptionsPage({ editActiveProfile: null }, router)">&#x270e;</span>
+        <span class="popup-page__edit-profile ml-2" @click="openOptionsPage({ editActiveProfile: null }, router)">
+          <img class="popup-page__edit-icon" src="/icons/edit.svg" />
+        </span>
       </div>
 
       <b-button size="sm" variant="primary" @click="openOptionsPage({}, router)" style="max-width: 150px">
@@ -139,6 +141,11 @@ const { version } = useVersion()
   &__active-profile-dropdown {
     width: 150px;
     font-size: 18px;
+  }
+
+  &__edit-icon {
+    width: 20px;
+    height: 20px;
   }
 }
 
