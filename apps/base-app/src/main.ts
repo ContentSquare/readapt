@@ -1,3 +1,3 @@
-import { mountApp } from '@/app'
+import { mountApp } from '@/app/ui'
 
 mountApp()
