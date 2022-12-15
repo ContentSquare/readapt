@@ -1,14 +1,14 @@
-import { LocalStorage } from './localStorage'
+import { StorageLocal } from './storageLocal'
 
-describe('LocalStorage()', () => {
-  let storage: LocalStorage
+describe('StorageLocal()', () => {
+  let storage: StorageLocal
 
   beforeEach(() => {
     localStorage.clear()
     localStorage.setItem('key', JSON.stringify({ prop: 'value' }))
     localStorage.setItem('secondKey', JSON.stringify({ prop: 'second value' }))
 
-    storage = new LocalStorage()
+    storage = new StorageLocal()
   })
 
   afterEach(() => {

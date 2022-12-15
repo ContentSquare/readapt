@@ -1,9 +1,9 @@
-import { Storage, StorageItems, StorageKeys } from './storage'
+import { StorageType, StorageItems, StorageKeys } from './storage'
 
 /**
  * Used mostly in unit tests to mock the storage
  */
-export class MemoryStorage implements Storage {
+export class StorageMemory implements StorageType {
   constructor(private allItems: StorageItems = {}) {}
 
   async get(key: StorageKeys): Promise<StorageItems> {

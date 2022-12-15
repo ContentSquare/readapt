@@ -1,4 +1,4 @@
-import { MemoryStorage } from '@/shared/lib/storage'
+import { StorageMemory } from '@/shared/lib/storage'
 import { textPreferencesStatePersist } from './textPreferencesStatePersist'
 import { TEXT_PREFERENCES_STORAGE_KEY } from '../config/storage'
 import { textPreferencesFixture } from '../model/textPreferencesFixtures'
@@ -11,7 +11,7 @@ describe('textPreferencesStatePersist()', () => {
 
   describe('on initial run', () => {
     it('should set preferences state from storage', async () => {
-      const storage = new MemoryStorage({
+      const storage = new StorageMemory({
         [TEXT_PREFERENCES_STORAGE_KEY]: textPreferencesFixture
       })
       const { preferences } = useTextPreferences()
@@ -25,7 +25,7 @@ describe('textPreferencesStatePersist()', () => {
 
   describe('when preferences state changes', () => {
     it('should write preferences state to storage', async () => {
-      const storage = new MemoryStorage()
+      const storage = new StorageMemory()
       const { setActiveProfileId, setProfiles } = useTextPreferences()
 
       const stopWatcher = await textPreferencesStatePersist(storage)

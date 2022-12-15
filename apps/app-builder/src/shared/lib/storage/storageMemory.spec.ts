@@ -1,7 +1,7 @@
-import { MemoryStorage } from './memoryStorage'
+import { StorageMemory } from './storageMemory'
 
-describe('MemoryStorage()', () => {
-  let storage: MemoryStorage
+describe('StorageMemory()', () => {
+  let storage: StorageMemory
 
   beforeEach(() => {
     const initial = {
@@ -9,7 +9,7 @@ describe('MemoryStorage()', () => {
       secondKey: 'second value'
     }
 
-    storage = new MemoryStorage(initial)
+    storage = new StorageMemory(initial)
   })
 
   describe('get', () => {
