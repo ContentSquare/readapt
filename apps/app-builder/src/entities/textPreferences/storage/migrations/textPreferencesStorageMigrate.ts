@@ -1,4 +1,4 @@
-import { Storage } from '@/shared/storage'
+import { Storage } from '@/shared/lib/storage'
 import { singleToMultiProfileMigrate } from './list/singleToMultiProfilesMigrate'
 
 export async function textPreferencesStorageMigrate(storage: Storage): Promise<void> {

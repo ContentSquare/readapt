@@ -1,4 +1,4 @@
-import { MemoryStorage } from '@/shared/storage'
+import { MemoryStorage } from '@/shared/lib/storage'
 import { textPreferencesStatePersist } from './textPreferencesStatePersist'
 import { TEXT_PREFERENCES_STORAGE_KEY } from '../config/storage'
 import { textPreferencesFixture } from '../model/textPreferencesFixtures'

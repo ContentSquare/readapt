@@ -1,5 +1,5 @@
 import { STORAGE_KEY_V1, STORAGE_KEY_V2 } from '../../../config/storage'
-import { Storage } from '@/shared/storage'
+import { Storage } from '@/shared/lib/storage'
 
 export async function singleToMultiProfileMigrate(storage: Storage) {
   const { [STORAGE_KEY_V1]: storageStateV1 } = await storage.get(STORAGE_KEY_V1)
