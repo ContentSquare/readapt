@@ -93,7 +93,13 @@ const { version } = useVersion()
       <div v-if="hasActiveProfile">
         <h5 class="mb-1">{{ $t('MAIN_MENU.ACTIVE_PROFILE') }}:</h5>
         <TextProfileActiveDropdown class="popup-page__active-profile-dropdown" />
-        <span class="popup-page__edit-profile ml-2" @click="openOptionsPage({ editActiveProfile: null }, router)">&#x270e;</span>
+        <span
+          :title="$t('MAIN_MENU.SEE_MODIFY_CURRENT_PROFILE')"
+          class="popup-page__edit-profile ml-2"
+          @click="openOptionsPage({ editActiveProfile: null }, router)"
+        >
+          <img class="popup-page__edit-icon" src="/icons/edit.svg" />
+        </span>
       </div>
 
       <b-button size="sm" variant="primary" @click="openOptionsPage({}, router)" style="max-width: 150px">
@@ -115,7 +121,7 @@ const { version } = useVersion()
       <strong class="version">Version {{ version }}</strong>
 
       <a class="about-you" href="https://forms.gle/ciWCnYnkFjutwEHWA" target="_blank">
-        <b-button size="sm" variant="primary">{{ t('MAIN_MENU.TELL_US_ABOUT_YOU') }}</b-button>
+        <b-button size="sm" variant="primary">{{ t('MAIN_MENU.WHAT_IS_NEW') }}</b-button>
       </a>
       <a class="contact-us" href="https://forms.gle/9pv3HCmtPQN8Akpn9" target="_blank">
         <b-button size="sm" variant="primary">{{ t('MAIN_MENU.CONTACT_US') }}</b-button>
@@ -139,6 +145,11 @@ const { version } = useVersion()
   &__active-profile-dropdown {
     width: 150px;
     font-size: 18px;
+  }
+
+  &__edit-icon {
+    width: 20px;
+    height: 20px;
   }
 }
 

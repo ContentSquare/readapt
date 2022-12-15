@@ -15,7 +15,8 @@
     "CONTACT_US": "Contact us!",
     "TELL_US_ABOUT_YOU": "Tell us about you",
     "FIRST_RUN": "To get started please select one of the two options below:",
-    "ACTIVE_PROFILE": "Active profile"
+    "ACTIVE_PROFILE": "Active profile",
+    "WHAT_IS_NEW": "What's new?"
   },
   "QUICK_ACTIVATE": {
     "QUICK_ACTIVATE": "Quick activate",
@@ -58,6 +59,7 @@
     "ALL_LETTERS_SETTINGS": "All letters settings",
     "PROFILE": "Profile",
     "PROFILE_NEW": "New profile",
+    "PROFILE_RENAME": "Rename profile",
     "PROFILE_GIVE_NAME": "Give this profile a name",
     "PROFILE_UPDATED": "The profile has been updated",
     "PROFILE_NAME_EXISTS": "A profile named \"{name}\" already exists! Please try another name.",

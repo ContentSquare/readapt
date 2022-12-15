@@ -95,10 +95,11 @@ To clean all packages and return to a fresh state run `yarn workspaces run clean
 2. Run `lerna version` to bump version of packages (that creates a commit and a release tag and push they into the remote repo)
 3. Create a PR to merge into `master` then request a review (DO NOT SQUASH or REBASE this PR because if not the tag is lost)
 4. Draft a new release titled `v.x.x.x` and describe the change log
-5. Build and Package the Chrome extension (do not forget to set env vars) and upload the zip file to the release
-6. After merge create another PR to merge master into `ms-word-addin` to update the ms-word addin
-7. Publish new Chrome extension release in Chrome Web Store
-8. Publish to npm `lerna publish from-package --force-publish`
+5. Build the deps locally `yarn build-deps` to set the version env variable and refresh dependencies
+6. Build and Package the Chrome extension (do not forget to set env vars) and upload the zip file to the release
+7. After merge create another PR to merge master into `ms-word-addin` to update the ms-word addin
+8. Publish new Chrome extension release in Chrome Web Store
+9. Publish to npm `lerna publish from-package --force-publish`
 
 ## Contributors
 
