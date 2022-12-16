@@ -31,13 +31,23 @@ runs:
     - shell: bash
       run: git config user.email "${{ github.server_url }}"
 
-    # This not working yet, we need a token that have access to push tag on master
+    - shell: bash
+      run: git checkout -b release/v{{ inputs.version }}
+
+    - shell: bash
+      run: git push -u origin HEAD
+
     - shell: bash
       run: yarn lerna publish ${{ inputs.version }} -y --force-publish
       env:
         GH_TOKEN: ${{ inputs.gh_token }}
         GITHUB_TOKEN: ${{ inputs.gh_token }}
         NPM_TOKEN: ${{ inputs.npm_token }}
+
+    - shell: bash
+      run: gh pr create --fill
+      env:
+        GITHUB_TOKEN: ${{ inputs.gh_token }}
 
     - shell: bash
       run: gh release create v${{ inputs.version }} -t 'readapt v${{ inputs.version }}' --generate-notes ./apps/chrome-extension/dist/readapt-chrome-extension-v${{ inputs.version }}.zip
