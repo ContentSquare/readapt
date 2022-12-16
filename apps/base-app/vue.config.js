@@ -31,13 +31,8 @@ module.exports = {
   productionSourceMap: process.env.NODE_ENV !== 'production',
   pages: {
     index: {
-      entry: 'src/main/userInterface/index.ts'
+      entry: 'src/main/ui.ts',
+      title: 'Readapt by Contentsquare Foundation'
     }
-  },
-  chainWebpack(config) {
-    config.plugin('html').tap((args) => {
-      args[0].title = 'Readapt by Contentsquare Foundation'
-      return [...args]
-    })
   }
 }
