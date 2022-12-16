@@ -21,6 +21,8 @@ runs:
 
     - uses: ./.github/actions/cache-dependencies
 
+    - uses: ./.github/actions/cache-build
+
     - uses: ./.github/actions/cache-packages
       with:
         version: ${{ inputs.version }}
@@ -38,16 +40,10 @@ runs:
       run: git push -u origin HEAD
 
     - shell: bash
-      run: yarn lerna publish ${{ inputs.version }} -y --force-publish
-      env:
-        GH_TOKEN: ${{ inputs.gh_token }}
-        GITHUB_TOKEN: ${{ inputs.gh_token }}
-        NPM_TOKEN: ${{ inputs.npm_token }}
+      run: yarn lerna version ${{ inputs.version }} -y
 
     - shell: bash
       run: gh pr create --fill
-      env:
-        GITHUB_TOKEN: ${{ inputs.gh_token }}
 
     - shell: bash
       run: gh pr review release/v${{ inputs.version }} -a
@@ -61,6 +57,39 @@ runs:
 
     - shell: bash
       run: gh release create v${{ inputs.version }} -t 'readapt v${{ inputs.version }}' --generate-notes ./apps/chrome-extension/dist/readapt-chrome-extension-v${{ inputs.version }}.zip
-      # run: gh release create v${{ inputs.version }} -t 'readapt v${{ inputs.version }}' -F ./CHANGELOG-v${{ inputs.version }}.md ./apps/chrome-extension/dist/readapt-chrome-extension-v${{ inputs.version }}.zip
       env:
         GITHUB_TOKEN: ${{ inputs.gh_token }}
+
+    - uses: JS-DevTools/npm-publish@v1
+      with:
+        token: ${{ inputs.npm_token }}
+        package: ./packages/dictionaries/package.json
+
+    - uses: JS-DevTools/npm-publish@v1
+      with:
+        token: ${{ inputs.npm_token }}
+        package: ./packages/settings/package.json
+
+    - uses: JS-DevTools/npm-publish@v1
+      with:
+        token: ${{ inputs.npm_token }}
+        package: ./packages/shared-components/package.json
+
+    - uses: JS-DevTools/npm-publish@v1
+      with:
+        token: ${{ inputs.npm_token }}
+        package: ./packages/text-engine/package.json
+
+    - uses: JS-DevTools/npm-publish@v1
+      with:
+        token: ${{ inputs.npm_token }}
+        package: ./packages/visual-engine/package.json
+
+    # - uses: Klemensas/chrome-extension-upload-action@$VERSION
+    #   with:
+    #     refresh-token: 'xxxxxxxxxxxxxxxxxxxxxx'
+    #     client-id: 'xxxxxxxxxxxxx'
+    #     client-secret: 'xxxxxxxxxxxx'
+    #     file-name: './apps/chrome-extension/dist/readapt-chrome-extension-v${{ inputs.version }}.zip'
+    #     app-id: 'xzc12xzc21cx23'
+    #     publish: true
