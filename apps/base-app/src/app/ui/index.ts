@@ -8,7 +8,7 @@ import { withVueConfig } from './providers/withVueConfig'
 
 import './styles/theme.scss'
 
-export const mountApp = async () => {
+export const mountUI = async () => {
   withVueConfig()
   withSanitize()
   const { i18n } = withi18n()

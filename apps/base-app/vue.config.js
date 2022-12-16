@@ -29,6 +29,11 @@ module.exports = {
   lintOnSave: false,
   configureWebpack: getConfigureWebpack(),
   productionSourceMap: process.env.NODE_ENV !== 'production',
+  pages: {
+    index: {
+      entry: 'src/main/userInterface/index.ts'
+    }
+  },
   chainWebpack(config) {
     config.plugin('html').tap((args) => {
       args[0].title = 'Readapt by Contentsquare Foundation'
