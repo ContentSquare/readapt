@@ -35,12 +35,12 @@ runs:
     - shell: bash
       run: yarn lerna publish ${{ inputs.version }} -y --force-publish
       env:
-        GH_TOKEN: ${{ github.token }}
-        GITHUB_TOKEN: ${{ github.token }}
+        GH_TOKEN: ${{ inputs.gh_token }}
+        GITHUB_TOKEN: ${{ inputs.gh_token }}
         NPM_TOKEN: ${{ inputs.npm_token }}
 
     - shell: bash
       run: gh release create v${{ inputs.version }} -t 'readapt v${{ inputs.version }}' --generate-notes ./apps/chrome-extension/dist/readapt-chrome-extension-v${{ inputs.version }}.zip
       # run: gh release create v${{ inputs.version }} -t 'readapt v${{ inputs.version }}' -F ./CHANGELOG-v${{ inputs.version }}.md ./apps/chrome-extension/dist/readapt-chrome-extension-v${{ inputs.version }}.zip
       env:
-        GITHUB_TOKEN: ${{ github.token }}
+        GITHUB_TOKEN: ${{ inputs.gh_token }}
