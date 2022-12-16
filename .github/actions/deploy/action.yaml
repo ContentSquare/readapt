@@ -53,7 +53,7 @@ runs:
         GH_TOKEN: ${{ inputs.gh_token }}
 
     - shell: bash
-      run: gh pr merge release/v${{ inputs.version }} -d
+      run: gh pr merge release/v${{ inputs.version }} -d -m
       env:
         GH_TOKEN: ${{ inputs.gh_token }}
 
