@@ -32,7 +32,7 @@ runs:
       run: git config user.email "${{ github.server_url }}"
 
     - shell: bash
-      run: git checkout -b release/v{{ inputs.version }}
+      run: git checkout -b release/v${{ inputs.version }}
 
     - shell: bash
       run: git push -u origin HEAD
@@ -46,6 +46,16 @@ runs:
 
     - shell: bash
       run: gh pr create --fill
+      env:
+        GITHUB_TOKEN: ${{ inputs.gh_token }}
+
+    - shell: bash
+      run: gh pr review release/v${{ inputs.version }} -a
+      env:
+        GITHUB_TOKEN: ${{ inputs.gh_token }}
+
+    - shell: bash
+      run: gh pr merge release/v${{ inputs.version }} -d
       env:
         GITHUB_TOKEN: ${{ inputs.gh_token }}
 
