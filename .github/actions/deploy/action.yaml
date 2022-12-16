@@ -33,7 +33,7 @@ runs:
 
     # This not working yet, we need a token that have access to push tag on master
     - shell: bash
-      run: yarn lerna publish ${{ inputs.version }} -y --force
+      run: yarn lerna publish ${{ inputs.version }} -y --force-publish
       env:
         GH_TOKEN: ${{ github.token }}
         GITHUB_TOKEN: ${{ github.token }}
