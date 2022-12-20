@@ -10,13 +10,14 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "clean": "shx rm -rf dist",
     "postinstall": "node scripts/init-env"
   },
   "dependencies": {
-    "@readapt/settings": "^1.6.0",
-    "@readapt/shared-components": "^1.6.0",
-    "@readapt/text-engine": "^1.6.0",
-    "@readapt/visual-engine": "^1.6.0",
+    "@readapt/settings": "^1.6.1",
+    "@readapt/shared-components": "^1.6.1",
+    "@readapt/text-engine": "^1.6.1",
+    "@readapt/visual-engine": "^1.6.1",
     "bootstrap": "~4.6.2",
     "bootstrap-vue": "~2.23.1",
     "dotenv": "^16.0.3",
