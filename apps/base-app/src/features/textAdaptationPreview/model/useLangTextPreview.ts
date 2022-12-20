@@ -1,5 +1,7 @@
-import { ref, Ref, watchEffect } from 'vue'
-import { Language, getLangConfig } from '@readapt/settings'
+import { ref, watchEffect } from 'vue'
+import type { Ref } from 'vue'
+import { getLangConfig } from '@readapt/settings'
+import type { Language } from '@readapt/settings'
 
 export function useLangTextPreview(language: Ref<Language>) {
   const text = ref('')
