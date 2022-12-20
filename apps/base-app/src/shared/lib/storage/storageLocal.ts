@@ -1,4 +1,4 @@
-import { StorageType, StorageItems, StorageKeys } from './storage'
+import type { StorageType, StorageItems, StorageKeys } from './storage'
 
 export class StorageLocal implements StorageType {
   async get(key: StorageKeys): Promise<StorageItems> {

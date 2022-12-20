@@ -1,5 +1,5 @@
 /* global chrome */
-import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
+import type { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
 import { Url } from '@/shared/lib'
 

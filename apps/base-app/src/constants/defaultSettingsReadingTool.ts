@@ -1,4 +1,4 @@
-import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
+import type { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 
 const buildDefaultSettingsReadingTool = (): SettingsReadingTool => {
   return {

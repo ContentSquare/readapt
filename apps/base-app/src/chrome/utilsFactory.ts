@@ -1,7 +1,7 @@
 import * as chromeUtils from '@/chrome/utils'
 import * as chromeMock from './utilsMock'
-import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
-import VueRouter from 'vue-router'
+import type { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
+import type VueRouter from 'vue-router'
 
 export interface ChromeUtils {
   getCurrentTab: () => Promise<chrome.tabs.Tab>

@@ -1,6 +1,6 @@
-import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
+import type { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
-import VueRouter from 'vue-router'
+import type VueRouter from 'vue-router'
 
 const getCurrentTab = async (): Promise<chrome.tabs.Tab> => {
   console.log('getCurrentTab mock')

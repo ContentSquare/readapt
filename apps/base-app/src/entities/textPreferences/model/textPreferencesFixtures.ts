@@ -1,5 +1,5 @@
-import { Settings } from '@readapt/settings'
-import { TextPreferences, TextProfile } from './TextPreferences'
+import type { Settings } from '@readapt/settings'
+import type { TextPreferences, TextProfile } from './TextPreferences'
 
 export const textSettingsFixture: Settings = {
   fontFamily: 'inherit',

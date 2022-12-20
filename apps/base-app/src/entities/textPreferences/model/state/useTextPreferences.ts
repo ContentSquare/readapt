@@ -1,6 +1,6 @@
 import { readonly } from 'vue'
-import { Settings } from '@readapt/settings'
-import { TextProfile, TextProfileId } from '../TextPreferences'
+import type { Settings } from '@readapt/settings'
+import type { TextProfile, TextProfileId } from '../TextPreferences'
 import { textPreferencesState as state } from './textPreferencesState'
 import cloneDeep from 'lodash/cloneDeep'
 
