@@ -64,7 +64,7 @@ const { version } = useVersion()
           <span v-if="locale === 'en'">EN</span>
           <a v-if="locale !== 'en'" href="#" @click="changeLocale('en')">EN</a>
         </div>
-        <b-img class="logo" src="/logo.png" alt="readapt-logo" />
+        <b-img class="logo" :src="require('@/assets/logo.png')" alt="readapt-logo" />
       </div>
     </div>
 
@@ -120,6 +120,9 @@ const { version } = useVersion()
     <div class="footer my-2">
       <strong class="version">Version {{ version }}</strong>
 
+      <a class="about-you" href="https://readapt.ai/#user-guides" target="_blank">
+        <b-button size="sm" variant="primary">{{ t('MAIN_MENU.USER_GUIDE') }}</b-button>
+      </a>
       <a class="about-you" href="https://forms.gle/ciWCnYnkFjutwEHWA" target="_blank">
         <b-button size="sm" variant="primary">{{ t('MAIN_MENU.WHAT_IS_NEW') }}</b-button>
       </a>
@@ -170,20 +173,12 @@ const { version } = useVersion()
 
 <style lang="scss">
 .footer {
-  display: grid;
+  display: flex;
+  align-items: center;
   gap: 0.5rem;
-  grid-template-areas: 'version about-you contact-us';
-  grid-template-columns: 1fr auto auto;
 
   .version {
-    grid-area: version;
-    justify-self: start;
-  }
-  .about-you {
-    grid-area: about-you;
-  }
-  .contact-us {
-    grid-area: contact-us;
+    margin-right: auto;
   }
 }
 </style>
