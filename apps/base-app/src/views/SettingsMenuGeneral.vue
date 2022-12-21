@@ -1,23 +1,23 @@
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from 'vue'
+import { defineComponent, ref, watch, type PropType } from 'vue'
 import { BFormCheckbox, BFormSelect, BTableSimple, BTbody, BTd, BTh, BThead, BTr } from 'bootstrap-vue'
 
 import {
   fontFamilyOptions,
   fontSizeOptions,
-  Language,
   languageOptions,
   letterSpacingOptions,
   lineSpacingOptions,
   opacityOptions,
-  Option,
-  Settings,
-  SettingsKey,
   silentLetterOpacityOptions,
-  wordSpacingOptions
+  wordSpacingOptions,
+  type Option,
+  type Settings,
+  type SettingsKey,
+  type Language
 } from '@readapt/settings'
 import { ColorPicker, RangeBar, SelectPercentage } from '@readapt/shared-components'
-import { LineSpacingOption } from '@readapt/settings'
+import type { LineSpacingOption } from '@readapt/settings'
 
 const SettingsMenuGeneral = defineComponent({
   props: {

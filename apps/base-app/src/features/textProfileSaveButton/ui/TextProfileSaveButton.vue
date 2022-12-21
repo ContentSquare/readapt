@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useTextPreferences, TextProfileId } from '@/entities/textPreferences'
+import { useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
 import type { Settings } from '@readapt/settings'
 import { BButton } from 'bootstrap-vue'
 import { nextTick } from 'vue'

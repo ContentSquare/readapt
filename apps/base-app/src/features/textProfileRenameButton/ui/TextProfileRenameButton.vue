@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useTextPreferences, TextProfileId } from '@/entities/textPreferences'
+import { useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
 import { useI18n } from 'vue-i18n-composable'
 
 const { preferences, updateProfile, getProfileById } = useTextPreferences()

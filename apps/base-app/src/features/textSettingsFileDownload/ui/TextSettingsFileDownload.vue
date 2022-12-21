@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { TextSettings } from '@/entities/textPreferences'
+import type { TextSettings } from '@/entities/textPreferences'
 
 const props = defineProps<{ settings: TextSettings }>()
 

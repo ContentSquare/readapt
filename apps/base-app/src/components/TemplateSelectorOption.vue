@@ -1,8 +1,8 @@
 <script lang="ts">
-import { computed, defineComponent, PropType, ref } from 'vue'
+import { computed, defineComponent, ref, type PropType } from 'vue'
 import { BButton, BCard, BCardText, BFormRadio } from 'bootstrap-vue'
 import { AdaptContainer } from '@readapt/shared-components'
-import { SettingsTemplate } from '@/interfaces/settingsTemplate'
+import type { SettingsTemplate } from '@/interfaces/settingsTemplate'
 import { adaptHtmlElementAsyncFn } from '@/features/textAdaptationPreview'
 
 const TemplateSelectorOption = defineComponent({

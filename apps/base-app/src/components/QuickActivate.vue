@@ -4,7 +4,7 @@ import { BTableSimple, BTbody, BTd, BTh, BTr } from 'bootstrap-vue'
 import { opacityOptions, thicknessOptions } from '@readapt/settings'
 
 import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
-import { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
+import type { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 import utils from '@/chrome'
 import { RangeBar } from '@readapt/shared-components'
 

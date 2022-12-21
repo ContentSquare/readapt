@@ -1,8 +1,8 @@
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, type PropType } from 'vue'
 import { BCol, BRow } from 'bootstrap-vue'
 import TemplateSelectorOption from './TemplateSelectorOption.vue'
-import { SettingsTemplate } from '@/interfaces/settingsTemplate'
+import type { SettingsTemplate } from '@/interfaces/settingsTemplate'
 
 const TemplateSelector = defineComponent({
   components: { BCol, BRow, TemplateSelectorOption },

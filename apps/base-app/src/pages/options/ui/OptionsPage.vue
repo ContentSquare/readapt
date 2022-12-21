@@ -5,7 +5,7 @@ import { useI18n } from 'vue-i18n-composable'
 import { BCol, BNav, BNavItem, BRow } from 'bootstrap-vue'
 
 import { CloseSettings } from '@readapt/shared-components'
-import { useTextPreferences, TextProfileId } from '@/entities/textPreferences'
+import { useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
 import { TextProfileEditDropdown } from '@/features/textProfileEditDropdown'
 import { TextProfileSaveButton } from '@/features/textProfileSaveButton'
 import { TextAdaptationPreview } from '@/features/textAdaptationPreview'

@@ -1,13 +1,13 @@
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue'
+import { computed, defineComponent, type PropType } from 'vue'
 import { BFormCheckbox, BTable } from 'bootstrap-vue'
 
-import { ColoredItem, ColoredOption, ColorOption } from '@readapt/settings'
+import type { ColoredItem, ColoredOption, ColorOption } from '@readapt/settings'
 import { buildItemPreview } from '@readapt/visual-engine'
 import { ColorPicker } from '@readapt/shared-components'
 
 import { useI18n } from 'vue-i18n-composable'
-import { SettingsTableItem } from '@/interfaces'
+import type { SettingsTableItem } from '@/interfaces'
 
 const SettingsMenuTableItems = defineComponent({
   props: {

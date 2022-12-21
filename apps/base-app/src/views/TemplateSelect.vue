@@ -1,10 +1,10 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue'
 import { BButton, BIconExclamationTriangle } from 'bootstrap-vue'
-import { Language, Settings } from '@readapt/settings'
+import type { Language, Settings } from '@readapt/settings'
 import TemplateSelector from '@/components/TemplateSelector.vue'
 import { templates } from '@/constants/templates'
-import { SettingsTemplate } from '@/interfaces'
+import type { SettingsTemplate } from '@/interfaces'
 import utils from '@/chrome'
 import { useRouter } from 'vue-router/composables'
 import { LanguageSelector } from '@readapt/shared-components'
