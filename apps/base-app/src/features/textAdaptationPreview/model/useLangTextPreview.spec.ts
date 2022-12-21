@@ -1,5 +1,5 @@
 import { ref, nextTick } from 'vue'
-import { getLangConfig, Language } from '@readapt/settings'
+import { getLangConfig, type Language } from '@readapt/settings'
 import { useLangTextPreview } from './useLangTextPreview'
 
 describe('useLangTextPreview()', () => {

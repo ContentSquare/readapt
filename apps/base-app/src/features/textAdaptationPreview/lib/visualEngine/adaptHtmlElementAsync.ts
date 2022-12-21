@@ -1,5 +1,4 @@
-import { buildAdaptHtmlElement } from '@readapt/visual-engine'
-import type { AdaptHtmlElementFn } from '@readapt/visual-engine'
+import { buildAdaptHtmlElement, type AdaptHtmlElementFn } from '@readapt/visual-engine'
 
 /**
  * @see {@link AdaptHtmlElementFn}

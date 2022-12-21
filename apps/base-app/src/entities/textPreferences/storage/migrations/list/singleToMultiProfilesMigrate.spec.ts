@@ -1,6 +1,6 @@
 import { StorageMemory } from '@/shared/lib/storage'
 import { STORAGE_KEY_V1, STORAGE_KEY_V2 } from '../../../config/storage'
-import { StorageItems } from '@/shared/lib/storage'
+import type { StorageItems } from '@/shared/lib/storage'
 import { singleToMultiProfileMigrate } from './singleToMultiProfilesMigrate'
 import { storageStateV1Fixture, storageStateV2Fixture } from '../textPreferencesStorageFixtures'
 

@@ -9,7 +9,7 @@ import {
   silentLetterOpacityOptions
 } from '@readapt/settings'
 
-import { SettingsTemplate } from '@/interfaces'
+import type { SettingsTemplate } from '@/interfaces'
 
 const defaultSettingsEn = buildDefaultSettings('en')
 const defaultSettingsFr = buildDefaultSettings('fr')

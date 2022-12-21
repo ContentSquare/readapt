@@ -11,7 +11,7 @@ describe('TextProfileSaveButton', () => {
 
   afterEach(() => {
     useTextPreferences().reset()
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 
   describe('when save button is clicked', () => {

@@ -64,7 +64,7 @@ const { version } = useVersion()
           <span v-if="locale === 'en'">EN</span>
           <a v-if="locale !== 'en'" href="#" @click="changeLocale('en')">EN</a>
         </div>
-        <b-img class="logo" :src="require('@/assets/logo.png')" alt="readapt-logo" />
+        <b-img class="logo" src="/logo.png" alt="readapt-logo" />
       </div>
     </div>
 

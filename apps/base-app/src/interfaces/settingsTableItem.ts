@@ -1,4 +1,4 @@
-import { ColorOption } from '@readapt/settings'
+import type { ColorOption } from '@readapt/settings'
 
 export interface SettingsTableItem {
   key: string

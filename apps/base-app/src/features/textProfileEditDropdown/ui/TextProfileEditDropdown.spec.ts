@@ -1,7 +1,7 @@
 import TextProfileEditDropdown from './TextProfileEditDropdown.vue'
 import { mount } from '@vue/test-utils'
 import { textProfileFixture as profile, useTextPreferences } from '@/entities/textPreferences'
-import { TextProfileId, TextSettings } from '@/entities/textPreferences/model/TextPreferences'
+import type { TextProfileId, TextSettings } from '@/entities/textPreferences/model/TextPreferences'
 import { mockConfirm } from '@/shared/test'
 
 describe('TextProfileEditDropdown', () => {

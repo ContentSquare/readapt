@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import TextProfileRenameButton from './TextProfileRenameButton.vue'
-import { textProfileFixture as profile, useTextPreferences, TextProfileId } from '@/entities/textPreferences'
+import { textProfileFixture as profile, useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
 import { mockAlert, mockPrompt } from '@/shared/test'
 
 describe('TextProfileRenameButton', () => {
@@ -11,7 +11,7 @@ describe('TextProfileRenameButton', () => {
 
   afterEach(() => {
     useTextPreferences().reset()
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 
   interface FactoryProps {

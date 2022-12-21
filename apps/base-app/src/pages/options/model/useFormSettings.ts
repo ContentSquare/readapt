@@ -1,10 +1,7 @@
-import { computed, ref, watchEffect } from 'vue'
-import type { Ref } from 'vue'
-import type { Language, Settings } from '@readapt/settings'
-import { buildDefaultProfiles } from '@readapt/settings'
+import { computed, ref, watchEffect, type Ref } from 'vue'
+import { buildDefaultProfiles, type Language, type Settings } from '@readapt/settings'
 import cloneDeep from 'lodash/cloneDeep'
-import { useTextPreferences } from '@/entities/textPreferences'
-import type { TextProfileId } from '@/entities/textPreferences'
+import { useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
 
 export function useFormSettings(selectedProfileId: Ref<TextProfileId | null>) {
   const settingsByLanguage = ref()

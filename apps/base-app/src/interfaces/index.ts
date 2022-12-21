@@ -1,2 +1,2 @@
-export { SettingsTableItem } from './settingsTableItem'
-export { SettingsTemplate } from './settingsTemplate'
+export type { SettingsTableItem } from './settingsTableItem'
+export type { SettingsTemplate } from './settingsTemplate'
