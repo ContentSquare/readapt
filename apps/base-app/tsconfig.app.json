@@ -5,6 +5,10 @@
   "compilerOptions": {
     "composite": true,
     "baseUrl": ".",
+    "lib": [
+      "esnext",
+      "dom",
+    ],
     "paths": {
       "@/*": ["./src/*"]
     }
