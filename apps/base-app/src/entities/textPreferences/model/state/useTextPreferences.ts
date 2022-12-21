@@ -2,7 +2,7 @@ import { readonly } from 'vue'
 import type { Settings } from '@readapt/settings'
 import type { TextProfile, TextProfileId } from '../TextPreferences'
 import { textPreferencesState as state } from './textPreferencesState'
-import cloneDeep from 'lodash/cloneDeep'
+import cloneDeep from 'lodash-es/cloneDeep'
 
 export function useTextPreferences() {
   const reset = () => {

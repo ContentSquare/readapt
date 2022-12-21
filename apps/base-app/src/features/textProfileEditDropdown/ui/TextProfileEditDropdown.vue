@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTextPreferences, type TextProfileId, type TextSettings } from '@/entities/textPreferences'
 import { buildDefaultSettings } from '@readapt/settings'
-import isEqual from 'lodash/isEqual'
+import isEqual from 'lodash-es/isEqual'
 import { useI18n } from 'vue-i18n-composable'
 
 const { preferences, getProfileById } = useTextPreferences()

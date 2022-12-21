@@ -1,6 +1,6 @@
 import { computed, ref, watchEffect, type Ref } from 'vue'
 import { buildDefaultProfiles, type Language, type Settings } from '@readapt/settings'
-import cloneDeep from 'lodash/cloneDeep'
+import cloneDeep from 'lodash-es/cloneDeep'
 import { useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
 
 export function useFormSettings(selectedProfileId: Ref<TextProfileId | null>) {

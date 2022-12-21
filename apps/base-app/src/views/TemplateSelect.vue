@@ -9,7 +9,7 @@ import utils from '@/chrome'
 import { useRouter } from 'vue-router/composables'
 import { LanguageSelector } from '@readapt/shared-components'
 import { useTextPreferences } from '@/entities/textPreferences'
-import cloneDeep from 'lodash/cloneDeep'
+import cloneDeep from 'lodash-es/cloneDeep'
 
 const isSameLanguage = (language: Language) => {
   return (template: SettingsTemplate) => template.settings.language === language
