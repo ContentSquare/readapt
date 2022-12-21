@@ -15,5 +15,6 @@
     "paths": {
       "@/*": ["./src/*"]
     }
-  }
+  },
+  "vueCompilerOptions": { "target": 2.7 }
 }
