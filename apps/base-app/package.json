@@ -8,7 +8,7 @@
     "preview": "vite preview --port 4173",
     "test:unit": "vitest --environment happy-dom",
     "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
+    "type-check": "tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "clean": "shx rm -rf dist",
     "postinstall": "node scripts/init-env"
