@@ -10,7 +10,7 @@ import vue2 from '@vitejs/plugin-vue2'
 export default defineConfig({
   optimizeDeps: {
     // TODO: try to provide ESM and remove the optimizeDeps
-    include: ['@readapt/shared-components']
+    include: ['@readapt/shared-components', '@readapt/text-engine']
   },
   plugins: [
     vue2(),
