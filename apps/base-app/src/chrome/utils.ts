@@ -1,4 +1,3 @@
-/* global chrome */
 import type { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
 import { Url } from '@/shared/lib'
