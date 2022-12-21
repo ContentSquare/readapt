@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useTextPreferences, TextProfileId } from '@/entities/textPreferences'
-import { Settings } from '@readapt/settings'
+import type { Settings } from '@readapt/settings'
 import { BButton } from 'bootstrap-vue'
 import { nextTick } from 'vue'
 import { useI18n } from 'vue-i18n-composable'

@@ -2,7 +2,7 @@
 import { computed, ref, watchEffect } from 'vue'
 import { BButton, BFormCheckbox, BImg } from 'bootstrap-vue'
 
-import type { useVersion } from '@readapt/shared-components'
+import { useVersion } from '@readapt/shared-components'
 import { TextProfileActiveDropdown } from '@/features/textProfileActiveDropdown'
 import { useTextPreferences } from '@/entities/textPreferences'
 

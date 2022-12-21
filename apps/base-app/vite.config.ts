@@ -8,6 +8,10 @@ import vue2 from '@vitejs/plugin-vue2'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  optimizeDeps: {
+    // TODO: try to provide ESM and remove the optimizeDeps
+    include: ['@readapt/shared-components']
+  },
   plugins: [
     vue2(),
     legacy({

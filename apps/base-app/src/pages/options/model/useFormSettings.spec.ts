@@ -1,7 +1,8 @@
 import { ref, nextTick } from 'vue'
 import { buildDefaultProfiles } from '@readapt/settings'
 import { useFormSettings } from './useFormSettings'
-import { TextProfile, textProfileFixture as profile, TextProfileId, useTextPreferences } from '@/entities/textPreferences'
+import { textProfileFixture as profile, useTextPreferences } from '@/entities/textPreferences'
+import type { TextProfile, TextProfileId } from '@/entities/textPreferences'
 
 describe('useFormSettings()', () => {
   const emptyProfileId = ref<TextProfileId | null>(null)
