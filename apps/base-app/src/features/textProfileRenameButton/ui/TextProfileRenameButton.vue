@@ -8,7 +8,10 @@ const props = defineProps<{ profileId: TextProfileId | null }>()
 const { t } = useI18n()
 
 const onClick = () => {
-  const profileName = getProfileById(props.profileId)?.name
+  let profileName = ''
+  if (props.profileId) {
+    profileName = getProfileById(props.profileId).name
+  }
   const newProfileName = prompt(t('SETTINGS.PROFILE_RENAME_TO'), profileName)
   if (!newProfileName) {
     return

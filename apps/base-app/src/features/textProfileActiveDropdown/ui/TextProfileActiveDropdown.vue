@@ -3,7 +3,8 @@ import { useTextPreferences } from '@/entities/textPreferences'
 
 const { preferences, setActiveProfileId } = useTextPreferences()
 
-const onChange = ({ target: { value } }: Event) => {
+const onChange = ({ target }: Event) => {
+  const { value } = target as HTMLSelectElement
   setActiveProfileId(parseInt(value))
 }
 </script>
