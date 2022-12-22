@@ -22,8 +22,8 @@ export default defineConfig({
     commonjsOptions: {
       transformMixedEsModules: true,
       // TODO: try to provide ESM and remove commonjsOptions
-      include: [/shared-components/, /text-engine/, /dictionaries/, /node_modules/],
-    },
+      include: [/shared-components/, /text-engine/, /dictionaries/, /node_modules/]
+    }
   },
   test: {
     setupFiles: [path.resolve(__dirname, './vitest.setup.ts')],

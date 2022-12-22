@@ -1,1 +1,3 @@
-export function contentScript() {}
+export function contentScript() {
+  return true
+}
