@@ -93,8 +93,7 @@
   },
   "SELECT_TEMPLATE": {
     "PLEASE_SELECT_A_TEMPLATE": "Please select a template",
-    "CLICK_TO_MODIFY_OR_SELECT_TEMPLATE": "Click Modify to tweak the template to your needs, or click Select to start using the template",
-    "CLICK_ON_SELECT_WARNING": "Warning: Clicking on Select will erase any prior profile you may have saved.",
+    "CLICK_TO_MODIFY_OR_SELECT_TEMPLATE": "Click Modify to tweak the template to your needs",
     "PROFILE_LANGUAGE": "Profile Language",
     "TEMPLATE_INDEX": "Template {index}",
     "MODIFY": "Modify",
