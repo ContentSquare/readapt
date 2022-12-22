@@ -20,6 +20,7 @@ export default defineConfig({
   },
   build: {
     commonjsOptions: {
+      transformMixedEsModules: true,
       // TODO: try to provide ESM and remove commonjsOptions
       include: [/shared-components/, /text-engine/, /dictionaries/, /node_modules/],
     },
