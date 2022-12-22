@@ -15,10 +15,10 @@ const emit = defineEmits<{
   (event: 'input', profileId: TextProfileId | null): void
 }>()
 
-const onChange = ({ target }: Event) => {
-  const emittedValue = target.value ? Number(target.value) : null
+const onChange = (event: Event) => {
   if (validateUnsavedChanges()) {
-    emit('input', emittedValue)
+    const profileId = event.target.value ? parseInt(event.target.value) : null
+    emit('input', profileId)
   } else {
     event.target.value = String(props.value ?? '')
   }

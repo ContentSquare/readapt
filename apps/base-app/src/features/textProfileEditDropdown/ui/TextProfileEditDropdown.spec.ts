@@ -27,8 +27,9 @@ describe('TextProfileEditDropdown', () => {
       }
     })
     const dropdown = wrapper.find<HTMLSelectElement>('[data-test-id=dropdown]')
+    const selectByProfileId = async (profileId: TextProfileId | null) => await dropdown.setValue(String(profileId ?? ''))
 
-    return { wrapper, dropdown }
+    return { wrapper, dropdown, selectByProfileId }
   }
 
   describe('options', () => {
@@ -54,9 +55,9 @@ describe('TextProfileEditDropdown', () => {
 
     describe('when selecting an existing profile', () => {
       it('should trigger "input" with selected profile id', () => {
-        const { wrapper, dropdown } = factory({ value: null })
+        const { wrapper, selectByProfileId } = factory({ value: null })
 
-        dropdown.setValue(profile.id)
+        selectByProfileId(profile.id)
 
         expect(wrapper.emitted('input')).toEqual([[profile.id]])
       })
@@ -64,9 +65,9 @@ describe('TextProfileEditDropdown', () => {
 
     describe('when selecting a new profile', () => {
       it('should trigger "input" with null', () => {
-        const { wrapper, dropdown } = factory()
+        const { wrapper, selectByProfileId } = factory()
 
-        dropdown.setValue('')
+        selectByProfileId(null)
 
         expect(wrapper.emitted('input')).toEqual([[null]])
       })
@@ -81,18 +82,18 @@ describe('TextProfileEditDropdown', () => {
     ]
 
     it.each(cases)('should open a confirmation dialog', async ({ profileId, newProfileId }) => {
-      const { dropdown } = factory({ value: profileId, settings: dirtySettings })
+      const { selectByProfileId } = factory({ value: profileId, settings: dirtySettings })
 
-      await dropdown.setValue(newProfileId)
+      await selectByProfileId(newProfileId)
 
       expect(confirm).toHaveBeenCalledWith('SETTINGS.PROFILE_UNSAVED_CHANGES')
     })
 
     describe('when user confirms the selection change', () => {
       it.each(cases)('should trigger "input"', async ({ profileId, newProfileId }) => {
-        const { wrapper, dropdown } = factory({ value: profileId, settings: dirtySettings })
+        const { wrapper, selectByProfileId } = factory({ value: profileId, settings: dirtySettings })
 
-        await dropdown.setValue(newProfileId)
+        await selectByProfileId(newProfileId)
 
         expect(wrapper.emitted('input')).toEqual([[newProfileId]])
       })
@@ -100,19 +101,19 @@ describe('TextProfileEditDropdown', () => {
 
     describe('when user cancels the selection change', () => {
       it.each(cases)('should not trigger "input"', async ({ profileId, newProfileId }) => {
-        const { wrapper, dropdown } = factory({ value: profileId, settings: dirtySettings })
+        const { wrapper, selectByProfileId } = factory({ value: profileId, settings: dirtySettings })
         mockConfirm(false)
 
-        await dropdown.setValue(newProfileId)
+        await selectByProfileId(newProfileId)
 
         expect(wrapper.emitted('input')).toBeUndefined()
       })
 
       it.each(cases)('should keep the selection', async ({ profileId, newProfileId }) => {
-        const { dropdown } = factory({ value: profileId, settings: dirtySettings })
+        const { dropdown, selectByProfileId } = factory({ value: profileId, settings: dirtySettings })
         mockConfirm(false)
 
-        await dropdown.setValue(newProfileId)
+        await selectByProfileId(newProfileId)
 
         expect(dropdown.element.value).toBe(String(profileId ?? ''))
       })
@@ -121,9 +122,9 @@ describe('TextProfileEditDropdown', () => {
 
   describe('when changing selection with saved changes', () => {
     it('should not open a confirmation dialog', async () => {
-      const { dropdown } = factory()
+      const { selectByProfileId } = factory()
 
-      await dropdown.setValue(null)
+      await selectByProfileId(null)
 
       expect(confirm).not.toHaveBeenCalled()
     })

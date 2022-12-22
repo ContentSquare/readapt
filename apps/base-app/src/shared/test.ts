@@ -1,3 +1,5 @@
+import { vi } from 'vitest'
+
 export const mockPrompt = (result: string | null) => {
   return vi.spyOn(window, 'prompt').mockReset().mockReturnValueOnce(result)
 }

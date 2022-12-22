@@ -19,10 +19,7 @@ export default defineConfig({
     })
   ],
   test: {
-    alias: {
-      vue: 'vue/dist/vue.runtime.mjs'
-    },
-    setupFiles: [path.resolve(__dirname, './vitest.setup.js')],
+    setupFiles: [path.resolve(__dirname, './vitest.setup.ts')],
     globals: true
   },
   resolve: {

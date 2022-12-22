@@ -42,7 +42,7 @@ describe('TextProfileActiveDropdown', () => {
       it('should change the active profile', async () => {
         const { dropdown, preferences } = factory()
 
-        await dropdown.setValue(profiles[1].id)
+        await dropdown.setValue(profiles[1].id.toString())
 
         expect(preferences.activeProfileId).toBe(profiles[1].id)
       })
