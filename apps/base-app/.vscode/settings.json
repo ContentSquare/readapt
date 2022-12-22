@@ -1,9 +1,0 @@
-{
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
-  "eslint.format.enable": true,
-  "vetur.validation.script": false,
-  "jestrunner.jestCommand": "npx vue-cli-service test:unit",
-  "editor.tabSize": 2
-}
