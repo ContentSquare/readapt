@@ -7,7 +7,7 @@
     "build": "run-p type-check build-only",
     "preview": "vite preview --port 4173",
     "test": "yarn test:unit --run",
-    "test:unit": "vitest --environment happy-dom",
+    "test:unit": "vitest",
     "build-only": "vite build",
     "type-check": "tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
