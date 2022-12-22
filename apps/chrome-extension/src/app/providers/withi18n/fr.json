@@ -93,8 +93,7 @@
   },
   "SELECT_TEMPLATE": {
     "PLEASE_SELECT_A_TEMPLATE": "Sélectionner un modèle",
-    "CLICK_TO_MODIFY_OR_SELECT_TEMPLATE": "Cliquez sur Modifier pour adapter le modèle à vos besoins, ou cliquez sur Sélectionner pour commencer à utiliser le modèle.",
-    "CLICK_ON_SELECT_WARNING": "Attention : En cliquant sur Sélectionner, vous effacerez tout profil antérieur que vous auriez pu sauvegarder.",
+    "CLICK_TO_MODIFY_OR_SELECT_TEMPLATE": "Cliquez sur Modifier pour adapter le modèle à vos besoins",
     "PROFILE_LANGUAGE": "Langue du profil",
     "TEMPLATE_INDEX": "Modèle {index}",
     "MODIFY": "Modifier",
