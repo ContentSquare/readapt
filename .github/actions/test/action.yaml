@@ -18,4 +18,4 @@ runs:
     - uses: ./.github/actions/cache-build
 
     - shell: bash
-      run: yarn test --ci
+      run: yarn test
