@@ -7,14 +7,12 @@ import type { SettingsTemplate } from '@/interfaces/settingsTemplate'
 const TemplateSelector = defineComponent({
   components: { BCol, BRow, TemplateSelectorOption },
   props: {
-    templates: { type: Array as PropType<SettingsTemplate[]>, required: true },
-    value: { type: Object as PropType<SettingsTemplate>, required: true }
+    templates: { type: Array as PropType<SettingsTemplate[]>, required: true }
   },
   setup(_, { emit }) {
-    const onChange = (value: SettingsTemplate) => emit('change', value)
     const onModify = (value: SettingsTemplate) => emit('modify', value)
 
-    return { onChange, onModify }
+    return { onModify }
   }
 })
 export default TemplateSelector
@@ -24,13 +22,7 @@ export default TemplateSelector
   <b-row>
     <template v-for="template in templates">
       <b-col class="mt-2" lg="6" sm="12" md="12" :key="template.value">
-        <TemplateSelectorOption
-          name="template-radio-field"
-          :value="value ? value : templates[0]"
-          :template="template"
-          @change="onChange"
-          @modify="onModify"
-        />
+        <TemplateSelectorOption name="template-radio-field" :template="template" @modify="onModify" />
       </b-col>
     </template>
   </b-row>
