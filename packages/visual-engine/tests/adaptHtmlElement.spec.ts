@@ -1,3 +1,4 @@
+import 'jest-extended'
 import { adaptHtmlElement } from '../src/browser'
 import { buildDefaultSettings } from '@readapt/settings'
 
@@ -31,9 +32,11 @@ describe('visual engine tests', () => {
     adaptHtmlElement(htmlElement, settings, 'jsdom')
 
     const readaptStyles = document.head.querySelector('[data-readapt-style=jsdom]') as HTMLStyleElement
-    expect(readaptStyles.textContent).toBe(
-      '.readapt-jsdom .readapt-content { font-size: inherit; } .readapt-content > span { font-size: inherit } .readapt-jsdom .readapt-bold { font-weight: bold }'
-    )
+    expect(readaptStyles.textContent).toEqualIgnoringWhitespace(`
+      .readapt-jsdom .readapt-content { font-size: inherit; }
+      .readapt-jsdom .readapt-content > span { font-size: inherit }
+      .readapt-jsdom .readapt-content .readapt-bold { font-weight: bold }
+    `)
   })
 
   it('should wrap text content in a span element', () => {
