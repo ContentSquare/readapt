@@ -16,7 +16,7 @@ export default defineConfig({
   ],
   optimizeDeps: {
     // TODO: try to provide ESM and remove the optimizeDeps
-    include: ['@readapt/shared-components', '@readapt/text-engine', '@readapt/dictionaries']
+    include: ['@readapt/shared-components', '@readapt/text-engine']
   },
   build: {
     commonjsOptions: {
