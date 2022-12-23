@@ -42,6 +42,7 @@ jobs:
       - uses: ./.github/actions/build
         with:
           version: ${{ inputs.version }}
+          matomoUrl: ${{ secrets.MATOMO_URL }}
 
   test:
     needs: build
