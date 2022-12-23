@@ -91,7 +91,7 @@ To clean all packages and return to a fresh state run `yarn workspaces run clean
 
 ### How to release
 
-1. Build the tag and packages using `Release a new version/tag` action workflow with a version number. This workflow will :
+1. Build the tag and packages using [Release a new version/tag](https://github.com/ContentSquare/readapt/actions/workflows/release.yaml) action workflow with a version number. This workflow will :
     - build and add a new tag
     - create a Github release
     - publish packages to npm
