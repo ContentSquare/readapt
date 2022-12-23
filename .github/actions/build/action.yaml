@@ -5,6 +5,9 @@ inputs:
   version:
     description: Bumped version
     required: true
+  matomoUrl:
+    description: matomo URL
+    required: true
 
 runs:
   using: composite
@@ -25,12 +28,10 @@ runs:
 
     - shell: bash
       run: yarn workspace chrome-extension build
+      env:
+        VUE_APP_MATOMO_URL: ${{ inputs.matomoUrl }}
 
     - shell: bash
       run: yarn workspace ms-word-addin build
-
-    - shell: bash
-      run: ls ./apps/chrome-extension
-
-    - shell: bash
-      run: ls ./apps/chrome-extension/dist
+      env:
+        VUE_APP_MATOMO_URL: ${{ inputs.matomoUrl }}
