@@ -23,8 +23,8 @@
     "@readapt/shared-components": "^1.6.2",
     "@readapt/text-engine": "^1.6.2",
     "@readapt/visual-engine": "^1.6.2",
-    "bootstrap": "~4.6.1",
-    "bootstrap-vue": "~2.22.0",
+    "bootstrap": "~4.6.2",
+    "bootstrap-vue": "~2.23.1",
     "core-js": "^3.8.3",
     "lodash": "^4.17.21",
     "popper.js": "^1.16.1",
@@ -64,9 +64,9 @@
     "office-addin-lint": "^2.0.0",
     "office-addin-manifest": "^1.7.7",
     "prettier": "^2.4.1",
-    "sass": "^1.32.7",
+    "sass": "^1.57.1",
     "sass-loader": "^12.0.0",
     "ts-jest": "^27.0.4",
-    "typescript": "~4.5.5"
+    "typescript": "~4.9.4"
   }
 }
