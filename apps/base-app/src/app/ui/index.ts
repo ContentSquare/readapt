@@ -7,6 +7,7 @@ import { withSanitize } from './providers/withSanitize'
 import { withVueConfig } from './providers/withVueConfig'
 
 import './styles/theme.scss'
+import './styles/tailwind.scss'
 
 export const mountUI = async () => {
   withVueConfig()
