@@ -20,7 +20,7 @@
     "@readapt/text-engine": "^1.6.2",
     "@readapt/visual-engine": "^1.6.2",
     "bootstrap": "~4.6.2",
-    "bootstrap-vue": "~2.23.1",
+    "bootstrap-vue": "~2.22.0",
     "dotenv": "^16.0.3",
     "lodash-es": "^4.17.21",
     "popper.js": "^1.16.1",
