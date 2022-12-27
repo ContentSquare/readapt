@@ -9,7 +9,11 @@ const fontStyles = (settings: Settings, scope: string): string => {
   const lineHeightStyle = lineSpacing !== lineSpacingOptions[0].value ? `line-height: ${settings.lineSpacing};` : ''
   const globalStyles = fontFamilyStyle + fontSizeStyle + letterSpacingStyle + wordSpacingStyle + lineHeightStyle
 
-  return `${scope} .readapt-content { ${globalStyles} } .readapt-content > span { font-size: inherit } ${scope} .readapt-bold { font-weight: bold }`
+  return `
+    ${scope} .readapt-content { ${globalStyles} }
+    ${scope} .readapt-content > span { font-size: inherit }
+    ${scope} .readapt-content .readapt-bold { font-weight: bold }
+  `
 }
 
 const generateHtmlElementStyles = (settings: Settings, mainClass?: string): string => {
