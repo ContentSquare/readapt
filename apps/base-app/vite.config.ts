@@ -8,12 +8,7 @@ import vue2 from '@vitejs/plugin-vue2'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    vue2(),
-    legacy({
-      targets: ['last 2 Chrome versions']
-    })
-  ],
+  plugins: [vue2(), legacy()],
   optimizeDeps: {
     // TODO: try to provide ESM and remove the optimizeDeps
     include: ['@readapt/shared-components', '@readapt/text-engine']
