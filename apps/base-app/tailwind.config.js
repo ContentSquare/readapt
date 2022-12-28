@@ -187,6 +187,16 @@ module.exports = {
       12: '96px',
       15: '120px'
     },
+    borderRadius: {
+      4: '4px',
+      8: '8px',
+      16: '16px'
+    },
+    borderWidth: {
+      1: '1px',
+      2: '2px',
+      3: '3px'
+    },
     extend: {
       textColor: {
         // colors text
