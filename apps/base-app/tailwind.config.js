@@ -155,8 +155,20 @@ module.exports = {
         }
       }
     },
+    fontSize: {
+      'body-big': ['17px', { lineHeight: '20px' }],
+      'body-base': ['15px', { lineHeight: '20px' }],
+      'body-button': ['15px', { lineHeight: '20px' }],
+      'body-small': ['12px', { lineHeight: '16px' }]
+      // heading sizes to be added later if necessary...
+    },
+    fontWeight: {
+      bold: '600',
+      'extra-bold': '700'
+    },
     extend: {
       textColor: {
+        // colors text
         gray: {
           base: '#3C3D40',
           lighter: {
@@ -164,6 +176,7 @@ module.exports = {
             20: 'rgba(0, 0, 0, 0.24)'
           }
         }
+        // white to be added later if necessary...
       }
     }
   },
