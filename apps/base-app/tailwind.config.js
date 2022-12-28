@@ -156,10 +156,10 @@ module.exports = {
       }
     },
     fontSize: {
-      'body-big': ['17px', { lineHeight: '20px' }],
-      'body-base': ['15px', { lineHeight: '20px' }],
-      'body-button': ['15px', { lineHeight: '20px' }],
-      'body-small': ['12px', { lineHeight: '16px' }]
+      big: ['17px', { lineHeight: '20px' }],
+      base: ['15px', { lineHeight: '20px' }],
+      button: ['15px', { lineHeight: '20px' }],
+      small: ['12px', { lineHeight: '16px' }]
       // heading sizes to be added later if necessary...
     },
     fontWeight: {
