@@ -197,6 +197,11 @@ module.exports = {
       2: '2px',
       3: '3px'
     },
+    boxShadow: {
+      30: '0px 12px 17px rgba(0, 0, 0, 0.1), 0px 5px 22px rgba(0, 0, 0, 0.08), 0px 1px 8px rgba(0, 0, 0, 0.08)',
+      20: '0px 2px 4px rgba(0, 0, 0, 0.1), 0px 4px 5px rgba(0, 0, 0, 0.08), 0px 0px 10px rgba(0, 0, 0, 0.08)',
+      10: '0px 0px 2px rgba(0, 0, 0, 0.1), 0px 2px 2px rgba(0, 0, 0, 0.08), 0px 1px 3px rgba(0, 0, 0, 0.08)'
+    },
     extend: {
       textColor: {
         // colors text
