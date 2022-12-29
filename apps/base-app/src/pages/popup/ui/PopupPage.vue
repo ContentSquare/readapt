@@ -11,6 +11,7 @@ import { useI18n } from 'vue-i18n-composable'
 import { useRouter } from 'vue-router/composables'
 
 import QuickActivate from '@/components/QuickActivate.vue'
+import BaseButton from '@/shared/ui/BaseButton.vue'
 
 const router = useRouter()
 
@@ -45,8 +46,8 @@ const { version } = useVersion()
 </script>
 
 <template>
-  <div class="container-fluid d-flex flex-column justify-content-between" style="min-width: 600px; min-height: 600px; max-width: 600px">
-    <div class="mt-2 d-flex justify-content-between align-items-center">
+  <div class="mx-auto w-full max-w-screen-sm">
+    <div class="d-flex justify-content-between align-items-center mt-2">
       <div>
         <!--<b-button class="mr-2" size="sm" variant="primary" @click="adapt()" :disabled="!readaptEnabled">-->
         <!--  {{ t('MAIN_MENU.ADAPT_PAGE') }}-->
@@ -84,12 +85,9 @@ const { version } = useVersion()
         <li>{{ t('MAIN_MENU.HOLD_CMD_AND_CLICK_TARGET') }}</li>
       </ul>
     </div>
-    <div v-else class="text-center my-3">{{ t('MAIN_MENU.FIRST_RUN') }}</div>
+    <div v-else class="my-3 text-center">{{ t('MAIN_MENU.FIRST_RUN') }}</div>
 
-    <div
-      class="popup-page__buttons mt-3 mb-4 d-flex align-items-center"
-      :class="hasActiveProfile ? 'justify-content-between' : 'justify-content-center'"
-    >
+    <div class="mt-3 mb-4 flex items-center" :class="hasActiveProfile ? 'justify-between' : 'justify-center'">
       <div v-if="hasActiveProfile">
         <h5 class="mb-1">{{ $t('MAIN_MENU.ACTIVE_PROFILE') }}:</h5>
         <TextProfileActiveDropdown class="popup-page__active-profile-dropdown" />
@@ -102,13 +100,13 @@ const { version } = useVersion()
         </span>
       </div>
 
-      <b-button size="sm" variant="primary" @click="openOptionsPage({}, router)" style="max-width: 150px">
+      <BaseButton @click="openOptionsPage({}, router)" class="mx-2 w-1/4">
         {{ t('MAIN_MENU.CREATE_BRAND_NEW_PROFILE') }}
-      </b-button>
+      </BaseButton>
 
-      <b-button size="sm" variant="primary" @click="selectTemplate" style="max-width: 150px">
+      <BaseButton @click="selectTemplate" class="mx-2 w-1/4">
         {{ t('MAIN_MENU.BASE_YOUR_PROFILE_FROM_TEMPLATE') }}
-      </b-button>
+      </BaseButton>
 
       <!--            <b-button size="sm" variant="primary" disabled>-->
       <!--              {{ t('MAIN_MENU.I_HAVE_PROFILE_CODE') }}-->

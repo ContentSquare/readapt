@@ -51,7 +51,7 @@ const { t } = useI18n()
         <h2 class="options-page__title mr-2">{{ $t('SETTINGS.PROFILE') }}:</h2>
         <TextProfileEditDropdown class="options-page__profiles-dropdown" v-model="selectedProfiledId" :settings="settings" />
         <TextProfileRenameButton class="options-page__profile-rename ml-3" :profile-id="selectedProfiledId" />
-        <TextSettingsFileDownload class="ml-2 float-right" :settings="settings" />
+        <TextSettingsFileDownload class="float-right ml-2" :settings="settings" />
       </div>
       <b-nav class="d-flex flex-row">
         <b-nav-item @click="activateTab('GENERAL')" :active="activeTab === 'GENERAL'">{{ t('SETTINGS.GENERAL_SETTINGS') }}</b-nav-item>
@@ -95,7 +95,7 @@ const { t } = useI18n()
           <h3>{{ t('SETTINGS.TEXT_PREVIEW') }}</h3>
           <TextAdaptationPreview class="preview-container" :settings="settings" />
 
-          <div class="mt-3 d-flex justify-content-between">
+          <div class="d-flex justify-content-between mt-3">
             <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
             <TextProfileDeleteButton class="ml-3 mr-auto" v-model="selectedProfiledId" />
             <!-- TODO: review dirty settings calculation -->
