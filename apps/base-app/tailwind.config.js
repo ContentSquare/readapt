@@ -202,6 +202,17 @@ module.exports = {
       20: '0px 2px 4px rgba(0, 0, 0, 0.1), 0px 4px 5px rgba(0, 0, 0, 0.08), 0px 0px 10px rgba(0, 0, 0, 0.08)',
       10: '0px 0px 2px rgba(0, 0, 0, 0.1), 0px 2px 2px rgba(0, 0, 0, 0.08), 0px 1px 3px rgba(0, 0, 0, 0.08)'
     },
+    screens: {
+      sm: '600px'
+    },
+    maxWidth: ({ theme, breakpoints }) => ({
+      none: 'none',
+      full: '100%',
+      min: 'min-content',
+      max: 'max-content',
+      fit: 'fit-content',
+      ...breakpoints(theme('screens'))
+    }),
     extend: {
       textColor: {
         // colors text
