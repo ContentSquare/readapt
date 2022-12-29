@@ -49,14 +49,18 @@ describe('BaseButton', () => {
     const cases = [
       {
         variant: undefined,
-        classes: 'text-white bg-primary-base hover:bg-primary-darker-10 active:bg-primary-darker-30'
+        classes: 'text-white bg-primary-base'
       },
       {
         variant: 'primary',
-        classes: 'text-white bg-primary-base hover:bg-primary-darker-10 active:bg-primary-darker-30'
+        classes: 'text-white bg-primary-base'
+      },
+      {
+        variant: 'secondary',
+        classes: 'text-primary-base bg-white border-1 border-primary-base'
       }
     ]
-    it.each(cases)('shoud support primary variant', ({ variant, classes }) => {
+    it.each(cases)('shoud support $variant variant', ({ variant, classes }) => {
       const wrapper = mount(BaseButton, {
         propsData: {
           variant

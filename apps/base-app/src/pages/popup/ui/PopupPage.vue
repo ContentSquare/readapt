@@ -52,9 +52,9 @@ const { version } = useVersion()
         <!--<b-button class="mr-2" size="sm" variant="primary" @click="adapt()" :disabled="!readaptEnabled">-->
         <!--  {{ t('MAIN_MENU.ADAPT_PAGE') }}-->
         <!--</b-button>-->
-        <b-button v-if="hasActiveProfile" size="sm" variant="outline-primary" @click="reset()" :disabled="!readaptEnabled">
+        <BaseButton v-if="hasActiveProfile" variant="secondary" @click="reset()" :disabled="!readaptEnabled">
           {{ t('MAIN_MENU.RESET') }}
-        </b-button>
+        </BaseButton>
       </div>
       <div class="d-flex justify-content-between align-items-center">
         <div class="mr-3" style="font-size: 14px">

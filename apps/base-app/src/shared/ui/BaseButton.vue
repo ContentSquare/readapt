@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 
-type Variant = 'primary'
+type Variant = 'primary' | 'secondary'
 const VARIANTS: Record<Variant, string> = {
-  primary: 'text-white bg-primary-base hover:bg-primary-darker-10 active:bg-primary-darker-30'
+  primary: 'text-white bg-primary-base hover:bg-primary-darker-10 active:bg-primary-darker-30',
+  secondary:
+    'border-1 border-primary-base bg-white text-primary-base hover:border-primary-darker-10 hover:text-primary-darker-10 active:border-primary-darker-20 active:text-primary-darker-10'
 }
 
 interface Props {
