@@ -9,7 +9,7 @@ type VariantClassOptions = {
 }
 const VARIANTS: Record<Variant, VariantClassOptions> = {
   primary: {
-    base: ' py-1 text-white',
+    base: 'text-white',
     enabled: 'bg-primary-base hover:bg-primary-darker-10 active:bg-primary-darker-30',
     disabled: 'bg-primary-lighter-20'
   },
@@ -40,7 +40,7 @@ const variantClass = computed(() => {
   <button
     v-bind="$attrs"
     v-on="$listeners"
-    class="rounded-4 px-1.5 text-button"
+    class="rounded-4 px-1.5 py-1 text-body-button"
     :class="variantClass"
     :disabled="props.disabled"
     data-test-id="button"
