@@ -2,15 +2,22 @@
 import { computed } from 'vue'
 
 type Variant = 'primary' | 'secondary'
-const VARIANTS: Record<Variant, { enabled: string; disabled: string }> = {
+type VariantClassOptions = {
+  base: string
+  enabled: string
+  disabled: string
+}
+const VARIANTS: Record<Variant, VariantClassOptions> = {
   primary: {
-    enabled: 'text-white bg-primary-base hover:bg-primary-darker-10 active:bg-primary-darker-30',
-    disabled: 'text-white bg-primary-lighter-20'
+    base: 'text-white',
+    enabled: 'bg-primary-base hover:bg-primary-darker-10 active:bg-primary-darker-30',
+    disabled: 'bg-primary-lighter-20'
   },
   secondary: {
+    base: 'border-1 bg-white',
     enabled:
-      'border-1 border-primary-base bg-white text-primary-base hover:border-primary-darker-10 hover:text-primary-darker-10 active:border-primary-darker-20 active:text-primary-darker-10',
-    disabled: 'border-1 border-primary-lighter-20 bg-white text-primary-lighter-20'
+      'border-primary-base text-primary-base hover:border-primary-darker-10 hover:text-primary-darker-10 active:border-primary-darker-20 active:text-primary-darker-10',
+    disabled: 'border-primary-lighter-20 text-primary-lighter-20'
   }
 }
 
@@ -24,8 +31,9 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const variantClass = computed(() => {
-  const variantOptions = VARIANTS[props.variant]
-  return props.disabled ? variantOptions.disabled : variantOptions.enabled
+  const options = VARIANTS[props.variant]
+  const activeClass = props.disabled ? options.disabled : options.enabled
+  return `${options.base} ${activeClass}`
 })
 </script>
 <template>
