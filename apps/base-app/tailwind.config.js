@@ -156,15 +156,17 @@ module.exports = {
       }
     },
     fontSize: {
-      big: ['17px', { lineHeight: '20px' }],
-      base: ['15px', { lineHeight: '20px' }],
-      button: ['15px', { lineHeight: '20px' }],
-      small: ['12px', { lineHeight: '16px' }]
-      // heading sizes to be added later if necessary...
-    },
-    fontWeight: {
-      bold: '600',
-      'extra-bold': '700'
+      'body-big': ['17px', { lineHeight: '20px', fontWeight: 400 }],
+      'body-base': ['15px', { lineHeight: '20px', fontWeight: 400 }],
+      'body-button': ['15px', { lineHeight: '20px', fontWeight: 600 }],
+      'body-base-bold': ['15px', { lineHeight: '20px', fontWeight: 600 }],
+      'body-base-extrabold': ['15px', { lineHeight: '20px', fontWeight: 700 }],
+      'body-small': ['12px', { lineHeight: '16px', fontWeight: 400 }],
+      'body-small-bold': ['12px', { lineHeight: '16px', fontWeight: 400 }],
+      h1: ['34px', { lineHeight: '40px', fontWeight: 600 }],
+      h2: ['28x', { lineHeight: '32px', fontWeight: 600 }],
+      h3: ['20px', { lineHeight: '24px', fontWeight: 600 }],
+      h4: ['17px', { lineHeight: '20px', fontWeight: 600 }]
     },
     spacing: {
       '1px': '1px',
