@@ -24,7 +24,7 @@ describe('TextProfileActiveDropdown', () => {
       const { dropdown } = factory()
 
       for (const profile of profiles) {
-        expect(dropdown.find(`[value="${profile.id}"]`).text()).toBe(profile.name)
+        expect(dropdown.find(`option[value="${profile.id}"]`).text()).toBe(profile.name)
       }
     })
   })

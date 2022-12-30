@@ -5,7 +5,7 @@ describe('BaseButton', () => {
   it('should render a button', () => {
     const wrapper = mount(BaseButton)
 
-    expect(wrapper.find('[data-test-id=button]').exists()).toBe(true)
+    expect(wrapper.find('button[data-test-id=button]').exists()).toBe(true)
   })
 
   it('should default slot content', () => {

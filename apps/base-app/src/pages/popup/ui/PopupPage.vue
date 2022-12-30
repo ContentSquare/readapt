@@ -46,14 +46,14 @@ const { version } = useVersion()
 </script>
 
 <template>
-  <div class="mx-auto w-full max-w-screen-sm p-2">
+  <div class="mx-auto w-full max-w-screen-sm p-2 text-body-base">
     <div class="flex items-center">
       <div class="w-1/3">
         <BaseButton v-if="hasActiveProfile" variant="secondary" @click="reset()" :disabled="!readaptEnabled">
           {{ t('MAIN_MENU.RESET') }}
         </BaseButton>
       </div>
-      <div class="w-1/3 text-center text-body-base">
+      <div class="w-1/3 text-center">
         {{ t('MAIN_MENU.MENU_LANGUAGE') }}
         <span v-if="locale === 'fr'">FR</span>
         <a v-if="locale !== 'fr'" href="#" @click="changeLocale('fr')">FR</a>
@@ -87,7 +87,7 @@ const { version } = useVersion()
     <div v-else class="my-3 text-center">{{ t('MAIN_MENU.FIRST_RUN') }}</div>
 
     <div class="mt-3 mb-4 flex items-center" :class="hasActiveProfile ? 'justify-between' : 'justify-center'">
-      <div v-if="hasActiveProfile" class="w-[150px]">
+      <div v-if="hasActiveProfile" class="w-[220px]">
         <h5 class="mb-1">{{ $t('MAIN_MENU.ACTIVE_PROFILE') }}:</h5>
         <TextProfileActiveDropdown class="popup-page__active-profile-dropdown" />
         <span
@@ -99,11 +99,11 @@ const { version } = useVersion()
         </span>
       </div>
 
-      <BaseButton @click="openOptionsPage({}, router)" class="mx-2 w-[150px]">
+      <BaseButton @click="openOptionsPage({}, router)" class="w-[150px]">
         {{ t('MAIN_MENU.CREATE_BRAND_NEW_PROFILE') }}
       </BaseButton>
 
-      <BaseButton @click="selectTemplate" class="mx-2 w-[150px]">
+      <BaseButton @click="selectTemplate" class="w-[150px]">
         {{ t('MAIN_MENU.BASE_YOUR_PROFILE_FROM_TEMPLATE') }}
       </BaseButton>
 

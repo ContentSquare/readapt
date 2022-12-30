@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useTextPreferences } from '@/entities/textPreferences'
+import BaseDropdown from '@/shared/ui/BaseDropdown.vue'
 
 const { preferences, setActiveProfileId } = useTextPreferences()
 
@@ -9,9 +10,9 @@ const onChange = ({ target }: Event) => {
 }
 </script>
 <template>
-  <select data-test-id="dropdown" :value="preferences.activeProfileId" @change="onChange">
+  <BaseDropdown :value="preferences.activeProfileId" @change="onChange">
     <option v-for="{ name, id } in preferences.profiles" :key="id" :value="id">
       {{ name }}
     </option>
-  </select>
+  </BaseDropdown>
 </template>
