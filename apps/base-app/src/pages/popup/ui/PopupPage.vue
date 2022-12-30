@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed, ref, watchEffect } from 'vue'
-import { BButton, BFormCheckbox, BImg } from 'bootstrap-vue'
+import { BButton } from 'bootstrap-vue'
 
 import { useVersion } from '@readapt/shared-components'
 import { TextProfileActiveDropdown } from '@/features/textProfileActiveDropdown'
@@ -46,37 +46,36 @@ const { version } = useVersion()
 </script>
 
 <template>
-  <div class="mx-auto w-full max-w-screen-sm">
-    <div class="d-flex justify-content-between align-items-center mt-2">
-      <div>
-        <!--<b-button class="mr-2" size="sm" variant="primary" @click="adapt()" :disabled="!readaptEnabled">-->
-        <!--  {{ t('MAIN_MENU.ADAPT_PAGE') }}-->
-        <!--</b-button>-->
+  <div class="mx-auto w-full max-w-screen-sm p-2">
+    <div class="flex items-center">
+      <div class="w-1/3">
         <BaseButton v-if="hasActiveProfile" variant="secondary" @click="reset()" :disabled="!readaptEnabled">
           {{ t('MAIN_MENU.RESET') }}
         </BaseButton>
       </div>
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="mr-3" style="font-size: 14px">
-          <span class="mr-2"> {{ t('MAIN_MENU.MENU_LANGUAGE') }}</span>
-          <span v-if="locale === 'fr'">FR</span>
-          <a v-if="locale !== 'fr'" href="#" @click="changeLocale('fr')">FR</a>
-          /
-          <span v-if="locale === 'en'">EN</span>
-          <a v-if="locale !== 'en'" href="#" @click="changeLocale('en')">EN</a>
-        </div>
-        <b-img class="logo" src="/logo.png" alt="readapt-logo" />
+      <div class="w-1/3 text-center text-body-base">
+        {{ t('MAIN_MENU.MENU_LANGUAGE') }}
+        <span v-if="locale === 'fr'">FR</span>
+        <a v-if="locale !== 'fr'" href="#" @click="changeLocale('fr')">FR</a>
+        /
+        <span v-if="locale === 'en'">EN</span>
+        <a v-if="locale !== 'en'" href="#" @click="changeLocale('en')">EN</a>
+      </div>
+      <div class="w-1/3">
+        <img class="float-right w-[169px]" src="/logo.png" alt="Readapt Logo" />
       </div>
     </div>
 
-    <div class="d-flex justify-content-start align-items-center mt-2" v-if="hasActiveProfile">
-      <label class="form-check-label mr-2">{{ t('MAIN_MENU.READAPT_ACTIVE') }}</label>
-      <b-form-checkbox switch :checked="readaptEnabled" @change="switchEnabled" />
+    <div class="mt-2" v-if="hasActiveProfile">
+      <label class="select-none text-body-big">
+        {{ t('MAIN_MENU.READAPT_ACTIVE') }}
+        <input type="checkbox" class="ml-1" :checked="readaptEnabled" @change="switchEnabled" />
+      </label>
     </div>
 
     <div class="mt-3" v-if="hasActiveProfile">
-      <h5>{{ t('MAIN_MENU.ADAPT_TEXT_BY') }}</h5>
-      <ul class="help">
+      <div class="text-h3">{{ t('MAIN_MENU.ADAPT_TEXT_BY') }}</div>
+      <ul class="ml-4 mt-1 list-disc text-body-small">
         <!-- <li>-->
         <!--   <b-icon-hand-index-thumb />-->
         <!--   {{ t('MAIN_MENU.CLICKING_ADAPT_PAGE_BUTTON') }}-->
@@ -88,7 +87,7 @@ const { version } = useVersion()
     <div v-else class="my-3 text-center">{{ t('MAIN_MENU.FIRST_RUN') }}</div>
 
     <div class="mt-3 mb-4 flex items-center" :class="hasActiveProfile ? 'justify-between' : 'justify-center'">
-      <div v-if="hasActiveProfile">
+      <div v-if="hasActiveProfile" class="w-[150px]">
         <h5 class="mb-1">{{ $t('MAIN_MENU.ACTIVE_PROFILE') }}:</h5>
         <TextProfileActiveDropdown class="popup-page__active-profile-dropdown" />
         <span
@@ -100,11 +99,11 @@ const { version } = useVersion()
         </span>
       </div>
 
-      <BaseButton @click="openOptionsPage({}, router)" class="mx-2 w-1/4">
+      <BaseButton @click="openOptionsPage({}, router)" class="mx-2 w-[150px]">
         {{ t('MAIN_MENU.CREATE_BRAND_NEW_PROFILE') }}
       </BaseButton>
 
-      <BaseButton @click="selectTemplate" class="mx-2 w-1/4">
+      <BaseButton @click="selectTemplate" class="mx-2 w-[150px]">
         {{ t('MAIN_MENU.BASE_YOUR_PROFILE_FROM_TEMPLATE') }}
       </BaseButton>
 
