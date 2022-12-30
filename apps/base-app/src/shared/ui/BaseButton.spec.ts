@@ -41,36 +41,49 @@ describe('BaseButton', () => {
         }
       })
 
-      expect(wrapper.find('[data-test-id=button]').classes()).contain(className)
+      const attributes = wrapper.find('[data-test-id=button]').attributes()
+
+      expect(attributes.class).toContain(className)
     })
   })
 
   describe('variants', () => {
-    const cases = [
-      {
-        variant: undefined,
-        classes: 'text-white bg-primary-base'
-      },
-      {
-        variant: 'primary',
-        classes: 'text-white bg-primary-base'
-      },
-      {
-        variant: 'secondary',
-        classes: 'text-primary-base bg-white border-1 border-primary-base'
-      }
-    ]
-    it.each(cases)('shoud support $variant variant', ({ variant, classes }) => {
+    const primaryEnabledClass = 'text-white bg-primary-base hover:bg-primary-darker-10 active:bg-primary-darker-30'
+    const primaryDisabledClass = 'text-white bg-primary-lighter-20'
+
+    it('shoud support primary variant', () => {
       const wrapper = mount(BaseButton, {
         propsData: {
-          variant
+          variant: 'primary'
         }
       })
 
-      const currentClasses = wrapper.find('[data-test-id=button]').classes()
-      for (const className of classes.split(' ')) {
-        expect(currentClasses).toContain(className)
-      }
+      const attributes = wrapper.find('[data-test-id=button]').attributes()
+
+      expect(attributes.class).toContain(primaryEnabledClass)
+    })
+
+    it('should support disabled primary variant', () => {
+      const wrapper = mount(BaseButton, {
+        propsData: {
+          variant: 'primary',
+          disabled: true
+        }
+      })
+
+      const attributes = wrapper.find('[data-test-id=button]').attributes()
+
+      expect(attributes.class).toContain(primaryDisabledClass)
+      expect(attributes.disabled).toBe('disabled')
+    })
+
+    it('should default to enabled primary variant', () => {
+      const wrapper = mount(BaseButton)
+
+      const attributes = wrapper.find('[data-test-id=button]').attributes()
+
+      expect(attributes.class).toContain(primaryEnabledClass)
+      expect(attributes.disabled).toBeUndefined()
     })
   })
 })
