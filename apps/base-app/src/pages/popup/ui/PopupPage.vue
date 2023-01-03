@@ -46,7 +46,7 @@ const { version } = useVersion()
 </script>
 
 <template>
-  <div class="mx-auto w-full max-w-screen-sm p-2 text-body-base">
+  <div class="text-body-base mx-auto w-full max-w-screen-sm p-2">
     <div class="flex items-center">
       <div class="w-1/3">
         <BaseButton v-if="hasActiveProfile" variant="secondary" @click="reset()" :disabled="!readaptEnabled">
@@ -67,7 +67,7 @@ const { version } = useVersion()
     </div>
 
     <div class="mt-2" v-if="hasActiveProfile">
-      <label class="select-none text-body-big">
+      <label class="text-body-big select-none">
         {{ t('MAIN_MENU.READAPT_ACTIVE') }}
         <input type="checkbox" class="ml-1" :checked="readaptEnabled" @change="switchEnabled" />
       </label>
@@ -75,7 +75,7 @@ const { version } = useVersion()
 
     <div class="mt-3" v-if="hasActiveProfile">
       <div class="text-h3">{{ t('MAIN_MENU.ADAPT_TEXT_BY') }}</div>
-      <ul class="ml-4 mt-1 list-disc text-body-small">
+      <ul class="text-body-small ml-4 mt-1 list-disc">
         <!-- <li>-->
         <!--   <b-icon-hand-index-thumb />-->
         <!--   {{ t('MAIN_MENU.CLICKING_ADAPT_PAGE_BUTTON') }}-->
@@ -99,13 +99,13 @@ const { version } = useVersion()
         </span>
       </div>
 
-      <BaseButton @click="openOptionsPage({}, router)" class="w-[150px]">
+      <button class="btn-primary btn w-[180px]" @click="openOptionsPage({}, router)">
         {{ t('MAIN_MENU.CREATE_BRAND_NEW_PROFILE') }}
-      </BaseButton>
+      </button>
 
-      <BaseButton @click="selectTemplate" class="w-[150px]">
+      <button class="btn-primary btn w-[180px]" @click="selectTemplate">
         {{ t('MAIN_MENU.BASE_YOUR_PROFILE_FROM_TEMPLATE') }}
-      </BaseButton>
+      </button>
 
       <!--            <b-button size="sm" variant="primary" disabled>-->
       <!--              {{ t('MAIN_MENU.I_HAVE_PROFILE_CODE') }}-->
