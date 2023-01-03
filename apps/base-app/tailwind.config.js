@@ -12,10 +12,16 @@ module.exports = {
         light: {
           ...daisyThemeLight,
           primary: '#4B8AE7',
+          secondary: '#6C757D',
           '--btn-text-case': 'none'
         }
       }
     ],
     logs: false
+  },
+  theme: {
+    screens: {
+      sm: '600px'
+    }
   }
 }
