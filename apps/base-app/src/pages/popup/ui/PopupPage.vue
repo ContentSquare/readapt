@@ -9,7 +9,7 @@ import utils from '@/chrome'
 import { useI18n } from 'vue-i18n-composable'
 import { useRouter } from 'vue-router/composables'
 
-import QuickActivate from '@/components/QuickActivate.vue'
+import { ToolsQuickActivate } from '@/features/ToolsQuickActivate'
 import SvgIcon from '@/shared/ui/SvgIcon.vue'
 
 const router = useRouter()
@@ -71,7 +71,7 @@ const { version } = useVersion()
     </label>
 
     <div class="mt-3" v-if="hasActiveProfile">
-      <div class="text-xl font-semibold">{{ t('MAIN_MENU.ADAPT_TEXT_BY') }}</div>
+      <div class="text-lg font-semibold">{{ t('MAIN_MENU.ADAPT_TEXT_BY') }}</div>
       <ul class="ml-4 mt-1 list-disc text-sm">
         <li>{{ t('MAIN_MENU.HOLD_CMD_AND_CLICK_TARGET') }}</li>
       </ul>
@@ -100,7 +100,7 @@ const { version } = useVersion()
       </button>
     </div>
 
-    <QuickActivate class="mb-auto mt-6" />
+    <ToolsQuickActivate class="mb-auto mt-6" />
 
     <div class="mt-2 flex items-center">
       <div class="mr-auto text-sm">Version {{ version }}</div>
