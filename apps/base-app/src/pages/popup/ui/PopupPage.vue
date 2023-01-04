@@ -65,7 +65,7 @@ const { version } = useVersion()
       </div>
     </div>
 
-    <label class="label mt-2 cursor-pointer justify-start">
+    <label class="mt-2 flex w-48 cursor-pointer items-center justify-start">
       <span class="mr-2">{{ t('MAIN_MENU.READAPT_ACTIVE') }}</span>
       <input type="checkbox" class="toggle-primary toggle toggle-sm" :checked="readaptEnabled" @change="switchEnabled" />
     </label>
@@ -78,11 +78,11 @@ const { version } = useVersion()
     </div>
     <div v-else class="my-3 text-center">{{ t('MAIN_MENU.FIRST_RUN') }}</div>
 
-    <div class="my-4 flex grow items-center gap-10" :class="hasActiveProfile ? 'justify-between' : 'justify-center'">
-      <div v-if="hasActiveProfile" class="w-[180px]">
+    <div class="mt-6 flex grow items-center gap-10" :class="hasActiveProfile ? 'justify-between' : 'justify-center'">
+      <div v-if="hasActiveProfile" class="w-[220px]">
         <div class="text-lg font-semibold">{{ $t('MAIN_MENU.ACTIVE_PROFILE') }}:</div>
         <div class="flex justify-between">
-          <TextProfileActiveDropdown class="select-primary select select-sm w-32" />
+          <TextProfileActiveDropdown class="select-primary select select-sm w-40" />
           <button
             :title="$t('MAIN_MENU.SEE_MODIFY_CURRENT_PROFILE')"
             class="btn-outline btn-primary btn-sm btn ml-1"
@@ -100,7 +100,7 @@ const { version } = useVersion()
       </button>
     </div>
 
-    <QuickActivate class="mb-auto" />
+    <QuickActivate class="mb-auto mt-6" />
 
     <div class="mt-2 flex items-center">
       <div class="mr-auto text-sm">Version {{ version }}</div>
