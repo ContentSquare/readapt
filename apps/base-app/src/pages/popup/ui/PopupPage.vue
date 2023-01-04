@@ -78,8 +78,8 @@ const { version } = useVersion()
     </div>
     <div v-else class="my-3 text-center">{{ t('MAIN_MENU.FIRST_RUN') }}</div>
 
-    <div class="my-4 flex grow items-center gap-5" :class="hasActiveProfile ? 'justify-between' : 'justify-center'">
-      <div v-if="hasActiveProfile" class="flex-1">
+    <div class="my-4 flex grow items-center gap-10" :class="hasActiveProfile ? 'justify-between' : 'justify-center'">
+      <div v-if="hasActiveProfile" class="w-[180px]">
         <div class="text-lg font-semibold">{{ $t('MAIN_MENU.ACTIVE_PROFILE') }}:</div>
         <div class="flex justify-between">
           <TextProfileActiveDropdown class="select-primary select select-sm w-32" />
@@ -92,12 +92,10 @@ const { version } = useVersion()
           </button>
         </div>
       </div>
-
-      <button class="btn-primary btn flex-1" @click="openOptionsPage({}, router)">
+      <button class="btn-primary btn w-[150px]" @click="openOptionsPage({}, router)">
         {{ t('MAIN_MENU.CREATE_BRAND_NEW_PROFILE') }}
       </button>
-
-      <button class="btn-primary btn flex-1" @click="selectTemplate">
+      <button class="btn-primary btn float-right w-[150px]" @click="selectTemplate">
         {{ t('MAIN_MENU.BASE_YOUR_PROFILE_FROM_TEMPLATE') }}
       </button>
     </div>
