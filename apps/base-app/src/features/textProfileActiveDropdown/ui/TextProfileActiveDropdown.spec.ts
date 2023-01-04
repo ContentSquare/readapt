@@ -14,7 +14,7 @@ describe('TextProfileActiveDropdown', () => {
     setActiveProfileId(profiles[0].id)
 
     const wrapper = mount(TextProfileActiveDropdown)
-    const dropdown = wrapper.find<HTMLSelectElement>('[data-test-id=dropdown]')
+    const dropdown = wrapper.find<HTMLSelectElement>('select')
 
     return { wrapper, dropdown, preferences, setActiveProfileId }
   }

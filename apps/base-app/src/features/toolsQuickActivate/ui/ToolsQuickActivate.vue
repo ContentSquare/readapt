@@ -5,7 +5,7 @@ import { opacityOptions, thicknessOptions } from '@readapt/settings'
 import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
 import type { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 import utils from '@/chrome'
-import { RangeBar } from '@readapt/shared-components'
+import RangeBar from '@/shared/ui/RangeBar.vue'
 
 const { getMaskSettings, getRuleSettings, saveMaskSettings, saveRuleSettings, broadcastMessage } = utils
 const mask = ref(buildDefaultSettingsReadingTool())
