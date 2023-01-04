@@ -46,18 +46,22 @@ const { t } = useI18n()
 </script>
 <template>
   <div class="p-2">
-    <div class="mt-3">
-      <div class="mb-2 flex items-center bg-base-100">
-        <div class="mr-4 text-2xl font-semibold">{{ $t('SETTINGS.PROFILE') }}:</div>
-        <TextProfileEditDropdown class="" v-model="selectedProfiledId" :settings="settings" />
-        <TextProfileRenameButton class="ml-3" :profile-id="selectedProfiledId" />
-        <TextSettingsFileDownload class="ml-auto" :settings="settings" />
+    <div class="mb-2 flex items-center bg-base-100">
+      <div class="mr-4 text-2xl font-semibold">{{ $t('SETTINGS.PROFILE') }}:</div>
+      <TextProfileEditDropdown class="" v-model="selectedProfiledId" :settings="settings" />
+      <TextProfileRenameButton class="ml-3" :profile-id="selectedProfiledId" />
+      <TextSettingsFileDownload class="ml-auto" :settings="settings" />
+    </div>
+    <div class="tabs m-4">
+      <div class="tab tab-bordered tab-lg" @click="activateTab('GENERAL')" :class="{ 'tab-active': activeTab === 'GENERAL' }">
+        {{ t('SETTINGS.GENERAL_SETTINGS') }}
       </div>
-      <b-nav class="d-flex flex-row">
-        <b-nav-item @click="activateTab('GENERAL')" :active="activeTab === 'GENERAL'">{{ t('SETTINGS.GENERAL_SETTINGS') }}</b-nav-item>
-        <b-nav-item @click="activateTab('PHONEMES')" :active="activeTab === 'PHONEMES'">{{ t('SETTINGS.PHONEME_SETTINGS') }}</b-nav-item>
-        <b-nav-item @click="activateTab('LETTERS')" :active="activeTab === 'LETTERS'">{{ t('SETTINGS.LETTER_SETTINGS') }}</b-nav-item>
-      </b-nav>
+      <div class="tab tab-bordered tab-lg" @click="activateTab('PHONEMES')" :class="{ 'tab-active': activeTab === 'PHONEMES' }">
+        {{ t('SETTINGS.PHONEME_SETTINGS') }}
+      </div>
+      <div class="tab tab-bordered tab-lg" @click="activateTab('LETTERS')" :class="{ 'tab-active': activeTab === 'LETTERS' }">
+        {{ t('SETTINGS.LETTER_SETTINGS') }}
+      </div>
     </div>
     <b-row class="mt-2" style="max-height: 80vh; height: 80vh">
       <b-col lg="8">
