@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
+import SvgIcon from '@/shared/ui/SvgIcon.vue'
 import { useI18n } from 'vue-i18n-composable'
 
 const { preferences, updateProfile, getProfileById } = useTextPreferences()
@@ -32,18 +33,7 @@ const isNameUnique = (newProfileName: string) => {
 }
 </script>
 <template>
-  <span :title="t('SETTINGS.PROFILE_RENAME')" v-if="props.profileId" data-test-id="rename" @click="onClick">
-    <img class="text-profile-rename-button__edit-icon" src="/icons/edit.svg" />
-  </span>
+  <button class="btn-outline btn-primary btn" :title="t('SETTINGS.PROFILE_RENAME')" v-if="props.profileId" @click="onClick">
+    <SvgIcon id="edit" class="h-6 w-6 fill-current" />
+  </button>
 </template>
-
-<style lang="scss" scoped>
-.text-profile-rename-button {
-  cursor: pointer;
-
-  &__edit-icon {
-    width: 25px;
-    height: 24px;
-  }
-}
-</style>

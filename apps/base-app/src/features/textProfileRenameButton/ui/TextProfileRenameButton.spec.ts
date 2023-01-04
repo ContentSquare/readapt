@@ -25,7 +25,7 @@ describe('TextProfileRenameButton', () => {
       propsData: { profileId }
     })
 
-    const rename = async () => await wrapper.find('[data-test-id=rename]').trigger('click')
+    const rename = async () => await wrapper.find('button').trigger('click')
 
     return { wrapper, rename }
   }
@@ -36,7 +36,7 @@ describe('TextProfileRenameButton', () => {
   ])('should render or not the button', ({ profileId, renders }) => {
     const { wrapper } = factory({ profileId })
 
-    expect(wrapper.find('[data-test-id=rename]').exists()).toBe(renders)
+    expect(wrapper.find('button').exists()).toBe(renders)
   })
 
   describe('when clicking the button', () => {

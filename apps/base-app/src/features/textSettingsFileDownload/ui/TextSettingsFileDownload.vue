@@ -11,5 +11,7 @@ const settingsFile = computed(() => {
 })
 </script>
 <template>
-  <a :href="settingsFile" data-test-id="anchor" download="settings.json" target="_blank">{{ $t('SETTINGS.DOWNLOAD_SETTINGS') }}</a>
+  <a class="btn-secondary btn-ghost btn" :href="settingsFile" data-test-id="anchor" download="settings.json" target="_blank">{{
+    $t('SETTINGS.DOWNLOAD_SETTINGS')
+  }}</a>
 </template>

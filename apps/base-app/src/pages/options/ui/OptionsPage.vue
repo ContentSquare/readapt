@@ -45,13 +45,13 @@ const close = async () => await utils.closeCurrentTab()
 const { t } = useI18n()
 </script>
 <template>
-  <div class="container-fluid">
+  <div class="p-2">
     <div class="mt-3">
-      <div class="mb-2">
-        <h2 class="options-page__title mr-2">{{ $t('SETTINGS.PROFILE') }}:</h2>
-        <TextProfileEditDropdown class="options-page__profiles-dropdown" v-model="selectedProfiledId" :settings="settings" />
-        <TextProfileRenameButton class="options-page__profile-rename ml-3" :profile-id="selectedProfiledId" />
-        <TextSettingsFileDownload class="float-right ml-2" :settings="settings" />
+      <div class="mb-2 flex items-center bg-base-100">
+        <div class="mr-4 text-2xl font-semibold">{{ $t('SETTINGS.PROFILE') }}:</div>
+        <TextProfileEditDropdown class="" v-model="selectedProfiledId" :settings="settings" />
+        <TextProfileRenameButton class="ml-3" :profile-id="selectedProfiledId" />
+        <TextSettingsFileDownload class="ml-auto" :settings="settings" />
       </div>
       <b-nav class="d-flex flex-row">
         <b-nav-item @click="activateTab('GENERAL')" :active="activeTab === 'GENERAL'">{{ t('SETTINGS.GENERAL_SETTINGS') }}</b-nav-item>
