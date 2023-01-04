@@ -61,7 +61,7 @@ describe('RangeBar', () => {
       it.each([true, undefined])('should render the steps', (steps) => {
         const { wrapper } = factory({ steps })
 
-        expect(wrapper.findAll('span')).toHaveLength(3)
+        expect(wrapper.findAll('[data-test-id=step]')).toHaveLength(3)
       })
     })
 
@@ -69,7 +69,7 @@ describe('RangeBar', () => {
       it('should not render the steps', () => {
         const { wrapper } = factory({ steps: false })
 
-        expect(wrapper.findAll('span')).toHaveLength(0)
+        expect(wrapper.findAll('[data-test-id=step]')).toHaveLength(0)
       })
     })
   })

@@ -33,7 +33,7 @@ const onValueChange = ({ target: { value } }: Event): void => {
   <div>
     <input class="range range-secondary range-xs" type="range" :min="min" :max="max" step="1" :value="rangeValue" @input="onValueChange" />
     <div v-if="props.steps" class="flex w-full justify-between px-2 text-xs">
-      <span v-for="item in options" :key="item.value">|</span>
+      <span data-test-id="step" v-for="item in options" :key="item.value">|</span>
     </div>
   </div>
 </template>
