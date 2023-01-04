@@ -82,7 +82,7 @@ const { version } = useVersion()
       <div v-if="hasActiveProfile" class="w-[220px]">
         <div class="text-lg font-semibold">{{ $t('MAIN_MENU.ACTIVE_PROFILE') }}:</div>
         <div class="flex justify-between">
-          <TextProfileActiveDropdown class="select-primary select select-sm w-40" />
+          <TextProfileActiveDropdown class="w-40" />
           <button
             :title="$t('MAIN_MENU.SEE_MODIFY_CURRENT_PROFILE')"
             class="btn-outline btn-primary btn-sm btn ml-1"
