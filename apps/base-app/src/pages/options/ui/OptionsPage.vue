@@ -25,6 +25,7 @@ import { getLangConfig } from '@readapt/settings'
 const router = useRouter()
 
 const { preferences } = useTextPreferences()
+// TODO: extract profile selection into a composable
 const selectedProfiledId = ref<TextProfileId | null>(null)
 onMounted(() => {
   if ('editActiveProfile' in router.currentRoute.query) {
