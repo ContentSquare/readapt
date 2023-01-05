@@ -12,6 +12,7 @@ import { TextAdaptationPreview } from '@/features/textAdaptationPreview'
 import { TextProfileRenameButton } from '@/features/textProfileRenameButton'
 import { TextProfileDeleteButton } from '@/features/textProfileDeleteButton'
 import { useFormSettings } from '../model/useFormSettings'
+import BaseTabs from '@/shared/ui/BaseTabs.vue'
 
 import SettingsMenuGeneral from '@/views/SettingsMenuGeneral.vue'
 import SettingsMenuTableItems from '@/views/SettingsMenuTableItems.vue'
@@ -35,45 +36,33 @@ onMounted(() => {
 
 const { settings, language, setLanguage, updateSettings } = useFormSettings(selectedProfiledId)
 const languageConfig = computed(() => getLangConfig(language.value))
+const { t } = useI18n()
 
-type TabName = 'GENERAL' | 'LETTERS' | 'PHONEMES'
-const activeTab = ref<TabName>('GENERAL')
-const activateTab = (tabName: TabName) => (activeTab.value = tabName)
+const tabNames = [t('SETTINGS.GENERAL_SETTINGS'), t('SETTINGS.PHONEME_SETTINGS'), t('SETTINGS.LETTER_SETTINGS')]
+const activeTabIndex = ref(0)
 
 const close = async () => await utils.closeCurrentTab()
-
-const { t } = useI18n()
 </script>
 <template>
   <div class="p-2">
     <div class="mb-2 flex items-center bg-base-100">
       <div class="mr-4 text-2xl font-semibold">{{ $t('SETTINGS.PROFILE') }}:</div>
-      <TextProfileEditDropdown class="" v-model="selectedProfiledId" :settings="settings" />
+      <TextProfileEditDropdown class="w-60" v-model="selectedProfiledId" :settings="settings" />
       <TextProfileRenameButton class="ml-3" :profile-id="selectedProfiledId" />
       <TextSettingsFileDownload class="ml-auto" :settings="settings" />
     </div>
-    <div class="tabs m-4">
-      <div class="tab tab-bordered tab-lg" @click="activateTab('GENERAL')" :class="{ 'tab-active': activeTab === 'GENERAL' }">
-        {{ t('SETTINGS.GENERAL_SETTINGS') }}
-      </div>
-      <div class="tab tab-bordered tab-lg" @click="activateTab('PHONEMES')" :class="{ 'tab-active': activeTab === 'PHONEMES' }">
-        {{ t('SETTINGS.PHONEME_SETTINGS') }}
-      </div>
-      <div class="tab tab-bordered tab-lg" @click="activateTab('LETTERS')" :class="{ 'tab-active': activeTab === 'LETTERS' }">
-        {{ t('SETTINGS.LETTER_SETTINGS') }}
-      </div>
-    </div>
+    <BaseTabs :names="tabNames" v-model="activeTabIndex" />
     <b-row class="mt-2" style="max-height: 80vh; height: 80vh">
       <b-col lg="8">
         <SettingsMenuGeneral
-          v-if="activeTab === 'GENERAL'"
+          v-if="activeTabIndex === 0"
           :settings="settings"
           @update="updateSettings($event.key, $event.value)"
           @change-language="setLanguage($event)"
         >
         </SettingsMenuGeneral>
         <SettingsMenuTableItems
-          v-if="activeTab === 'PHONEMES'"
+          v-if="activeTabIndex === 1"
           table-label="SETTINGS.PHONEME"
           switch-all-label="SETTINGS.ALL_PHONEMES_SETTINGS"
           :all-items-active="settings.phonemesActive"
@@ -84,7 +73,7 @@ const { t } = useI18n()
         >
         </SettingsMenuTableItems>
         <SettingsMenuTableItems
-          v-if="activeTab === 'LETTERS'"
+          v-if="activeTabIndex === 2"
           table-label="SETTINGS.LETTER"
           switch-all-label="SETTINGS.ALL_LETTERS_SETTINGS"
           :all-items-active="settings.lettersActive"

@@ -33,7 +33,7 @@ const isNameUnique = (newProfileName: string) => {
 }
 </script>
 <template>
-  <button class="btn-outline btn-primary btn" :title="t('SETTINGS.PROFILE_RENAME')" v-if="props.profileId" @click="onClick">
-    <SvgIcon id="edit" class="h-6 w-6 fill-current" />
+  <button class="btn-outline btn-primary btn-sm btn" :title="t('SETTINGS.PROFILE_RENAME')" v-if="props.profileId" @click="onClick">
+    <SvgIcon id="edit" class="h-4 w-4 fill-current" />
   </button>
 </template>
