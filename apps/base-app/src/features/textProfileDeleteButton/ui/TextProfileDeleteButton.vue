@@ -23,5 +23,5 @@ const onClick = async () => {
 }
 </script>
 <template>
-  <b-button v-if="props.value" data-test-id="delete" size="sm" variant="danger" @click="onClick"> {{ $t('SETTINGS.DELETE') }}</b-button>
+  <b-button v-if="value" data-test-id="delete" size="sm" variant="danger" @click="onClick"> {{ $t('SETTINGS.DELETE') }}</b-button>
 </template>
