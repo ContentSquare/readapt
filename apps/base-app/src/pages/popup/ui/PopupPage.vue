@@ -9,7 +9,7 @@ import utils from '@/chrome'
 import { useI18n } from 'vue-i18n-composable'
 import { useRouter } from 'vue-router/composables'
 
-import { ToolsQuickActivate } from '@/features/ToolsQuickActivate'
+import { ToolsQuickActivate } from '@/features/toolsQuickActivate'
 import SvgIcon from '@/shared/ui/SvgIcon.vue'
 
 const router = useRouter()

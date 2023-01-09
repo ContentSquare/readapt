@@ -9,7 +9,7 @@ import { TextAdaptationPreview } from '@/features/textAdaptationPreview'
 import { TextProfileRenameButton } from '@/features/textProfileRenameButton'
 import { TextProfileDeleteButton } from '@/features/textProfileDeleteButton'
 import { useFormSettings } from '../model/useFormSettings'
-import { TextProfileForm } from '@/features/TextProfileForm'
+import { TextProfileForm } from '@/features/textProfileForm'
 
 import { TextSettingsFileDownload } from '@/features/textSettingsFileDownload'
 

@@ -1,3 +1,1 @@
-import ToolsQuickActivate from './ui/ToolsQuickActivate.vue'
-
-export { ToolsQuickActivate }
+export { default as ToolsQuickActivate } from './ui/ToolsQuickActivate.vue'
