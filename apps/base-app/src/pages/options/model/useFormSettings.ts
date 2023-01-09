@@ -9,7 +9,7 @@ export function useFormSettings(selectedProfileId: Ref<TextProfileId | null>) {
   const { getProfileById } = useTextPreferences()
 
   const settings = computed(() => settingsByLanguage.value[language.value])
-  const setLanguage = (newLanguage: Language) => (language.value = newLanguage)
+  const changeLanguage = (newLanguage: Language) => (language.value = newLanguage)
   const updateSettings = <K extends keyof Settings>(key: K, value: Settings[K]) => {
     settings.value[key] = value
   }
@@ -27,5 +27,5 @@ export function useFormSettings(selectedProfileId: Ref<TextProfileId | null>) {
     }
   })
 
-  return { settings, language, setLanguage, updateSettings }
+  return { settings, changeLanguage, updateSettings }
 }
