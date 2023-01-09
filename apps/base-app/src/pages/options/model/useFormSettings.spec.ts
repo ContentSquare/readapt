@@ -94,7 +94,7 @@ describe('useFormSettings()', () => {
     it('should update the settings', () => {
       const { settings, updateSettings } = useFormSettings(emptyProfileId)
 
-      updateSettings('fontFamily', 'OpenDyslexic')
+      updateSettings({ key: 'fontFamily', value: 'OpenDyslexic' })
 
       expect(settings.value.fontFamily).toBe('OpenDyslexic')
     })
@@ -103,7 +103,7 @@ describe('useFormSettings()', () => {
       it('should not change original selected profile settings', async () => {
         const { settings, updateSettings } = useFormSettings(ref<TextProfileId>(profile.id))
 
-        updateSettings('fontFamily', 'OpenDyslexic')
+        updateSettings({ key: 'fontFamily', value: 'OpenDyslexic' })
 
         expect(settings.value.fontFamily).not.toBe(profile.settings.fontFamily)
       })
