@@ -41,18 +41,19 @@ const close = async () => await utils.closeCurrentTab()
       <TextProfileRenameButton class="ml-3" :profile-id="selectedProfiledId" />
       <TextSettingsFileDownload class="ml-auto" :settings="settings" />
     </div>
-    <TextProfileForm :settings="settings" @update-settings="updateSettings" @change-language="changeLanguage" />
+    <div class="flex">
+      <TextProfileForm class="w-2/3" :settings="settings" @update-settings="updateSettings" @change-language="changeLanguage" />
+      <div class="w-1/3">
+        <div class="d-flex flex-column align-content-between h-100">
+          <h3>{{ $t('SETTINGS.TEXT_PREVIEW') }}</h3>
+          <TextAdaptationPreview class="preview-container" :settings="settings" />
 
-    <div lg="4">
-      <div class="d-flex flex-column align-content-between h-100">
-        <h3>{{ $t('SETTINGS.TEXT_PREVIEW') }}</h3>
-        <TextAdaptationPreview class="preview-container" :settings="settings" />
-
-        <div class="d-flex justify-content-between mt-3">
-          <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
-          <TextProfileDeleteButton class="ml-3 mr-auto" v-model="selectedProfiledId" />
-          <!-- TODO: review dirty settings calculation -->
-          <CloseSettings :is-settings-dirty="false" @close-settings="close" />
+          <div class="d-flex justify-content-between mt-3">
+            <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
+            <TextProfileDeleteButton class="ml-3 mr-auto" v-model="selectedProfiledId" />
+            <!-- TODO: review dirty settings calculation -->
+            <CloseSettings :is-settings-dirty="false" @close-settings="close" />
+          </div>
         </div>
       </div>
     </div>
