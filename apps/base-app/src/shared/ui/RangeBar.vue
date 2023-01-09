@@ -11,7 +11,10 @@ const props = withDefaults(defineProps<Props>(), {
   steps: true
 })
 
-const emit = defineEmits(['change'])
+interface Emits {
+  (event: 'input', value: string)
+}
+const emit = defineEmits<Emits>()
 
 const min = '1'
 const max = computed(() => props.options.length.toString())
@@ -25,7 +28,7 @@ const rangeValue = computed(() => {
 
 const onValueChange = ({ target: { value } }: Event): void => {
   const option = props.options[parseInt(value) - 1]
-  emit('change', option.value)
+  emit('input', option.value)
 }
 </script>
 

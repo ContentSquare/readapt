@@ -47,12 +47,12 @@ describe('RangeBar', () => {
   })
 
   describe('when range value changes', () => {
-    it('should emit "change" event', async () => {
+    it('should emit "input" event', async () => {
       const { wrapper, input } = factory()
 
       await input.setValue('1')
 
-      expect(wrapper.emitted('change')).toEqual([['10']])
+      expect(wrapper.emitted('input')).toEqual([['10']])
     })
   })
 
