@@ -1,10 +1,14 @@
-/// <reference types="vitest" />
 import { fileURLToPath, URL } from 'node:url'
 import path from 'node:path'
 
-import { defineConfig } from 'vite'
+import { type UserConfig, defineConfig } from 'vite'
+import type { InlineConfig } from 'vitest'
 import legacy from '@vitejs/plugin-legacy'
 import vue2 from '@vitejs/plugin-vue2'
+
+interface VitestConfigExport extends UserConfig {
+  test: InlineConfig
+}
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -31,4 +35,4 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   }
-})
+} as VitestConfigExport)
