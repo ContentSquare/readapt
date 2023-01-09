@@ -133,7 +133,7 @@ watch(
             <RangeBar :value="settings.syllableOpacity" :options="opacityOptions" @input="updateOption('syllableOpacity', $event)" />
           </td>
           <td>
-            <b-form-checkbox :checked="settings.syllableActive" @change="updateOption('syllableActive', $event)" switch />
+            <input type="checkbox" :checked="settings.syllableActive" @change="updateOption('syllableActive', $event)" switch />
           </td>
         </tr>
         <tr v-if="settings.language === 'fr'">
