@@ -38,6 +38,10 @@ const emitUpdateToggled = ({ key }: { key: SettingsKey }) => {
 }
 const changeLanguage = (language: Language) => emit('change-language', language)
 
+watchEffect(() => {
+  console.log(JSON.stringify(props.settings, undefined, 2))
+})
+
 const optimizeLineSpacingOptions = (): Option<LineSpacingOption>[] =>
   props.settings.shadeAlternateLinesActive ? lineSpacingOptions.slice(1) : lineSpacingOptions
 
@@ -159,7 +163,7 @@ watch(
           <RangeBar :value="settings.syllableOpacity" :options="opacityOptions" @input="emitUpdate({ key: 'syllableOpacity', value: $event })" />
         </td>
         <td>
-          <input type="checkbox" class="toggle" :value="settings.syllableActive" @input="emitUpdateToggled({ key: 'syllableActive' })" />
+          <input type="checkbox" class="toggle" :checked="settings.syllableActive" @input="emitUpdateToggled({ key: 'syllableActive' })" />
         </td>
       </tr>
       <tr v-if="settings.language === 'fr'">
@@ -174,7 +178,7 @@ watch(
           />
         </td>
         <td>
-          <input type="checkbox" class="toggle" :value="settings.liaisonsActive" @input="emitUpdateToggled({ key: 'liaisonsActive' })" />
+          <input type="checkbox" class="toggle" :checked="settings.liaisonsActive" @input="emitUpdateToggled({ key: 'liaisonsActive' })" />
         </td>
       </tr>
       <tr>
@@ -188,7 +192,7 @@ watch(
           />
         </td>
         <td>
-          <input type="checkbox" class="toggle" :value="settings.silentLetterActive" @input="emitUpdateToggled({ key: 'silentLetterActive' })" />
+          <input type="checkbox" class="toggle" :checked="settings.silentLetterActive" @input="emitUpdateToggled({ key: 'silentLetterActive' })" />
         </td>
       </tr>
       <tr>
@@ -199,14 +203,14 @@ watch(
           <RangeBar
             :value="settings.shadeAlternateLinesOpacity"
             :options="opacityOptions"
-            @change="emitUpdate({ key: 'shadeAlternateLinesOpacity', value: $event })"
+            @input="emitUpdate({ key: 'shadeAlternateLinesOpacity', value: $event })"
           />
         </td>
         <td>
           <input
             type="checkbox"
             class="toggle"
-            :value="settings.shadeAlternateLinesActive"
+            :checked="settings.shadeAlternateLinesActive"
             @input="emitUpdateToggled({ key: 'shadeAlternateLinesActive' })"
           />
         </td>
