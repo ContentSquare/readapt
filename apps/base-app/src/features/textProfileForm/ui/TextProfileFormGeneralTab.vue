@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
+import { ref, watch, watchEffect } from 'vue'
 
 import {
   fontFamilyOptions,
@@ -32,7 +32,10 @@ interface Emits {
 }
 const emit = defineEmits<Emits>()
 
-const updateOption = (key: SettingsKey, value: unknown) => emit('update', { key, value })
+const emitUpdate = ({ key, value }: { key: SettingsKey; value: unknown }) => emit('update', { key, value })
+const emitUpdateToggled = ({ key }: { key: SettingsKey }) => {
+  emit('update', { key, value: !props.settings[key] })
+}
 const changeLanguage = (language: Language) => emit('change-language', language)
 
 const optimizeLineSpacingOptions = (): Option<LineSpacingOption>[] =>
@@ -46,7 +49,7 @@ watch(
     lineSpacingOptionsOptimized.value = optimizeLineSpacingOptions()
     // change lineSpacing value if lineSpacingOptionsOptimized has changed and current value is not selectable
     if (lineSpacingOptionsOptimized.value.length !== lineSpacingOptions.length && props.settings.lineSpacing === lineSpacingOptions[0].value) {
-      updateOption('lineSpacing', lineSpacingOptionsOptimized.value[0].value)
+      emitUpdate({ key: 'lineSpacing', value: lineSpacingOptionsOptimized.value[0].value })
     }
   }
 )
@@ -87,7 +90,7 @@ watch(
             class="select-secondary select select-sm w-full"
             :options="fontFamilyOptions"
             :value="settings.fontFamily"
-            @input="updateOption('fontFamily', $event)"
+            @input="emitUpdate({ key: 'fontFamily', value: $event })"
           />
         </td>
         <td />
@@ -96,7 +99,12 @@ watch(
       <tr>
         <td>{{ $t('GENERAL.FONT_SIZE') }}</td>
         <td>
-          <SelectPercentage class="w-full" :options="fontSizeOptions" :value="settings.fontSize" @input="updateOption('fontSize', $event)" />
+          <SelectPercentage
+            class="w-full"
+            :options="fontSizeOptions"
+            :value="settings.fontSize"
+            @input="emitUpdate({ key: 'fontSize', value: $event })"
+          />
         </td>
         <td />
         <td />
@@ -107,7 +115,11 @@ watch(
         </th>
         <td>{{ $t('GENERAL.LETTER_SPACING') }}</td>
         <td>
-          <SelectPercentage :options="letterSpacingOptions" :value="settings.letterSpacing" @input="updateOption('letterSpacing', $event)" />
+          <SelectPercentage
+            :options="letterSpacingOptions"
+            :value="settings.letterSpacing"
+            @input="emitUpdate({ key: 'letterSpacing', value: $event })"
+          />
         </td>
         <td />
         <td />
@@ -115,7 +127,7 @@ watch(
       <tr>
         <td>{{ $t('GENERAL.WORD_SPACING') }}</td>
         <td>
-          <SelectPercentage :options="wordSpacingOptions" :value="settings.wordSpacing" @input="updateOption('wordSpacing', $event)" />
+          <SelectPercentage :options="wordSpacingOptions" :value="settings.wordSpacing" @input="emitUpdate({ key: 'wordSpacing', value: $event })" />
         </td>
         <td />
         <td />
@@ -123,7 +135,11 @@ watch(
       <tr>
         <td>{{ $t('GENERAL.LINE_SPACING') }}</td>
         <td>
-          <SelectPercentage :options="lineSpacingOptionsOptimized" :value="settings.lineSpacing" @input="updateOption('lineSpacing', $event)" />
+          <SelectPercentage
+            :options="lineSpacingOptionsOptimized"
+            :value="settings.lineSpacing"
+            @input="emitUpdate({ key: 'lineSpacing', value: $event })"
+          />
         </td>
         <td />
         <td />
@@ -135,15 +151,15 @@ watch(
         <td>{{ $t('GENERAL.HIGHLIGHT_ALTERNATING_SYLLABLES') }}</td>
         <td>
           <div class="flex content-center">
-            <ColorPicker class="m-1" :value="settings.syllableColor1" @selectColor="updateOption('syllableColor1', $event)" />
-            <ColorPicker class="m-1" :value="settings.syllableColor2" @selectColor="updateOption('syllableColor2', $event)" />
+            <ColorPicker class="m-1" :value="settings.syllableColor1" @selectColor="emitUpdate({ key: 'syllableColor1', value: $event })" />
+            <ColorPicker class="m-1" :value="settings.syllableColor2" @selectColor="emitUpdate({ key: 'syllableColor2', value: $event })" />
           </div>
         </td>
         <td>
-          <RangeBar :value="settings.syllableOpacity" :options="opacityOptions" @input="updateOption('syllableOpacity', $event)" />
+          <RangeBar :value="settings.syllableOpacity" :options="opacityOptions" @input="emitUpdate({ key: 'syllableOpacity', value: $event })" />
         </td>
         <td>
-          <input type="checkbox" :checked="settings.syllableActive" @change="updateOption('syllableActive', $event)" switch />
+          <input type="checkbox" class="toggle" :value="settings.syllableActive" @input="emitUpdateToggled({ key: 'syllableActive' })" />
         </td>
       </tr>
       <tr v-if="settings.language === 'fr'">
@@ -154,11 +170,11 @@ watch(
             :disabled="settings.language === 'en'"
             :value="settings.liaisonsOpacity"
             :options="opacityOptions"
-            @input="updateOption('liaisonsOpacity', $event)"
+            @input="emitUpdate({ key: 'liaisonsOpacity', value: $event })"
           />
         </td>
         <td>
-          <input type="checkbox" :checked="settings.liaisonsActive" @change="updateOption('liaisonsActive', $event)" switch />
+          <input type="checkbox" class="toggle" :value="settings.liaisonsActive" @input="emitUpdateToggled({ key: 'liaisonsActive' })" />
         </td>
       </tr>
       <tr>
@@ -168,11 +184,11 @@ watch(
           <RangeBar
             :value="settings.silentLetterOpacity"
             :options="silentLetterOpacityOptions"
-            @input="updateOption('silentLetterOpacity', $event)"
+            @input="emitUpdate({ key: 'silentLetterOpacity', value: $event })"
           />
         </td>
         <td>
-          <input type="checkbox" :checked="settings.silentLetterActive" @change="updateOption('silentLetterActive', $event)" switch />
+          <input type="checkbox" class="toggle" :value="settings.silentLetterActive" @input="emitUpdateToggled({ key: 'silentLetterActive' })" />
         </td>
       </tr>
       <tr>
@@ -183,11 +199,16 @@ watch(
           <RangeBar
             :value="settings.shadeAlternateLinesOpacity"
             :options="opacityOptions"
-            @change="updateOption('shadeAlternateLinesOpacity', $event)"
+            @change="emitUpdate({ key: 'shadeAlternateLinesOpacity', value: $event })"
           />
         </td>
         <td>
-          <input type="checkbox" :checked="settings.shadeAlternateLinesActive" @change="updateOption('shadeAlternateLinesActive', $event)" switch />
+          <input
+            type="checkbox"
+            class="toggle"
+            :value="settings.shadeAlternateLinesActive"
+            @input="emitUpdateToggled({ key: 'shadeAlternateLinesActive' })"
+          />
         </td>
       </tr>
     </tbody>
