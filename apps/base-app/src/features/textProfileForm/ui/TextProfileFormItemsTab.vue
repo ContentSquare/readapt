@@ -94,8 +94,8 @@ export default SettingsMenuTableItems
 </script>
 
 <template>
-  <div>
-    <div class="d-flex py-2">
+  <div class="w-full">
+    <div class="flex py-2">
       <b-form-checkbox :checked="allItemsActive" @change="switchAllItems" switch />
       <h5 class="ml-2">{{ t(switchAllLabel) }}</h5>
     </div>
