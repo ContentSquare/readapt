@@ -16,11 +16,13 @@ import {
   type Language,
   type LineSpacingOption
 } from '@readapt/settings'
-import { ColorPicker } from '@readapt/shared-components'
+import ColorPicker from '@/shared/ui/ColorPicker.vue'
 import RangeBar from '@/shared/ui/RangeBar.vue'
 import BaseSelect from '@/shared/ui/BaseSelect.vue'
 import SelectPercentage from '@/shared/ui/SelectPercentage.vue'
 
+// TODO: create a local settings object, kept in sync with props.settings
+// and use v-model to update the local settings object
 interface Props {
   settings: Settings
 }
@@ -37,10 +39,6 @@ const emitUpdateToggled = ({ key }: { key: SettingsKey }) => {
   emit('update', { key, value: !props.settings[key] })
 }
 const changeLanguage = (language: Language) => emit('change-language', language)
-
-watchEffect(() => {
-  console.log(JSON.stringify(props.settings, undefined, 2))
-})
 
 const optimizeLineSpacingOptions = (): Option<LineSpacingOption>[] =>
   props.settings.shadeAlternateLinesActive ? lineSpacingOptions.slice(1) : lineSpacingOptions
@@ -154,7 +152,7 @@ watch(
         </th>
         <td>{{ $t('GENERAL.HIGHLIGHT_ALTERNATING_SYLLABLES') }}</td>
         <td>
-          <div class="flex content-center">
+          <div class="flex justify-center">
             <ColorPicker class="m-1" :value="settings.syllableColor1" @selectColor="emitUpdate({ key: 'syllableColor1', value: $event })" />
             <ColorPicker class="m-1" :value="settings.syllableColor2" @selectColor="emitUpdate({ key: 'syllableColor2', value: $event })" />
           </div>
