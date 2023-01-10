@@ -16,9 +16,10 @@ import {
   type Language,
   type LineSpacingOption
 } from '@readapt/settings'
-import { ColorPicker, SelectPercentage } from '@readapt/shared-components'
+import { ColorPicker } from '@readapt/shared-components'
 import RangeBar from '@/shared/ui/RangeBar.vue'
 import BaseSelect from '@/shared/ui/BaseSelect.vue'
+import SelectPercentage from '@/shared/ui/SelectPercentage.vue'
 
 interface Props {
   settings: Settings
@@ -66,7 +67,12 @@ watch(
         <th class="bg-white">{{ $t('GENERAL.PROFILE_LANGUAGE') }}</th>
         <th />
         <td>
-          <BaseSelect :options="languageOptions" :value="settings.language" @input="changeLanguage($event)" />
+          <BaseSelect
+            class="select-secondary select select-sm w-full"
+            :options="languageOptions"
+            :value="settings.language"
+            @input="changeLanguage($event)"
+          />
         </td>
         <td />
         <td />
@@ -77,7 +83,12 @@ watch(
         </th>
         <td>{{ $t('GENERAL.FONT') }}</td>
         <td>
-          <BaseSelect :options="fontFamilyOptions" :value="settings.fontFamily" @input="updateOption('fontFamily', $event)" />
+          <BaseSelect
+            class="select-secondary select select-sm w-full"
+            :options="fontFamilyOptions"
+            :value="settings.fontFamily"
+            @input="updateOption('fontFamily', $event)"
+          />
         </td>
         <td />
         <td />
@@ -85,7 +96,7 @@ watch(
       <tr>
         <td>{{ $t('GENERAL.FONT_SIZE') }}</td>
         <td>
-          <SelectPercentage :options="fontSizeOptions" :value="settings.fontSize" @change="updateOption('fontSize', $event)" />
+          <SelectPercentage class="w-full" :options="fontSizeOptions" :value="settings.fontSize" @input="updateOption('fontSize', $event)" />
         </td>
         <td />
         <td />
@@ -96,7 +107,7 @@ watch(
         </th>
         <td>{{ $t('GENERAL.LETTER_SPACING') }}</td>
         <td>
-          <SelectPercentage :options="letterSpacingOptions" :value="settings.letterSpacing" @change="updateOption('letterSpacing', $event)" />
+          <SelectPercentage :options="letterSpacingOptions" :value="settings.letterSpacing" @input="updateOption('letterSpacing', $event)" />
         </td>
         <td />
         <td />
@@ -104,7 +115,7 @@ watch(
       <tr>
         <td>{{ $t('GENERAL.WORD_SPACING') }}</td>
         <td>
-          <SelectPercentage :options="wordSpacingOptions" :value="settings.wordSpacing" @change="updateOption('wordSpacing', $event)" />
+          <SelectPercentage :options="wordSpacingOptions" :value="settings.wordSpacing" @input="updateOption('wordSpacing', $event)" />
         </td>
         <td />
         <td />
@@ -112,7 +123,7 @@ watch(
       <tr>
         <td>{{ $t('GENERAL.LINE_SPACING') }}</td>
         <td>
-          <SelectPercentage :options="lineSpacingOptionsOptimized" :value="settings.lineSpacing" @change="updateOption('lineSpacing', $event)" />
+          <SelectPercentage :options="lineSpacingOptionsOptimized" :value="settings.lineSpacing" @input="updateOption('lineSpacing', $event)" />
         </td>
         <td />
         <td />
