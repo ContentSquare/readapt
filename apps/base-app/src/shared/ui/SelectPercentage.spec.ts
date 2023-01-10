@@ -48,7 +48,9 @@ describe('SelectPercentage', () => {
       it('should be disabled', () => {
         const { minusButton } = factory({ value: '1' })
 
-        expect(minusButton.attributes('disabled')).toBeTruthy()
+        const classes = minusButton.classes()
+        expect(classes).toContain('bg-transparent')
+        expect(classes).toContain('btn-disabled')
       })
 
       it('should not emit "input"', async () => {
@@ -76,7 +78,9 @@ describe('SelectPercentage', () => {
       it('should be disabled', () => {
         const { plusButton } = factory({ value: '3' })
 
-        expect(plusButton.attributes('disabled')).toBeTruthy()
+        const classes = plusButton.classes()
+        expect(classes).toContain('bg-transparent')
+        expect(classes).toContain('btn-disabled')
       })
 
       it('should not emit "input"', async () => {
