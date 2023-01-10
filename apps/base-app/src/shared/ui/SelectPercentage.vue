@@ -40,11 +40,11 @@ const { t } = useI18n()
 
 <template>
   <div class="flex items-center justify-between">
-    <button @click="onMinus" class="btn-ghost btn float-left" :disabled="!hasLessOptions" data-test-id="btn-minus">
+    <button @click="onMinus" class="btn-ghost btn" :class="{ 'bg-transparent btn-disabled': !hasLessOptions }" data-test-id="btn-minus">
       <SvgIcon id="minus" class="h-6 w-6 fill-current" />
     </button>
-    <div data-test-id="value" class="flex-1 text-center font-semibold">{{ t(currentValue) }}</div>
-    <button @click="onPlus" class="btn-ghost btn float-right" :disabled="!hasMoreOptions" data-test-id="btn-plus">
+    <div data-test-id="value" class="w-28 text-center font-semibold">{{ t(currentValue) }}</div>
+    <button @click="onPlus" class="btn-ghost btn" :class="{ 'bg-transparent btn-disabled': !hasMoreOptions }" data-test-id="btn-plus">
       <SvgIcon id="plus" class="h-6 w-6 fill-current" />
     </button>
   </div>
