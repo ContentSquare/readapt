@@ -86,7 +86,7 @@ watch(
         <th rowspan="2" class="bg-white">
           {{ $t('GENERAL.FONT_SETTINGS') }}
         </th>
-        <td>{{ $t('GENERAL.FONT') }}</td>
+        <td class="whitespace-normal">{{ $t('GENERAL.FONT') }}</td>
         <td>
           <BaseSelect
             class="select-secondary select select-sm w-full"
@@ -99,7 +99,7 @@ watch(
         <td />
       </tr>
       <tr>
-        <td>{{ $t('GENERAL.FONT_SIZE') }}</td>
+        <td class="whitespace-normal">{{ $t('GENERAL.FONT_SIZE') }}</td>
         <td>
           <SelectPercentage
             class="w-full"
@@ -115,7 +115,7 @@ watch(
         <th rowspan="3" class="bg-white">
           {{ $t('GENERAL.SPACING') }}
         </th>
-        <td>{{ $t('GENERAL.LETTER_SPACING') }}</td>
+        <td class="whitespace-normal">{{ $t('GENERAL.LETTER_SPACING') }}</td>
         <td>
           <SelectPercentage
             :options="letterSpacingOptions"
@@ -127,7 +127,7 @@ watch(
         <td />
       </tr>
       <tr>
-        <td>{{ $t('GENERAL.WORD_SPACING') }}</td>
+        <td class="whitespace-normal">{{ $t('GENERAL.WORD_SPACING') }}</td>
         <td>
           <SelectPercentage :options="wordSpacingOptions" :value="settings.wordSpacing" @input="emitUpdate({ key: 'wordSpacing', value: $event })" />
         </td>
@@ -135,7 +135,7 @@ watch(
         <td />
       </tr>
       <tr>
-        <td>{{ $t('GENERAL.LINE_SPACING') }}</td>
+        <td class="whitespace-normal">{{ $t('GENERAL.LINE_SPACING') }}</td>
         <td>
           <SelectPercentage
             :options="lineSpacingOptionsOptimized"
@@ -150,7 +150,7 @@ watch(
         <th :rowspan="settings.language === 'fr' ? 3 : 2" class="bg-white">
           {{ $t('GENERAL.TEXT_HINTS') }}
         </th>
-        <td>{{ $t('GENERAL.HIGHLIGHT_ALTERNATING_SYLLABLES') }}</td>
+        <td class="whitespace-normal">{{ $t('GENERAL.HIGHLIGHT_ALTERNATING_SYLLABLES') }}</td>
         <td>
           <div class="flex justify-center">
             <ColorPicker class="m-1" :value="settings.syllableColor1" @selectColor="emitUpdate({ key: 'syllableColor1', value: $event })" />
@@ -165,10 +165,11 @@ watch(
         </td>
       </tr>
       <tr v-if="settings.language === 'fr'">
-        <td>{{ $t('GENERAL.SHOW_LIAISONS') }}</td>
+        <td class="whitespace-normal">{{ $t('GENERAL.SHOW_LIAISONS') }}</td>
         <td />
         <td>
           <RangeBar
+            class="w-52"
             :disabled="settings.language === 'en'"
             :value="settings.liaisonsOpacity"
             :options="opacityOptions"
@@ -180,10 +181,11 @@ watch(
         </td>
       </tr>
       <tr>
-        <td>{{ $t('GENERAL.GREY_SILENT_LETTERS') }}</td>
+        <td class="whitespace-normal">{{ $t('GENERAL.GREY_SILENT_LETTERS') }}</td>
         <td />
         <td>
           <RangeBar
+            class="w-52"
             :value="settings.silentLetterOpacity"
             :options="silentLetterOpacityOptions"
             @input="emitUpdate({ key: 'silentLetterOpacity', value: $event })"
@@ -195,10 +197,11 @@ watch(
       </tr>
       <tr>
         <th class="bg-white">{{ $t('GENERAL.READING_TOOLS') }}</th>
-        <td>{{ $t('GENERAL.SHADE_ALTERNATE_LINES') }}</td>
+        <td class="whitespace-normal">{{ $t('GENERAL.SHADE_ALTERNATE_LINES') }}</td>
         <td />
         <td>
           <RangeBar
+            class="w-52"
             :value="settings.shadeAlternateLinesOpacity"
             :options="opacityOptions"
             @input="emitUpdate({ key: 'shadeAlternateLinesOpacity', value: $event })"

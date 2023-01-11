@@ -34,24 +34,18 @@ const { settings, changeLanguage, updateSettings } = useFormSettings(selectedPro
 const close = async () => await utils.closeCurrentTab()
 </script>
 <template>
-  <div class="p-2">
+  <div class="m-auto max-w-screen-lg p-2">
     <div class="mb-2 flex items-center bg-base-100">
       <div class="mr-4 text-2xl font-semibold">{{ $t('SETTINGS.PROFILE') }}:</div>
       <TextProfileEditDropdown class="w-60" v-model="selectedProfiledId" :settings="settings" />
       <TextProfileRenameButton class="ml-3" :profile-id="selectedProfiledId" />
       <TextSettingsFileDownload class="ml-auto" :settings="settings" />
     </div>
-    <div class="flex max-h-[1200px] flex-wrap">
-      <TextProfileForm
-        class="max-h-full w-2/3 overflow-auto"
-        :settings="settings"
-        @update-settings="updateSettings"
-        @change-language="changeLanguage"
-      />
-      <div class="flex w-1/3 min-w-[300px] flex-col pl-4 pt-14">
+    <div class="flex flex-wrap">
+      <TextProfileForm class="w-2/3" :settings="settings" @update-settings="updateSettings" @change-language="changeLanguage" />
+      <div class="flex w-1/3 flex-col pl-4 pt-14">
         <div class="text-2xl font-semibold">{{ $t('SETTINGS.TEXT_PREVIEW') }}</div>
         <TextAdaptationPreview :settings="settings" />
-
         <div class="mt-auto flex justify-between">
           <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
           <TextProfileDeleteButton class="ml-3 mr-auto" v-model="selectedProfiledId" />
