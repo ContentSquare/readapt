@@ -25,7 +25,10 @@ interface Emits {
 const emit = defineEmits<Emits>()
 
 const updateOption = (value: unknown) => emit('update-items', value)
-const switchAllItems = (value: boolean): void => emit('update-active', value)
+const switchAllItems = (event: Event): void => {
+  const checked = (event.target as HTMLInputElement).checked
+  emit('update-active', checked)
+}
 
 const { t } = useI18n()
 const tableFields = computed(() => {
@@ -81,10 +84,10 @@ const setColor = (itemKey: string, color: ColorOption): void => {
 
 <template>
   <div class="w-full">
-    <div class="flex py-2">
-      <b-form-checkbox :checked="allItemsActive" @change="switchAllItems" switch />
-      <h5 class="ml-2">{{ t(switchAllLabel) }}</h5>
-    </div>
+    <label class="inline-block cursor-pointer py-4">
+      <input type="checkbox" class="toggle mr-3 align-middle" :checked="allItemsActive" @input="switchAllItems" />
+      {{ t(switchAllLabel) }}
+    </label>
     <b-table small striped sticky-header="73vh" :items="tableItems" :fields="tableFields" responsive="sm">
       <template #head(color)="color">
         <div class="text-center">{{ color.label }}</div>

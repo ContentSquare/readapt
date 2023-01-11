@@ -28,7 +28,7 @@ const languageConfig = computed(() => getLangConfig(props.settings.language))
 </script>
 <template>
   <div>
-    <BaseTabs class="mb-2" data-test-id="tabs" :names="tabNames" v-model="activeTabIndex" />
+    <BaseTabs data-test-id="tabs" :names="tabNames" v-model="activeTabIndex" />
     <TextProfileFormGeneralTab
       v-if="activeTabIndex === 0"
       :settings="settings"
