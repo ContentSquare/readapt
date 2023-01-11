@@ -57,165 +57,171 @@ watch(
 )
 </script>
 <template>
-  <table class="table w-full">
-    <thead>
-      <tr>
-        <th />
-        <th />
-        <th class="whitespace-normal">{{ $t('GENERAL.SETTING') }}</th>
-        <th class="whitespace-normal">{{ $t('GENERAL.OPACITY') }}</th>
-        <th class="whitespace-normal">{{ $t('GENERAL.ACTIVATE') }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th class="whitespace-normal bg-white">{{ $t('GENERAL.PROFILE_LANGUAGE') }}</th>
-        <th />
-        <td>
-          <BaseSelect
-            class="select-secondary select select-sm w-full"
-            :options="languageOptions"
-            :value="settings.language"
-            @input="changeLanguage($event)"
-          />
-        </td>
-        <td />
-        <td />
-      </tr>
-      <tr>
-        <th rowspan="2" class="whitespace-normal bg-white">
-          {{ $t('GENERAL.FONT_SETTINGS') }}
-        </th>
-        <td class="whitespace-normal">{{ $t('GENERAL.FONT') }}</td>
-        <td>
-          <BaseSelect
-            class="select-secondary select select-sm w-full"
-            :options="fontFamilyOptions"
-            :value="settings.fontFamily"
-            @input="emitUpdate({ key: 'fontFamily', value: $event })"
-          />
-        </td>
-        <td />
-        <td />
-      </tr>
-      <tr>
-        <td class="whitespace-normal">{{ $t('GENERAL.FONT_SIZE') }}</td>
-        <td>
-          <SelectPercentage
-            class="w-full"
-            :options="fontSizeOptions"
-            :value="settings.fontSize"
-            @input="emitUpdate({ key: 'fontSize', value: $event })"
-          />
-        </td>
-        <td />
-        <td />
-      </tr>
-      <tr>
-        <th rowspan="3" class="whitespace-normal bg-white">
-          {{ $t('GENERAL.SPACING') }}
-        </th>
-        <td class="whitespace-normal">{{ $t('GENERAL.LETTER_SPACING') }}</td>
-        <td>
-          <SelectPercentage
-            :options="letterSpacingOptions"
-            :value="settings.letterSpacing"
-            @input="emitUpdate({ key: 'letterSpacing', value: $event })"
-          />
-        </td>
-        <td />
-        <td />
-      </tr>
-      <tr>
-        <td class="whitespace-normal">{{ $t('GENERAL.WORD_SPACING') }}</td>
-        <td>
-          <SelectPercentage :options="wordSpacingOptions" :value="settings.wordSpacing" @input="emitUpdate({ key: 'wordSpacing', value: $event })" />
-        </td>
-        <td />
-        <td />
-      </tr>
-      <tr>
-        <td class="whitespace-normal">{{ $t('GENERAL.LINE_SPACING') }}</td>
-        <td>
-          <SelectPercentage
-            :options="lineSpacingOptionsOptimized"
-            :value="settings.lineSpacing"
-            @input="emitUpdate({ key: 'lineSpacing', value: $event })"
-          />
-        </td>
-        <td />
-        <td />
-      </tr>
-      <tr>
-        <th :rowspan="settings.language === 'fr' ? 3 : 2" class="whitespace-normal bg-white">
-          {{ $t('GENERAL.TEXT_HINTS') }}
-        </th>
-        <td class="whitespace-normal">{{ $t('GENERAL.HIGHLIGHT_ALTERNATING_SYLLABLES') }}</td>
-        <td>
-          <div class="flex justify-center">
-            <ColorPicker class="m-1" :value="settings.syllableColor1" @selectColor="emitUpdate({ key: 'syllableColor1', value: $event })" />
-            <ColorPicker class="m-1" :value="settings.syllableColor2" @selectColor="emitUpdate({ key: 'syllableColor2', value: $event })" />
-          </div>
-        </td>
-        <td>
-          <RangeBar :value="settings.syllableOpacity" :options="opacityOptions" @input="emitUpdate({ key: 'syllableOpacity', value: $event })" />
-        </td>
-        <td>
-          <input type="checkbox" class="toggle" :checked="settings.syllableActive" @input="emitUpdateToggled({ key: 'syllableActive' })" />
-        </td>
-      </tr>
-      <tr v-if="settings.language === 'fr'">
-        <td class="whitespace-normal">{{ $t('GENERAL.SHOW_LIAISONS') }}</td>
-        <td />
-        <td>
-          <RangeBar
-            class="w-52"
-            :disabled="settings.language === 'en'"
-            :value="settings.liaisonsOpacity"
-            :options="opacityOptions"
-            @input="emitUpdate({ key: 'liaisonsOpacity', value: $event })"
-          />
-        </td>
-        <td>
-          <input type="checkbox" class="toggle" :checked="settings.liaisonsActive" @input="emitUpdateToggled({ key: 'liaisonsActive' })" />
-        </td>
-      </tr>
-      <tr>
-        <td class="whitespace-normal">{{ $t('GENERAL.GREY_SILENT_LETTERS') }}</td>
-        <td />
-        <td>
-          <RangeBar
-            class="w-52"
-            :value="settings.silentLetterOpacity"
-            :options="silentLetterOpacityOptions"
-            @input="emitUpdate({ key: 'silentLetterOpacity', value: $event })"
-          />
-        </td>
-        <td>
-          <input type="checkbox" class="toggle" :checked="settings.silentLetterActive" @input="emitUpdateToggled({ key: 'silentLetterActive' })" />
-        </td>
-      </tr>
-      <tr>
-        <th class="whitespace-normal bg-white">{{ $t('GENERAL.READING_TOOLS') }}</th>
-        <td class="whitespace-normal">{{ $t('GENERAL.SHADE_ALTERNATE_LINES') }}</td>
-        <td />
-        <td>
-          <RangeBar
-            class="w-52"
-            :value="settings.shadeAlternateLinesOpacity"
-            :options="opacityOptions"
-            @input="emitUpdate({ key: 'shadeAlternateLinesOpacity', value: $event })"
-          />
-        </td>
-        <td>
-          <input
-            type="checkbox"
-            class="toggle"
-            :checked="settings.shadeAlternateLinesActive"
-            @input="emitUpdateToggled({ key: 'shadeAlternateLinesActive' })"
-          />
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="relative h-[min(1000px,calc(100vh-120px))] overflow-scroll">
+    <table class="table w-full">
+      <thead>
+        <tr>
+          <th />
+          <th />
+          <th class="whitespace-normal">{{ $t('GENERAL.SETTING') }}</th>
+          <th class="whitespace-normal">{{ $t('GENERAL.OPACITY') }}</th>
+          <th class="whitespace-normal">{{ $t('GENERAL.ACTIVATE') }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th class="whitespace-normal bg-white">{{ $t('GENERAL.PROFILE_LANGUAGE') }}</th>
+          <th />
+          <td>
+            <BaseSelect
+              class="select-secondary select select-sm w-full"
+              :options="languageOptions"
+              :value="settings.language"
+              @input="changeLanguage($event)"
+            />
+          </td>
+          <td />
+          <td />
+        </tr>
+        <tr>
+          <th rowspan="2" class="whitespace-normal bg-white">
+            {{ $t('GENERAL.FONT_SETTINGS') }}
+          </th>
+          <td class="whitespace-normal">{{ $t('GENERAL.FONT') }}</td>
+          <td>
+            <BaseSelect
+              class="select-secondary select select-sm w-full"
+              :options="fontFamilyOptions"
+              :value="settings.fontFamily"
+              @input="emitUpdate({ key: 'fontFamily', value: $event })"
+            />
+          </td>
+          <td />
+          <td />
+        </tr>
+        <tr>
+          <td class="whitespace-normal">{{ $t('GENERAL.FONT_SIZE') }}</td>
+          <td>
+            <SelectPercentage
+              class="w-full"
+              :options="fontSizeOptions"
+              :value="settings.fontSize"
+              @input="emitUpdate({ key: 'fontSize', value: $event })"
+            />
+          </td>
+          <td />
+          <td />
+        </tr>
+        <tr>
+          <th rowspan="3" class="whitespace-normal bg-white">
+            {{ $t('GENERAL.SPACING') }}
+          </th>
+          <td class="whitespace-normal">{{ $t('GENERAL.LETTER_SPACING') }}</td>
+          <td>
+            <SelectPercentage
+              :options="letterSpacingOptions"
+              :value="settings.letterSpacing"
+              @input="emitUpdate({ key: 'letterSpacing', value: $event })"
+            />
+          </td>
+          <td />
+          <td />
+        </tr>
+        <tr>
+          <td class="whitespace-normal">{{ $t('GENERAL.WORD_SPACING') }}</td>
+          <td>
+            <SelectPercentage
+              :options="wordSpacingOptions"
+              :value="settings.wordSpacing"
+              @input="emitUpdate({ key: 'wordSpacing', value: $event })"
+            />
+          </td>
+          <td />
+          <td />
+        </tr>
+        <tr>
+          <td class="whitespace-normal">{{ $t('GENERAL.LINE_SPACING') }}</td>
+          <td>
+            <SelectPercentage
+              :options="lineSpacingOptionsOptimized"
+              :value="settings.lineSpacing"
+              @input="emitUpdate({ key: 'lineSpacing', value: $event })"
+            />
+          </td>
+          <td />
+          <td />
+        </tr>
+        <tr>
+          <th :rowspan="settings.language === 'fr' ? 3 : 2" class="whitespace-normal bg-white">
+            {{ $t('GENERAL.TEXT_HINTS') }}
+          </th>
+          <td class="whitespace-normal">{{ $t('GENERAL.HIGHLIGHT_ALTERNATING_SYLLABLES') }}</td>
+          <td>
+            <div class="flex justify-center">
+              <ColorPicker class="m-1" :value="settings.syllableColor1" @selectColor="emitUpdate({ key: 'syllableColor1', value: $event })" />
+              <ColorPicker class="m-1" :value="settings.syllableColor2" @selectColor="emitUpdate({ key: 'syllableColor2', value: $event })" />
+            </div>
+          </td>
+          <td>
+            <RangeBar :value="settings.syllableOpacity" :options="opacityOptions" @input="emitUpdate({ key: 'syllableOpacity', value: $event })" />
+          </td>
+          <td>
+            <input type="checkbox" class="toggle" :checked="settings.syllableActive" @input="emitUpdateToggled({ key: 'syllableActive' })" />
+          </td>
+        </tr>
+        <tr v-if="settings.language === 'fr'">
+          <td class="whitespace-normal">{{ $t('GENERAL.SHOW_LIAISONS') }}</td>
+          <td />
+          <td>
+            <RangeBar
+              class="w-52"
+              :disabled="settings.language === 'en'"
+              :value="settings.liaisonsOpacity"
+              :options="opacityOptions"
+              @input="emitUpdate({ key: 'liaisonsOpacity', value: $event })"
+            />
+          </td>
+          <td>
+            <input type="checkbox" class="toggle" :checked="settings.liaisonsActive" @input="emitUpdateToggled({ key: 'liaisonsActive' })" />
+          </td>
+        </tr>
+        <tr>
+          <td class="whitespace-normal">{{ $t('GENERAL.GREY_SILENT_LETTERS') }}</td>
+          <td />
+          <td>
+            <RangeBar
+              class="w-52"
+              :value="settings.silentLetterOpacity"
+              :options="silentLetterOpacityOptions"
+              @input="emitUpdate({ key: 'silentLetterOpacity', value: $event })"
+            />
+          </td>
+          <td>
+            <input type="checkbox" class="toggle" :checked="settings.silentLetterActive" @input="emitUpdateToggled({ key: 'silentLetterActive' })" />
+          </td>
+        </tr>
+        <tr>
+          <th class="whitespace-normal bg-white">{{ $t('GENERAL.READING_TOOLS') }}</th>
+          <td class="whitespace-normal">{{ $t('GENERAL.SHADE_ALTERNATE_LINES') }}</td>
+          <td />
+          <td>
+            <RangeBar
+              class="w-52"
+              :value="settings.shadeAlternateLinesOpacity"
+              :options="opacityOptions"
+              @input="emitUpdate({ key: 'shadeAlternateLinesOpacity', value: $event })"
+            />
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              class="toggle"
+              :checked="settings.shadeAlternateLinesActive"
+              @input="emitUpdateToggled({ key: 'shadeAlternateLinesActive' })"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
