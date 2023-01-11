@@ -62,14 +62,14 @@ watch(
       <tr>
         <th />
         <th />
-        <th>{{ $t('GENERAL.SETTING') }}</th>
-        <th>{{ $t('GENERAL.OPACITY') }}</th>
-        <th>{{ $t('GENERAL.ACTIVATE') }}</th>
+        <th class="whitespace-normal">{{ $t('GENERAL.SETTING') }}</th>
+        <th class="whitespace-normal">{{ $t('GENERAL.OPACITY') }}</th>
+        <th class="whitespace-normal">{{ $t('GENERAL.ACTIVATE') }}</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <th class="bg-white">{{ $t('GENERAL.PROFILE_LANGUAGE') }}</th>
+        <th class="whitespace-normal bg-white">{{ $t('GENERAL.PROFILE_LANGUAGE') }}</th>
         <th />
         <td>
           <BaseSelect
@@ -83,7 +83,7 @@ watch(
         <td />
       </tr>
       <tr>
-        <th rowspan="2" class="bg-white">
+        <th rowspan="2" class="whitespace-normal bg-white">
           {{ $t('GENERAL.FONT_SETTINGS') }}
         </th>
         <td class="whitespace-normal">{{ $t('GENERAL.FONT') }}</td>
@@ -112,7 +112,7 @@ watch(
         <td />
       </tr>
       <tr>
-        <th rowspan="3" class="bg-white">
+        <th rowspan="3" class="whitespace-normal bg-white">
           {{ $t('GENERAL.SPACING') }}
         </th>
         <td class="whitespace-normal">{{ $t('GENERAL.LETTER_SPACING') }}</td>
@@ -147,7 +147,7 @@ watch(
         <td />
       </tr>
       <tr>
-        <th :rowspan="settings.language === 'fr' ? 3 : 2" class="bg-white">
+        <th :rowspan="settings.language === 'fr' ? 3 : 2" class="whitespace-normal bg-white">
           {{ $t('GENERAL.TEXT_HINTS') }}
         </th>
         <td class="whitespace-normal">{{ $t('GENERAL.HIGHLIGHT_ALTERNATING_SYLLABLES') }}</td>
@@ -196,7 +196,7 @@ watch(
         </td>
       </tr>
       <tr>
-        <th class="bg-white">{{ $t('GENERAL.READING_TOOLS') }}</th>
+        <th class="whitespace-normal bg-white">{{ $t('GENERAL.READING_TOOLS') }}</th>
         <td class="whitespace-normal">{{ $t('GENERAL.SHADE_ALTERNATE_LINES') }}</td>
         <td />
         <td>
