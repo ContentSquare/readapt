@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { BFormCheckbox, BTable } from 'bootstrap-vue'
+import { BTable } from 'bootstrap-vue'
 
 import type { ColoredItem, ColoredOption, ColorOption } from '@readapt/settings'
 import { buildItemPreview } from '@readapt/visual-engine'
-import { ColorPicker } from '@readapt/shared-components'
+import ColorPicker from '@/shared/ui/ColorPicker.vue'
 
 import { useI18n } from 'vue-i18n-composable'
 import type { SettingsTableItem } from '@/interfaces'
@@ -108,12 +108,12 @@ const setColor = (itemKey: string, color: ColorOption): void => {
       </template>
       <template #cell(bold)="row">
         <div class="text-center">
-          <b-form-checkbox :checked="row.item.bold" @change="switchBold(row.item.key)" />
+          <input type="checkbox" class="checkbox checkbox-sm" :checked="row.item.bold" @change="switchBold(row.item.key)" />
         </div>
       </template>
       <template #cell(activate)="row">
         <div class="text-center">
-          <b-form-checkbox :checked="row.item.active" @change="switchActive(row.item.key)" switch />
+          <input type="checkbox" class="toggle" :checked="row.item.active" @change="switchActive(row.item.key)" switch />
         </div>
       </template>
     </b-table>
