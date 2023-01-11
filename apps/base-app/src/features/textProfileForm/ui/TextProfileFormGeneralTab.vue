@@ -57,7 +57,7 @@ watch(
 )
 </script>
 <template>
-  <div class="relative h-[min(1000px,calc(100vh-120px))] overflow-scroll">
+  <div class="relative h-general-settings overflow-scroll">
     <table class="table w-full">
       <thead>
         <tr>

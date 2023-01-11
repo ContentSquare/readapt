@@ -88,7 +88,7 @@ const setColor = (itemKey: string, color: ColorOption): void => {
       <input type="checkbox" class="toggle mr-3 align-middle" :checked="allItemsActive" @input="switchAllItems" />
       {{ t(switchAllLabel) }}
     </label>
-    <div class="relative h-[min(942px,calc(100vh-178px))] overflow-scroll">
+    <div class="relative h-items-settings overflow-scroll">
       <table class="table-compact table w-full">
         <thead>
           <tr>
