@@ -61,17 +61,17 @@ watch(
     <table class="table w-full">
       <thead>
         <tr>
-          <th />
-          <th />
-          <th class="whitespace-normal">{{ $t('GENERAL.SETTING') }}</th>
-          <th class="whitespace-normal">{{ $t('GENERAL.OPACITY') }}</th>
-          <th class="whitespace-normal">{{ $t('GENERAL.ACTIVATE') }}</th>
+          <th class="sticky top-0" />
+          <th class="sticky top-0" />
+          <th class="sticky top-0 whitespace-normal">{{ $t('GENERAL.SETTING') }}</th>
+          <th class="sticky top-0 whitespace-normal">{{ $t('GENERAL.OPACITY') }}</th>
+          <th class="sticky top-0 whitespace-normal">{{ $t('GENERAL.ACTIVATE') }}</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <th class="whitespace-normal bg-white">{{ $t('GENERAL.PROFILE_LANGUAGE') }}</th>
-          <th />
+          <td class="whitespace-normal font-bold">{{ $t('GENERAL.PROFILE_LANGUAGE') }}</td>
+          <td />
           <td>
             <BaseSelect
               class="select-secondary select select-sm w-full"
@@ -84,9 +84,9 @@ watch(
           <td />
         </tr>
         <tr>
-          <th rowspan="2" class="whitespace-normal bg-white">
+          <td rowspan="2" class="whitespace-normal font-bold">
             {{ $t('GENERAL.FONT_SETTINGS') }}
-          </th>
+          </td>
           <td class="whitespace-normal">{{ $t('GENERAL.FONT') }}</td>
           <td>
             <BaseSelect
@@ -113,9 +113,9 @@ watch(
           <td />
         </tr>
         <tr>
-          <th rowspan="3" class="whitespace-normal bg-white">
+          <td rowspan="3" class="whitespace-normal font-bold">
             {{ $t('GENERAL.SPACING') }}
-          </th>
+          </td>
           <td class="whitespace-normal">{{ $t('GENERAL.LETTER_SPACING') }}</td>
           <td>
             <SelectPercentage
@@ -152,9 +152,9 @@ watch(
           <td />
         </tr>
         <tr>
-          <th :rowspan="settings.language === 'fr' ? 3 : 2" class="whitespace-normal bg-white">
+          <td :rowspan="settings.language === 'fr' ? 3 : 2" class="whitespace-normal font-bold">
             {{ $t('GENERAL.TEXT_HINTS') }}
-          </th>
+          </td>
           <td class="whitespace-normal">{{ $t('GENERAL.HIGHLIGHT_ALTERNATING_SYLLABLES') }}</td>
           <td>
             <div class="flex justify-center">
@@ -170,7 +170,7 @@ watch(
           </td>
         </tr>
         <tr v-if="settings.language === 'fr'">
-          <td class="whitespace-normal">{{ $t('GENERAL.SHOW_LIAISONS') }}</td>
+          <td class="whitespace-normal font-bold">{{ $t('GENERAL.SHOW_LIAISONS') }}</td>
           <td />
           <td>
             <RangeBar
@@ -201,7 +201,7 @@ watch(
           </td>
         </tr>
         <tr>
-          <th class="whitespace-normal bg-white">{{ $t('GENERAL.READING_TOOLS') }}</th>
+          <td class="whitespace-normal font-bold">{{ $t('GENERAL.READING_TOOLS') }}</td>
           <td class="whitespace-normal">{{ $t('GENERAL.SHADE_ALTERNATE_LINES') }}</td>
           <td />
           <td>
