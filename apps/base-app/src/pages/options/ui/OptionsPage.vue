@@ -46,7 +46,7 @@ const close = async () => await utils.closeCurrentTab()
       <div class="flex w-1/3 flex-col pl-4 pt-14">
         <div class="text-2xl font-semibold">{{ $t('SETTINGS.TEXT_PREVIEW') }}</div>
         <TextAdaptationPreview :settings="settings" />
-        <div class="mt-auto flex justify-between">
+        <div class="flex justify-between">
           <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
           <TextProfileDeleteButton class="ml-3 mr-auto" v-model="selectedProfiledId" />
           <!-- TODO: review dirty settings calculation -->
