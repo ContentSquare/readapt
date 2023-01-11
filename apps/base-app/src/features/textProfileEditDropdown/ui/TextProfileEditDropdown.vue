@@ -37,7 +37,7 @@ const validateUnsavedChanges = () => {
 }
 </script>
 <template>
-  <select class="select-primary select select-sm" :value="value" @change="onChange">
+  <select class="select-secondary select select-sm" :value="value" @change="onChange">
     <option value="">{{ t('SETTINGS.PROFILE_NEW') }}</option>
     <option v-for="{ name, id } in preferences.profiles" :key="id" :value="id">
       {{ name }}
