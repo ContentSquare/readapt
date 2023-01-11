@@ -4,6 +4,8 @@ import { textSettingsFixture as settings } from '@/entities/textPreferences'
 import type { ColoredItem } from '@readapt/settings'
 
 describe('TextProfileForm', () => {
+  const tabTestIds = ['general', 'phoneme', 'letter']
+
   const factory = () => {
     const wrapper = shallowMount(TextProfileForm, {
       propsData: {
@@ -17,7 +19,7 @@ describe('TextProfileForm', () => {
 
   describe('tabs', () => {
     const expectTabRendered = (wrapper: Wrapper<TextProfileForm>, expectedTabTestId: string) => {
-      ;['general', 'phoneme', 'letter'].forEach((tabTestId) => {
+      tabTestIds.forEach((tabTestId) => {
         expect(wrapper.find(`[data-test-id=${tabTestId}]`).exists()).toBe(expectedTabTestId === tabTestId)
       })
     }

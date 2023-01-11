@@ -32,31 +32,34 @@ const languageConfig = computed(() => getLangConfig(props.settings.language))
     <TextProfileFormGeneralTab
       v-if="activeTabIndex === 0"
       :settings="settings"
-      data-test-id="general"
       @update="emitUpdateSettings($event)"
       @change-language="emitChangeLanguage($event)"
+      data-test-id="general"
+      key="general"
     />
     <TextProfileFormItemsTab
       v-if="activeTabIndex === 1"
-      table-label="SETTINGS.PHONEME"
-      switch-all-label="SETTINGS.ALL_PHONEMES_SETTINGS"
-      data-test-id="phonemes"
       :all-items-active="settings.phonemesActive"
       :items="settings.phonemes"
       :options="languageConfig.phonemeOptions"
       @update-items="emitUpdateSettings({ key: 'phonemes', value: $event })"
       @update-active="emitUpdateSettings({ key: 'phonemesActive', value: $event })"
+      table-label="SETTINGS.PHONEME"
+      switch-all-label="SETTINGS.ALL_PHONEMES_SETTINGS"
+      data-test-id="phonemes"
+      key="phonemes"
     />
     <TextProfileFormItemsTab
       v-if="activeTabIndex === 2"
-      table-label="SETTINGS.LETTER"
-      switch-all-label="SETTINGS.ALL_LETTERS_SETTINGS"
-      data-test-id="letters"
       :all-items-active="settings.lettersActive"
       :items="settings.letters"
       :options="languageConfig.letterOptions"
       @update-items="emitUpdateSettings({ key: 'letters', value: $event })"
       @update-active="emitUpdateSettings({ key: 'lettersActive', value: $event })"
+      table-label="SETTINGS.LETTER"
+      switch-all-label="SETTINGS.ALL_LETTERS_SETTINGS"
+      data-test-id="letters"
+      key="letters"
     />
   </div>
 </template>
