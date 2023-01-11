@@ -88,34 +88,35 @@ const setColor = (itemKey: string, color: ColorOption): void => {
       <input type="checkbox" class="toggle mr-3 align-middle" :checked="allItemsActive" @input="switchAllItems" />
       {{ t(switchAllLabel) }}
     </label>
-    <b-table small striped sticky-header="73vh" :items="tableItems" :fields="tableFields" responsive="sm">
-      <template #head(color)="color">
-        <div class="text-center">{{ color.label }}</div>
-      </template>
-      <template #head(bold)="bold">
-        <div class="text-center">{{ bold.label }}</div>
-      </template>
-      <template #head(activate)="activate">
-        <div class="text-center">{{ activate.label }}</div>
-      </template>
-      <template #cell(example)="row">
-        <div class="d-flex" v-html="row.item.example" />
-      </template>
-      <template #cell(color)="row">
-        <div class="d-flex justify-content-center p-2">
-          <ColorPicker :value="row.item.color" @selectColor="setColor(row.item.key, $event)" />
-        </div>
-      </template>
-      <template #cell(bold)="row">
-        <div class="text-center">
-          <input type="checkbox" class="checkbox checkbox-sm" :checked="row.item.bold" @change="switchBold(row.item.key)" />
-        </div>
-      </template>
-      <template #cell(activate)="row">
-        <div class="text-center">
-          <input type="checkbox" class="toggle" :checked="row.item.active" @change="switchActive(row.item.key)" switch />
-        </div>
-      </template>
-    </b-table>
+    <div class="relative overflow-scroll">
+      <table class="table-compact table w-full">
+        <thead>
+          <tr>
+            <th class="sticky top-0" v-for="{ key, label } in tableFields" :key="key">{{ label }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="tableItem in tableItems" :key="tableItem.key">
+            <td v-for="{ key } in tableFields" :key="key">
+              <template v-if="key === 'value'">
+                <div>{{ tableItem.value }}</div>
+              </template>
+              <template v-else-if="key === 'example'">
+                <div v-html="tableItem.example" />
+              </template>
+              <template v-else-if="key === 'color'">
+                <ColorPicker :value="tableItem.color" @selectColor="setColor(tableItem.key, $event)" />
+              </template>
+              <template v-else-if="key === 'bold'">
+                <input type="checkbox" class="checkbox checkbox-sm" :checked="tableItem.bold" @change="switchBold(tableItem.key)" />
+              </template>
+              <template v-else-if="key === 'activate'">
+                <input type="checkbox" class="toggle" :checked="tableItem.active" @change="switchActive(tableItem.key)" />
+              </template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
