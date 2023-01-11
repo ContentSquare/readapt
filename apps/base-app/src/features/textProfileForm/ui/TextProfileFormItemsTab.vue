@@ -89,7 +89,7 @@ const setColor = (itemKey: string, color: ColorOption): void => {
       {{ t(switchAllLabel) }}
     </label>
     <div class="relative h-items-settings overflow-scroll">
-      <table class="table-compact table w-full">
+      <table class="table-zebra table-compact table w-full">
         <thead>
           <tr>
             <th class="sticky top-0" v-for="{ key, label } in tableFields" :key="key">{{ label }}</th>
@@ -97,7 +97,7 @@ const setColor = (itemKey: string, color: ColorOption): void => {
         </thead>
         <tbody>
           <tr v-for="tableItem in tableItems" :key="tableItem.key">
-            <td v-for="{ key } in tableFields" :key="key">
+            <td v-for="{ key } in tableFields" :key="key" class="text-base">
               <template v-if="key === 'value'">
                 <div>{{ tableItem.value }}</div>
               </template>
