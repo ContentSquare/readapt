@@ -1,5 +1,5 @@
-<script lang="ts">
-import { computed, defineComponent, type PropType } from 'vue'
+<script lang="ts" setup>
+import { computed } from 'vue'
 import { BFormCheckbox, BTable } from 'bootstrap-vue'
 
 import type { ColoredItem, ColoredOption, ColorOption } from '@readapt/settings'
@@ -9,88 +9,74 @@ import { ColorPicker } from '@readapt/shared-components'
 import { useI18n } from 'vue-i18n-composable'
 import type { SettingsTableItem } from '@/interfaces'
 
-const SettingsMenuTableItems = defineComponent({
-  props: {
-    tableLabel: { type: String, required: true },
-    switchAllLabel: { type: String, required: true },
-    allItemsActive: { type: Boolean, required: true },
-    items: { type: Array as PropType<ColoredItem[]>, required: true },
-    options: { type: Array as PropType<ColoredOption[]>, required: true }
-  },
-  components: { BFormCheckbox, BTable, ColorPicker },
-  setup(props, { emit }) {
-    const { t } = useI18n()
-    const tableFields = computed(() => {
-      return [
-        { key: 'value', label: t(props.tableLabel) },
-        { key: 'example', label: t('SETTINGS.EXAMPLE') },
-        { key: 'color', label: t('SETTINGS.TEXT_COLOR') },
-        { key: 'bold', label: t('SETTINGS.BOLD') },
-        { key: 'activate', label: t('SETTINGS.ACTIVATE') }
-      ]
-    })
+interface Props {
+  tableLabel: string
+  switchAllLabel: string
+  allItemsActive: boolean
+  items: ColoredItem[]
+  options: ColoredOption[]
+}
+const props = defineProps<Props>()
 
-    const tableItems = computed<SettingsTableItem[]>(() => {
-      return props.items.map((item) => {
-        const example = buildItemPreview(props.options, item)
-        return { ...item, example }
-      })
-    })
+interface Emits {
+  (event: 'update-items', value: unknown)
+  (event: 'update-active', value: boolean)
+}
+const emit = defineEmits<Emits>()
 
-    const updateOption = (value: unknown) => {
-      emit('update-items', value)
-    }
+const updateOption = (value: unknown) => emit('update-items', value)
+const switchAllItems = (value: boolean): void => emit('update-active', value)
 
-    const switchBold = (itemKey: string): void => {
-      const items = props.items.slice()
-      const index = items.findIndex(({ key }) => key === itemKey)
-      if (index === -1) {
-        return
-      }
-      const item = items[index]
-      items[index] = { ...item, bold: !item.bold }
-      updateOption(items)
-    }
-
-    const switchActive = (itemKey: string): void => {
-      const items = props.items.slice()
-      const index = items.findIndex(({ key }) => key === itemKey)
-      if (index === -1) {
-        return
-      }
-      const item = items[index]
-      items[index] = { ...item, active: !item.active }
-      updateOption(items)
-    }
-
-    const setColor = (itemKey: string, color: ColorOption): void => {
-      const items = props.items.slice()
-      const index = items.findIndex(({ key }) => key === itemKey)
-      if (index === -1) {
-        return
-      }
-      const item = items[index]
-      items[index] = { ...item, color }
-      updateOption(items)
-    }
-
-    const switchAllItems = (value: boolean): void => {
-      emit('update-active', value)
-    }
-
-    return {
-      tableFields,
-      tableItems,
-      // methods
-      switchBold,
-      switchActive,
-      setColor,
-      switchAllItems,
-      t
-    }
-  }
+const { t } = useI18n()
+const tableFields = computed(() => {
+  return [
+    { key: 'value', label: t(props.tableLabel) },
+    { key: 'example', label: t('SETTINGS.EXAMPLE') },
+    { key: 'color', label: t('SETTINGS.TEXT_COLOR') },
+    { key: 'bold', label: t('SETTINGS.BOLD') },
+    { key: 'activate', label: t('SETTINGS.ACTIVATE') }
+  ]
 })
-export default SettingsMenuTableItems
+
+const tableItems = computed<SettingsTableItem[]>(() => {
+  return props.items.map((item) => {
+    const example = buildItemPreview(props.options, item)
+    return { ...item, example }
+  })
+})
+
+const switchBold = (itemKey: string): void => {
+  const items = props.items.slice()
+  const index = items.findIndex(({ key }) => key === itemKey)
+  if (index === -1) {
+    return
+  }
+  const item = items[index]
+  items[index] = { ...item, bold: !item.bold }
+  updateOption(items)
+}
+
+const switchActive = (itemKey: string): void => {
+  const items = props.items.slice()
+  const index = items.findIndex(({ key }) => key === itemKey)
+  if (index === -1) {
+    return
+  }
+  const item = items[index]
+  items[index] = { ...item, active: !item.active }
+  updateOption(items)
+}
+
+const setColor = (itemKey: string, color: ColorOption): void => {
+  const items = props.items.slice()
+  const index = items.findIndex(({ key }) => key === itemKey)
+  if (index === -1) {
+    return
+  }
+  const item = items[index]
+  items[index] = { ...item, color }
+  updateOption(items)
+}
 </script>
 
 <template>
