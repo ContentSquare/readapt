@@ -41,12 +41,12 @@ const close = async () => await utils.closeCurrentTab()
       <TextProfileRenameButton class="ml-3" :profile-id="selectedProfiledId" />
       <TextSettingsFileDownload class="ml-auto" :settings="settings" />
     </div>
-    <div class="flex flex-wrap">
-      <TextProfileForm class="w-2/3" :settings="settings" @update-settings="updateSettings" @change-language="changeLanguage" />
-      <div class="flex w-1/3 flex-col pl-4 pt-14">
+    <div class="flex">
+      <TextProfileForm class="w-2/3 min-w-[805px]" :settings="settings" @update-settings="updateSettings" @change-language="changeLanguage" />
+      <div class="flex w-1/3 flex-1 flex-col pl-4 pt-14">
         <div class="text-2xl font-semibold">{{ $t('SETTINGS.TEXT_PREVIEW') }}</div>
         <TextAdaptationPreview :settings="settings" />
-        <div class="flex justify-between">
+        <div class="flex flex-wrap justify-between">
           <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
           <TextProfileDeleteButton class="ml-3 mr-auto" v-model="selectedProfiledId" />
           <!-- TODO: review dirty settings calculation -->
