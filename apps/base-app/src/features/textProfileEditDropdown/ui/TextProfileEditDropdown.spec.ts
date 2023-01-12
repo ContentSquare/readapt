@@ -26,7 +26,7 @@ describe('TextProfileEditDropdown', () => {
         settings
       }
     })
-    const dropdown = wrapper.find<HTMLSelectElement>('[data-test-id=dropdown]')
+    const dropdown = wrapper.find<HTMLSelectElement>('select')
     const selectByProfileId = async (profileId: TextProfileId | null) => await dropdown.setValue(String(profileId ?? ''))
 
     return { wrapper, dropdown, selectByProfileId }

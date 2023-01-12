@@ -28,25 +28,25 @@ describe('useFormSettings()', () => {
     })
 
     it('should set language to english', () => {
-      const { language } = useFormSettings(emptyProfileId)
+      const { settings } = useFormSettings(emptyProfileId)
 
-      expect(language.value).toBe('en')
+      expect(settings.value.language).toBe('en')
     })
   })
 
-  describe('setLanguage()', () => {
+  describe('changeLanguage()', () => {
     it('should change language', () => {
-      const { language, setLanguage } = useFormSettings(emptyProfileId)
+      const { settings, changeLanguage } = useFormSettings(emptyProfileId)
 
-      setLanguage('fr')
+      changeLanguage('fr')
 
-      expect(language.value).toEqual('fr')
+      expect(settings.value.language).toEqual('fr')
     })
 
     it('should pick settings of the changed language', () => {
-      const { settings, setLanguage } = useFormSettings(emptyProfileId)
+      const { settings, changeLanguage } = useFormSettings(emptyProfileId)
 
-      setLanguage('fr')
+      changeLanguage('fr')
 
       expect(settings.value).toEqual(buildDefaultProfiles()['fr'])
     })
@@ -62,9 +62,9 @@ describe('useFormSettings()', () => {
 
     it('should provide language from the selected profile settings', () => {
       const selectedProfileId = ref<TextProfileId>(frenchProfile.id)
-      const { language } = useFormSettings(selectedProfileId)
+      const { settings } = useFormSettings(selectedProfileId)
 
-      expect(language.value).toEqual(frenchProfile.settings.language)
+      expect(settings.value.language).toEqual(frenchProfile.settings.language)
     })
 
     describe('when selected profile id changes to null', () => {
@@ -80,12 +80,12 @@ describe('useFormSettings()', () => {
 
       it('should reset the language to english', async () => {
         const selectedProfileId = ref<TextProfileId | null>(frenchProfile.id)
-        const { language } = useFormSettings(selectedProfileId)
+        const { settings } = useFormSettings(selectedProfileId)
 
         selectedProfileId.value = null
         await nextTick()
 
-        expect(language.value).toBe('en')
+        expect(settings.value.language).toBe('en')
       })
     })
   })
@@ -94,7 +94,7 @@ describe('useFormSettings()', () => {
     it('should update the settings', () => {
       const { settings, updateSettings } = useFormSettings(emptyProfileId)
 
-      updateSettings('fontFamily', 'OpenDyslexic')
+      updateSettings({ key: 'fontFamily', value: 'OpenDyslexic' })
 
       expect(settings.value.fontFamily).toBe('OpenDyslexic')
     })
@@ -103,7 +103,7 @@ describe('useFormSettings()', () => {
       it('should not change original selected profile settings', async () => {
         const { settings, updateSettings } = useFormSettings(ref<TextProfileId>(profile.id))
 
-        updateSettings('fontFamily', 'OpenDyslexic')
+        updateSettings({ key: 'fontFamily', value: 'OpenDyslexic' })
 
         expect(settings.value.fontFamily).not.toBe(profile.settings.fontFamily)
       })

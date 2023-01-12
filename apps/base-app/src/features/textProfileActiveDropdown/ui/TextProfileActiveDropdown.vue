@@ -9,7 +9,7 @@ const onChange = ({ target }: Event) => {
 }
 </script>
 <template>
-  <select data-test-id="dropdown" :value="preferences.activeProfileId" @change="onChange">
+  <select class="select-primary select select-sm" :value="preferences.activeProfileId" @change="onChange">
     <option v-for="{ name, id } in preferences.profiles" :key="id" :value="id">
       {{ name }}
     </option>

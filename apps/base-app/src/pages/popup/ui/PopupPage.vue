@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { computed, ref, watchEffect } from 'vue'
-import { BButton, BFormCheckbox, BImg } from 'bootstrap-vue'
 
 import { useVersion } from '@readapt/shared-components'
 import { TextProfileActiveDropdown } from '@/features/textProfileActiveDropdown'
@@ -10,7 +9,8 @@ import utils from '@/chrome'
 import { useI18n } from 'vue-i18n-composable'
 import { useRouter } from 'vue-router/composables'
 
-import QuickActivate from '@/components/QuickActivate.vue'
+import { ToolsQuickActivate } from '@/features/toolsQuickActivate'
+import SvgIcon from '@/shared/ui/SvgIcon.vue'
 
 const router = useRouter()
 
@@ -45,140 +45,74 @@ const { version } = useVersion()
 </script>
 
 <template>
-  <div class="container-fluid d-flex flex-column justify-content-between" style="min-width: 600px; min-height: 600px; max-width: 600px">
-    <div class="mt-2 d-flex justify-content-between align-items-center">
-      <div>
-        <!--<b-button class="mr-2" size="sm" variant="primary" @click="adapt()" :disabled="!readaptEnabled">-->
-        <!--  {{ t('MAIN_MENU.ADAPT_PAGE') }}-->
-        <!--</b-button>-->
-        <b-button v-if="hasActiveProfile" size="sm" variant="outline-primary" @click="reset()" :disabled="!readaptEnabled">
+  <div class="mx-auto w-full max-w-screen-sm p-2">
+    <div class="flex items-center">
+      <div class="w-1/3">
+        <button class="btn-outline btn-secondary btn-sm btn" v-if="hasActiveProfile" @click="reset()" :disabled="!readaptEnabled">
           {{ t('MAIN_MENU.RESET') }}
-        </b-button>
+        </button>
       </div>
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="mr-3" style="font-size: 14px">
-          <span class="mr-2"> {{ t('MAIN_MENU.MENU_LANGUAGE') }}</span>
-          <span v-if="locale === 'fr'">FR</span>
-          <a v-if="locale !== 'fr'" href="#" @click="changeLocale('fr')">FR</a>
-          /
-          <span v-if="locale === 'en'">EN</span>
-          <a v-if="locale !== 'en'" href="#" @click="changeLocale('en')">EN</a>
-        </div>
-        <b-img class="logo" src="/logo.png" alt="readapt-logo" />
+      <div class="w-1/3 text-center">
+        {{ t('MAIN_MENU.MENU_LANGUAGE') }}
+        <span v-if="locale === 'fr'">FR</span>
+        <a v-if="locale !== 'fr'" href="#" @click="changeLocale('fr')">FR</a>
+        /
+        <span v-if="locale === 'en'">EN</span>
+        <a v-if="locale !== 'en'" href="#" @click="changeLocale('en')">EN</a>
+      </div>
+      <div class="w-1/3">
+        <img class="float-right w-[169px]" src="/logo.png" alt="Readapt Logo" />
       </div>
     </div>
 
-    <div class="d-flex justify-content-start align-items-center mt-2" v-if="hasActiveProfile">
-      <label class="form-check-label mr-2">{{ t('MAIN_MENU.READAPT_ACTIVE') }}</label>
-      <b-form-checkbox switch :checked="readaptEnabled" @change="switchEnabled" />
-    </div>
+    <label class="mt-2 flex w-48 cursor-pointer items-center justify-start">
+      <span class="mr-2">{{ t('MAIN_MENU.READAPT_ACTIVE') }}</span>
+      <input type="checkbox" class="toggle-primary toggle toggle-sm" :checked="readaptEnabled" @change="switchEnabled" />
+    </label>
 
     <div class="mt-3" v-if="hasActiveProfile">
-      <h5>{{ t('MAIN_MENU.ADAPT_TEXT_BY') }}</h5>
-      <ul class="help">
-        <!-- <li>-->
-        <!--   <b-icon-hand-index-thumb />-->
-        <!--   {{ t('MAIN_MENU.CLICKING_ADAPT_PAGE_BUTTON') }}-->
-        <!-- </li>-->
-        <!-- <li>{{ t('MAIN_MENU.RIGHT_CLICK_AND_SELECT_ADAPT') }}</li>-->
+      <div class="text-lg font-semibold">{{ t('MAIN_MENU.ADAPT_TEXT_BY') }}</div>
+      <ul class="ml-4 mt-1 list-disc text-sm">
         <li>{{ t('MAIN_MENU.HOLD_CMD_AND_CLICK_TARGET') }}</li>
       </ul>
     </div>
-    <div v-else class="text-center my-3">{{ t('MAIN_MENU.FIRST_RUN') }}</div>
+    <div v-else class="my-3 text-center">{{ t('MAIN_MENU.FIRST_RUN') }}</div>
 
-    <div
-      class="popup-page__buttons mt-3 mb-4 d-flex align-items-center"
-      :class="hasActiveProfile ? 'justify-content-between' : 'justify-content-center'"
-    >
-      <div v-if="hasActiveProfile">
-        <h5 class="mb-1">{{ $t('MAIN_MENU.ACTIVE_PROFILE') }}:</h5>
-        <TextProfileActiveDropdown class="popup-page__active-profile-dropdown" />
-        <span
-          :title="$t('MAIN_MENU.SEE_MODIFY_CURRENT_PROFILE')"
-          class="popup-page__edit-profile ml-2"
-          @click="openOptionsPage({ editActiveProfile: null }, router)"
-        >
-          <img class="popup-page__edit-icon" src="/icons/edit.svg" />
-        </span>
+    <div class="mt-6 flex grow items-center gap-10" :class="hasActiveProfile ? 'justify-between' : 'justify-center'">
+      <div v-if="hasActiveProfile" class="w-[220px]">
+        <div class="text-lg font-semibold">{{ $t('MAIN_MENU.ACTIVE_PROFILE') }}:</div>
+        <div class="flex justify-between">
+          <TextProfileActiveDropdown class="w-40" />
+          <button
+            :title="$t('MAIN_MENU.SEE_MODIFY_CURRENT_PROFILE')"
+            class="btn-outline btn-primary btn-sm btn ml-1"
+            @click="openOptionsPage({ editActiveProfile: null }, router)"
+          >
+            <SvgIcon id="edit" class="h-4 w-4 fill-current" />
+          </button>
+        </div>
       </div>
-
-      <b-button size="sm" variant="primary" @click="openOptionsPage({}, router)" style="max-width: 150px">
+      <button class="btn-primary btn w-[150px]" @click="openOptionsPage({}, router)">
         {{ t('MAIN_MENU.CREATE_BRAND_NEW_PROFILE') }}
-      </b-button>
-
-      <b-button size="sm" variant="primary" @click="selectTemplate" style="max-width: 150px">
+      </button>
+      <button class="btn-primary btn float-right w-[150px]" @click="selectTemplate">
         {{ t('MAIN_MENU.BASE_YOUR_PROFILE_FROM_TEMPLATE') }}
-      </b-button>
-
-      <!--            <b-button size="sm" variant="primary" disabled>-->
-      <!--              {{ t('MAIN_MENU.I_HAVE_PROFILE_CODE') }}-->
-      <!--            </b-button>-->
+      </button>
     </div>
 
-    <QuickActivate class="mb-auto" />
+    <ToolsQuickActivate class="mb-auto mt-6" />
 
-    <div class="footer my-2">
-      <strong class="version">Version {{ version }}</strong>
-
-      <a class="about-you" href="https://readapt.ai/#user-guides" target="_blank">
-        <b-button size="sm" variant="primary">{{ t('MAIN_MENU.USER_GUIDE') }}</b-button>
+    <div class="mt-2 flex items-center">
+      <div class="mr-auto text-sm">Version {{ version }}</div>
+      <a class="link mr-3" href="https://readapt.ai/#user-guides" target="_blank">
+        {{ t('MAIN_MENU.USER_GUIDE') }}
       </a>
-      <a class="about-you" href="https://forms.gle/ciWCnYnkFjutwEHWA" target="_blank">
-        <b-button size="sm" variant="primary">{{ t('MAIN_MENU.WHAT_IS_NEW') }}</b-button>
+      <a class="link mr-3" href="https://forms.gle/ciWCnYnkFjutwEHWA" target="_blank">
+        {{ t('MAIN_MENU.WHAT_IS_NEW') }}
       </a>
-      <a class="contact-us" href="https://forms.gle/9pv3HCmtPQN8Akpn9" target="_blank">
-        <b-button size="sm" variant="primary">{{ t('MAIN_MENU.CONTACT_US') }}</b-button>
+      <a class="link" href="https://forms.gle/9pv3HCmtPQN8Akpn9" target="_blank">
+        {{ t('MAIN_MENU.CONTACT_US') }}
       </a>
     </div>
   </div>
 </template>
-
-<style lang="scss">
-.popup-page {
-  &__buttons {
-    gap: 32px;
-  }
-
-  &__edit-profile {
-    font-weight: bold;
-    font-size: 20px;
-    cursor: pointer;
-  }
-
-  &__active-profile-dropdown {
-    width: 150px;
-    font-size: 18px;
-  }
-
-  &__edit-icon {
-    width: 20px;
-    height: 20px;
-  }
-}
-
-.help {
-  font-size: 12px;
-}
-
-.logo {
-  width: 169px;
-}
-
-.list-group {
-  max-height: 200px;
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch;
-}
-</style>
-
-<style lang="scss">
-.footer {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  .version {
-    margin-right: auto;
-  }
-}
-</style>

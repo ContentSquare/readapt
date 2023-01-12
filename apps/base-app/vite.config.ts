@@ -1,22 +1,21 @@
-/// <reference types="vitest" />
 import { fileURLToPath, URL } from 'node:url'
 import path from 'node:path'
 
-import { defineConfig } from 'vite'
+import { type UserConfig, defineConfig } from 'vite'
+import type { InlineConfig } from 'vitest'
 import legacy from '@vitejs/plugin-legacy'
 import vue2 from '@vitejs/plugin-vue2'
 
+interface VitestConfigExport extends UserConfig {
+  test: InlineConfig
+}
+
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    vue2(),
-    legacy({
-      targets: ['last 2 Chrome versions']
-    })
-  ],
+  plugins: [vue2(), legacy()],
   optimizeDeps: {
     // TODO: try to provide ESM and remove the optimizeDeps
-    include: ['@readapt/shared-components', '@readapt/text-engine', '@readapt/dictionaries']
+    include: ['@readapt/shared-components', '@readapt/text-engine']
   },
   build: {
     commonjsOptions: {
@@ -36,4 +35,4 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   }
-})
+} as VitestConfigExport)

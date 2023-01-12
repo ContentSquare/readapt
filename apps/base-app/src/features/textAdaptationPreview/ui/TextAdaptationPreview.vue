@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import type { TextSettings } from '@/entities/textPreferences'
-import { AdaptContainer, PreviewContainer } from '@readapt/shared-components'
+import AdaptContainer from '@/shared/ui/AdaptContainer.vue'
+import PreviewContainer from '@/shared/ui/PreviewContainer.vue'
 import { useLangTextPreview } from '../model/useLangTextPreview'
 import { adaptHtmlElementAsyncFn } from '../lib/visualEngine/adaptHtmlElementAsync'
 

@@ -1,6 +1,6 @@
 import type { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
 import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
-import { Url } from '@/shared/lib'
+import { getQueryString } from '@/shared/lib/url'
 
 const getCurrentTab = async (): Promise<chrome.tabs.Tab> => {
   const queryOptions = { active: true, currentWindow: true }
@@ -19,7 +19,7 @@ const openOptionsPage = async (params?: Record<string, string>): Promise<void> =
   try {
     await chrome.tabs.create({
       // TODO: use router as a single source of truth for URLs
-      url: `index.html#/options${Url.getQueryString(params)}`
+      url: `index.html#/options${getQueryString(params)}`
     })
   } catch (e) {
     console.error(e)
