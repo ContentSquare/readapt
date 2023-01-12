@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, watch, watchEffect } from 'vue'
+import { ref, watch } from 'vue'
 
 import {
   fontFamilyOptions,
