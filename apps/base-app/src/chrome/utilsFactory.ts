@@ -1,6 +1,6 @@
 import * as chromeUtils from '@/chrome/utils'
 import * as chromeMock from './utilsMock'
-import type { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
+import type { SettingsReadingTool } from '@/entities/readingTools'
 import type VueRouter from 'vue-router'
 
 export interface ChromeUtils {

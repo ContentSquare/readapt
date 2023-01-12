@@ -1,5 +1,5 @@
 // READING TOOLS
-import { SettingsReadingTool } from '../src/interfaces/settingsReadingTool'
+import type { SettingsReadingTool } from '../src/entities/readingTools'
 
 const BASE_COLOR = '#000000'
 const BASE_RULE_SIZE = 1
