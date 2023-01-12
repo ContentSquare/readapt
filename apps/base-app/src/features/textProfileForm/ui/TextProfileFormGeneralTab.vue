@@ -170,7 +170,7 @@ watch(
           </td>
         </tr>
         <tr v-if="settings.language === 'fr'">
-          <td class="whitespace-normal font-bold">{{ $t('GENERAL.SHOW_LIAISONS') }}</td>
+          <td class="whitespace-normal">{{ $t('GENERAL.SHOW_LIAISONS') }}</td>
           <td />
           <td>
             <RangeBar
