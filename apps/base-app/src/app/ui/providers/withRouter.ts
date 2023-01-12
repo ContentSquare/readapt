@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { type RouteConfig } from 'vue-router'
 
-import { PopupPage } from '@/pages/popup'
+import { MainMenuPage } from '@/pages/mainMenu'
 
 export function withRouter() {
   Vue.use(VueRouter)
@@ -10,7 +10,7 @@ export function withRouter() {
     {
       path: '/',
       name: 'main',
-      component: PopupPage
+      component: MainMenuPage
     },
     {
       path: '/templates',
