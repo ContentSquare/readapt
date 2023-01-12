@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 // TODO: add unit tests
 import { ref, onUnmounted, watch } from 'vue'
-import { AdaptHtmlElementFn, removeStyleElement } from '@readapt/visual-engine'
-import { Settings } from '@readapt/settings'
+import { type AdaptHtmlElementFn, removeStyleElement } from '@readapt/visual-engine'
+import type { Settings } from '@readapt/settings'
 
 interface Props {
   contentToAdapt: string
