@@ -1,13 +1,12 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { BTable } from 'bootstrap-vue'
 
 import type { ColoredItem, ColoredOption, ColorOption } from '@readapt/settings'
 import { buildItemPreview } from '@readapt/visual-engine'
 import ColorPicker from '@/shared/ui/ColorPicker.vue'
 
 import { useI18n } from 'vue-i18n-composable'
-import type { SettingsTableItem } from '@/interfaces'
+import type { SettingsTableItem } from '../model/settingsTableItem'
 
 interface Props {
   tableLabel: string

@@ -1,2 +1,2 @@
-export type { SettingsTableItem } from './settingsTableItem'
+export type { SettingsTableItem } from '../features/textProfileForm/model/settingsTableItem'
 export type { SettingsTemplate } from './settingsTemplate'
