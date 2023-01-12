@@ -3,7 +3,7 @@ import { computed, defineComponent, ref } from 'vue'
 import { BButton, BIconExclamationTriangle } from 'bootstrap-vue'
 import type { Language, Settings } from '@readapt/settings'
 import TemplateSelector from '@/components/TemplateSelector.vue'
-import { templates } from '@/constants/templates'
+import { templatesToDisplay } from '../constants/templatesToDisplay'
 import type { SettingsTemplate } from '@/interfaces'
 import utils from '@/chrome'
 import { useRouter } from 'vue-router/composables'
@@ -25,7 +25,7 @@ const TemplateSelect = defineComponent({
     }
     const { closeCurrentTab } = utils
 
-    const filteredTemplates = computed(() => templates.filter(isSameLanguage(selectedLanguage.value)))
+    const filteredTemplates = computed(() => templatesToDisplay.filter(isSameLanguage(selectedLanguage.value)))
     const selectedTemplate = ref<SettingsTemplate>(filteredTemplates.value[0])
 
     const onChangeTemplate = (value: SettingsTemplate) => (selectedTemplate.value = value)
@@ -85,7 +85,7 @@ export default TemplateSelect
       <TemplateSelector :templates="filteredTemplates" :value="selectedTemplate" @change="onChangeTemplate" @modify="onModifyTemplate" />
     </div>
 
-    <div class="mt-2 d-flex justify-content-end">
+    <div class="d-flex justify-content-end mt-2">
       <b-button class="mr-3" size="sm" variant="primary" @click="saveTemplate()">{{ $t('SELECT_TEMPLATE.SELECT') }}</b-button>
       <b-button size="sm" variant="outline-primary" @click="closeCurrentTab(router)">{{ $t('SELECT_TEMPLATE.CANCEL') }}</b-button>
     </div>

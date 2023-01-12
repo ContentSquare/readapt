@@ -1,6 +1,6 @@
 import type { Settings } from '@readapt/settings'
 
-export interface SettingsTemplate {
+export interface TextSettingsTemplate {
   name: string
   descriptions: string[]
   content: string
