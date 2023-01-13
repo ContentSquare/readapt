@@ -7,6 +7,7 @@ import LanguageSelect from '@/shared/ui/LanguageSelect.vue'
 import type { TextProfileId } from '@/entities/textPreferences'
 import { useTemplatesByLanguage } from '@/entities/textSettingsTemplate'
 import { TextProfileCreateFromTemplate } from '@/features/textProfileCreateFromTemplate'
+import { useI18n } from 'vue-i18n-composable'
 
 const language = ref<Language>('en')
 const templates = useTemplatesByLanguage(language)
@@ -17,22 +18,21 @@ const router = useRouter()
 const openProfile = (newTextProfileId: TextProfileId) => {
   router.push({ path: 'options?profileId=' + newTextProfileId })
 }
+
+const { t } = useI18n()
 </script>
 
 <template>
-  <div class="container-md">
-    <div class="mt-2">
-      <h2>{{ $t('SELECT_TEMPLATE.PLEASE_SELECT_A_TEMPLATE') }}</h2>
-      <p>{{ $t('SELECT_TEMPLATE.CLICK_TO_MODIFY_OR_SELECT_TEMPLATE') }}</p>
+  <div class="mx-auto max-w-screen-md p-2">
+    <div class="text-2xl font-semibold">{{ t('SELECT_TEMPLATE.PLEASE_SELECT_A_TEMPLATE') }}</div>
+    <div class="mt-3">{{ t('SELECT_TEMPLATE.CLICK_TO_MODIFY_OR_SELECT_TEMPLATE') }}</div>
+    <div class="mt-3">
+      <div>{{ t('SELECT_TEMPLATE.PROFILE_LANGUAGE') }}</div>
+      <LanguageSelect class="select-secondary select select-sm w-40" v-model="language" />
     </div>
-
-    <div>
-      <LanguageSelect v-model="language" />
-      <TextProfileCreateFromTemplate :templates="templates" @created="openProfile" />
-    </div>
-
-    <div class="d-flex justify-content-end mt-2">
-      <b-button size="sm" variant="outline-primary" @click="closeCurrentTab(router)">{{ $t('SELECT_TEMPLATE.CANCEL') }}</b-button>
+    <TextProfileCreateFromTemplate class="mt-3" :templates="templates" @created="openProfile" />
+    <div class="mt-2 flex justify-end">
+      <button class="btn-outline btn-secondary btn-sm btn" @click="closeCurrentTab(router)">{{ t('SELECT_TEMPLATE.CANCEL') }}</button>
     </div>
   </div>
 </template>

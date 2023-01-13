@@ -22,7 +22,9 @@ const onModify = (settings: TextSettings) => {
 </script>
 
 <template>
-  <div>
-    <TextSettingsTemplatePreview @modify="onModify" v-for="template in templates" :key="template.value" :template="template" data-test-id="preview" />
+  <div class="grid grid-cols-2 gap-2">
+    <div v-for="template in templates" :key="template.value">
+      <TextSettingsTemplatePreview @modify="onModify" class="h-full" :template="template" data-test-id="preview" />
+    </div>
   </div>
 </template>

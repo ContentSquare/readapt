@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { BButton, BCard, BCardText } from 'bootstrap-vue'
 import AdaptContainer from '@/shared/ui/AdaptContainer.vue'
 import type { SettingsTemplate } from '../model/settingsTemplate'
 import { adaptHtmlElementAsyncFn } from '@/shared/lib/textAdaptation'
@@ -25,37 +24,24 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <b-card>
-    <b-card-text>
-      <div class="option-header">
-        <strong class="mb-2">{{ template.name }}</strong>
-        <b-button size="sm" variant="primary" @click="emitModify">{{ t('SELECT_TEMPLATE.MODIFY') }}</b-button>
-      </div>
+  <div class="rounded border p-4">
+    <div class="flex justify-between">
+      <div class="mb-2 font-semibold">{{ template.name }}</div>
+      <button class="btn-primary btn-sm btn" @click="emitModify">{{ t('SELECT_TEMPLATE.MODIFY') }}</button>
+    </div>
 
-      <ul>
-        <template v-for="description of template.descriptions">
-          <li :key="description">{{ description }}</li>
-        </template>
-      </ul>
-    </b-card-text>
+    <ul class="list-disc pl-4">
+      <template v-for="description of template.descriptions">
+        <li :key="description">{{ description }}</li>
+      </template>
+    </ul>
 
     <AdaptContainer
-      class="template-preview"
+      class="mt-2 w-3/4"
       :adapt-html-element-async="adaptHtmlElementAsyncFn()"
       :content-to-adapt="templateContent"
       :settings="template.settings"
       :scope="template.value"
     />
-  </b-card>
+  </div>
 </template>
-
-<style lang="scss">
-.option-header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.template-preview {
-  width: 320px;
-}
-</style>
