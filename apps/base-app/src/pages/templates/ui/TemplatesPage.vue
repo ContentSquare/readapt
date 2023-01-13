@@ -3,15 +3,20 @@ import { ref } from 'vue'
 import type { Language } from '@readapt/settings'
 import utils from '@/chrome'
 import { useRouter } from 'vue-router/composables'
-import LanguageSelect from '@shared/ui/LanguageSelect.vue'
-
-import { useTemplatesByLanguage } from '../model/useTemplatesByLanguage'
+import LanguageSelect from '@/shared/ui/LanguageSelect.vue'
+import type { TextProfileId } from '@/entities/textPreferences'
+import { useTemplatesByLanguage } from '@/entities/textSettingsTemplate'
+import { TextProfileCreateFromTemplate } from '@/features/textProfileCreateFromTemplate'
 
 const language = ref<Language>('en')
 const templates = useTemplatesByLanguage(language)
 
 const { closeCurrentTab } = utils
+
 const router = useRouter()
+const openProfile = (newTextProfileId: TextProfileId) => {
+  router.push({ path: 'options?profileId=' + newTextProfileId })
+}
 </script>
 
 <template>
@@ -22,8 +27,8 @@ const router = useRouter()
     </div>
 
     <div>
-      <LanguageSelect v-model="selectedLanguage" />
-      <!-- Create from template component -->
+      <LanguageSelect v-model="language" />
+      <TextProfileCreateFromTemplate :templates="templates" @created="openProfile" />
     </div>
 
     <div class="d-flex justify-content-end mt-2">

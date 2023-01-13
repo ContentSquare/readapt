@@ -5,12 +5,20 @@ import AdaptContainer from '@/shared/ui/AdaptContainer.vue'
 import type { SettingsTemplate } from '../model/settingsTemplate'
 import { adaptHtmlElementAsyncFn } from '@/shared/lib/textAdaptation'
 import { useI18n } from 'vue-i18n-composable'
+import { TextSettings } from '@/entities/textPreferences'
 
 interface Props {
-  name: string
   template: SettingsTemplate
 }
 const props = defineProps<Props>()
+
+interface Emits {
+  (event: 'modify', value: TextSettings)
+}
+const emit = defineEmits<Emits>()
+const emitModify = () => {
+  emit('modify', props.template.settings)
+}
 
 const templateContent = computed(() => `<p>${props.template.content}</p>`)
 const { t } = useI18n()
@@ -21,7 +29,7 @@ const { t } = useI18n()
     <b-card-text>
       <div class="option-header">
         <strong class="mb-2">{{ template.name }}</strong>
-        <b-button size="sm" variant="primary" @click="onModify()">{{ t('SELECT_TEMPLATE.MODIFY') }}</b-button>
+        <b-button size="sm" variant="primary" @click="emitModify">{{ t('SELECT_TEMPLATE.MODIFY') }}</b-button>
       </div>
 
       <ul>
