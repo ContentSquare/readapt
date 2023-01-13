@@ -1,8 +1,7 @@
-<script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
-import { BButton, BIconExclamationTriangle } from 'bootstrap-vue'
+<script lang="ts" setup>
+import { computed, ref } from 'vue'
 import type { Language, Settings } from '@readapt/settings'
-import TemplateSelector from '@/components/TemplateSelector.vue'
+import { TextSettingsTemplatePreview } from '@/entities/TextSettingsTemplate'
 import { templatesToDisplay } from '../constants/templatesToDisplay'
 import type { SettingsTemplate } from '@/interfaces'
 import utils from '@/chrome'
@@ -15,60 +14,33 @@ const isSameLanguage = (language: Language) => {
   return (template: SettingsTemplate) => template.settings.language === language
 }
 
-const TemplateSelect = defineComponent({
-  components: { BIconExclamationTriangle, BButton, TemplateSelector, LanguageSelector },
-  setup() {
-    const selectedLanguage = ref<Language>('en')
-    const onLanguageChange = (lang: Language) => {
-      selectedLanguage.value = lang
-      selectedTemplate.value = filteredTemplates.value[0]
-    }
-    const { closeCurrentTab } = utils
+const selectedLanguage = ref<Language>('en')
+const onLanguageChange = (lang: Language) => {
+  selectedLanguage.value = lang
+  selectedTemplate.value = filteredTemplates.value[0]
+}
+const { closeCurrentTab } = utils
 
-    const filteredTemplates = computed(() => templatesToDisplay.filter(isSameLanguage(selectedLanguage.value)))
-    const selectedTemplate = ref<SettingsTemplate>(filteredTemplates.value[0])
+const filteredTemplates = computed(() => templatesToDisplay.filter(isSameLanguage(selectedLanguage.value)))
+const selectedTemplate = ref<SettingsTemplate>(filteredTemplates.value[0])
 
-    const onChangeTemplate = (value: SettingsTemplate) => (selectedTemplate.value = value)
+const { createProfile, generateNextProfileId } = useTextPreferences()
 
-    const { createProfile, generateNextProfileId } = useTextPreferences()
-    const createProfileFromTemplate = (settings: Settings) => {
-      const newProfileId = generateNextProfileId()
-      createProfile({
-        name: 'From template ' + newProfileId,
-        settings: cloneDeep(settings)
-      })
-      router.push({ path: 'options?profileId=' + newProfileId })
-    }
+const createProfileFromTemplate = (settings: Settings) => {
+  const newProfileId = generateNextProfileId()
+  createProfile({
+    name: 'From template ' + newProfileId,
+    settings: cloneDeep(settings)
+  })
+  return newProfileId
+}
 
-    const router = useRouter()
+const router = useRouter()
 
-    const onModifyTemplate = (settings: Settings) => {
-      createProfileFromTemplate(settings)
-    }
-
-    const saveTemplate = () => {
-      createProfileFromTemplate(selectedTemplate.value.settings)
-    }
-
-    return {
-      selectedLanguage,
-      onLanguageChange,
-
-      selectedTemplate,
-      onChangeTemplate,
-      onModifyTemplate,
-
-      filteredTemplates,
-
-      saveTemplate,
-      closeCurrentTab,
-
-      router
-    }
-  }
-})
-
-export default TemplateSelect
+const onModifyTemplate = (settings: Settings) => {
+  const newProfileId = createProfileFromTemplate(settings)
+  router.push({ path: 'options?profileId=' + newProfileId })
+}
 </script>
 
 <template>
@@ -82,11 +54,14 @@ export default TemplateSelect
     <div>
       <LanguageSelector :value="selectedLanguage" @change="onLanguageChange" />
 
-      <TemplateSelector :templates="filteredTemplates" :value="selectedTemplate" @change="onChangeTemplate" @modify="onModifyTemplate" />
+      <template v-for="template in filteredTemplates">
+        <div class="mt-2" lg="6" sm="12" md="12" :key="template.value">
+          <TextSettingsTemplatePreview name="template-radio-field" :template="template" @modify="onModifyTemplate" />
+        </div>
+      </template>
     </div>
 
     <div class="d-flex justify-content-end mt-2">
-      <b-button class="mr-3" size="sm" variant="primary" @click="saveTemplate()">{{ $t('SELECT_TEMPLATE.SELECT') }}</b-button>
       <b-button size="sm" variant="outline-primary" @click="closeCurrentTab(router)">{{ $t('SELECT_TEMPLATE.CANCEL') }}</b-button>
     </div>
   </div>
