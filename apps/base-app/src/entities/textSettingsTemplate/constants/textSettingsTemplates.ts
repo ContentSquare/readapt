@@ -8,15 +8,14 @@ import {
   overrideDefaultPhonemes,
   silentLetterOpacityOptions
 } from '@readapt/settings'
-
-import type { TextSettingsTemplate } from '@/entities/textSettingsTemplate'
+import type { TextSettingsTemplate } from '../model/textSettingsTemplate'
 
 const defaultSettingsEn = buildDefaultSettings('en')
 const defaultSettingsFr = buildDefaultSettings('fr')
 const textPreviewEn = getLangConfig('en').textPreview
 const textPreviewFr = getLangConfig('fr').textPreview
 
-export const templatesToDisplay: TextSettingsTemplate[] = [
+export const textSettingsTemplates: TextSettingsTemplate[] = [
   {
     name: 'Template 1',
     descriptions: ['Alternate lines shaded', 'Silent letters greyed'],

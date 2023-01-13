@@ -48,7 +48,6 @@ const onModifyTemplate = (settings: Settings) => {
     <div class="mt-2">
       <h2>{{ $t('SELECT_TEMPLATE.PLEASE_SELECT_A_TEMPLATE') }}</h2>
       <p>{{ $t('SELECT_TEMPLATE.CLICK_TO_MODIFY_OR_SELECT_TEMPLATE') }}</p>
-      <p><b-icon-exclamation-triangle /> {{ $t('SELECT_TEMPLATE.CLICK_ON_SELECT_WARNING') }}</p>
     </div>
 
     <div>
