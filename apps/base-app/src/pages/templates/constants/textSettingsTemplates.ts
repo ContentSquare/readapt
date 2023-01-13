@@ -8,7 +8,7 @@ import {
   overrideDefaultPhonemes,
   silentLetterOpacityOptions
 } from '@readapt/settings'
-import type { TextSettingsTemplate } from '../model/textSettingsTemplate'
+import type { TextSettingsTemplate } from '@/entities/textSettingsTemplate'
 
 const defaultSettingsEn = buildDefaultSettings('en')
 const defaultSettingsFr = buildDefaultSettings('fr')

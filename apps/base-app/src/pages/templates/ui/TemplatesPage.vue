@@ -1,46 +1,17 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
-import type { Language, Settings } from '@readapt/settings'
-import { TextSettingsTemplatePreview } from '@/entities/TextSettingsTemplate'
-import { templatesToDisplay } from '../constants/templatesToDisplay'
-import type { SettingsTemplate } from '@/interfaces'
+import { ref } from 'vue'
+import type { Language } from '@readapt/settings'
 import utils from '@/chrome'
 import { useRouter } from 'vue-router/composables'
-import { LanguageSelector } from '@readapt/shared-components'
-import { useTextPreferences } from '@/entities/textPreferences'
-import cloneDeep from 'lodash-es/cloneDeep'
+import LanguageSelect from '@shared/ui/LanguageSelect.vue'
 
-const isSameLanguage = (language: Language) => {
-  return (template: SettingsTemplate) => template.settings.language === language
-}
+import { useTemplatesByLanguage } from '../model/useTemplatesByLanguage'
 
-const selectedLanguage = ref<Language>('en')
-const onLanguageChange = (lang: Language) => {
-  selectedLanguage.value = lang
-  selectedTemplate.value = filteredTemplates.value[0]
-}
+const language = ref<Language>('en')
+const templates = useTemplatesByLanguage(language)
+
 const { closeCurrentTab } = utils
-
-const filteredTemplates = computed(() => templatesToDisplay.filter(isSameLanguage(selectedLanguage.value)))
-const selectedTemplate = ref<SettingsTemplate>(filteredTemplates.value[0])
-
-const { createProfile, generateNextProfileId } = useTextPreferences()
-
-const createProfileFromTemplate = (settings: Settings) => {
-  const newProfileId = generateNextProfileId()
-  createProfile({
-    name: 'From template ' + newProfileId,
-    settings: cloneDeep(settings)
-  })
-  return newProfileId
-}
-
 const router = useRouter()
-
-const onModifyTemplate = (settings: Settings) => {
-  const newProfileId = createProfileFromTemplate(settings)
-  router.push({ path: 'options?profileId=' + newProfileId })
-}
 </script>
 
 <template>
@@ -51,13 +22,8 @@ const onModifyTemplate = (settings: Settings) => {
     </div>
 
     <div>
-      <LanguageSelector :value="selectedLanguage" @change="onLanguageChange" />
-
-      <template v-for="template in filteredTemplates">
-        <div class="mt-2" lg="6" sm="12" md="12" :key="template.value">
-          <TextSettingsTemplatePreview name="template-radio-field" :template="template" @modify="onModifyTemplate" />
-        </div>
-      </template>
+      <LanguageSelect v-model="selectedLanguage" />
+      <!-- Create from template component -->
     </div>
 
     <div class="d-flex justify-content-end mt-2">

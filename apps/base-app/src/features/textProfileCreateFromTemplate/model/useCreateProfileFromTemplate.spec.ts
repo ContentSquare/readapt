@@ -1,7 +1,7 @@
-import { useCreateTextProfileFromTemplate } from './useCreateTextProfileFromTemplate'
+import { useCreateTextProfileFromTemplate } from './useCreateProfileFromTemplate'
 import { useTextPreferences, textSettingsFixture as settings, textProfileFixture as profile } from '@/entities/textPreferences'
 
-describe('useCreateTextProfileFromTemplate()', () => {
+describe('useCreateProfileFromTemplate()', () => {
   beforeEach(() => {
     useTextPreferences().setProfiles([profile])
   })
