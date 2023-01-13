@@ -15,7 +15,7 @@ export function withRouter() {
     {
       path: '/templates',
       name: 'templates',
-      component: async () => (await import('@/pages/templateSelect')).TemplateSelectPage
+      component: async () => (await import('@/pages/templates')).TemplatesPage
     },
     {
       path: '/options',
