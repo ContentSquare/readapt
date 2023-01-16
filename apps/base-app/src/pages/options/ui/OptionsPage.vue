@@ -5,7 +5,7 @@ import { CloseSettings } from '@readapt/shared-components'
 import { useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
 import { TextProfileEditDropdown } from '@/features/textProfileEditDropdown'
 import { TextProfileSaveButton } from '@/features/textProfileSaveButton'
-import { TextAdaptationPreview } from '@/features/textAdaptationPreview'
+import { TextSettingsAdaptationPreview } from '@/features/textSettingsAdaptationPreview'
 import { TextProfileRenameButton } from '@/features/textProfileRenameButton'
 import { TextProfileDeleteButton } from '@/features/textProfileDeleteButton'
 import { useFormSettings } from '../model/useFormSettings'
@@ -45,7 +45,7 @@ const close = async () => await utils.closeCurrentTab()
       <TextProfileForm class="w-2/3 min-w-[850px]" :settings="settings" @update-settings="updateSettings" @change-language="changeLanguage" />
       <div class="flex w-1/3 flex-1 flex-col pl-4 pt-10">
         <div class="text-2xl font-semibold">{{ $t('SETTINGS.TEXT_PREVIEW') }}</div>
-        <TextAdaptationPreview class="h-items-settings overflow-scroll" :settings="settings" />
+        <TextSettingsAdaptationPreview class="h-items-settings overflow-scroll" :settings="settings" />
         <div class="mt-auto flex flex-wrap justify-between">
           <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
           <TextProfileDeleteButton class="ml-3 mr-auto" v-model="selectedProfiledId" />
