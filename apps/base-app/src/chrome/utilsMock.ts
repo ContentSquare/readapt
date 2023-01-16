@@ -1,5 +1,4 @@
-import type { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
-import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
+import { type SettingsReadingTool, buildDefaultSettingsReadingTool } from '@/entities/readingTools'
 import type VueRouter from 'vue-router'
 
 const getCurrentTab = async (): Promise<chrome.tabs.Tab> => {

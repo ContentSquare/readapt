@@ -2,8 +2,7 @@
 import { onMounted, ref, watch } from 'vue'
 import { opacityOptions, thicknessOptions } from '@readapt/settings'
 
-import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
-import type { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
+import { type SettingsReadingTool, buildDefaultSettingsReadingTool } from '@/entities/readingTools'
 import utils from '@/chrome'
 import RangeBar from '@/shared/ui/RangeBar.vue'
 

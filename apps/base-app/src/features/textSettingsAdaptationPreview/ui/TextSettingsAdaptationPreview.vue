@@ -4,7 +4,7 @@ import type { TextSettings } from '@/entities/textPreferences'
 import AdaptContainer from '@/shared/ui/AdaptContainer.vue'
 import PreviewContainer from '@/shared/ui/PreviewContainer.vue'
 import { useLangTextPreview } from '../model/useLangTextPreview'
-import { adaptHtmlElementAsyncFn } from '../lib/visualEngine/adaptHtmlElementAsync'
+import { adaptHtmlElementAsyncFn } from '@/shared/lib/textAdaptation'
 
 const props = defineProps<{ settings: TextSettings }>()
 

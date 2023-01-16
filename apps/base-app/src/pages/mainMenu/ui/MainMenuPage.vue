@@ -9,7 +9,7 @@ import utils from '@/chrome'
 import { useI18n } from 'vue-i18n-composable'
 import { useRouter } from 'vue-router/composables'
 
-import { ToolsQuickActivate } from '@/features/toolsQuickActivate'
+import { ReadingToolsQuickActivate } from '@/features/readingToolsQuickActivate'
 import SvgIcon from '@/shared/ui/SvgIcon.vue'
 
 const router = useRouter()
@@ -100,7 +100,7 @@ const { version } = useVersion()
       </button>
     </div>
 
-    <ToolsQuickActivate class="mb-auto mt-6" />
+    <ReadingToolsQuickActivate class="mb-auto mt-6" />
 
     <div class="mt-2 flex items-center">
       <div class="mr-auto text-sm">Version {{ version }}</div>

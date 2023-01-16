@@ -1,5 +1,4 @@
-import type { SettingsReadingTool } from '@/interfaces/settingsReadingTool'
-import { buildDefaultSettingsReadingTool } from '@/constants/defaultSettingsReadingTool'
+import { type SettingsReadingTool, buildDefaultSettingsReadingTool } from '@/entities/readingTools'
 import { getQueryString } from '@/shared/lib/url'
 
 const getCurrentTab = async (): Promise<chrome.tabs.Tab> => {
