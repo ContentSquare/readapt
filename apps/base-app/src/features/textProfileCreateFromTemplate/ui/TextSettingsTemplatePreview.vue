@@ -4,7 +4,7 @@ import AdaptContainer from '@/shared/ui/AdaptContainer.vue'
 import type { SettingsTemplate } from '../model/settingsTemplate'
 import { adaptHtmlElementAsyncFn } from '@/shared/lib/textAdaptation'
 import { useI18n } from 'vue-i18n-composable'
-import { TextSettings } from '@/entities/textPreferences'
+import type { TextSettings } from '@/entities/textPreferences'
 
 interface Props {
   template: SettingsTemplate
