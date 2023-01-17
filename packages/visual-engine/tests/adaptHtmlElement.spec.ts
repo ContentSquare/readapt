@@ -119,21 +119,58 @@ describe('visual engine tests', () => {
     expect(adaptedElement.innerHTML).toBe('<span class="readapt-content">save the w<span class="readapt-silent-letter">h</span>ale!</span>')
   })
 
-  it('should adapt syllables', () => {
-    const settings = buildDefaultSettings('en')
-    settings.syllableActive = true
-    settings.syllableColor1 = '#5fa2ce'
-    settings.syllableColor1 = '#59a14f'
-    const pElement = `<p>hello</p>`
-    document.body.innerHTML = `${pElement}`
+  describe('syllables', () => {
+    it('should adapt syllables of one word', () => {
+      const settings = buildDefaultSettings('en')
+      settings.syllableActive = true
+      settings.syllableColor1 = '#5fa2ce'
+      settings.syllableColor2 = '#59a14f'
+      const pElement = `<p>hello</p>`
+      document.body.innerHTML = `${pElement}`
 
-    adaptHtmlElement(document.body, settings, 'jsdom')
+      adaptHtmlElement(document.body, settings, 'jsdom')
 
-    const adaptedElement = document.body.firstElementChild as HTMLElement
+      const adaptedElement = document.body.firstElementChild as HTMLElement
 
-    expect(adaptedElement.innerHTML).toBe(
-      '<span class="readapt-content"><span class="readapt-syllable-1">hel</span><span class="readapt-syllable-2">lo</span></span>'
-    )
+      expect(adaptedElement.innerHTML).toEqualIgnoringWhitespace(
+        `<span class="readapt-content">
+          <span class="readapt-syllable-1">hel</span>
+          <span class="readapt-syllable-2">lo</span>
+        </span>`
+      )
+    })
+
+    it('should alternate syllables between multiple elements', () => {
+      const settings = buildDefaultSettings('en')
+      settings.syllableActive = true
+      settings.syllableColor1 = '#5fa2ce'
+      settings.syllableColor2 = '#59a14f'
+      const pElement = `
+        <p>
+          <a href="http://example.com/path-a/">hi</a>
+          <a href="http://example.com/path-b/">hello</a>
+        </p>
+      `
+      document.body.innerHTML = pElement
+
+      adaptHtmlElement(document.body, settings, 'jsdom')
+
+      const adaptedElement = document.body.firstElementChild as HTMLElement
+
+      expect(adaptedElement.innerHTML).toEqualIgnoringWhitespace(
+        `
+        <a href="http://example.com/path-a/">
+          <span class="readapt-content">
+            <span class="readapt-syllable-1">hi</span>
+          </span>
+        </a>
+        <a href="http://example.com/path-b/">
+          <span class="readapt-content">
+            <span class="readapt-syllable-2">hel</span>
+            <span class="readapt-syllable-1">lo</span>
+          </span></a>`
+      )
+    })
   })
 
   it('should adapt letters', () => {

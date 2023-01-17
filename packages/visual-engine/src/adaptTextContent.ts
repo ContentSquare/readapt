@@ -2,10 +2,17 @@ import { AnaliseTextFn, Liaison, Syllable } from '@readapt/text-engine'
 import { ColoredItem, Settings } from '@readapt/settings'
 import xor from 'lodash/xor'
 
+interface Context {
+  processedSyllables: number
+}
+
 const buildAdaptTextContentForText =
   (analyse: AnaliseTextFn) =>
   (htmlText: string, settings: Settings, liaisonsPhonemes: Set<string>): string => {
-    const adaptNodeForText = buildAdaptTextNodeForText(analyse, settings, liaisonsPhonemes)
+    const context: Context = {
+      processedSyllables: 0
+    }
+    const adaptNodeForText = buildAdaptTextNodeForText(analyse, settings, liaisonsPhonemes, context)
 
     return adaptNodeForText(htmlText)
   }
@@ -15,7 +22,7 @@ const buildAdaptTextContentForText =
  * adaptTextNode manipulates the DOM to add readapt styles and classes
  */
 const buildAdaptTextNodeForText =
-  (analyse: AnaliseTextFn, settings: Settings, liaisonsPhonemes: Set<string>) =>
+  (analyse: AnaliseTextFn, settings: Settings, liaisonsPhonemes: Set<string>, context: Context) =>
   (textToAdapt: string): string => {
     if (!hasTextRulesSettings(settings)) {
       return `${textToAdapt}`
@@ -26,7 +33,7 @@ const buildAdaptTextNodeForText =
       const classList = []
 
       if (settings.syllableActive) {
-        const syllable = isSyllable(textIndex, textEngineResult.syllables)
+        const syllable = isSyllable(textIndex, textEngineResult.syllables, context)
         if (syllable) {
           classList.push(syllable)
         }
@@ -74,6 +81,8 @@ const buildAdaptTextNodeForText =
       }
     })
 
+    context.processedSyllables += textEngineResult.syllables.length
+
     return `${textAdapted.join('')}`
   }
 
@@ -98,7 +107,10 @@ const buildAdaptTextContent =
         return NodeFilter.FILTER_ACCEPT
       }
     })
-    const adaptNode = buildAdaptTextNode(analyse, settings, liaisonsPhonemes)
+    const context: Context = {
+      processedSyllables: 0
+    }
+    const adaptNode = buildAdaptTextNode(analyse, settings, liaisonsPhonemes, context)
     let currentNode
     while ((currentNode = treeWalker.nextNode())) {
       try {
@@ -124,7 +136,7 @@ const hasTextRulesSettings = (settings: Settings): boolean => {
 
 const hasItemActive = (items: ColoredItem[]): boolean => items.some((item) => item.active)
 
-const isSyllable = (charIndex: number, syllables: Syllable[]): string | undefined => {
+const isSyllable = (charIndex: number, syllables: Syllable[], context: Context): string | undefined => {
   const indexSyllable = syllables.findIndex(([initPos, endPos]: Syllable) => {
     return charIndex >= initPos && charIndex <= endPos
   })
@@ -133,7 +145,7 @@ const isSyllable = (charIndex: number, syllables: Syllable[]): string | undefine
     return
   }
 
-  return indexSyllable % 2 ? 'readapt-syllable-2' : 'readapt-syllable-1'
+  return (indexSyllable + context.processedSyllables) % 2 ? 'readapt-syllable-2' : 'readapt-syllable-1'
 }
 
 const findLiaison = (index: number, liaisons: Liaison[]) => {
@@ -178,7 +190,7 @@ const adaptPhoneme = (settings: Settings, phoneme: number): string[] => {
  * adaptTextNode manipulates the DOM to add readapt styles and classes
  */
 const buildAdaptTextNode =
-  (analyse: AnaliseTextFn, settings: Settings, liaisonsPhonemes: Set<string>) =>
+  (analyse: AnaliseTextFn, settings: Settings, liaisonsPhonemes: Set<string>, context: Context) =>
   (textNode: Text): void => {
     const text = textNode.nodeValue
     if (!text) {
@@ -200,7 +212,7 @@ const buildAdaptTextNode =
       const classList = []
 
       if (settings.syllableActive) {
-        const syllable = isSyllable(textIndex, textEngineResult.syllables)
+        const syllable = isSyllable(textIndex, textEngineResult.syllables, context)
         if (syllable) {
           classList.push(syllable)
         }
@@ -257,6 +269,8 @@ const buildAdaptTextNode =
         contentSpan.appendChild(document.createTextNode(char))
       }
     })
+
+    context.processedSyllables += textEngineResult.syllables.length
 
     // clean the node
     textNode.textContent = ''
