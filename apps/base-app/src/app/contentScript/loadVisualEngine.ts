@@ -1,5 +1,5 @@
-import { AdaptHtmlElementFn } from '@readapt/visual-engine'
-import { preloadFont } from './preload-fonts'
+import type { AdaptHtmlElementFn } from '@readapt/visual-engine'
+import { preloadFont } from './preloadFonts'
 
 interface VisualEngine {
   adaptHtmlElement: AdaptHtmlElementFn
