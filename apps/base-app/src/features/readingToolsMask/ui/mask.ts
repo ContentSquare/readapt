@@ -5,34 +5,34 @@ import { appendNewElementToBody } from '@/shared/lib/dom'
 let maskElem: HTMLElement
 let maskElemBefore: HTMLElement
 
-const maskState = {
+export const state = {
   enabled: false,
   height: BASE_MASK_HEIGHT,
   color: `${BASE_COLOR}33`
 }
 
 const updateMaskPositionListener = (event: MouseEvent): void => {
-  const maskHeight = maskState.height
-  updateMaskPosition(event.clientY, maskHeight)
+  const maskHeight = state.height
+  updatePosition(event.clientY, maskHeight)
 }
 
-export const addMask = (): void => {
+export const add = (): void => {
   maskElemBefore = appendNewElementToBody('mask-before')
   maskElem = appendNewElementToBody('mask')
   document.addEventListener('mousemove', updateMaskPositionListener)
 
-  maskState.enabled = true
-  document.documentElement.style.setProperty('--mask-color', maskState.color)
+  state.enabled = true
+  document.documentElement.style.setProperty('--mask-color', state.color)
 }
 
-export const removeMask = (): void => {
+export const remove = (): void => {
   maskElem?.remove()
   maskElemBefore?.remove()
   document.removeEventListener('mousemove', updateMaskPositionListener)
-  maskState.enabled = false
+  state.enabled = false
 }
 
-export const updateMaskPosition = (clientY: number, maskHeight: number): void => {
+const updatePosition = (clientY: number, maskHeight: number): void => {
   const maskPosition = Math.max(clientY + maskHeight / 2, maskHeight)
   setTimeout(() => {
     maskElemBefore?.style.setProperty('height', `${Math.max(maskPosition - maskHeight, 0)}px`)
@@ -40,12 +40,12 @@ export const updateMaskPosition = (clientY: number, maskHeight: number): void =>
   })
 }
 
-export const updateMaskSettings = (clientY: number, maskSettings: SettingsReadingTool): void => {
+export const updateSettings = (clientY: number, maskSettings: SettingsReadingTool): void => {
   if (maskSettings) {
-    maskState.color = BASE_COLOR + maskSettings.opacity
-    maskState.height = BASE_MASK_HEIGHT * parseInt(maskSettings.thickness)
+    state.color = BASE_COLOR + maskSettings.opacity
+    state.height = BASE_MASK_HEIGHT * parseInt(maskSettings.thickness)
   }
 
-  document.documentElement.style.setProperty('--mask-color', maskState.color)
-  updateMaskPosition(clientY, maskState.height)
+  document.documentElement.style.setProperty('--mask-color', state.color)
+  updatePosition(clientY, state.height)
 }

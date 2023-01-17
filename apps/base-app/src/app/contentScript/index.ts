@@ -1,4 +1,7 @@
 /* global chrome */
+import { ReadingToolsMask } from '@/features/readingToolsMask'
+import { ReadingToolsRuler } from '@/features/readingToolsRuler'
+
 import { maskState, rulerState, addMask, addRuler, updateRulerSettings, removeRuler, removeMask, updateMaskSettings } from './reading-tools'
 import { loadVisualEngine } from './loadVisualEngine'
 import { TEXT_PREFERENCES_STORAGE_KEY } from '@/entities/textPreferences'
@@ -39,11 +42,11 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     await adaptHtmlElement(document.body)
 
     // reading tools
-    if (maskState.enabled) {
-      addMask()
+    if (ReadingToolsMask.state.enabled) {
+      ReadingToolsMask.add()
     }
-    if (rulerState.enabled) {
-      addRuler()
+    if (ReadingToolsRuler.state.enabled) {
+      ReadingToolsMask.add()
     }
   }
   sendResponse()
@@ -57,8 +60,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     })
 
     disableAdaptSelection()
-    removeMask()
-    removeRuler()
+    ReadingToolsMask.remove()
+    ReadingToolsRuler.remove()
   }
   sendResponse()
 })
@@ -250,29 +253,29 @@ const deactivateHighlightElement = () => {
 
 // READING TOOLS
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message === 'ADD_MASK' && !maskState.enabled) {
-    if (rulerState.enabled) {
-      removeRuler()
+  if (message === 'ADD_MASK' && !ReadingToolsMask.state.enabled) {
+    if (ReadingToolsRuler.state.enabled) {
+      ReadingToolsRuler.remove()
     }
-    addMask()
+    ReadingToolsMask.add()
   }
   sendResponse()
 })
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message === 'ADD_RULER' && !rulerState.enabled) {
-    if (maskState.enabled) {
-      removeMask()
+  if (message === 'ADD_RULER' && !ReadingToolsRuler.state.enabled) {
+    if (ReadingToolsMask.state.enabled) {
+      ReadingToolsMask.remove()
     }
-    addRuler()
+    ReadingToolsRuler.add()
   }
   sendResponse()
 })
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message === 'RESET') {
-    removeMask()
-    removeRuler()
+    ReadingToolsMask.remove()
+    ReadingToolsRuler.remove()
   }
   sendResponse()
 })
@@ -280,7 +283,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   if (message === 'UPDATE_MASK') {
     const { maskSettings } = await chrome.storage.sync.get('maskSettings')
-    updateMaskSettings(mousePos.y, maskSettings)
+    ReadingToolsMask.updateSettings(mousePos.y, maskSettings)
   }
   sendResponse()
 })
@@ -288,15 +291,15 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   if (message === 'UPDATE_RULER') {
     const { ruleSettings } = await chrome.storage.sync.get('ruleSettings')
-    updateRulerSettings(ruleSettings)
+    ReadingToolsRuler.updateSettings(ruleSettings)
   }
   sendResponse()
 })
 
 document.addEventListener('keydown', (event) => {
   if (event.key === 'ESC' || event.key === 'Escape') {
-    removeRuler()
-    removeMask()
+    ReadingToolsRuler.remove()
+    ReadingToolsMask.remove()
   }
 })
 // end reading tools
@@ -321,7 +324,7 @@ const enableReadapt = async (): Promise<void> => {
   await enableAdaptSelection()
   await loadVisualEngine()
   const { ruleSettings } = await chrome.storage.sync.get('ruleSettings')
-  await updateRulerSettings(ruleSettings)
+  await ReadingToolsRuler.updateSettings(ruleSettings)
   const { maskSettings } = await chrome.storage.sync.get('maskSettings')
-  await updateMaskSettings(mousePos.y, maskSettings)
+  await ReadingToolsMask.updateSettings(mousePos.y, maskSettings)
 }
