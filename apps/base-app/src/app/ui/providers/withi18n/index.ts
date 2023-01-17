@@ -5,7 +5,7 @@ import { createI18n } from 'vue-i18n-composable'
 import en from './en.json'
 import fr from './fr.json'
 
-import utils from '@/chrome'
+import { useChromeUtils } from '@/shared/lib/chrome'
 
 export const withi18n = () => {
   Vue.use(VueI18n)
@@ -21,7 +21,7 @@ export const withi18n = () => {
   })
 
   const loadLocale = async () => {
-    const locale = await utils.getLocale()
+    const locale = await useChromeUtils().getLocale()
 
     if (locale) {
       i18n.locale = locale

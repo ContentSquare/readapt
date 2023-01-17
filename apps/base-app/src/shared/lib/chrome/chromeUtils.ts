@@ -1,5 +1,3 @@
-import * as chromeUtils from '@/chrome/utils'
-import * as chromeMock from './utilsMock'
 import type { SettingsReadingTool } from '@/entities/readingTools'
 import type VueRouter from 'vue-router'
 
@@ -19,12 +17,3 @@ export interface ChromeUtils {
   getRuleSettings: () => Promise<SettingsReadingTool>
   saveRuleSettings: (ruleSettings: SettingsReadingTool) => Promise<void>
 }
-
-const buildUtils = (): ChromeUtils => {
-  if (chrome?.extension) {
-    return chromeUtils
-  }
-  return chromeMock
-}
-
-export { buildUtils }

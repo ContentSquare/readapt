@@ -23,7 +23,7 @@ After install an `.env` file will be generated, please fill missing values
 
 ### Compiles and hot-reloads for development
 ```
-yarn serve
+yarn dev
 ```
 
 ### Run your unit tests
