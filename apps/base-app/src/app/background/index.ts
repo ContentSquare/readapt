@@ -1,5 +1,5 @@
 /* global chrome  */
-import { useChromeUtils } from '@/shared/lib/chrome'
+import { useExtensionUtils } from '@/shared/lib/extension'
 import { textPreferencesStorageMigrate, TEXT_PREFERENCES_STORAGE_KEY } from '@/entities/textPreferences'
 
 chrome.runtime.onInstalled.addListener(async () => {
@@ -95,7 +95,7 @@ chrome.storage.onChanged.addListener(async (changes) => {
   }
 
   if (hasSettingsChanged(changes)) {
-    await useChromeUtils().broadcastMessage('REFRESH')
+    await useExtensionUtils().broadcastMessage('REFRESH')
   }
 
   const matomoURL = '__MATOMO_URL'

@@ -3,10 +3,10 @@ import { onMounted, ref, watch } from 'vue'
 import { opacityOptions, thicknessOptions } from '@readapt/settings'
 
 import { type SettingsReadingTool, buildDefaultSettingsReadingTool } from '@/entities/readingTools'
-import utils from '@/chrome'
 import RangeBar from '@/shared/ui/RangeBar.vue'
+import { useExtensionUtils } from '@/shared/lib/extension'
 
-const { getMaskSettings, getRuleSettings, saveMaskSettings, saveRuleSettings, broadcastMessage } = utils
+const { getMaskSettings, getRuleSettings, saveMaskSettings, saveRuleSettings, broadcastMessage } = useExtensionUtils()
 const mask = ref<SettingsReadingTool>(buildDefaultSettingsReadingTool())
 const ruler = ref<SettingsReadingTool>(buildDefaultSettingsReadingTool())
 

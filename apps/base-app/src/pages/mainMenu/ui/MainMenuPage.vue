@@ -5,18 +5,18 @@ import { useVersion } from '@readapt/shared-components'
 import { TextProfileActiveDropdown } from '@/features/textProfileActiveDropdown'
 import { useTextPreferences } from '@/entities/textPreferences'
 
-import utils from '@/chrome'
 import { useI18n } from 'vue-i18n-composable'
 import { useRouter } from 'vue-router/composables'
 
 import { ReadingToolsQuickActivate } from '@/features/readingToolsQuickActivate'
+import { useExtensionUtils } from '@/shared/lib/extension'
 import SvgIcon from '@/shared/ui/SvgIcon.vue'
 
 const router = useRouter()
 
 const readaptEnabled = ref(true)
 
-const { openOptionsPage, sendMessageToCurrentTab, openTemplates, broadcastMessage, getEnabled, saveEnabled, saveLocale } = utils
+const { openOptionsPage, sendMessageToCurrentTab, openTemplates, broadcastMessage, getEnabled, saveEnabled, saveLocale } = useExtensionUtils()
 
 const { preferences } = useTextPreferences()
 const hasActiveProfile = computed(() => Boolean(preferences.activeProfileId))

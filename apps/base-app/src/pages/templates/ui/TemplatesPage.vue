@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import type { Language } from '@readapt/settings'
-import utils from '@/chrome'
+import { useExtensionUtils } from '@/shared/lib/extension'
 import { useRouter } from 'vue-router/composables'
 import LanguageSelect from '@/shared/ui/LanguageSelect.vue'
 import type { TextProfileId } from '@/entities/textPreferences'
@@ -12,7 +12,7 @@ import { useI18n } from 'vue-i18n-composable'
 const language = ref<Language>('en')
 const templates = useTemplatesByLanguage(language)
 
-const { closeCurrentTab } = utils
+const { closeCurrentTab } = useExtensionUtils()
 
 const router = useRouter()
 const openProfile = (newTextProfileId: TextProfileId) => {

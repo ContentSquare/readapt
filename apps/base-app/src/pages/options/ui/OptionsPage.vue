@@ -13,7 +13,7 @@ import { TextProfileForm } from '@/features/textProfileForm'
 
 import { TextSettingsFileDownload } from '@/features/textSettingsFileDownload'
 
-import utils from '@/chrome'
+import { useExtensionUtils } from '@/shared/lib/extension'
 import { useRouter } from 'vue-router/composables'
 
 const router = useRouter()
@@ -31,7 +31,7 @@ onMounted(() => {
 
 const { settings, changeLanguage, updateSettings } = useFormSettings(selectedProfiledId)
 
-const close = async () => await utils.closeCurrentTab()
+const close = async () => await useExtensionUtils().closeCurrentTab()
 </script>
 <template>
   <div class="m-auto max-w-screen-lg p-2">
