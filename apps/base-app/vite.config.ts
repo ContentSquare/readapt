@@ -1,10 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 import path from 'node:path'
-
 import { type UserConfig, defineConfig } from 'vite'
 import type { InlineConfig } from 'vitest'
-
-// import legacy from '@vitejs/plugin-legacy'
 import vue2 from '@vitejs/plugin-vue2'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
@@ -16,42 +13,36 @@ interface VitestConfigExport extends UserConfig {
 export default defineConfig({
   plugins: [
     vue2(),
-    // legacy(), - temporarily disable legacy polyfills
-    {
-      ...viteStaticCopy({
-        targets: [
-          {
-            // TODO: try to refactor this copying to normal building
-            src: '../../packages/visual-engine/dist/readapt-visual-engine.browser.js',
-            dest: 'scripts'
-          },
-          {
-            src: 'manifest.json',
-            dest: '.',
-            transform(content) {
-              const manifest = JSON.parse(content)
-              manifest.version = process.env.npm_package_version
-              return JSON.stringify(manifest, null, 2)
-            }
+    viteStaticCopy({
+      targets: [
+        {
+          // TODO: try to refactor this copying to normal building
+          src: '../../packages/visual-engine/dist/readapt-visual-engine.browser.js',
+          dest: 'scripts'
+        },
+        {
+          src: 'manifest.json',
+          dest: '.',
+          transform(content) {
+            const manifest = JSON.parse(content)
+            manifest.version = process.env.npm_package_version
+            return JSON.stringify(manifest, null, 2)
           }
-        ]
-      }),
-      apply: 'build'
-    }
+        }
+      ]
+    })
   ],
   optimizeDeps: {
     // TODO: try to provide ESM and remove the optimizeDeps
     include: ['@readapt/shared-components', '@readapt/text-engine']
   },
   build: {
+    emptyOutDir: false,
     commonjsOptions: {
       transformMixedEsModules: true,
       // TODO: try to provide ESM and remove commonjsOptions
       include: [/shared-components/, /text-engine/, /dictionaries/, /node_modules/]
     }
-    // lib: {
-
-    // }
   },
   test: {
     setupFiles: [path.resolve(__dirname, './vitest.setup.ts')],

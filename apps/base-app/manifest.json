@@ -13,13 +13,13 @@
     "storage"
   ],
   "background": {
-    "service_worker": "scripts/background.js"
+    "service_worker": "scripts/background.iife.js"
   },
   "options_page": "index.html#/options",
   "content_scripts": [
     {
       "matches": ["https://*/*", "http://*/*"],
-      "js": ["scripts/readapt.js"],
+      "js": ["scripts/contentScript.iife.js"],
       "css": ["readapt-fonts.css", "readapt-styles.css"]
     }
   ],
