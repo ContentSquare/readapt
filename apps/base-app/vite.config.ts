@@ -20,6 +20,11 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
+          // TODO: try to refactor this copying to normal building
+          src: '../../packages/visual-engine/dist/readapt-visual-engine.browser.js',
+          dest: 'scripts'
+        },
+        {
           src: 'manifest.json',
           dest: '.',
           transform(content) {
