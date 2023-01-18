@@ -3,8 +3,10 @@ import path from 'node:path'
 
 import { type UserConfig, defineConfig } from 'vite'
 import type { InlineConfig } from 'vitest'
+
 import legacy from '@vitejs/plugin-legacy'
 import vue2 from '@vitejs/plugin-vue2'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 interface VitestConfigExport extends UserConfig {
   test: InlineConfig
@@ -12,7 +14,23 @@ interface VitestConfigExport extends UserConfig {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue2(), legacy()],
+  plugins: [
+    vue2(),
+    legacy(),
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'manifest.json',
+          dest: '.',
+          transform(content) {
+            const manifest = JSON.parse(content)
+            manifest.version = process.env.npm_package_version
+            return JSON.stringify(manifest, null, 2)
+          }
+        }
+      ]
+    })
+  ],
   optimizeDeps: {
     // TODO: try to provide ESM and remove the optimizeDeps
     include: ['@readapt/shared-components', '@readapt/text-engine']

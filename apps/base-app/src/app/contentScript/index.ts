@@ -2,7 +2,6 @@
 import { ReadingToolsMask } from '@/features/readingToolsMask'
 import { ReadingToolsRuler } from '@/features/readingToolsRuler'
 
-import { maskState, rulerState, addMask, addRuler, updateRulerSettings, removeRuler, removeMask, updateMaskSettings } from './reading-tools'
 import { loadVisualEngine } from './loadVisualEngine'
 import { TEXT_PREFERENCES_STORAGE_KEY } from '@/entities/textPreferences'
 
