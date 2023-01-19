@@ -86,6 +86,8 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   await chrome.tabs.sendMessage(tab.id as number, message)
 })
 
+declare const __MATOMO_URL__: string // __MATOMO_URL__ gets replaced with the actual value during build
+
 chrome.storage.onChanged.addListener(async (changes) => {
   if (hasEnabledChanged(changes)) {
     const { enabled } = await chrome.storage.sync.get('enabled')
@@ -99,8 +101,7 @@ chrome.storage.onChanged.addListener(async (changes) => {
   }
 
   if (hasEventChanged(changes)) {
-    const matomoUrl = '__MATOMO_URL__' // Note: gets replaced with the actual value during build
-    await fetch(`${matomoUrl}/matomo.php?idsite=1&action_name=adapt&rec=1`)
+    await fetch(`${__MATOMO_URL__}/matomo.php?idsite=1&action_name=adapt&rec=1`)
   }
 })
 

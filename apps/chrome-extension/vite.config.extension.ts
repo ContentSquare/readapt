@@ -23,7 +23,7 @@ const ENTRIES: Record<string, LibraryOptions> = {
 // https://vitejs.dev/config/
 export default defineConfig({
   define: {
-    __MATOMO_URL__: process.env.VUE_APP_MATOMO_URL
+    __MATOMO_URL__: `"${process.env.VUE_APP_MATOMO_URL}"`
   },
   build: {
     emptyOutDir: false,

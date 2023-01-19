@@ -10,6 +10,8 @@ interface VitestConfigExport extends UserConfig {
   test: InlineConfig
 }
 
+console.log(JSON.stringify(pkg.version))
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -34,7 +36,7 @@ export default defineConfig({
     })
   ],
   define: {
-    __VERSION__: pkg.version
+    __VERSION__: `"${pkg.version}"`
   },
   optimizeDeps: {
     // TODO: try to provide ESM and remove the optimizeDeps
