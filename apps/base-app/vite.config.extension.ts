@@ -1,7 +1,6 @@
 /// <reference types="vite/client" />
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, type LibraryOptions } from 'vite'
-import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 const ENTRIES: Record<string, LibraryOptions> = {
   background: {
