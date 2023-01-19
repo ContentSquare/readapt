@@ -23,7 +23,7 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <div class="mx-auto max-w-screen-md p-2">
+  <div class="mx-auto max-w-screen-md p-2 text-base">
     <div class="text-2xl font-semibold">{{ t('SELECT_TEMPLATE.PLEASE_SELECT_A_TEMPLATE') }}</div>
     <div class="mt-3">{{ t('SELECT_TEMPLATE.CLICK_TO_MODIFY_OR_SELECT_TEMPLATE') }}</div>
     <div class="mt-3">

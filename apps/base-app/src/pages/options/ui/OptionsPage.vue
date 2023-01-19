@@ -34,7 +34,7 @@ const { settings, changeLanguage, updateSettings } = useFormSettings(selectedPro
 const close = async () => await useExtensionUtils().closeCurrentTab()
 </script>
 <template>
-  <div class="m-auto max-w-screen-lg p-2">
+  <div class="m-auto max-w-screen-lg p-2 text-base">
     <div class="mb-2 flex items-center bg-base-100">
       <div class="mr-4 text-2xl font-semibold">{{ $t('SETTINGS.PROFILE') }}:</div>
       <TextProfileEditDropdown class="w-60" v-model="selectedProfiledId" :settings="settings" />

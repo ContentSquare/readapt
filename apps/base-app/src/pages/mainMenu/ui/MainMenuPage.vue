@@ -45,7 +45,7 @@ const { version } = useVersion()
 </script>
 
 <template>
-  <div class="mx-auto w-full max-w-screen-sm p-2">
+  <div class="mx-auto w-full max-w-screen-sm p-2 text-base">
     <div class="flex items-center">
       <div class="w-1/3">
         <button class="btn-outline btn-secondary btn-sm btn" v-if="hasActiveProfile" @click="reset()" :disabled="!readaptEnabled">
