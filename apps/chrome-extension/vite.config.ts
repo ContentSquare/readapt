@@ -4,9 +4,7 @@ import { type UserConfig, defineConfig } from 'vite'
 import type { InlineConfig } from 'vitest'
 import vue2 from '@vitejs/plugin-vue2'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
-import dotenv from 'dotenv'
-
-dotenv.config()
+import pkg from './package.json'
 
 interface VitestConfigExport extends UserConfig {
   test: InlineConfig
@@ -36,7 +34,7 @@ export default defineConfig({
     })
   ],
   define: {
-    __VERSION__: process.env.VUE_APP_VERSION ?? '0.0.0'
+    __VERSION__: pkg.version
   },
   optimizeDeps: {
     // TODO: try to provide ESM and remove the optimizeDeps
