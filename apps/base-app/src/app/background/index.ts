@@ -98,9 +98,9 @@ chrome.storage.onChanged.addListener(async (changes) => {
     await useExtensionUtils().broadcastMessage('REFRESH')
   }
 
-  const matomoURL = '__MATOMO_URL'
-  if (matomoURL && hasEventChanged(changes)) {
-    await fetch(`${matomoURL}/matomo.php?idsite=1&action_name=adapt&rec=1`)
+  if (hasEventChanged(changes)) {
+    const matomoUrl = '__MATOMO_URL__' // Note: gets replaced with the actual value during build
+    await fetch(`${matomoUrl}/matomo.php?idsite=1&action_name=adapt&rec=1`)
   }
 })
 

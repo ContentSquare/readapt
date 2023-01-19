@@ -1,6 +1,9 @@
 /// <reference types="vite/client" />
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, type LibraryOptions } from 'vite'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const ENTRIES: Record<string, LibraryOptions> = {
   background: {
@@ -19,6 +22,9 @@ const ENTRIES: Record<string, LibraryOptions> = {
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: {
+    __MATOMO_URL__: process.env.VUE_APP_MATOMO_URL
+  },
   build: {
     emptyOutDir: false,
     commonjsOptions: {
