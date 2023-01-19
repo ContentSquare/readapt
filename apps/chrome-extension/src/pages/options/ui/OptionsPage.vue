@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
 
-import { CloseSettings } from '@readapt/shared-components'
 import { useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
 import { TextProfileEditDropdown } from '@/features/textProfileEditDropdown'
 import { TextProfileSaveButton } from '@/features/textProfileSaveButton'
@@ -15,6 +14,7 @@ import { TextSettingsFileDownload } from '@/features/textSettingsFileDownload'
 
 import { useExtensionUtils } from '@/shared/lib/extension'
 import { useRouter } from 'vue-router/composables'
+import { useI18n } from 'vue-i18n-composable'
 
 const router = useRouter()
 
@@ -32,6 +32,8 @@ onMounted(() => {
 const { settings, changeLanguage, updateSettings } = useFormSettings(selectedProfiledId)
 
 const close = async () => await useExtensionUtils().closeCurrentTab()
+
+const { t } = useI18n()
 </script>
 <template>
   <div class="m-auto max-w-screen-lg p-2 text-base">
@@ -49,8 +51,8 @@ const close = async () => await useExtensionUtils().closeCurrentTab()
         <div class="mt-auto flex flex-wrap justify-between">
           <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
           <TextProfileDeleteButton class="ml-3 mr-auto" v-model="selectedProfiledId" />
-          <!-- TODO: review dirty settings calculation -->
-          <CloseSettings :is-settings-dirty="false" @close-settings="close" />
+          <!-- TODO: add dirty settings calculation -->
+          <button class="btn-secondary btn-sm btn" @click="close">{{ t('SETTINGS.CLOSE') }}</button>
         </div>
       </div>
     </div>
