@@ -51,7 +51,7 @@ const profileNameExists = (profileName: string): boolean => {
 }
 </script>
 <template>
-  <button class="btn-primary btn-sm btn" @click="onClick">
+  <button class="btn-primary btn-sm btn" data-test-id="save" @click="onClick">
     {{ $t('SETTINGS.SAVE') }}
   </button>
 </template>
