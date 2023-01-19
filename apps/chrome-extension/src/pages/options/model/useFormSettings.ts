@@ -1,8 +1,7 @@
-import { computed, Ref, ref, watchEffect } from 'vue'
-import { Language, Settings } from '@readapt/settings'
-import { buildDefaultProfiles } from '@readapt/settings'
-import cloneDeep from 'lodash/cloneDeep'
-import { TextProfileId, useTextPreferences } from '@/entities/textPreferences'
+import { computed, ref, watchEffect, type Ref } from 'vue'
+import { buildDefaultProfiles, type Language, type Settings } from '@readapt/settings'
+import cloneDeep from 'lodash-es/cloneDeep'
+import { useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
 
 export function useFormSettings(selectedProfileId: Ref<TextProfileId | null>) {
   const settingsByLanguage = ref()
@@ -10,8 +9,9 @@ export function useFormSettings(selectedProfileId: Ref<TextProfileId | null>) {
   const { getProfileById } = useTextPreferences()
 
   const settings = computed(() => settingsByLanguage.value[language.value])
-  const setLanguage = (newLanguage: Language) => (language.value = newLanguage)
-  const updateSettings = <K extends keyof Settings>(key: K, value: Settings[K]) => {
+  const changeLanguage = (newLanguage: Language) => (language.value = newLanguage)
+
+  const updateSettings = <K extends keyof Settings>({ key, value }: { key: K; value: Settings[K] }) => {
     settings.value[key] = value
   }
 
@@ -28,5 +28,5 @@ export function useFormSettings(selectedProfileId: Ref<TextProfileId | null>) {
     }
   })
 
-  return { settings, language, setLanguage, updateSettings }
+  return { settings, changeLanguage, updateSettings }
 }

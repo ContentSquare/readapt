@@ -18,3 +18,5 @@ export function getQueryString(params?: Params): string {
   }
   return `?${queryParts.join('&')}`
 }
+
+Storage

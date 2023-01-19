@@ -1,4 +1,4 @@
-import { Settings } from '@readapt/settings'
+import type { Settings } from '@readapt/settings'
 import { textProfileFixture as profile } from '../textPreferencesFixtures'
 import { useTextPreferences } from './useTextPreferences'
 

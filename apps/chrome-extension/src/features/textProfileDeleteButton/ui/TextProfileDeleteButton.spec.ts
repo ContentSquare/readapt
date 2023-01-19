@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import TextProfileDeleteButton from './TextProfileDeleteButton.vue'
-import { textProfileFixture as profile, useTextPreferences, TextProfileId } from '@/entities/textPreferences'
+import { textProfileFixture as profile, useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
 import { mockAlert, mockConfirm } from '@/shared/test'
 
 describe('TextProfileDeleteButton', () => {
@@ -10,7 +10,7 @@ describe('TextProfileDeleteButton', () => {
 
   afterEach(() => {
     useTextPreferences().reset()
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 
   interface FactoryProps {

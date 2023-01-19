@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { useTextPreferences, TextProfileId } from '@/entities/textPreferences'
+import { useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
+import SvgIcon from '@/shared/ui/SvgIcon.vue'
 import { useI18n } from 'vue-i18n-composable'
 
 const { preferences, updateProfile, getProfileById } = useTextPreferences()
@@ -8,7 +9,10 @@ const props = defineProps<{ profileId: TextProfileId | null }>()
 const { t } = useI18n()
 
 const onClick = () => {
-  const profileName = getProfileById(props.profileId)?.name
+  let profileName = ''
+  if (props.profileId) {
+    profileName = getProfileById(props.profileId).name
+  }
   const newProfileName = prompt(t('SETTINGS.PROFILE_RENAME_TO'), profileName)
   if (!newProfileName) {
     return
@@ -29,18 +33,7 @@ const isNameUnique = (newProfileName: string) => {
 }
 </script>
 <template>
-  <span :title="t('SETTINGS.PROFILE_RENAME')" v-if="props.profileId" data-test-id="rename" @click="onClick">
-    <img class="text-profile-rename-button__edit-icon" src="/icons/edit.svg" />
-  </span>
+  <button class="btn-outline btn-secondary btn-sm btn" :title="t('SETTINGS.PROFILE_RENAME')" v-if="props.profileId" @click="onClick">
+    <SvgIcon id="edit" class="h-4 w-4 fill-current" />
+  </button>
 </template>
-
-<style lang="scss" scoped>
-.text-profile-rename-button {
-  cursor: pointer;
-
-  &__edit-icon {
-    width: 25px;
-    height: 24px;
-  }
-}
-</style>
