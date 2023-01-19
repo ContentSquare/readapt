@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, ref, watchEffect } from 'vue'
 
-import { useVersion } from '@readapt/shared-components'
+import { useVersion } from '@/shared/lib/useVersion'
 import { TextProfileActiveDropdown } from '@/features/textProfileActiveDropdown'
 import { useTextPreferences } from '@/entities/textPreferences'
 
@@ -41,7 +41,7 @@ const changeLocale = async (lang: 'en' | 'fr') => {
   await saveLocale(lang)
 }
 
-const { version } = useVersion()
+const version = useVersion()
 </script>
 
 <template>
