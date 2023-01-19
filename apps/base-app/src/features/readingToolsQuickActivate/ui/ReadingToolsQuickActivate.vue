@@ -39,25 +39,25 @@ watch(
       <table class="table w-full">
         <tbody>
           <tr>
-            <td class="w-40 font-semibold" rowspan="2">{{ $t('QUICK_ACTIVATE.SCREEN_MASK') }}</td>
-            <td>{{ $t('QUICK_ACTIVATE.THICKNESS') }}</td>
-            <td><RangeBar v-model="mask.thickness" :options="thicknessOptions" /></td>
+            <td class="w-40 p-3 font-semibold" rowspan="2">{{ $t('QUICK_ACTIVATE.SCREEN_MASK') }}</td>
+            <td class="p-3">{{ $t('QUICK_ACTIVATE.THICKNESS') }}</td>
+            <td class="p-3"><RangeBar v-model="mask.thickness" :options="thicknessOptions" /></td>
           </tr>
 
           <tr>
-            <td>{{ $t('QUICK_ACTIVATE.OPACITY') }}</td>
-            <td><RangeBar v-model="mask.opacity" :options="opacityOptions" /></td>
+            <td class="p-3">{{ $t('QUICK_ACTIVATE.OPACITY') }}</td>
+            <td class="p-3"><RangeBar v-model="mask.opacity" :options="opacityOptions" /></td>
           </tr>
 
           <tr>
-            <td class="w-40 border-b-0 bg-transparent font-semibold" rowspan="2">{{ $t('QUICK_ACTIVATE.READING_RULER') }}</td>
-            <td>{{ $t('QUICK_ACTIVATE.THICKNESS') }}</td>
-            <td><RangeBar v-model="ruler.thickness" :options="thicknessOptions" /></td>
+            <td class="w-40 border-b-0 bg-transparent p-3 font-semibold" rowspan="2">{{ $t('QUICK_ACTIVATE.READING_RULER') }}</td>
+            <td class="p-3">{{ $t('QUICK_ACTIVATE.THICKNESS') }}</td>
+            <td class="p-3"><RangeBar v-model="ruler.thickness" :options="thicknessOptions" /></td>
           </tr>
 
           <tr>
-            <td>{{ $t('QUICK_ACTIVATE.OPACITY') }}</td>
-            <td><RangeBar v-model="ruler.opacity" :options="opacityOptions" /></td>
+            <td class="p-3">{{ $t('QUICK_ACTIVATE.OPACITY') }}</td>
+            <td class="p-3"><RangeBar v-model="ruler.opacity" :options="opacityOptions" /></td>
           </tr>
         </tbody>
       </table>
