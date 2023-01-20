@@ -17,7 +17,10 @@ describe('singleToMultiProfileMigrate()', () => {
 
       await expectStorageStateToEqual(storage, {
         [STORAGE_KEY_V1]: undefined,
-        [STORAGE_KEY_V2]: undefined
+        [STORAGE_KEY_V2]: {
+          activeProfileId: null,
+          profiles: []
+        }
       })
     })
   })
