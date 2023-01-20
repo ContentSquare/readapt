@@ -1,8 +1,9 @@
+import type browser from 'webextension-polyfill'
 import type { SettingsReadingTool } from '@/entities/readingTools'
 import type { Router } from 'vue-router'
 
 export interface ChromeUtils {
-  getCurrentTab: () => Promise<chrome.tabs.Tab>
+  getCurrentTab: () => Promise<browser.Tabs.Tab>
   openOptionsPage: (params?: Record<string, string>, router?: Router) => Promise<void>
   openTemplates: (router?: Router) => Promise<void>
   closeCurrentTab: (router?: Router) => Promise<void>

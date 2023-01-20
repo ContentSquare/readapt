@@ -1,9 +1,10 @@
 import { type SettingsReadingTool, buildDefaultSettingsReadingTool } from '@/entities/readingTools'
 import type { Router } from 'vue-router'
+import type browser from 'webextension-polyfill'
 
-const getCurrentTab = async (): Promise<chrome.tabs.Tab> => {
+const getCurrentTab = async (): Promise<browser.Tabs.Tab> => {
   console.log('getCurrentTab mock')
-  return { id: 0 } as chrome.tabs.Tab
+  return { id: 0 } as browser.Tabs.Tab
 }
 
 const closeCurrentTab = async (router?: Router): Promise<void> => {
