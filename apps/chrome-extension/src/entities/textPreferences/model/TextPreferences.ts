@@ -1,4 +1,4 @@
-import { Settings } from '@readapt/settings'
+import type { Settings } from '@readapt/settings'
 
 export interface TextPreferences {
   activeProfileId: TextProfileId | null

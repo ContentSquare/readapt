@@ -1,17 +1,17 @@
-import { MemoryStorage } from '@/shared/storage'
+import { StorageMemory } from '@/shared/lib/storage'
 import { STORAGE_KEY_V1, STORAGE_KEY_V2 } from '../../../config/storage'
-import { StorageItems } from '@/shared/storage'
+import type { StorageItems } from '@/shared/lib/storage'
 import { singleToMultiProfileMigrate } from './singleToMultiProfilesMigrate'
 import { storageStateV1Fixture, storageStateV2Fixture } from '../textPreferencesStorageFixtures'
 
 describe('singleToMultiProfileMigrate()', () => {
-  const expectStorageStateToEqual = async (storage: MemoryStorage, expectedState: StorageItems): Promise<void> => {
+  const expectStorageStateToEqual = async (storage: StorageMemory, expectedState: StorageItems): Promise<void> => {
     expect(await storage.get([STORAGE_KEY_V1, STORAGE_KEY_V2])).toEqual(expectedState)
   }
 
   describe('when storage contains neither single nor multi profile', () => {
     it('should do nothing', async () => {
-      const storage = new MemoryStorage()
+      const storage = new StorageMemory()
 
       await singleToMultiProfileMigrate(storage)
 
@@ -28,7 +28,7 @@ describe('singleToMultiProfileMigrate()', () => {
         [STORAGE_KEY_V1]: storageStateV1Fixture,
         [STORAGE_KEY_V2]: storageStateV2Fixture
       }
-      const storage = new MemoryStorage(storageState)
+      const storage = new StorageMemory(storageState)
 
       await singleToMultiProfileMigrate(storage)
 
@@ -38,7 +38,7 @@ describe('singleToMultiProfileMigrate()', () => {
 
   describe('when storage contains single but no multi profile', () => {
     it('should create multi profile from single profile format', async () => {
-      const storage = new MemoryStorage({
+      const storage = new StorageMemory({
         [STORAGE_KEY_V1]: storageStateV1Fixture
       })
 

@@ -14,7 +14,7 @@ describe('TextProfileActiveDropdown', () => {
     setActiveProfileId(profiles[0].id)
 
     const wrapper = mount(TextProfileActiveDropdown)
-    const dropdown = wrapper.find<HTMLSelectElement>('[data-test-id=dropdown]')
+    const dropdown = wrapper.find<HTMLSelectElement>('select')
 
     return { wrapper, dropdown, preferences, setActiveProfileId }
   }
@@ -24,7 +24,7 @@ describe('TextProfileActiveDropdown', () => {
       const { dropdown } = factory()
 
       for (const profile of profiles) {
-        expect(dropdown.find(`[value="${profile.id}"]`).text()).toBe(profile.name)
+        expect(dropdown.find(`option[value="${profile.id}"]`).text()).toBe(profile.name)
       }
     })
   })
@@ -42,7 +42,7 @@ describe('TextProfileActiveDropdown', () => {
       it('should change the active profile', async () => {
         const { dropdown, preferences } = factory()
 
-        await dropdown.setValue(profiles[1].id)
+        await dropdown.setValue(profiles[1].id.toString())
 
         expect(preferences.activeProfileId).toBe(profiles[1].id)
       })

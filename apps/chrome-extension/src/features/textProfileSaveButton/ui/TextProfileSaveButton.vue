@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { useTextPreferences, TextProfileId } from '@/entities/textPreferences'
-import { Settings } from '@readapt/settings'
-import { BButton } from 'bootstrap-vue'
+import { useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
+import type { Settings } from '@readapt/settings'
 import { nextTick } from 'vue'
 import { useI18n } from 'vue-i18n-composable'
 
@@ -52,7 +51,7 @@ const profileNameExists = (profileName: string): boolean => {
 }
 </script>
 <template>
-  <b-button data-test-id="save" size="sm" variant="primary" @click="onClick">
+  <button class="btn-primary btn-sm btn" data-test-id="save" @click="onClick">
     {{ $t('SETTINGS.SAVE') }}
-  </b-button>
+  </button>
 </template>

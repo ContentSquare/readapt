@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { TextSettings } from '@/entities/textPreferences'
+import type { TextSettings } from '@/entities/textPreferences'
 
 const props = defineProps<{ settings: TextSettings }>()
 
@@ -11,5 +11,7 @@ const settingsFile = computed(() => {
 })
 </script>
 <template>
-  <a :href="settingsFile" data-test-id="anchor" download="settings.json" target="_blank">{{ $t('SETTINGS.DOWNLOAD_SETTINGS') }}</a>
+  <a class="btn-secondary btn-ghost btn-sm btn" :href="settingsFile" data-test-id="anchor" download="settings.json" target="_blank">{{
+    $t('SETTINGS.DOWNLOAD_SETTINGS')
+  }}</a>
 </template>
