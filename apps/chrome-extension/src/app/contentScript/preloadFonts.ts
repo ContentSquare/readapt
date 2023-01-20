@@ -1,8 +1,9 @@
-/* global chrome */
+import browser from 'webextension-polyfill'
+
 const preloadFont = (fontPath: string, type: string) => {
   const preloadLink = document.createElement('link')
   preloadLink.rel = 'preload'
-  preloadLink.href = chrome.runtime.getURL(fontPath)
+  preloadLink.href = browser.runtime.getURL(fontPath)
   preloadLink.as = 'font'
   preloadLink.type = type
   preloadLink.setAttribute('crossorigin', '')
