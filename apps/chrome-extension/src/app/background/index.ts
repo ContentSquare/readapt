@@ -6,7 +6,11 @@ import { STORAGE_KEY_V2 } from '@/entities/textPreferences/config/storage'
 browser.runtime.onInstalled.addListener(async () => {
   console.log('readapt installed or updated')
 
-  await textPreferencesStorageMigrate(chrome.storage.local)
+  const savedStorage = await browser.storage.sync.get(STORAGE_KEY_V2)
+
+  if (!savedStorage) {
+    await textPreferencesStorageMigrate(browser.storage.sync)
+  }
 
   const { enabled } = await browser.storage.sync.get('enabled')
   const isEnabled = enabled ?? true
