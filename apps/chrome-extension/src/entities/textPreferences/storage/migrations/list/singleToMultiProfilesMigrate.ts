@@ -4,6 +4,11 @@ import type { StorageType } from '@/shared/lib/storage'
 export async function singleToMultiProfileMigrate(storage: StorageType) {
   const { [STORAGE_KEY_V1]: storageStateV1 } = await storage.get(STORAGE_KEY_V1)
   if (!storageStateV1) {
+    const storageStateV2 = {
+      activeProfileId: null,
+      profiles: []
+    }
+    await storage.set({ [STORAGE_KEY_V2]: storageStateV2 })
     return
   }
   const storageStateV2 = {

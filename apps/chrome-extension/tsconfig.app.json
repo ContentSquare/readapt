@@ -9,9 +9,6 @@
       "esnext",
       "dom",
     ],
-    "types": [
-      "chrome", // TODO: Remove later (because base-app must not be concerned about chrome specifics)
-    ],
     "paths": {
       "@/*": ["./src/*"]
     }

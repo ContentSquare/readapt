@@ -1,22 +1,23 @@
 import { type SettingsReadingTool, buildDefaultSettingsReadingTool } from '@/entities/readingTools'
 import { getQueryString } from '@/shared/lib/url'
+import browser from 'webextension-polyfill'
 
-const getCurrentTab = async (): Promise<chrome.tabs.Tab> => {
+const getCurrentTab = async (): Promise<browser.Tabs.Tab> => {
   const queryOptions = { active: true, currentWindow: true }
-  const [tab] = await chrome.tabs.query(queryOptions)
+  const [tab] = await browser.tabs.query(queryOptions)
   return tab
 }
 
 const closeCurrentTab = async (): Promise<void> => {
   const tab = await getCurrentTab()
   if (tab?.id) {
-    await chrome.tabs.remove(tab.id)
+    await browser.tabs.remove(tab.id)
   }
 }
 
 const openOptionsPage = async (params?: Record<string, string>): Promise<void> => {
   try {
-    await chrome.tabs.create({
+    await browser.tabs.create({
       // TODO: use router as a single source of truth for URLs
       url: `index.html#/options${getQueryString(params)}`
     })
@@ -28,7 +29,7 @@ const openOptionsPage = async (params?: Record<string, string>): Promise<void> =
 const sendMessageToCurrentTab = async (message: unknown): Promise<void> => {
   try {
     const tab = await getCurrentTab()
-    await chrome.tabs.sendMessage(tab.id as number, message)
+    await browser.tabs.sendMessage(tab.id as number, message)
   } catch (e) {
     console.error(e)
   }
@@ -36,10 +37,10 @@ const sendMessageToCurrentTab = async (message: unknown): Promise<void> => {
 
 const broadcastMessage = async (message: unknown): Promise<void> => {
   try {
-    const tabs = await chrome.tabs.query({})
+    const tabs = await browser.tabs.query({})
     await Promise.all(
-      tabs.map((tab: chrome.tabs.Tab) => {
-        return chrome.tabs.sendMessage(tab.id as number, message)
+      tabs.map((tab: browser.Tabs.Tab) => {
+        return browser.tabs.sendMessage(tab.id as number, message)
       })
     )
   } catch (e) {
@@ -49,7 +50,7 @@ const broadcastMessage = async (message: unknown): Promise<void> => {
 
 const openTemplates = async (): Promise<void> => {
   try {
-    await chrome.tabs.create({
+    await browser.tabs.create({
       url: 'index.html#/templates'
     })
   } catch (e) {
@@ -58,38 +59,38 @@ const openTemplates = async (): Promise<void> => {
 }
 
 const saveLocale = async (locale: string): Promise<void> => {
-  await chrome.storage.sync.set({ locale })
+  await browser.storage.sync.set({ locale })
 }
 
 const getLocale = async (): Promise<string> => {
-  const { locale } = await chrome.storage.sync.get('locale')
+  const { locale } = await browser.storage.sync.get('locale')
   return locale
 }
 
 const saveEnabled = async (enabled: boolean): Promise<void> => {
-  await chrome.storage.sync.set({ enabled })
+  await browser.storage.sync.set({ enabled })
 }
 
 const getEnabled = async (): Promise<boolean> => {
-  const { enabled } = await chrome.storage.sync.get('enabled')
+  const { enabled } = await browser.storage.sync.get('enabled')
   return enabled ?? true
 }
 
 const saveMaskSettings = async (maskSettings: SettingsReadingTool) => {
-  await chrome.storage.sync.set({ maskSettings })
+  await browser.storage.sync.set({ maskSettings })
 }
 
 const getMaskSettings = async (): Promise<SettingsReadingTool> => {
-  const { maskSettings } = await chrome.storage.sync.get('maskSettings')
+  const { maskSettings } = await browser.storage.sync.get('maskSettings')
   return maskSettings ?? buildDefaultSettingsReadingTool()
 }
 
 const saveRuleSettings = async (ruleSettings: SettingsReadingTool) => {
-  await chrome.storage.sync.set({ ruleSettings })
+  await browser.storage.sync.set({ ruleSettings })
 }
 
 const getRuleSettings = async (): Promise<SettingsReadingTool> => {
-  const { ruleSettings } = await chrome.storage.sync.get('ruleSettings')
+  const { ruleSettings } = await browser.storage.sync.get('ruleSettings')
   return ruleSettings ?? buildDefaultSettingsReadingTool()
 }
 

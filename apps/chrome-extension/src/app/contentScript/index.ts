@@ -1,4 +1,4 @@
-/* global chrome */
+import browser from 'webextension-polyfill'
 import { ReadingToolsMask } from '@/features/readingToolsMask'
 import { ReadingToolsRuler } from '@/features/readingToolsRuler'
 
@@ -10,17 +10,17 @@ const mousePos = {
   y: 0
 }
 
-const originalElemsMap = new Map()
+const originalElementsMap = new Map()
 
 const cacheBody = () => {
   // cache original body if not saved
-  if (!originalElemsMap.get('body')) {
-    originalElemsMap.set('body', document.body.innerHTML)
+  if (!originalElementsMap.get('body')) {
+    originalElementsMap.set('body', document.body.innerHTML)
   }
 }
 
 const getExtensionEnabled = async (): Promise<boolean> => {
-  const { enabled } = await chrome.storage.sync.get('enabled')
+  const { enabled } = await browser.storage.sync.get('enabled')
   return enabled ?? true // enabled by default
 }
 
@@ -29,7 +29,7 @@ document.addEventListener('mousemove', (event) => {
   mousePos.y = event.clientY
 })
 
-chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+browser.runtime.onMessage.addListener(async (message) => {
   if (message === 'ADAPT') {
     const enabled = await getExtensionEnabled()
     if (!enabled) {
@@ -37,7 +37,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     }
 
     cacheBody()
-    document.body.innerHTML = originalElemsMap.get('body')
+    document.body.innerHTML = originalElementsMap.get('body')
     await adaptHtmlElement(document.body)
 
     // reading tools
@@ -48,53 +48,49 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       ReadingToolsMask.add()
     }
   }
-  sendResponse()
 })
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+browser.runtime.onMessage.addListener((message) => {
   if (message === 'DISABLE') {
-    const elements = Array.from(document.getElementsByClassName('readapt-chrome'))
+    const elements = Array.from(document.getElementsByClassName('readapt-extension'))
     elements.forEach((element) => {
-      element.classList.replace('readapt-chrome', 'readapt-disabled')
+      element.classList.replace('readapt-extension', 'readapt-disabled')
     })
 
     disableAdaptSelection()
     ReadingToolsMask.remove()
     ReadingToolsRuler.remove()
   }
-  sendResponse()
 })
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+browser.runtime.onMessage.addListener((message) => {
   if (message === 'ENABLE') {
     const elements = Array.from(document.getElementsByClassName('readapt-disabled'))
     elements.forEach((element) => {
-      element.classList.replace('readapt-disabled', 'readapt-chrome')
+      element.classList.replace('readapt-disabled', 'readapt-extension')
     })
 
     enableReadapt().catch(console.error)
   }
-  sendResponse()
 })
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+browser.runtime.onMessage.addListener((message) => {
   if (message === 'RESET') {
-    document.body.classList.remove('readapt-chrome')
+    document.body.classList.remove('readapt-extension')
 
-    const originalBody = originalElemsMap.get('body')
+    const originalBody = originalElementsMap.get('body')
     if (originalBody) {
       document.body.innerHTML = originalBody
     }
 
-    const styleElement = document.head.querySelector(`[data-readapt-style=chrome]`)
+    const styleElement = document.head.querySelector(`[data-readapt-style=extension]`)
     if (styleElement) {
       styleElement.remove()
     }
   }
-  sendResponse()
 })
 
-chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+browser.runtime.onMessage.addListener(async (message) => {
   if (message === 'REFRESH') {
     const enabled = await getExtensionEnabled()
     if (!enabled) {
@@ -106,25 +102,31 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     for (const element of adaptedElements) {
       // if has already adapted then revert before adapt
       const oldElemId = element.getAttribute('data-readapt-id') as string
-      element.innerHTML = originalElemsMap.get(oldElemId)
-      originalElemsMap.delete(oldElemId)
+      element.innerHTML = originalElementsMap.get(oldElemId)
+      originalElementsMap.delete(oldElemId)
       const originalHTML = element.innerHTML
 
       await adaptHtmlElement(element)
 
       const elemId = element.getAttribute('data-readapt-id')
-      originalElemsMap.set(elemId, originalHTML)
+      originalElementsMap.set(elemId, originalHTML)
     }
   }
-  sendResponse()
 })
 
 const requestSettings = async () => {
-  const { [TEXT_PREFERENCES_STORAGE_KEY]: preferences } = (await chrome.storage.local.get(TEXT_PREFERENCES_STORAGE_KEY)) as any
-  if (preferences && preferences.profiles.length > 0) {
-    const profile = preferences.profiles.find((profile: any) => profile.id === preferences.activeProfileId)
-    const result = profile?.settings
-    return result
+  try {
+    const { [TEXT_PREFERENCES_STORAGE_KEY]: preferences } = (await browser.storage.sync.get(TEXT_PREFERENCES_STORAGE_KEY)) as any
+    if (preferences && preferences.profiles.length > 0) {
+      console.log('requestSettings got preference')
+      const profile = preferences.profiles.find((profile: any) => profile.id === preferences.activeProfileId)
+      const result = profile?.settings
+      console.log('requestSettings end')
+      return result
+    }
+  } catch (error) {
+    console.error('Something went wrong when getting settings')
+    console.error(error)
   }
 }
 
@@ -161,15 +163,15 @@ const adaptElementEvent = async (event: Event) => {
   element.classList.remove('readapt-highlight')
 
   cacheBody()
-  document.body.classList.add('readapt-chrome')
+  document.body.classList.add('readapt-extension')
 
   // revert child elems
   const childElemsAdapted = element.querySelectorAll('[data-readapt-id]')
   childElemsAdapted.forEach((childElem) => {
     const childId = childElem.getAttribute('data-readapt-id')
-    childElem.innerHTML = originalElemsMap.get(childId)
+    childElem.innerHTML = originalElementsMap.get(childId)
     childElem.removeAttribute('data-readapt-id')
-    originalElemsMap.delete(childId)
+    originalElementsMap.delete(childId)
   })
 
   // if is adapted by their parent do nothing
@@ -180,7 +182,7 @@ const adaptElementEvent = async (event: Event) => {
   // if has already adapted then revert before adapt
   if (element.hasAttribute('data-readapt-id')) {
     const elemId = element.getAttribute('data-readapt-id')
-    element.innerHTML = originalElemsMap.get(elemId)
+    element.innerHTML = originalElementsMap.get(elemId)
   }
 
   const originalHTML = element.innerHTML
@@ -188,7 +190,7 @@ const adaptElementEvent = async (event: Event) => {
   await adaptHtmlElement(element)
 
   const elemId = element.getAttribute('data-readapt-id')
-  originalElemsMap.set(elemId, originalHTML)
+  originalElementsMap.set(elemId, originalHTML)
 }
 
 const adaptHtmlElement = async (element: HTMLElement): Promise<void> => {
@@ -197,15 +199,18 @@ const adaptHtmlElement = async (element: HTMLElement): Promise<void> => {
     const settings = await requestSettings()
     if (settings) {
       const visualEngine = await loadVisualEngine()
-      visualEngine.adaptHtmlElement(element, settings, 'chrome')
+      visualEngine.adaptHtmlElement(element, settings, 'extension')
     }
   } catch (error) {
-    console.error('Something went wrong when adapting element', element)
+    console.error('Something went wrong when adapting element')
     console.error(error)
   }
-  chrome.storage.local.set({ event: `adapt:${new Date().toISOString()}` }).catch(console.error)
 
-  document.body.classList.remove('readapt-loading')
+  browser.storage.sync.set({ event: `adapt:${new Date().toISOString()}` }).catch(console.error)
+
+  requestAnimationFrame(() => {
+    document.body.classList.remove('readapt-loading')
+  })
 }
 
 const highlightElement = (event: MouseEvent) => {
@@ -251,48 +256,43 @@ const deactivateHighlightElement = () => {
 }
 
 // READING TOOLS
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+browser.runtime.onMessage.addListener((message) => {
   if (message === 'ADD_MASK' && !ReadingToolsMask.state.enabled) {
     if (ReadingToolsRuler.state.enabled) {
       ReadingToolsRuler.remove()
     }
     ReadingToolsMask.add()
   }
-  sendResponse()
 })
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+browser.runtime.onMessage.addListener((message) => {
   if (message === 'ADD_RULER' && !ReadingToolsRuler.state.enabled) {
     if (ReadingToolsMask.state.enabled) {
       ReadingToolsMask.remove()
     }
     ReadingToolsRuler.add()
   }
-  sendResponse()
 })
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+browser.runtime.onMessage.addListener((message) => {
   if (message === 'RESET') {
     ReadingToolsMask.remove()
     ReadingToolsRuler.remove()
   }
-  sendResponse()
 })
 
-chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+browser.runtime.onMessage.addListener(async (message) => {
   if (message === 'UPDATE_MASK') {
-    const { maskSettings } = await chrome.storage.sync.get('maskSettings')
+    const { maskSettings } = await browser.storage.sync.get('maskSettings')
     ReadingToolsMask.updateSettings(mousePos.y, maskSettings)
   }
-  sendResponse()
 })
 
-chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+browser.runtime.onMessage.addListener(async (message) => {
   if (message === 'UPDATE_RULER') {
-    const { ruleSettings } = await chrome.storage.sync.get('ruleSettings')
+    const { ruleSettings } = await browser.storage.sync.get('ruleSettings')
     ReadingToolsRuler.updateSettings(ruleSettings)
   }
-  sendResponse()
 })
 
 document.addEventListener('keydown', (event) => {
@@ -322,8 +322,8 @@ document.addEventListener('visibilitychange', () => {
 const enableReadapt = async (): Promise<void> => {
   await enableAdaptSelection()
   await loadVisualEngine()
-  const { ruleSettings } = await chrome.storage.sync.get('ruleSettings')
+  const { ruleSettings } = await browser.storage.sync.get('ruleSettings')
   await ReadingToolsRuler.updateSettings(ruleSettings)
-  const { maskSettings } = await chrome.storage.sync.get('maskSettings')
+  const { maskSettings } = await browser.storage.sync.get('maskSettings')
   await ReadingToolsMask.updateSettings(mousePos.y, maskSettings)
 }

@@ -1,23 +1,24 @@
-/* global chrome  */
+import browser from 'webextension-polyfill'
 import { useExtensionUtils } from '@/shared/lib/extension'
 import { textPreferencesStorageMigrate, TEXT_PREFERENCES_STORAGE_KEY } from '@/entities/textPreferences'
+import { STORAGE_KEY_V2 } from '@/entities/textPreferences/config/storage'
 
-chrome.runtime.onInstalled.addListener(async () => {
+browser.runtime.onInstalled.addListener(async () => {
   console.log('readapt installed or updated')
 
   await textPreferencesStorageMigrate(chrome.storage.local)
 
-  const { enabled } = await chrome.storage.sync.get('enabled')
+  const { enabled } = await browser.storage.sync.get('enabled')
   const isEnabled = enabled ?? true
 
-  chrome.contextMenus.create({
+  browser.contextMenus.create({
     title: 'Readapt',
     contexts: ['all'],
     id: 'readaptMenu',
     documentUrlPatterns: ['https://*/*', 'http://*/*']
   })
 
-  chrome.contextMenus.create({
+  browser.contextMenus.create({
     title: 'Activate Readapt',
     contexts: ['all'],
     id: 'readaptActivateReadapt',
@@ -25,7 +26,7 @@ chrome.runtime.onInstalled.addListener(async () => {
     visible: !isEnabled
   })
 
-  // chrome.contextMenus.create({
+  // browser.contextMenus.create({
   //   title: 'Adapt whole page',
   //   contexts: ['all'],
   //   id: 'readaptMenuAdaptAction',
@@ -33,7 +34,7 @@ chrome.runtime.onInstalled.addListener(async () => {
   //   visible: isEnabled
   // })
 
-  chrome.contextMenus.create({
+  browser.contextMenus.create({
     title: 'Reset all text',
     contexts: ['all'],
     id: 'readaptMenuResetAction',
@@ -41,7 +42,7 @@ chrome.runtime.onInstalled.addListener(async () => {
     visible: isEnabled
   })
 
-  chrome.contextMenus.create({
+  browser.contextMenus.create({
     title: 'Activate mask',
     contexts: ['all'],
     id: 'readaptAddMask',
@@ -49,7 +50,7 @@ chrome.runtime.onInstalled.addListener(async () => {
     visible: isEnabled
   })
 
-  chrome.contextMenus.create({
+  browser.contextMenus.create({
     title: 'Activate ruler',
     contexts: ['all'],
     id: 'readaptAddRuler',
@@ -58,11 +59,11 @@ chrome.runtime.onInstalled.addListener(async () => {
   })
 })
 
-chrome.contextMenus.onClicked.addListener(async (info, tab) => {
+browser.contextMenus.onClicked.addListener(async (info, tab) => {
   let message
 
   if (info.menuItemId === 'readaptActivateReadapt') {
-    await chrome.storage.sync.set({ enabled: true })
+    await browser.storage.sync.set({ enabled: true })
     message = 'ENABLE'
   }
 
@@ -83,14 +84,14 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     return
   }
 
-  await chrome.tabs.sendMessage(tab.id as number, message)
+  await browser.tabs.sendMessage(tab.id as number, message)
 })
 
 declare const __MATOMO_URL__: string // __MATOMO_URL__ gets replaced with the actual value during build
 
-chrome.storage.onChanged.addListener(async (changes) => {
+browser.storage.onChanged.addListener(async (changes) => {
   if (hasEnabledChanged(changes)) {
-    const { enabled } = await chrome.storage.sync.get('enabled')
+    const { enabled } = await browser.storage.sync.get('enabled')
     const isEnabled = enabled ?? true
     switchEnabledContextMenu(isEnabled)
     return
@@ -105,7 +106,7 @@ chrome.storage.onChanged.addListener(async (changes) => {
   }
 })
 
-const hasEnabledChanged = (changes: { [p: string]: chrome.storage.StorageChange }): boolean => {
+const hasEnabledChanged = (changes: { [p: string]: browser.Storage.StorageChange }): boolean => {
   for (const [key] of Object.entries(changes)) {
     if (key === 'enabled') {
       return true
@@ -114,7 +115,7 @@ const hasEnabledChanged = (changes: { [p: string]: chrome.storage.StorageChange 
   return false
 }
 
-const hasEventChanged = (changes: { [p: string]: chrome.storage.StorageChange }): boolean => {
+const hasEventChanged = (changes: { [p: string]: browser.Storage.StorageChange }): boolean => {
   for (const [key] of Object.entries(changes)) {
     if (key === 'event') {
       return true
@@ -124,15 +125,15 @@ const hasEventChanged = (changes: { [p: string]: chrome.storage.StorageChange })
 }
 
 const switchEnabledContextMenu = (enabled: boolean): void => {
-  // chrome.contextMenus.update('readaptMenuAdaptAction', { visible: enabled })
-  chrome.contextMenus.update('readaptMenuResetAction', { visible: enabled })
-  chrome.contextMenus.update('readaptAddMask', { visible: enabled })
-  chrome.contextMenus.update('readaptAddRuler', { visible: enabled })
+  // browser.contextMenus.update('readaptMenuAdaptAction', { visible: enabled })
+  browser.contextMenus.update('readaptMenuResetAction', { visible: enabled })
+  browser.contextMenus.update('readaptAddMask', { visible: enabled })
+  browser.contextMenus.update('readaptAddRuler', { visible: enabled })
   // update activate readapt visibility
-  chrome.contextMenus.update('readaptActivateReadapt', { visible: !enabled })
+  browser.contextMenus.update('readaptActivateReadapt', { visible: !enabled })
 }
 
-const hasSettingsChanged = (changes: { [p: string]: chrome.storage.StorageChange }): boolean => {
+const hasSettingsChanged = (changes: { [p: string]: browser.Storage.StorageChange }): boolean => {
   for (const [key] of Object.entries(changes)) {
     if (key === TEXT_PREFERENCES_STORAGE_KEY) {
       return true
