@@ -1,0 +1,1 @@
+export { SettingsTableItem } from './settingsTableItem'
