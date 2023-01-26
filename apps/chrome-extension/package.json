@@ -34,7 +34,6 @@
     "@types/chrome": "^0.0.181",
     "@types/lodash-es": "^4.17.6",
     "@types/node": "^16.18.10",
-    "@vitejs/plugin-legacy": "^3.0.1",
     "@vitejs/plugin-vue2": "^2.2.0",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.2",
