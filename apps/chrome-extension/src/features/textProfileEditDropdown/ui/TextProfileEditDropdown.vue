@@ -3,7 +3,7 @@ import { useTextPreferences, type TextProfileId, type TextSettings } from '@/ent
 import { buildDefaultSettings } from '@readapt/settings'
 import isEqual from 'lodash-es/isEqual'
 import { toRefs } from 'vue'
-import { useI18n } from 'vue-i18n-composable'
+import { useI18n } from 'vue-i18n'
 
 const { preferences, getProfileById } = useTextPreferences()
 

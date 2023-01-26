@@ -5,8 +5,8 @@ import { useVersion } from '@/shared/lib/useVersion'
 import { TextProfileActiveDropdown } from '@/features/textProfileActiveDropdown'
 import { useTextPreferences } from '@/entities/textPreferences'
 
-import { useI18n } from 'vue-i18n-composable'
-import { useRouter } from 'vue-router/composables'
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 
 import { ReadingToolsQuickActivate } from '@/features/readingToolsQuickActivate'
 import { useExtensionUtils } from '@/shared/lib/extension'

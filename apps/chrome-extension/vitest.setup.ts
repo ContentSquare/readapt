@@ -10,7 +10,7 @@ vi.mock('vue', async () => {
   return Vue
 })
 
-vi.mock('vue-i18n-composable', () => {
+vi.mock('vue-i18n', () => {
   // TODO: try not to mock the i18n
   return {
     useI18n() {

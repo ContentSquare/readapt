@@ -5,7 +5,7 @@ import type { ColoredItem, ColoredOption, ColorOption } from '@readapt/settings'
 import { buildItemPreview } from '@readapt/visual-engine'
 import ColorPicker from '@/shared/ui/ColorPicker.vue'
 
-import { useI18n } from 'vue-i18n-composable'
+import { useI18n } from 'vue-i18n'
 import type { SettingsTableItem } from '../model/settingsTableItem'
 
 interface Props {

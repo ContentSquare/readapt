@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
-import { useI18n } from 'vue-i18n-composable'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
   value: TextProfileId | null

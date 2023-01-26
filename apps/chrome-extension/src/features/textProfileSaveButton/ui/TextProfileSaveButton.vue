@@ -2,7 +2,7 @@
 import { useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
 import type { Settings } from '@readapt/settings'
 import { nextTick } from 'vue'
-import { useI18n } from 'vue-i18n-composable'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
   value: TextProfileId | null

@@ -1,6 +1,4 @@
-import Vue from 'vue'
-import VueI18n from 'vue-i18n'
-import { createI18n } from 'vue-i18n-composable'
+import { createI18n } from 'vue-i18n'
 
 import en from './en.json'
 import fr from './fr.json'
@@ -8,8 +6,6 @@ import fr from './fr.json'
 import { useExtensionUtils } from '@/shared/lib/extension'
 
 export const withi18n = () => {
-  Vue.use(VueI18n)
-
   const messages = { en, fr }
 
   const getLang = () => (navigator.languages?.length ? navigator.languages[0] : navigator.language)

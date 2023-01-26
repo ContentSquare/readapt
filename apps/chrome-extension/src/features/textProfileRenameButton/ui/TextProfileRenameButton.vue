@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
 import SvgIcon from '@/shared/ui/SvgIcon.vue'
-import { useI18n } from 'vue-i18n-composable'
+import { useI18n } from 'vue-i18n'
 
 const { preferences, updateProfile, getProfileById } = useTextPreferences()
 

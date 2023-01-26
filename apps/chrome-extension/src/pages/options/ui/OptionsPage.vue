@@ -13,8 +13,8 @@ import { TextProfileForm } from '@/features/textProfileForm'
 import { TextSettingsFileDownload } from '@/features/textSettingsFileDownload'
 
 import { useExtensionUtils } from '@/shared/lib/extension'
-import { useRouter } from 'vue-router/composables'
-import { useI18n } from 'vue-i18n-composable'
+import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 

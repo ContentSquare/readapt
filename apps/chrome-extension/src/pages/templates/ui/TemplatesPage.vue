@@ -2,12 +2,12 @@
 import { ref } from 'vue'
 import type { Language } from '@readapt/settings'
 import { useExtensionUtils } from '@/shared/lib/extension'
-import { useRouter } from 'vue-router/composables'
+import { useRouter } from 'vue-router'
 import LanguageSelect from '@/shared/ui/LanguageSelect.vue'
 import type { TextProfileId } from '@/entities/textPreferences'
 import { useTemplatesByLanguage } from '@/entities/textSettingsTemplate'
 import { TextProfileCreateFromTemplate } from '@/features/textProfileCreateFromTemplate'
-import { useI18n } from 'vue-i18n-composable'
+import { useI18n } from 'vue-i18n'
 
 const language = ref<Language>('en')
 const templates = useTemplatesByLanguage(language)

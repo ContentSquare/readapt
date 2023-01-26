@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useI18n } from 'vue-i18n-composable'
+import { useI18n } from 'vue-i18n'
 import { type Settings, type Language, getLangConfig } from '@readapt/settings'
 import BaseTabs from '@/shared/ui/BaseTabs.vue'
 import TextProfileFormGeneralTab from './TextProfileFormGeneralTab.vue'

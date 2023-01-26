@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import SvgIcon from '@/shared/ui/SvgIcon.vue'
-import { useI18n } from 'vue-i18n-composable'
+import { useI18n } from 'vue-i18n'
 
 interface Props {
   options: { value: string; text: string }[]
