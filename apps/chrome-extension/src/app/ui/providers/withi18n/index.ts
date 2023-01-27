@@ -13,7 +13,8 @@ export const withi18n = () => {
   const i18n = createI18n({
     locale: getLang()?.substring(0, 2),
     fallbackLocale: 'en',
-    messages
+    messages,
+    legacy: false
   })
 
   const loadLocale = async () => {
