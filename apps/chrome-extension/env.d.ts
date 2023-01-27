@@ -5,4 +5,4 @@
 //   export default Vue
 // }
 
-declare module 'vue-sanitize'
+declare module 'vue-3-sanitize'
