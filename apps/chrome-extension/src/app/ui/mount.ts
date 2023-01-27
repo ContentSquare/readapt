@@ -1,22 +1,21 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import App from './ui/App.vue'
 
 import { withi18n } from './providers/withi18n'
 import { withRouter } from './providers/withRouter'
-import { withSanitize } from './providers/withSanitize'
-import { withVueConfig } from './providers/withVueConfig'
+import VueSanitize from 'vue-3-sanitize'
+// import { withVueConfig } from './providers/withVueConfig'
 
 import './styles/tailwind.scss'
 
 export const mountUI = async () => {
-  withVueConfig()
-  withSanitize()
   const { i18n } = withi18n()
   const { router } = withRouter()
 
-  new Vue({
-    i18n,
-    router,
-    render: (h) => h(App)
-  }).$mount('#app')
+  const app = createApp(App)
+  app.use(i18n)
+  app.use(router)
+  app.use(VueSanitize)
+
+  app.mount('#app')
 }
