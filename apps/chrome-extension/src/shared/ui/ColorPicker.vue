@@ -29,7 +29,7 @@ const selectColor = (value?: ColorOption): void => {
 
 <template>
   <div>
-    <button @click="openModal" class="btn-ghost btn" data-test-id="main-button">
+    <button class="btn-ghost btn" data-test-id="main-button" @click="openModal">
       <div v-if="value" data-test-id="colored-icon" class="h-8 w-8 rounded-full" :style="{ backgroundColor: value }" />
       <SvgIcon v-else id="forbidden" class="h-8 w-8" data-test-id="missing-color-icon" />
     </button>
@@ -37,21 +37,20 @@ const selectColor = (value?: ColorOption): void => {
       <div class="modal-box relative">
         <label class="btn-sm btn-circle btn absolute right-2 top-2" @click="closeModal">✕</label>
         <div class="flex flex-wrap">
-          <template v-for="color in colors">
+          <template v-for="color in colors" :key="color">
             <button
               class="btn-circle btn m-2"
               data-test-id="color-button"
-              :key="color"
               :style="{ backgroundColor: `${color}` }"
               :class="{ 'outline outline-offset-2 outline-4 outline-black': color === value }"
               @click="selectColor(color)"
             />
           </template>
           <button
-            @click="selectColor()"
             class="btn-ghost btn-circle btn m-2"
             :class="{ 'outline outline-offset-2 outline-4 outline-black': !value }"
             data-test-id="missing-color-button"
+            @click="selectColor()"
           >
             <SvgIcon id="forbidden" class="h-full w-full" />
           </button>

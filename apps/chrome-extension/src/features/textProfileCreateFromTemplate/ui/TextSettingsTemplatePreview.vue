@@ -31,8 +31,8 @@ const { t } = useI18n()
     </div>
 
     <ul class="list-disc pl-4">
-      <template v-for="description of template.descriptions">
-        <li :key="description">{{ description }}</li>
+      <template v-for="description of template.descriptions" :key="description">
+        <li>{{ description }}</li>
       </template>
     </ul>
 
