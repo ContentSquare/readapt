@@ -8,7 +8,7 @@ import ColorPicker from '@/shared/ui/ColorPicker.vue'
 import { useI18n } from 'vue-i18n'
 import type { SettingsTableItem } from '../model/settingsTableItem'
 
-interface Props {
+type Props = {
   tableLabel: string
   switchAllLabel: string
   allItemsActive: boolean
@@ -18,8 +18,8 @@ interface Props {
 const props = defineProps<Props>()
 
 interface Emits {
-  (event: 'update-items', value: unknown)
-  (event: 'update-active', value: boolean)
+  (event: 'update-items', value: unknown): void
+  (event: 'update-active', value: boolean): void
 }
 const emit = defineEmits<Emits>()
 
@@ -69,7 +69,7 @@ const switchActive = (itemKey: string): void => {
   updateOption(items)
 }
 
-const setColor = (itemKey: string, color: ColorOption): void => {
+const setColor = (itemKey: string, color: ColorOption | undefined): void => {
   const items = props.items.slice()
   const index = items.findIndex(({ key }) => key === itemKey)
   if (index === -1) {
@@ -91,7 +91,7 @@ const setColor = (itemKey: string, color: ColorOption): void => {
       <table class="table-zebra table-compact table w-full">
         <thead>
           <tr>
-            <th class="sticky top-0" v-for="{ key, label } in tableFields" :key="key">{{ label }}</th>
+            <th v-for="{ key, label } in tableFields" :key="key" class="sticky top-0">{{ label }}</th>
           </tr>
         </thead>
         <tbody>
@@ -104,7 +104,7 @@ const setColor = (itemKey: string, color: ColorOption): void => {
                 <div v-html="tableItem.example" />
               </template>
               <template v-else-if="key === 'color'">
-                <ColorPicker :value="tableItem.color" @selectColor="setColor(tableItem.key, $event)" />
+                <ColorPicker :value="tableItem.color" @select-color="setColor(tableItem.key, $event)" />
               </template>
               <template v-else-if="key === 'bold'">
                 <input type="checkbox" class="checkbox checkbox-sm" :checked="tableItem.bold" @change="switchBold(tableItem.key)" />

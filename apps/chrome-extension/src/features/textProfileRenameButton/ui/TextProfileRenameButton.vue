@@ -14,7 +14,7 @@ const onClick = () => {
     profileName = getProfileById(props.profileId).name
   }
   const newProfileName = prompt(t('SETTINGS.PROFILE_RENAME_TO'), profileName)
-  if (!newProfileName) {
+  if (!newProfileName || !props.profileId) {
     return
   }
   if (isNameUnique(newProfileName)) {
@@ -33,7 +33,7 @@ const isNameUnique = (newProfileName: string) => {
 }
 </script>
 <template>
-  <button class="btn-outline btn-secondary btn-sm btn" :title="t('SETTINGS.PROFILE_RENAME')" v-if="props.profileId" @click="onClick">
+  <button v-if="props.profileId" class="btn-outline btn-secondary btn-sm btn" :title="t('SETTINGS.PROFILE_RENAME')" @click="onClick">
     <SvgIcon id="edit" class="h-4 w-4 fill-current" />
   </button>
 </template>
