@@ -5,22 +5,24 @@ import { nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
-  value: TextProfileId | null
+  modelValue: TextProfileId | null
   settings: Settings
 }>()
 
 const emit = defineEmits<{
-  (event: 'input', profileId: TextProfileId | null): void
+  (event: 'update:modelValue', profileId: TextProfileId | null): void
 }>()
 
-const onClick = () => (props.value ? update() : create())
+const onClick = () => (props.modelValue ? update() : create())
 
 const { preferences, createProfile, updateProfile } = useTextPreferences()
 const { t } = useI18n()
 
 const update = () => {
-  updateProfile(props.value, { settings: props.settings })
-  alert(t('SETTINGS.PROFILE_UPDATED'))
+  if (props.modelValue) {
+    updateProfile(props.modelValue, { settings: props.settings })
+    alert(t('SETTINGS.PROFILE_UPDATED'))
+  }
 }
 
 const create = async () => {
@@ -42,7 +44,7 @@ const create = async () => {
     name: newProfileName
   })
   await nextTick()
-  emit('input', newProfileId)
+  emit('update:modelValue', newProfileId)
   alert(t('SETTINGS.PROFILE_CREATED'))
 }
 

@@ -8,28 +8,29 @@ import { useI18n } from 'vue-i18n'
 const { preferences, getProfileById } = useTextPreferences()
 
 const props = defineProps<{
-  value: TextProfileId | null
+  modelValue: TextProfileId | null
   settings: TextSettings
 }>()
-const { value, settings } = toRefs(props)
+const { modelValue, settings } = toRefs(props)
 
 const emit = defineEmits<{
-  (event: 'input', profileId: TextProfileId | null): void
+  (event: 'update:modelValue', profileId: TextProfileId | null): void
 }>()
 
 const onChange = (event: Event) => {
+  const target = event.target as HTMLSelectElement
   if (validateUnsavedChanges()) {
-    const profileId = event.target.value ? parseInt(event.target.value) : null
-    emit('input', profileId)
+    const profileId = target.value ? parseInt(target.value) : null
+    emit('update:modelValue', profileId)
   } else {
-    event.target.value = String(props.value ?? '')
+    target.value = String(props.modelValue ?? '')
   }
 }
 
 const { t } = useI18n()
 
 const validateUnsavedChanges = () => {
-  const defaultSettings = value.value ? getProfileById(value.value)?.settings : buildDefaultSettings('en')
+  const defaultSettings = modelValue.value ? getProfileById(modelValue.value)?.settings : buildDefaultSettings('en')
   if (defaultSettings && isEqual(defaultSettings, settings.value)) {
     return true
   }
@@ -37,7 +38,7 @@ const validateUnsavedChanges = () => {
 }
 </script>
 <template>
-  <select class="select-secondary select select-sm" :value="value" @change="onChange">
+  <select class="select-secondary select select-sm" :value="modelValue" @change="onChange">
     <option value="">{{ t('SETTINGS.PROFILE_NEW') }}</option>
     <option v-for="{ name, id } in preferences.profiles" :key="id" :value="id">
       {{ name }}

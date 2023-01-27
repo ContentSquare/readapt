@@ -22,10 +22,11 @@ const { preferences } = useTextPreferences()
 // TODO: extract profile selection into a composable
 const selectedProfiledId = ref<TextProfileId | null>(null)
 onMounted(() => {
-  if ('editActiveProfile' in router.currentRoute.query) {
+  const { query } = router.currentRoute.value
+  if ('editActiveProfile' in query) {
     selectedProfiledId.value = preferences.activeProfileId
-  } else if ('profileId' in router.currentRoute.query) {
-    selectedProfiledId.value = parseInt(router.currentRoute.query.profileId)
+  } else if ('profileId' in query) {
+    selectedProfiledId.value = parseInt(String(query.profileId))
   }
 })
 
@@ -39,7 +40,7 @@ const { t } = useI18n()
   <div class="m-auto max-w-screen-lg p-2 text-base">
     <div class="mb-2 flex items-center bg-base-100">
       <div class="mr-4 text-2xl font-semibold">{{ $t('SETTINGS.PROFILE') }}:</div>
-      <TextProfileEditDropdown class="w-60" v-model="selectedProfiledId" :settings="settings" />
+      <TextProfileEditDropdown v-model="selectedProfiledId" class="w-60" :settings="settings" />
       <TextProfileRenameButton class="ml-3" :profile-id="selectedProfiledId" />
       <TextSettingsFileDownload class="ml-auto" :settings="settings" />
     </div>
@@ -50,7 +51,7 @@ const { t } = useI18n()
         <TextSettingsAdaptationPreview class="h-items-settings overflow-scroll" :settings="settings" />
         <div class="mt-auto flex flex-wrap justify-between">
           <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
-          <TextProfileDeleteButton class="ml-3 mr-auto" v-model="selectedProfiledId" />
+          <TextProfileDeleteButton v-model="selectedProfiledId" class="ml-3 mr-auto" />
           <!-- TODO: add dirty settings calculation -->
           <button class="btn-secondary btn-sm btn" @click="close">{{ t('SETTINGS.CLOSE') }}</button>
         </div>
