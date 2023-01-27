@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-import { type TextSettingsTemplate } from '@/entities/textSettingsTemplate'
+import type { TextSettingsTemplate } from '@/entities/textSettingsTemplate'
 import type { TextSettings, TextProfileId } from '@/entities/textPreferences'
 import TextSettingsTemplatePreview from './TextSettingsTemplatePreview.vue'
 import { useCreateTextProfileFromTemplate } from '../model/useCreateProfileFromTemplate'
 
-interface Props {
+type Props = {
   templates: TextSettingsTemplate[]
 }
 defineProps<Props>()
 
 interface Emits {
-  (event: 'created', value: TextProfileId)
+  (event: 'created', value: TextProfileId): void
 }
 const emit = defineEmits<Emits>()
 
@@ -24,7 +24,7 @@ const onModify = (settings: TextSettings) => {
 <template>
   <div class="grid grid-cols-2 gap-2">
     <div v-for="template in templates" :key="template.value">
-      <TextSettingsTemplatePreview @modify="onModify" class="h-full" :template="template" data-test-id="preview" />
+      <TextSettingsTemplatePreview class="h-full" :template="template" data-test-id="preview" @modify="onModify" />
     </div>
   </div>
 </template>

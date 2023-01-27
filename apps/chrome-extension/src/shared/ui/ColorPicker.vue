@@ -3,9 +3,9 @@ import { ref } from 'vue'
 import { type ColorOption, colors } from '@readapt/settings'
 import SvgIcon from '@/shared/ui/SvgIcon.vue'
 
-interface Props {
-  value?: string
-  colors?: ColorOption[]
+type Props = {
+  value: string
+  colors?: readonly ColorOption[]
 }
 withDefaults(defineProps<Props>(), {
   value: '',
@@ -13,7 +13,7 @@ withDefaults(defineProps<Props>(), {
 })
 
 interface Emits {
-  (event: 'selectColor', value?: ColorOption)
+  (event: 'selectColor', value?: ColorOption): void
 }
 const emit = defineEmits<Emits>()
 

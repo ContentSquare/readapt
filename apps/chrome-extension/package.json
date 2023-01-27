@@ -11,7 +11,7 @@
     "build-ui": "vite build",
     "build-background": "ENTRY=background vite build -c vite.config.extension.ts",
     "build-contentscript": "ENTRY=contentscript vite build -c vite.config.extension.ts",
-    "type-check": "tsc --noEmit -p tsconfig.vitest.json --composite false",
+    "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "package": "scripts/package-release",
     "clean": "shx rm -rf dist",

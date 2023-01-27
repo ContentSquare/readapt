@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 
-type IconId = 'edit'
+type IconId = string
 const props = defineProps<{ id: IconId }>()
 
 const FRAGMENTS_URL = '/icons/fragments.svg'
