@@ -1,0 +1,51 @@
+name: Deploy packages
+description: Deploy packages to NPM
+
+inputs:
+  version:
+    description: Bumped version
+    required: true
+  npm_token:
+    description: NPM Token
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: ./.github/actions/setup
+      with:
+        version: ${{ inputs.version }}
+
+    - uses: ./.github/actions/cache-dependencies
+
+    - uses: ./.github/actions/cache-build
+
+    - uses: ./.github/actions/cache-packages
+      with:
+        version: ${{ inputs.version }}
+
+    - uses: JS-DevTools/npm-publish@v1
+      with:
+        token: ${{ inputs.npm_token }}
+        package: ./packages/dictionaries/package.json
+
+    - uses: JS-DevTools/npm-publish@v1
+      with:
+        token: ${{ inputs.npm_token }}
+        package: ./packages/settings/package.json
+
+    - uses: JS-DevTools/npm-publish@v1
+      with:
+        token: ${{ inputs.npm_token }}
+        package: ./packages/shared-components/package.json
+
+    - uses: JS-DevTools/npm-publish@v1
+      with:
+        token: ${{ inputs.npm_token }}
+        package: ./packages/text-engine/package.json
+
+    - uses: JS-DevTools/npm-publish@v1
+      with:
+        token: ${{ inputs.npm_token }}
+        package: ./packages/visual-engine/package.json
+

@@ -12,5 +12,7 @@ runs:
     - name: Cache Packages
       uses: actions/cache@v3
       with:
-        path: ./apps/chrome-extension/dist/readapt-chrome-extension-v${{ inputs.version }}.zip
+        path: |
+          ./apps/chrome-extension/dist/readapt-chrome-extension-v${{ inputs.version }}.zip
+          ./apps/safari-extension/dist/Application/Readapt.app
         key: cache-packages-${{ github.sha }}

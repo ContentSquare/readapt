@@ -25,10 +25,7 @@ runs:
       run: yarn lerna version ${{ inputs.version }} -y --no-git-tag-version
 
     - shell: bash
-      run: ls ./apps/chrome-extension
+      run: yarn package-chrome-extension
 
     - shell: bash
-      run: ls ./apps/chrome-extension/dist
-
-    - shell: bash
-      run: cd ./apps/chrome-extension && yarn package
+      run: yarn package-safari-extension
