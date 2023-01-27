@@ -36,8 +36,11 @@ jobs:
 
   build:
     needs: bootstrap
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
       - uses: actions/checkout@v3
       - uses: ./.github/actions/build
         with:
@@ -55,8 +58,11 @@ jobs:
 
   package:
     needs: [lint, build]
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
       - uses: actions/checkout@v3
       - uses: ./.github/actions/package
         with:

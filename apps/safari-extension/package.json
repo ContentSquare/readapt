@@ -1,0 +1,12 @@
+{
+	"name": "safari-extension",
+	"version": "1.7.1",
+	"private": true,
+	"scripts": {
+		"build": "yarn update-version && yarn build-project",
+		"package": "yarn update-version && yarn package-project",
+		"build-project": "xcodebuild -project ./Readapt.xcodeproj -scheme 'Readapt (macOS)' DSTROOT='./dist' clean build",
+		"package-project": "xcodebuild -project ./Readapt.xcodeproj -scheme 'Readapt (macOS)' DSTROOT='./dist' clean build archive",
+    "update-version": "node scripts/update-version"
+	}
+}

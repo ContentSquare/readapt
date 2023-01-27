@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+
+const { execSync } = require('child_process')
+const path = require('path')
+const pkg = require('../package.json')
+
+const CONFIG_FILE_PATH = path.join(__dirname, '../Config.xcconfig')
+
+execSync(`echo "CURRENT_PROJECT_VERSION = ${pkg.version};" > ${CONFIG_FILE_PATH}`)
+execSync(`echo "MARKETING_VERSION = ${pkg.version};" >> ${CONFIG_FILE_PATH}`)
