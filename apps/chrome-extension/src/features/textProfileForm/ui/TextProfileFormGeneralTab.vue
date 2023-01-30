@@ -163,7 +163,12 @@ watch(
             </div>
           </td>
           <td>
-            <RangeBar :value="settings.syllableOpacity" :options="opacityOptions" @input="emitUpdate({ key: 'syllableOpacity', value: $event })" />
+            <RangeBar
+              class="w-28 lg:w-52"
+              :value="settings.syllableOpacity"
+              :options="opacityOptions"
+              @input="emitUpdate({ key: 'syllableOpacity', value: $event })"
+            />
           </td>
           <td>
             <input type="checkbox" class="toggle" :checked="settings.syllableActive" @input="emitUpdateToggled({ key: 'syllableActive' })" />
@@ -174,7 +179,7 @@ watch(
           <td />
           <td>
             <RangeBar
-              class="w-52"
+              class="w-28 lg:w-52"
               :disabled="settings.language === 'en'"
               :value="settings.liaisonsOpacity"
               :options="opacityOptions"
@@ -190,7 +195,7 @@ watch(
           <td />
           <td>
             <RangeBar
-              class="w-52"
+              class="w-28 lg:w-52"
               :value="settings.silentLetterOpacity"
               :options="silentLetterOpacityOptions"
               @input="emitUpdate({ key: 'silentLetterOpacity', value: $event })"
@@ -206,7 +211,7 @@ watch(
           <td />
           <td>
             <RangeBar
-              class="w-52"
+              class="w-28 lg:w-52"
               :value="settings.shadeAlternateLinesOpacity"
               :options="opacityOptions"
               @input="emitUpdate({ key: 'shadeAlternateLinesOpacity', value: $event })"

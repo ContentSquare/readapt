@@ -44,7 +44,7 @@ const { t } = useI18n()
       <TextSettingsFileDownload class="ml-auto" :settings="settings" />
     </div>
     <div class="flex">
-      <TextProfileForm class="w-2/3 min-w-[850px]" :settings="settings" @update-settings="updateSettings" @change-language="changeLanguage" />
+      <TextProfileForm class="w-2/3 min-w-[730px]" :settings="settings" @update-settings="updateSettings" @change-language="changeLanguage" />
       <div class="flex w-1/3 flex-1 flex-col pl-4 pt-10">
         <div class="text-2xl font-semibold">{{ $t('SETTINGS.TEXT_PREVIEW') }}</div>
         <TextSettingsAdaptationPreview class="h-items-settings overflow-scroll" :settings="settings" />
