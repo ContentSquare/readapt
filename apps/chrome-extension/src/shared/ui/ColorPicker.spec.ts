@@ -7,7 +7,7 @@ describe('ColorPicker', () => {
 
   const factory = ({ value = color } = {}) => {
     const wrapper = mount(ColorPicker, {
-      propsData: {
+      props: {
         value
       }
     })

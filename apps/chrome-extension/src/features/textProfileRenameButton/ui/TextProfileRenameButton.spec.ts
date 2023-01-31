@@ -22,7 +22,7 @@ describe('TextProfileRenameButton', () => {
   const factory = ({ profileId, newProfileName = '' }: FactoryProps) => {
     mockPrompt(newProfileName)
     const wrapper = mount(TextProfileRenameButton, {
-      propsData: { profileId }
+      props: { profileId }
     })
 
     const rename = async () => await wrapper.find('button').trigger('click')

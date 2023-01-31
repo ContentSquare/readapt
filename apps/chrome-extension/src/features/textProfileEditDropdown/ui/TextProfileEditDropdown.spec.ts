@@ -21,7 +21,7 @@ describe('TextProfileEditDropdown', () => {
   const factory = ({ value = profile.id, settings = profile.settings, confirmResult = true }: FactoryProps = {}) => {
     mockConfirm(confirmResult)
     const wrapper = mount(TextProfileEditDropdown, {
-      propsData: {
+      props: {
         value,
         settings
       }

@@ -22,7 +22,7 @@ describe('TextProfileDeleteButton', () => {
     mockAlert()
     mockConfirm(confirmValue)
     const wrapper = mount(TextProfileDeleteButton, {
-      propsData: { value },
+      props: { value },
       mocks: {
         $t: (value: string) => value
       }

@@ -5,7 +5,7 @@ import { type Language, languageOptions } from '@readapt/settings'
 describe('LanguageSelect', () => {
   const factory = ({ value = 'en' } = {}) => {
     const wrapper = mount(LanguageSelect, {
-      propsData: {
+      props: {
         value
       }
     })

@@ -27,7 +27,7 @@ describe('TextProfileCreateFromTemplate', () => {
 
   const factory = () => {
     const wrapper = shallowMount(TextProfileCreateFromTemplate, {
-      propsData: { templates }
+      props: { templates }
     })
 
     const previews = wrapper.findAll('[data-test-id=preview]')

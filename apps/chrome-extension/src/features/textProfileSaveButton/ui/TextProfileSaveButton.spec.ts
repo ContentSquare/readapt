@@ -20,7 +20,7 @@ describe('TextProfileSaveButton', () => {
         mockPrompt(newProfileName)
 
         const wrapper = mount(TextProfileSave, {
-          propsData: {
+          props: {
             value: null,
             settings
           },
@@ -161,7 +161,7 @@ describe('TextProfileSaveButton', () => {
 
       const editProfileFactory = () => {
         const wrapper = mount(TextProfileSave, {
-          propsData: {
+          props: {
             value: profile.id,
             settings: newSettings
           },

@@ -8,7 +8,7 @@ describe('TextProfileForm', () => {
 
   const factory = () => {
     const wrapper = shallowMount(TextProfileForm, {
-      propsData: {
+      props: {
         settings
       }
     })

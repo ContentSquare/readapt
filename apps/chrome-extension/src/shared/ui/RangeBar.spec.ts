@@ -3,7 +3,7 @@ import RangeBar from './RangeBar.vue'
 import type { Option } from '@readapt/settings'
 
 describe('RangeBar', () => {
-  const factory = (propsData: { steps?: boolean } = {}) => {
+  const factory = (props: { steps?: boolean } = {}) => {
     const options: Option<string>[] = [
       { value: '10', text: 'Ten' },
       { value: '20', text: 'Twenty' },
@@ -11,10 +11,10 @@ describe('RangeBar', () => {
     ]
 
     const wrapper = mount(RangeBar, {
-      propsData: {
+      props: {
         options,
         value: '20',
-        ...propsData
+        ...props
       }
     })
     const input = wrapper.find<HTMLInputElement>('input')

@@ -5,7 +5,7 @@ describe('BaseTabs', () => {
   const factory = () => {
     const names = ['Tab 1', 'Tab 2']
     const wrapper = mount(BaseTabs, {
-      propsData: {
+      props: {
         names,
         value: 1
       }

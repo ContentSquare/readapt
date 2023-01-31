@@ -4,7 +4,7 @@ import SelectPercentage from './SelectPercentage.vue'
 describe('SelectPercentage', () => {
   const factory = ({ value }: { value: string }) => {
     const wrapper = mount(SelectPercentage, {
-      propsData: {
+      props: {
         options: [
           { value: '1', text: 'option-one' },
           { value: '2', text: 'option-two' },

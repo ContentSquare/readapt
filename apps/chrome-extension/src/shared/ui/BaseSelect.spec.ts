@@ -11,7 +11,7 @@ describe('BaseButton', () => {
   }
   const factory = ({ value = '' }: FactoryProps = {}) => {
     const wrapper = mount(BaseSelect, {
-      propsData: { value, options }
+      props: { value, options }
     })
     const select = wrapper.find<HTMLSelectElement>('select')
 
