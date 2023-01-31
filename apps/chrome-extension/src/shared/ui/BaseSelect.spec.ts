@@ -1,11 +1,12 @@
 import BaseSelect from './BaseSelect.vue'
 import { mount } from '@vue/test-utils'
 
-describe('BaseButton', () => {
+describe('BaseSelect', () => {
   const options = [
     { value: '10', text: 'Ten' },
     { value: '20', text: 'Twenty' }
   ]
+
   interface FactoryProps {
     modelValue?: string
   }
@@ -29,7 +30,7 @@ describe('BaseButton', () => {
       const { select } = factory()
 
       options.forEach(({ value, text }) => {
-        expect(select.find(`option[value=${value}]`).text()).toBe(text)
+        expect(select.find(`option[value="${value}"]`).text()).toBe(text)
       })
     })
   })
@@ -42,13 +43,13 @@ describe('BaseButton', () => {
   })
 
   describe('when an option is selected', () => {
-    it('should emit "input"', () => {
+    it('should emit "update:modelValue"', () => {
       const modelValue = '20'
       const { wrapper, select } = factory({ modelValue })
 
       select.setValue(modelValue)
 
-      expect(wrapper.emitted('input')).toEqual([[modelValue]])
+      expect(wrapper.emitted('update:modelValue')).toEqual([[modelValue]])
     })
   })
 })

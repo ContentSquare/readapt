@@ -32,13 +32,13 @@ describe('LanguageSelect', () => {
   })
 
   describe('when language changes', () => {
-    it('should emit "input " with the new language', async () => {
+    it('should emit "update:modelValue " with the new language', async () => {
       const newLanguage: Language = 'fr'
       const { wrapper, select } = factory()
 
       await select.setValue(newLanguage)
 
-      expect(wrapper.emitted('input')).toEqual([[newLanguage]])
+      expect(wrapper.emitted('update:modelValue')).toEqual([[newLanguage]])
     })
   })
 })

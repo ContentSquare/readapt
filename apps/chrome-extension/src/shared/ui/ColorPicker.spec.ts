@@ -19,10 +19,11 @@ describe('ColorPicker', () => {
 
   describe('when "value" is a color', () => {
     it('should color main button by "value" color', () => {
+      const colorRgb = 'rgb(95, 162, 206)' // of #5fa2ce
       const { wrapper } = factory()
 
       const coloredIconElement = wrapper.find<HTMLDivElement>('[data-test-id=colored-icon]').element
-      expect(coloredIconElement.style.backgroundColor).toBe(color)
+      expect(coloredIconElement.style.backgroundColor).toBe(colorRgb)
     })
   })
 

@@ -51,7 +51,7 @@ export default defineConfig({
   test: {
     setupFiles: [path.resolve(__dirname, './vitest.setup.ts')],
     globals: true,
-    environment: 'happy-dom'
+    environment: 'jsdom'
   },
   resolve: {
     // change config
