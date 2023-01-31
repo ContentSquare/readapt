@@ -16,12 +16,16 @@ const tabNames = [t('SETTINGS.GENERAL_SETTINGS'), t('SETTINGS.PHONEME_SETTINGS')
 
 const activeTabIndex = ref(0)
 
+type Entry = {
+  key: string
+  value: unknown
+}
 interface Emits {
-  (event: 'update-settings', value: unknown): void
+  (event: 'update-settings', value: Entry): void
   (event: 'change-language', value: Language): void
 }
 const emit = defineEmits<Emits>()
-const emitUpdateSettings = (event: unknown) => emit('update-settings', event)
+const emitUpdateSettings = (event: Entry) => emit('update-settings', event)
 const emitChangeLanguage = (language: Language) => emit('change-language', language)
 
 const languageConfig = computed(() => getLangConfig(props.settings.language))

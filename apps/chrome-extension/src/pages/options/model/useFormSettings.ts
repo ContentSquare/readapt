@@ -11,7 +11,7 @@ export function useFormSettings(selectedProfileId: Ref<TextProfileId | null>) {
   const settings = computed(() => settingsByLanguage.value[language.value])
   const changeLanguage = (newLanguage: Language) => (language.value = newLanguage)
 
-  const updateSettings = <K extends keyof Settings>({ key, value }: { key: K; value: Settings[K] }) => {
+  const updateSettings = ({ key, value }: { key: string; value: unknown }) => {
     settings.value[key] = value
   }
 
