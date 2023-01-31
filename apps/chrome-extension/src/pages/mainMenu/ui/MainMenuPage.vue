@@ -48,7 +48,7 @@ const version = useVersion()
   <div class="mx-auto w-full max-w-screen-sm p-3 text-base">
     <div class="flex items-center">
       <div class="w-1/3">
-        <button class="btn-outline btn-secondary btn-sm btn" v-if="hasActiveProfile" @click="reset()" :disabled="!readaptEnabled">
+        <button v-if="hasActiveProfile" class="btn-outline btn-secondary btn-sm btn" :disabled="!readaptEnabled" @click="reset()">
           {{ t('MAIN_MENU.RESET') }}
         </button>
       </div>
@@ -70,7 +70,7 @@ const version = useVersion()
       <input type="checkbox" class="toggle-primary toggle toggle-sm" :checked="readaptEnabled" @change="switchEnabled" />
     </label>
 
-    <div class="mt-3" v-if="hasActiveProfile">
+    <div v-if="hasActiveProfile" class="mt-3">
       <div class="text-lg font-semibold">{{ t('MAIN_MENU.ADAPT_TEXT_BY') }}</div>
       <ul class="ml-4 mt-1 list-disc text-sm">
         <li>{{ t('MAIN_MENU.HOLD_CMD_AND_CLICK_TARGET') }}</li>
