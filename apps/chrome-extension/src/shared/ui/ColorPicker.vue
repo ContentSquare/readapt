@@ -4,11 +4,11 @@ import { type ColorOption, colors } from '@readapt/settings'
 import SvgIcon from '@/shared/ui/SvgIcon.vue'
 
 type Props = {
-  modelValue: string
+  modelValue: string | null
   colors?: readonly ColorOption[]
 }
 withDefaults(defineProps<Props>(), {
-  modelValue: '',
+  modelValue: null,
   colors: () => colors
 })
 

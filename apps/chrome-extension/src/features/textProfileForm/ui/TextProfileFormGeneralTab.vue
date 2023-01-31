@@ -175,7 +175,7 @@ watch(
               class="w-28 lg:w-52"
               :model-value="settings.syllableOpacity"
               :options="opacityOptions"
-              @input="emitUpdate({ key: 'syllableOpacity', value: $event })"
+              @update:model-value="emitUpdate({ key: 'syllableOpacity', value: $event })"
             />
           </td>
           <td>

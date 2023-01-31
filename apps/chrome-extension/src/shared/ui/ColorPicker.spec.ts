@@ -5,7 +5,7 @@ import { colors } from '@readapt/settings'
 describe('ColorPicker', () => {
   const color = colors[0] as string
 
-  const factory = ({ modelValue = color } = {}) => {
+  const factory = ({ modelValue = color }: { modelValue?: string | null } = {}) => {
     const wrapper = mount(ColorPicker, {
       props: {
         modelValue
@@ -29,7 +29,7 @@ describe('ColorPicker', () => {
 
   describe('when "value" is empty', () => {
     it('should show missing color icon', () => {
-      const { wrapper } = factory({ modelValue: '' })
+      const { wrapper } = factory({ modelValue: null })
 
       expect(wrapper.find('[data-test-id=missing-color-icon]').exists()).toBe(true)
     })
