@@ -86,7 +86,7 @@ const version = useVersion()
           <button
             :title="$t('MAIN_MENU.SEE_MODIFY_CURRENT_PROFILE')"
             class="btn-outline btn-primary btn-sm btn ml-1"
-            @click="openOptionsPage({ editActiveProfile: null }, router)"
+            @click="openOptionsPage({ editActiveProfile: '' }, router)"
           >
             <SvgIcon id="edit" class="h-4 w-4 fill-current" />
           </button>
