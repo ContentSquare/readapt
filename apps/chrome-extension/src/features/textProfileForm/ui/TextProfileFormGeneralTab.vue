@@ -164,9 +164,10 @@ watch(
           </td>
           <td>
             <RangeBar
-              :model-value="settings.syllableOpacity"
+              class="w-28 lg:w-52"
+              :value="settings.syllableOpacity"
               :options="opacityOptions"
-              @update:model-value="emitUpdate({ key: 'syllableOpacity', value: $event })"
+              @input="emitUpdate({ key: 'syllableOpacity', value: $event })"
             />
           </td>
           <td>
@@ -178,7 +179,7 @@ watch(
           <td />
           <td>
             <RangeBar
-              class="w-52"
+              class="w-28 lg:w-52"
               :disabled="settings.language === ('en' as Language)"
               :model-value="settings.liaisonsOpacity"
               :options="opacityOptions"
@@ -194,7 +195,7 @@ watch(
           <td />
           <td>
             <RangeBar
-              class="w-52"
+              class="w-28 lg:w-52"
               :model-value="settings.silentLetterOpacity"
               :options="silentLetterOpacityOptions"
               @update:model-value="emitUpdate({ key: 'silentLetterOpacity', value: $event })"
@@ -210,7 +211,7 @@ watch(
           <td />
           <td>
             <RangeBar
-              class="w-52"
+              class="w-28 lg:w-52"
               :model-value="settings.shadeAlternateLinesOpacity"
               :options="opacityOptions"
               @update:model-value="emitUpdate({ key: 'shadeAlternateLinesOpacity', value: $event })"
