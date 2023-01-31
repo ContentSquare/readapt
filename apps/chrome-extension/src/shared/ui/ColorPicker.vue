@@ -4,11 +4,11 @@ import { type ColorOption, colors } from '@readapt/settings'
 import SvgIcon from '@/shared/ui/SvgIcon.vue'
 
 type Props = {
-  value: string
+  modelValue: string
   colors?: readonly ColorOption[]
 }
 withDefaults(defineProps<Props>(), {
-  value: '',
+  modelValue: '',
   colors: () => colors
 })
 
@@ -30,7 +30,7 @@ const selectColor = (value?: ColorOption): void => {
 <template>
   <div>
     <button class="btn-ghost btn" data-test-id="main-button" @click="openModal">
-      <div v-if="value" data-test-id="colored-icon" class="h-8 w-8 rounded-full" :style="{ backgroundColor: value }" />
+      <div v-if="modelValue" data-test-id="colored-icon" class="h-8 w-8 rounded-full" :style="{ backgroundColor: modelValue }" />
       <SvgIcon v-else id="forbidden" class="h-8 w-8" data-test-id="missing-color-icon" />
     </button>
     <div class="modal" data-test-id="modal" :class="{ 'modal-open': isModalOpened }">
@@ -42,13 +42,13 @@ const selectColor = (value?: ColorOption): void => {
               class="btn-circle btn m-2"
               data-test-id="color-button"
               :style="{ backgroundColor: `${color}` }"
-              :class="{ 'outline outline-offset-2 outline-4 outline-black': color === value }"
+              :class="{ 'outline outline-offset-2 outline-4 outline-black': color === modelValue }"
               @click="selectColor(color)"
             />
           </template>
           <button
             class="btn-ghost btn-circle btn m-2"
-            :class="{ 'outline outline-offset-2 outline-4 outline-black': !value }"
+            :class="{ 'outline outline-offset-2 outline-4 outline-black': !modelValue }"
             data-test-id="missing-color-button"
             @click="selectColor()"
           >

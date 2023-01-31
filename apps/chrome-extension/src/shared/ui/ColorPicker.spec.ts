@@ -5,10 +5,10 @@ import { colors } from '@readapt/settings'
 describe('ColorPicker', () => {
   const color = colors[0] as string
 
-  const factory = ({ value = color } = {}) => {
+  const factory = ({ modelValue = color } = {}) => {
     const wrapper = mount(ColorPicker, {
       props: {
-        value
+        modelValue
       }
     })
     const modal = wrapper.find('[data-test-id=modal]')
@@ -29,7 +29,7 @@ describe('ColorPicker', () => {
 
   describe('when "value" is empty', () => {
     it('should show missing color icon', () => {
-      const { wrapper } = factory({ value: '' })
+      const { wrapper } = factory({ modelValue: '' })
 
       expect(wrapper.find('[data-test-id=missing-color-icon]').exists()).toBe(true)
     })
