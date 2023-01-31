@@ -1,7 +1,10 @@
-import { shallowMount, type VueWrapper } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import TextProfileForm from './TextProfileForm.vue'
 import { textSettingsFixture as settings } from '@/entities/textPreferences'
 import type { ColoredItem } from '@readapt/settings'
+import BaseTabs from '@/shared/ui/BaseTabs.vue'
+import TextProfileFormGeneralTab from './TextProfileFormGeneralTab.vue'
+import TextProfileFormItemsTab from './TextProfileFormItemsTab.vue'
 
 describe('TextProfileForm', () => {
   const tabTestIds = ['general', 'phoneme', 'letter']
@@ -12,29 +15,28 @@ describe('TextProfileForm', () => {
         settings
       }
     })
-    const tabs = wrapper.getComponent('[data-test-id=tabs]')
+    const tabs = wrapper.getComponent(BaseTabs)
 
-    return { wrapper, tabs }
-  }
-
-  describe('tabs', () => {
-    const expectTabRendered = (wrapper: VueWrapper, expectedTabTestId: string) => {
+    const expectTabRendered = (expectedTabTestId: string) => {
       tabTestIds.forEach((tabTestId) => {
         expect(wrapper.find(`[data-test-id=${tabTestId}]`).exists()).toBe(expectedTabTestId === tabTestId)
       })
     }
 
+    return { wrapper, tabs, expectTabRendered }
+  }
+
+  describe('tabs', () => {
     it('should render tab names', () => {
       const { tabs } = factory()
-
       expect(tabs.props('names')).toEqual(['SETTINGS.GENERAL_SETTINGS', 'SETTINGS.PHONEME_SETTINGS', 'SETTINGS.LETTER_SETTINGS'])
     })
 
     describe('when initially rendered', () => {
       it('should initially select the first tab', () => {
-        const { wrapper } = factory()
+        const { expectTabRendered } = factory()
 
-        expectTabRendered(wrapper, 'general')
+        expectTabRendered('general')
       })
     })
 
@@ -45,11 +47,11 @@ describe('TextProfileForm', () => {
         { tabIndex: 2, tabTestId: 'letters' }
       ]
       it.each(cases)('should show $tabTestId tab', async ({ tabTestId, tabIndex }) => {
-        const { tabs, wrapper } = factory()
+        const { tabs, expectTabRendered } = factory()
 
-        await tabs.vm.$emit('input', tabIndex)
+        await tabs.vm.$emit('update:modelValue', tabIndex)
 
-        expectTabRendered(wrapper, tabTestId)
+        expectTabRendered(tabTestId)
       })
     })
   })
@@ -60,7 +62,7 @@ describe('TextProfileForm', () => {
         const { wrapper } = factory()
 
         const updateEvent = { key: 'fontSize', value: '140%' }
-        wrapper.find('[data-test-id=general]').vm.$emit('update', updateEvent)
+        wrapper.findComponent(TextProfileFormGeneralTab).vm.$emit('update', updateEvent)
 
         expect(wrapper.emitted('update-settings')).toEqual([[updateEvent]])
       })
@@ -70,8 +72,8 @@ describe('TextProfileForm', () => {
       it('should emit "change-language"', () => {
         const { wrapper } = factory()
 
-        const changeLanguageEvent = 'FR'
-        wrapper.find('[data-test-id=general]').vm.$emit('change-language', changeLanguageEvent)
+        const changeLanguageEvent = 'fr'
+        wrapper.findComponent(TextProfileFormGeneralTab).vm.$emit('change-language', changeLanguageEvent)
 
         expect(wrapper.emitted('change-language')).toEqual([[changeLanguageEvent]])
       })
@@ -83,10 +85,10 @@ describe('TextProfileForm', () => {
       it('should emit "update-settings"', async () => {
         const { wrapper, tabs } = factory()
 
-        await tabs.vm.$emit('input', 1)
+        await tabs.vm.$emit('update:modelValue', 1)
 
         const phonemes: ColoredItem[] = [{ active: false, bold: true, key: '7', value: 'b' }]
-        wrapper.find('[data-test-id=phonemes]').vm.$emit('update-items', phonemes)
+        wrapper.findComponent(TextProfileFormItemsTab).vm.$emit('update-items', phonemes)
 
         expect(wrapper.emitted('update-settings')).toEqual([[{ key: 'phonemes', value: phonemes }]])
       })
@@ -95,10 +97,10 @@ describe('TextProfileForm', () => {
         it('should emit "update-settings"', async () => {
           const { wrapper, tabs } = factory()
 
-          await tabs.vm.$emit('input', 1)
+          await tabs.vm.$emit('update:modelValue', 1)
 
           const phonemesActive = true
-          wrapper.find('[data-test-id=phonemes]').vm.$emit('update-active', phonemesActive)
+          wrapper.findComponent(TextProfileFormItemsTab).vm.$emit('update-active', phonemesActive)
 
           expect(wrapper.emitted('update-settings')).toEqual([[{ key: 'phonemesActive', value: phonemesActive }]])
         })
@@ -111,10 +113,10 @@ describe('TextProfileForm', () => {
       it('should emit "update-settings"', async () => {
         const { wrapper, tabs } = factory()
 
-        await tabs.vm.$emit('input', 2)
+        await tabs.vm.$emit('update:modelValue', 2)
 
         const letters: ColoredItem[] = [{ active: false, bold: true, key: '7', value: 'b' }]
-        wrapper.find('[data-test-id=letters]').vm.$emit('update-items', letters)
+        wrapper.findComponent(TextProfileFormItemsTab).vm.$emit('update-items', letters)
 
         expect(wrapper.emitted('update-settings')).toEqual([[{ key: 'letters', value: letters }]])
       })
@@ -123,10 +125,10 @@ describe('TextProfileForm', () => {
         it('should emit "update-settings"', async () => {
           const { wrapper, tabs } = factory()
 
-          await tabs.vm.$emit('input', 2)
+          await tabs.vm.$emit('update:modelValue', 2)
 
           const lettersActive = true
-          wrapper.find('[data-test-id=letters]').vm.$emit('update-active', lettersActive)
+          wrapper.findComponent(TextProfileFormItemsTab).vm.$emit('update-active', lettersActive)
 
           expect(wrapper.emitted('update-settings')).toEqual([[{ key: 'lettersActive', value: lettersActive }]])
         })

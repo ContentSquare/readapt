@@ -22,5 +22,5 @@ const onClick = async () => {
 }
 </script>
 <template>
-  <button v-if="modelValue" class="btn-warning btn-sm btn" data-test-id="delete" @click="onClick">{{ $t('SETTINGS.DELETE') }}</button>
+  <button v-if="modelValue" class="btn-warning btn-sm btn" data-test-id="delete" @click="onClick">{{ t('SETTINGS.DELETE') }}</button>
 </template>
