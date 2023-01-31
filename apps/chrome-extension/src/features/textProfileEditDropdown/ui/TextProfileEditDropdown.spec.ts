@@ -13,16 +13,16 @@ describe('TextProfileEditDropdown', () => {
   })
 
   interface FactoryProps {
-    value?: TextProfileId | null
+    modelValue?: TextProfileId | null
     settings?: TextSettings
     confirmResult?: boolean
   }
 
-  const factory = ({ value = profile.id, settings = profile.settings, confirmResult = true }: FactoryProps = {}) => {
+  const factory = ({ modelValue = profile.id, settings = profile.settings, confirmResult = true }: FactoryProps = {}) => {
     mockConfirm(confirmResult)
     const wrapper = mount(TextProfileEditDropdown, {
       props: {
-        value,
+        modelValue,
         settings
       }
     })
@@ -47,29 +47,29 @@ describe('TextProfileEditDropdown', () => {
   })
 
   describe('when changing selection with saved changes', () => {
-    it('should select a profile using "value" prop', () => {
+    it('should select a profile using "value" prop', async () => {
       const { dropdown } = factory()
 
       expect(dropdown.element.value).toBe(profile.id.toString())
     })
 
     describe('when selecting an existing profile', () => {
-      it('should trigger "input" with selected profile id', () => {
-        const { wrapper, selectByProfileId } = factory({ value: null })
+      it('should trigger "update:modelValue" with selected profile id', () => {
+        const { wrapper, selectByProfileId } = factory({ modelValue: null })
 
         selectByProfileId(profile.id)
 
-        expect(wrapper.emitted('input')).toEqual([[profile.id]])
+        expect(wrapper.emitted('update:modelValue')).toEqual([[profile.id]])
       })
     })
 
     describe('when selecting a new profile', () => {
-      it('should trigger "input" with null', () => {
+      it('should trigger "update:modelValue" with null', () => {
         const { wrapper, selectByProfileId } = factory()
 
         selectByProfileId(null)
 
-        expect(wrapper.emitted('input')).toEqual([[null]])
+        expect(wrapper.emitted('update:modelValue')).toEqual([[null]])
       })
     })
   })
@@ -82,7 +82,7 @@ describe('TextProfileEditDropdown', () => {
     ]
 
     it.each(cases)('should open a confirmation dialog', async ({ profileId, newProfileId }) => {
-      const { selectByProfileId } = factory({ value: profileId, settings: dirtySettings })
+      const { selectByProfileId } = factory({ modelValue: profileId, settings: dirtySettings })
 
       await selectByProfileId(newProfileId)
 
@@ -90,27 +90,27 @@ describe('TextProfileEditDropdown', () => {
     })
 
     describe('when user confirms the selection change', () => {
-      it.each(cases)('should trigger "input"', async ({ profileId, newProfileId }) => {
-        const { wrapper, selectByProfileId } = factory({ value: profileId, settings: dirtySettings })
+      it.each(cases)('should trigger "update:modelValue"', async ({ profileId, newProfileId }) => {
+        const { wrapper, selectByProfileId } = factory({ modelValue: profileId, settings: dirtySettings })
 
         await selectByProfileId(newProfileId)
 
-        expect(wrapper.emitted('input')).toEqual([[newProfileId]])
+        expect(wrapper.emitted('update:modelValue')).toEqual([[newProfileId]])
       })
     })
 
     describe('when user cancels the selection change', () => {
-      it.each(cases)('should not trigger "input"', async ({ profileId, newProfileId }) => {
-        const { wrapper, selectByProfileId } = factory({ value: profileId, settings: dirtySettings })
+      it.each(cases)('should not trigger "update:modelValue"', async ({ profileId, newProfileId }) => {
+        const { wrapper, selectByProfileId } = factory({ modelValue: profileId, settings: dirtySettings })
         mockConfirm(false)
 
         await selectByProfileId(newProfileId)
 
-        expect(wrapper.emitted('input')).toBeUndefined()
+        expect(wrapper.emitted('update:modelValue')).toBeUndefined()
       })
 
       it.each(cases)('should keep the selection', async ({ profileId, newProfileId }) => {
-        const { dropdown, selectByProfileId } = factory({ value: profileId, settings: dirtySettings })
+        const { dropdown, selectByProfileId } = factory({ modelValue: profileId, settings: dirtySettings })
         mockConfirm(false)
 
         await selectByProfileId(newProfileId)
