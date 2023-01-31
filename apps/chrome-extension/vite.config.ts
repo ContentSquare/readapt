@@ -57,7 +57,8 @@ export default defineConfig({
     // change config
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      'vue-i18n': process.env.PROD ? 'vue-i18n/dist/vue-i18n.runtime.esm-bundler.js' : 'vue-i18n' // @see https://github.com/intlify/bundle-tools/issues/23
+      // @see https://github.com/intlify/bundle-tools/issues/23
+      'vue-i18n': process.env.NODE_ENV === 'production' ? 'vue-i18n/dist/vue-i18n.runtime.esm-bundler.js' : 'vue-i18n'
     }
   }
 } as VitestConfigExport)
