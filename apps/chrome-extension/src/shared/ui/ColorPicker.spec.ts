@@ -58,7 +58,7 @@ describe('ColorPicker', () => {
         const { wrapper, modal, mainButton } = factory()
 
         await mainButton.trigger('click')
-        await modal.findAll('[data-test-id=color-button]').at(1).trigger('click')
+        await modal.findAll('[data-test-id=color-button]')[1].trigger('click')
 
         expect(wrapper.emitted('selectColor')).toEqual([[colors.at(1)]])
       })
@@ -67,7 +67,7 @@ describe('ColorPicker', () => {
         const { modal, mainButton } = factory()
 
         await mainButton.trigger('click')
-        await modal.findAll('[data-test-id=color-button]').at(1).trigger('click')
+        await modal.findAll('[data-test-id=color-button]')[1].trigger('click')
 
         expect(modal.classes()).not.toContain('modal-open')
       })

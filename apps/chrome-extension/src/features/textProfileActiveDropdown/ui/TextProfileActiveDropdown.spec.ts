@@ -1,4 +1,4 @@
-import { mount, type Wrapper } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import TextProfileActiveDropdown from './TextProfileActiveDropdown.vue'
 import { textProfileFixture as profile, useTextPreferences } from '@/entities/textPreferences'
 
@@ -14,7 +14,7 @@ describe('TextProfileActiveDropdown', () => {
     setActiveProfileId(profiles[0].id)
 
     const wrapper = mount(TextProfileActiveDropdown)
-    const dropdown = wrapper.find('select') as Wrapper<HTMLSelectElement>
+    const dropdown = wrapper.find('select')
 
     return { wrapper, dropdown, preferences, setActiveProfileId }
   }
