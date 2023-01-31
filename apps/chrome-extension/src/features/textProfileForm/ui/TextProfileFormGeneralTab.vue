@@ -158,8 +158,16 @@ watch(
           <td class="whitespace-normal">{{ $t('GENERAL.HIGHLIGHT_ALTERNATING_SYLLABLES') }}</td>
           <td>
             <div class="flex justify-center">
-              <ColorPicker class="m-1" :model-value="settings.syllableColor1" @select-color="emitUpdate({ key: 'syllableColor1', value: $event })" />
-              <ColorPicker class="m-1" :model-value="settings.syllableColor2" @select-color="emitUpdate({ key: 'syllableColor2', value: $event })" />
+              <ColorPicker
+                class="m-1"
+                :model-value="(settings.syllableColor1 as string)"
+                @select-color="emitUpdate({ key: 'syllableColor1', value: $event })"
+              />
+              <ColorPicker
+                class="m-1"
+                :model-value="(settings.syllableColor2 as string)"
+                @select-color="emitUpdate({ key: 'syllableColor2', value: $event })"
+              />
             </div>
           </td>
           <td>

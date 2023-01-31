@@ -104,7 +104,7 @@ const setColor = (itemKey: string, color: ColorOption | undefined): void => {
                 <div v-html="tableItem.example" />
               </template>
               <template v-else-if="key === 'color'">
-                <ColorPicker :value="tableItem.color" @select-color="setColor(tableItem.key, $event)" />
+                <ColorPicker :model-value="tableItem.color" @select-color="setColor(tableItem.key, $event)" />
               </template>
               <template v-else-if="key === 'bold'">
                 <input type="checkbox" class="checkbox checkbox-sm" :checked="tableItem.bold" @change="switchBold(tableItem.key)" />
