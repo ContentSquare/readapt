@@ -1,4 +1,4 @@
-import { shallowMount, type Wrapper } from '@vue/test-utils'
+import { shallowMount, type VueWrapper } from '@vue/test-utils'
 import TextProfileForm from './TextProfileForm.vue'
 import { textSettingsFixture as settings } from '@/entities/textPreferences'
 import type { ColoredItem } from '@readapt/settings'
@@ -12,13 +12,13 @@ describe('TextProfileForm', () => {
         settings
       }
     })
-    const tabs = wrapper.find('[data-test-id=tabs]')
+    const tabs = wrapper.getComponent('[data-test-id=tabs]')
 
     return { wrapper, tabs }
   }
 
   describe('tabs', () => {
-    const expectTabRendered = (wrapper: Wrapper<TextProfileForm>, expectedTabTestId: string) => {
+    const expectTabRendered = (wrapper: VueWrapper, expectedTabTestId: string) => {
       tabTestIds.forEach((tabTestId) => {
         expect(wrapper.find(`[data-test-id=${tabTestId}]`).exists()).toBe(expectedTabTestId === tabTestId)
       })
