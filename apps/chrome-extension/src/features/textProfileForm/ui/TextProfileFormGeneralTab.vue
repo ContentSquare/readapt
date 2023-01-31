@@ -165,7 +165,7 @@ watch(
           <td>
             <RangeBar
               class="w-28 lg:w-52"
-              :value="settings.syllableOpacity"
+              :model-value="settings.syllableOpacity"
               :options="opacityOptions"
               @input="emitUpdate({ key: 'syllableOpacity', value: $event })"
             />
