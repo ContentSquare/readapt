@@ -55,7 +55,6 @@ const { t } = useI18n()
           <!-- TODO: add dirty settings calculation -->
           <button class="btn-secondary btn-sm btn" @click="close">{{ t('SETTINGS.CLOSE') }}</button>
         </div>
-        <select v-model="selectedProfiledId" />
       </div>
     </div>
   </div>
