@@ -7,7 +7,7 @@ describe('BaseTabs', () => {
     const wrapper = mount(BaseTabs, {
       props: {
         names,
-        value: 1
+        modelValue: 1
       }
     })
     const tabs = wrapper.findAll('[data-test-id=tab]')
@@ -19,31 +19,31 @@ describe('BaseTabs', () => {
     it('should render tab names', () => {
       const { tabs, names } = factory()
 
-      expect(tabs.at(0).text()).toBe(names[0])
-      expect(tabs.at(1).text()).toBe(names[1])
+      expect(tabs[0].text()).toBe(names[0])
+      expect(tabs[1].text()).toBe(names[1])
     })
 
     it('should mark a tab selected from "value" prop', () => {
       const { tabs } = factory()
 
-      expect(tabs.at(0).classes()).not.toContain('tab-active')
-      expect(tabs.at(1).classes()).toContain('tab-active')
+      expect(tabs[0].classes()).not.toContain('tab-active')
+      expect(tabs[1].classes()).toContain('tab-active')
     })
 
-    it('should not emit "input"', () => {
+    it('should not emit "update:modelValue"', () => {
       const { wrapper } = factory()
 
-      expect(wrapper.emitted('input')).toBeUndefined()
+      expect(wrapper.emitted('update:modelValue')).toBeUndefined()
     })
   })
 
   describe('when a tab is clicked', () => {
-    it('should emit "input"', async () => {
+    it('should emit "update:modelValue"', async () => {
       const { wrapper, tabs } = factory()
 
-      await tabs.at(0).trigger('click')
+      await tabs[0].trigger('click')
 
-      expect(wrapper.emitted('input')).toEqual([[0]])
+      expect(wrapper.emitted('update:modelValue')).toEqual([[0]])
     })
   })
 })
