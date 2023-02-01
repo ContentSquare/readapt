@@ -230,7 +230,7 @@ watch(
               type="checkbox"
               class="toggle"
               :checked="settings.shadeAlternateLinesActive"
-              @update:model-value="emitUpdateToggled({ key: 'shadeAlternateLinesActive' })"
+              @input="emitUpdateToggled({ key: 'shadeAlternateLinesActive' })"
             />
           </td>
         </tr>
