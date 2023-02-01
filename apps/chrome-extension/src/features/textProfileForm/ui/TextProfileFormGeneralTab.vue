@@ -23,14 +23,14 @@ import SelectPercentage from '@/shared/ui/SelectPercentage.vue'
 
 // TODO: create a local settings object, kept in sync with props.settings
 // and use v-model to update the local settings object
-interface Props {
+type Props = {
   settings: Settings
 }
 const props = defineProps<Props>()
 
 interface Emits {
-  (event: 'change-language', language: Language)
-  (event: 'update', value: { key: string; value: unknown })
+  (event: 'change-language', language: Language): void
+  (event: 'update', value: { key: string; value: unknown }): void
 }
 const emit = defineEmits<Emits>()
 
@@ -76,8 +76,8 @@ watch(
             <BaseSelect
               class="select-secondary select select-sm w-full"
               :options="languageOptions"
-              :value="settings.language"
-              @input="changeLanguage($event)"
+              :model-value="settings.language"
+              @update:model-value="changeLanguage($event as Language)"
             />
           </td>
           <td />
@@ -92,8 +92,8 @@ watch(
             <BaseSelect
               class="select-secondary select select-sm w-full"
               :options="fontFamilyOptions"
-              :value="settings.fontFamily"
-              @input="emitUpdate({ key: 'fontFamily', value: $event })"
+              :model-value="settings.fontFamily"
+              @update:model-value="emitUpdate({ key: 'fontFamily', value: $event })"
             />
           </td>
           <td />
@@ -105,8 +105,8 @@ watch(
             <SelectPercentage
               class="w-full"
               :options="fontSizeOptions"
-              :value="settings.fontSize"
-              @input="emitUpdate({ key: 'fontSize', value: $event })"
+              :model-value="settings.fontSize"
+              @update:model-value="emitUpdate({ key: 'fontSize', value: $event })"
             />
           </td>
           <td />
@@ -120,8 +120,8 @@ watch(
           <td>
             <SelectPercentage
               :options="letterSpacingOptions"
-              :value="settings.letterSpacing"
-              @input="emitUpdate({ key: 'letterSpacing', value: $event })"
+              :model-value="settings.letterSpacing"
+              @update:model-value="emitUpdate({ key: 'letterSpacing', value: $event })"
             />
           </td>
           <td />
@@ -132,8 +132,8 @@ watch(
           <td>
             <SelectPercentage
               :options="wordSpacingOptions"
-              :value="settings.wordSpacing"
-              @input="emitUpdate({ key: 'wordSpacing', value: $event })"
+              :model-value="settings.wordSpacing"
+              @update:model-value="emitUpdate({ key: 'wordSpacing', value: $event })"
             />
           </td>
           <td />
@@ -144,8 +144,8 @@ watch(
           <td>
             <SelectPercentage
               :options="lineSpacingOptionsOptimized"
-              :value="settings.lineSpacing"
-              @input="emitUpdate({ key: 'lineSpacing', value: $event })"
+              :model-value="settings.lineSpacing"
+              @update:model-value="emitUpdate({ key: 'lineSpacing', value: $event })"
             />
           </td>
           <td />
@@ -158,16 +158,24 @@ watch(
           <td class="whitespace-normal">{{ $t('GENERAL.HIGHLIGHT_ALTERNATING_SYLLABLES') }}</td>
           <td>
             <div class="flex justify-center">
-              <ColorPicker class="m-1" :value="settings.syllableColor1" @selectColor="emitUpdate({ key: 'syllableColor1', value: $event })" />
-              <ColorPicker class="m-1" :value="settings.syllableColor2" @selectColor="emitUpdate({ key: 'syllableColor2', value: $event })" />
+              <ColorPicker
+                class="m-1"
+                :model-value="(settings.syllableColor1 as string)"
+                @select-color="emitUpdate({ key: 'syllableColor1', value: $event })"
+              />
+              <ColorPicker
+                class="m-1"
+                :model-value="(settings.syllableColor2 as string)"
+                @select-color="emitUpdate({ key: 'syllableColor2', value: $event })"
+              />
             </div>
           </td>
           <td>
             <RangeBar
               class="w-28 lg:w-52"
-              :value="settings.syllableOpacity"
+              :model-value="settings.syllableOpacity"
               :options="opacityOptions"
-              @input="emitUpdate({ key: 'syllableOpacity', value: $event })"
+              @update:model-value="emitUpdate({ key: 'syllableOpacity', value: $event })"
             />
           </td>
           <td>
@@ -180,10 +188,10 @@ watch(
           <td>
             <RangeBar
               class="w-28 lg:w-52"
-              :disabled="settings.language === 'en'"
-              :value="settings.liaisonsOpacity"
+              :disabled="settings.language === ('en' as Language)"
+              :model-value="settings.liaisonsOpacity"
               :options="opacityOptions"
-              @input="emitUpdate({ key: 'liaisonsOpacity', value: $event })"
+              @update:model-value="emitUpdate({ key: 'liaisonsOpacity', value: $event })"
             />
           </td>
           <td>
@@ -196,9 +204,9 @@ watch(
           <td>
             <RangeBar
               class="w-28 lg:w-52"
-              :value="settings.silentLetterOpacity"
+              :model-value="settings.silentLetterOpacity"
               :options="silentLetterOpacityOptions"
-              @input="emitUpdate({ key: 'silentLetterOpacity', value: $event })"
+              @update:model-value="emitUpdate({ key: 'silentLetterOpacity', value: $event })"
             />
           </td>
           <td>
@@ -212,9 +220,9 @@ watch(
           <td>
             <RangeBar
               class="w-28 lg:w-52"
-              :value="settings.shadeAlternateLinesOpacity"
+              :model-value="settings.shadeAlternateLinesOpacity"
               :options="opacityOptions"
-              @input="emitUpdate({ key: 'shadeAlternateLinesOpacity', value: $event })"
+              @update:model-value="emitUpdate({ key: 'shadeAlternateLinesOpacity', value: $event })"
             />
           </td>
           <td>

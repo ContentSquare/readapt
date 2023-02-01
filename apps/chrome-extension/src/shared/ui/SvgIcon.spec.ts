@@ -4,7 +4,7 @@ import SvgIcon from './SvgIcon.vue'
 describe('SvgIcon', () => {
   it('should render an "edit" icon', () => {
     const wrapper = mount(SvgIcon, {
-      propsData: {
+      props: {
         id: 'edit'
       }
     })

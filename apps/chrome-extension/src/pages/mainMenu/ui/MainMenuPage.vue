@@ -5,8 +5,8 @@ import { useVersion } from '@/shared/lib/useVersion'
 import { TextProfileActiveDropdown } from '@/features/textProfileActiveDropdown'
 import { useTextPreferences } from '@/entities/textPreferences'
 
-import { useI18n } from 'vue-i18n-composable'
-import { useRouter } from 'vue-router/composables'
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 
 import { ReadingToolsQuickActivate } from '@/features/readingToolsQuickActivate'
 import { useExtensionUtils } from '@/shared/lib/extension'
@@ -48,7 +48,7 @@ const version = useVersion()
   <div class="mx-auto w-full max-w-screen-sm py-2 px-3 text-base">
     <div class="flex items-center">
       <div class="w-1/3">
-        <button class="btn-outline btn-secondary btn-sm btn" v-if="hasActiveProfile" @click="reset()" :disabled="!readaptEnabled">
+        <button v-if="hasActiveProfile" class="btn-outline btn-secondary btn-sm btn" :disabled="!readaptEnabled" @click="reset()">
           {{ t('MAIN_MENU.RESET') }}
         </button>
       </div>
@@ -70,7 +70,7 @@ const version = useVersion()
       <input type="checkbox" class="toggle-primary toggle toggle-sm" :checked="readaptEnabled" @change="switchEnabled" />
     </label>
 
-    <div class="mt-3" v-if="hasActiveProfile">
+    <div v-if="hasActiveProfile" class="mt-3">
       <div class="text-lg font-semibold">{{ t('MAIN_MENU.ADAPT_TEXT_BY') }}</div>
       <ul class="ml-4 mt-1 list-disc text-sm">
         <li>{{ t('MAIN_MENU.HOLD_CMD_AND_CLICK_TARGET') }}</li>
@@ -86,7 +86,7 @@ const version = useVersion()
           <button
             :title="$t('MAIN_MENU.SEE_MODIFY_CURRENT_PROFILE')"
             class="btn-outline btn-primary btn-sm btn ml-1"
-            @click="openOptionsPage({ editActiveProfile: null }, router)"
+            @click="openOptionsPage({ editActiveProfile: '' }, router)"
           >
             <SvgIcon id="edit" class="h-4 w-4 fill-current" />
           </button>

@@ -5,10 +5,10 @@ import { colors } from '@readapt/settings'
 describe('ColorPicker', () => {
   const color = colors[0] as string
 
-  const factory = ({ value = color } = {}) => {
+  const factory = ({ modelValue = color }: { modelValue?: string | null } = {}) => {
     const wrapper = mount(ColorPicker, {
-      propsData: {
-        value
+      props: {
+        modelValue
       }
     })
     const modal = wrapper.find('[data-test-id=modal]')
@@ -19,16 +19,17 @@ describe('ColorPicker', () => {
 
   describe('when "value" is a color', () => {
     it('should color main button by "value" color', () => {
+      const colorRgb = 'rgb(95, 162, 206)' // of #5fa2ce
       const { wrapper } = factory()
 
       const coloredIconElement = wrapper.find<HTMLDivElement>('[data-test-id=colored-icon]').element
-      expect(coloredIconElement.style.backgroundColor).toBe(color)
+      expect(coloredIconElement.style.backgroundColor).toBe(colorRgb)
     })
   })
 
   describe('when "value" is empty', () => {
     it('should show missing color icon', () => {
-      const { wrapper } = factory({ value: '' })
+      const { wrapper } = factory({ modelValue: null })
 
       expect(wrapper.find('[data-test-id=missing-color-icon]').exists()).toBe(true)
     })
@@ -58,7 +59,7 @@ describe('ColorPicker', () => {
         const { wrapper, modal, mainButton } = factory()
 
         await mainButton.trigger('click')
-        await modal.findAll('[data-test-id=color-button]').at(1).trigger('click')
+        await modal.findAll('[data-test-id=color-button]')[1].trigger('click')
 
         expect(wrapper.emitted('selectColor')).toEqual([[colors.at(1)]])
       })
@@ -67,7 +68,7 @@ describe('ColorPicker', () => {
         const { modal, mainButton } = factory()
 
         await mainButton.trigger('click')
-        await modal.findAll('[data-test-id=color-button]').at(1).trigger('click')
+        await modal.findAll('[data-test-id=color-button]')[1].trigger('click')
 
         expect(modal.classes()).not.toContain('modal-open')
       })

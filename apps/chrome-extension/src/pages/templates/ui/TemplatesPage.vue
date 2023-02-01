@@ -2,12 +2,12 @@
 import { ref } from 'vue'
 import type { Language } from '@readapt/settings'
 import { useExtensionUtils } from '@/shared/lib/extension'
-import { useRouter } from 'vue-router/composables'
+import { useRouter } from 'vue-router'
 import LanguageSelect from '@/shared/ui/LanguageSelect.vue'
 import type { TextProfileId } from '@/entities/textPreferences'
 import { useTemplatesByLanguage } from '@/entities/textSettingsTemplate'
 import { TextProfileCreateFromTemplate } from '@/features/textProfileCreateFromTemplate'
-import { useI18n } from 'vue-i18n-composable'
+import { useI18n } from 'vue-i18n'
 
 const language = ref<Language>('en')
 const templates = useTemplatesByLanguage(language)
@@ -16,7 +16,7 @@ const { closeCurrentTab } = useExtensionUtils()
 
 const router = useRouter()
 const openProfile = (newTextProfileId: TextProfileId) => {
-  router.push({ path: 'options?profileId=' + newTextProfileId })
+  router.push({ path: 'options', query: { profileId: newTextProfileId } })
 }
 
 const { t } = useI18n()
@@ -28,7 +28,7 @@ const { t } = useI18n()
     <div class="mt-3">{{ t('SELECT_TEMPLATE.CLICK_TO_MODIFY_OR_SELECT_TEMPLATE') }}</div>
     <div class="mt-3">
       <div>{{ t('SELECT_TEMPLATE.PROFILE_LANGUAGE') }}</div>
-      <LanguageSelect class="select-secondary select select-sm w-40" v-model="language" />
+      <LanguageSelect v-model="language" class="select-secondary select select-sm w-40" />
     </div>
     <TextProfileCreateFromTemplate class="mt-3" :templates="templates" @created="openProfile" />
     <div class="mt-2 flex justify-end">

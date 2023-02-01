@@ -3,6 +3,7 @@
   "include": ["vite.config.*", "vitest.config.*", "package.json"],
   "compilerOptions": {
     "composite": true,
+    "target": "ES2015",
     "types": ["node"]
   }
 }

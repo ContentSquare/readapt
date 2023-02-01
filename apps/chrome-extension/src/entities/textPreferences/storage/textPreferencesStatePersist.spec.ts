@@ -3,6 +3,7 @@ import { textPreferencesStatePersist } from './textPreferencesStatePersist'
 import { TEXT_PREFERENCES_STORAGE_KEY } from '../config/storage'
 import { textPreferencesFixture } from '../model/textPreferencesFixtures'
 import { useTextPreferences } from '../model/state/useTextPreferences'
+import { nextTick } from 'vue'
 
 describe('textPreferencesStatePersist()', () => {
   afterEach(() => {
@@ -33,6 +34,8 @@ describe('textPreferencesStatePersist()', () => {
       if (textPreferencesFixture.activeProfileId) {
         setActiveProfileId(textPreferencesFixture.activeProfileId)
       }
+
+      await nextTick()
 
       expect(await storage.get(TEXT_PREFERENCES_STORAGE_KEY)).toEqual({
         [TEXT_PREFERENCES_STORAGE_KEY]: textPreferencesFixture

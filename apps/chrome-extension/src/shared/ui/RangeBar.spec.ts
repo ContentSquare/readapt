@@ -3,7 +3,7 @@ import RangeBar from './RangeBar.vue'
 import type { Option } from '@readapt/settings'
 
 describe('RangeBar', () => {
-  const factory = (propsData: { steps?: boolean } = {}) => {
+  const factory = (props: { steps?: boolean } = {}) => {
     const options: Option<string>[] = [
       { value: '10', text: 'Ten' },
       { value: '20', text: 'Twenty' },
@@ -11,10 +11,10 @@ describe('RangeBar', () => {
     ]
 
     const wrapper = mount(RangeBar, {
-      propsData: {
+      props: {
         options,
-        value: '20',
-        ...propsData
+        modelValue: '20',
+        ...props
       }
     })
     const input = wrapper.find<HTMLInputElement>('input')
@@ -37,22 +37,20 @@ describe('RangeBar', () => {
       expect(input.element.value).toBe('2')
     })
 
-    it('should not emit "change" event', () => {
-      it('should emit "change" event', () => {
-        const { wrapper } = factory()
+    it('should not emit "update:modelValue" event', () => {
+      const { wrapper } = factory()
 
-        expect(wrapper.emitted('change')).toBeUndefined()
-      })
+      expect(wrapper.emitted('update:modelValue')).toBeUndefined()
     })
   })
 
   describe('when range value changes', () => {
-    it('should emit "input" event', async () => {
+    it('should emit "update:modelValue" event', async () => {
       const { wrapper, input } = factory()
 
       await input.setValue('1')
 
-      expect(wrapper.emitted('input')).toEqual([['10']])
+      expect(wrapper.emitted('update:modelValue')).toEqual([['10']])
     })
   })
 

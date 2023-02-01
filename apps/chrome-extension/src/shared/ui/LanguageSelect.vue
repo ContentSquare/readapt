@@ -2,16 +2,16 @@
 import { type Language, languageOptions } from '@readapt/settings'
 import BaseSelect from '@/shared/ui/BaseSelect.vue'
 
-interface Props {
-  value: Language
+type Props = {
+  modelValue: Language
 }
 defineProps<Props>()
 
 interface Emits {
-  (event: 'input', value: Language)
+  (event: 'update:modelValue', value: Language): void
 }
 const emit = defineEmits<Emits>()
 </script>
 <template>
-  <BaseSelect :value="value" :options="languageOptions" @input="emit('input', $event)" />
+  <BaseSelect :model-value="modelValue" :options="languageOptions" @update:model-value="emit('update:modelValue', $event as Language)" />
 </template>

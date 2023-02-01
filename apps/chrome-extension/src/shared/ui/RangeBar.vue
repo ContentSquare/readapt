@@ -2,9 +2,9 @@
 import { computed } from 'vue'
 import type { Option } from '@readapt/settings'
 
-interface Props {
+type Props = {
   options: Option<string>[]
-  value: string
+  modelValue: string | undefined
   steps?: boolean
 }
 const props = withDefaults(defineProps<Props>(), {
@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 interface Emits {
-  (event: 'input', value: string)
+  (event: 'update:modelValue', value: string): void
 }
 const emit = defineEmits<Emits>()
 
@@ -20,15 +20,15 @@ const min = '1'
 const max = computed(() => props.options.length.toString())
 
 const rangeValue = computed(() => {
-  const { options, value } = props
-  const index = options.findIndex((option) => option.value === value)
+  const index = props.options.findIndex((option) => option.value === props.modelValue)
   const currentIndex = index === -1 ? 0 : index
   return String(currentIndex + 1)
 })
 
-const onValueChange = ({ target: { value } }: Event): void => {
+const onValueChange = (event: Event): void => {
+  const { value } = event.target as HTMLInputElement
   const option = props.options[parseInt(value) - 1]
-  emit('input', option.value)
+  emit('update:modelValue', option.value)
 }
 </script>
 
@@ -36,7 +36,7 @@ const onValueChange = ({ target: { value } }: Event): void => {
   <div>
     <input class="range range-secondary range-xs" type="range" :min="min" :max="max" step="1" :value="rangeValue" @input="onValueChange" />
     <div v-if="props.steps" class="flex w-full justify-between px-2 text-xs">
-      <span data-test-id="step" v-for="item in options" :key="item.value">|</span>
+      <span v-for="item in options" :key="item.value" data-test-id="step">|</span>
     </div>
   </div>
 </template>

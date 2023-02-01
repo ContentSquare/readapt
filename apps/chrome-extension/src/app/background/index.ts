@@ -34,14 +34,6 @@ chrome.runtime.onInstalled.addListener(async () => {
   // })
 
   chrome.contextMenus.create({
-    title: 'Reset all text',
-    contexts: ['all'],
-    id: 'readaptMenuResetAction',
-    parentId: 'readaptMenu',
-    visible: isEnabled
-  })
-
-  chrome.contextMenus.create({
     title: 'Activate mask',
     contexts: ['all'],
     id: 'readaptAddMask',
@@ -53,6 +45,22 @@ chrome.runtime.onInstalled.addListener(async () => {
     title: 'Activate ruler',
     contexts: ['all'],
     id: 'readaptAddRuler',
+    parentId: 'readaptMenu',
+    visible: isEnabled
+  })
+
+  chrome.contextMenus.create({
+    contexts: ['all'],
+    id: 'separator',
+    parentId: 'readaptMenu',
+    visible: isEnabled,
+    type: 'separator'
+  })
+
+  chrome.contextMenus.create({
+    title: 'Reset all',
+    contexts: ['all'],
+    id: 'readaptMenuResetAction',
     parentId: 'readaptMenu',
     visible: isEnabled
   })

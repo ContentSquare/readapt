@@ -20,12 +20,9 @@ describe('TextProfileSaveButton', () => {
         mockPrompt(newProfileName)
 
         const wrapper = mount(TextProfileSave, {
-          propsData: {
-            value: null,
+          props: {
+            modelValue: null,
             settings
-          },
-          mocks: {
-            $t: (v: string) => v
           }
         })
         const { preferences, setProfiles, setActiveProfileId } = useTextPreferences()
@@ -57,7 +54,7 @@ describe('TextProfileSaveButton', () => {
         expect(alert).toHaveBeenCalledWith('SETTINGS.PROFILE_CREATED')
       })
 
-      it('should emit "input" with the new profile id', async () => {
+      it('should emit "update:modelValue" with the new profile id', async () => {
         const {
           wrapper,
           save,
@@ -66,7 +63,7 @@ describe('TextProfileSaveButton', () => {
 
         await save()
 
-        expect(wrapper.emitted('input')).toEqual([[profiles[0].id]])
+        expect(wrapper.emitted('update:modelValue')).toEqual([[profiles[0].id]])
       })
 
       describe('when having no profiles saved', () => {
@@ -161,8 +158,8 @@ describe('TextProfileSaveButton', () => {
 
       const editProfileFactory = () => {
         const wrapper = mount(TextProfileSave, {
-          propsData: {
-            value: profile.id,
+          props: {
+            modelValue: profile.id,
             settings: newSettings
           },
           mocks: {

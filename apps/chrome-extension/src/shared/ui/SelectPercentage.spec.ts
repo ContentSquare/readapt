@@ -2,15 +2,15 @@ import { mount } from '@vue/test-utils'
 import SelectPercentage from './SelectPercentage.vue'
 
 describe('SelectPercentage', () => {
-  const factory = ({ value }: { value: string }) => {
+  const factory = ({ modelValue }: { modelValue: string }) => {
     const wrapper = mount(SelectPercentage, {
-      propsData: {
+      props: {
         options: [
           { value: '1', text: 'option-one' },
           { value: '2', text: 'option-two' },
           { value: '3', text: 'option-three' }
         ],
-        value
+        modelValue
       }
     })
     const minusButton = wrapper.find('[data-test-id="btn-minus"]')
@@ -20,14 +20,14 @@ describe('SelectPercentage', () => {
   }
 
   it('should select currentValue', () => {
-    const { wrapper } = factory({ value: '2' })
+    const { wrapper } = factory({ modelValue: '2' })
 
     expect(wrapper.find('[data-test-id=value]').text()).toBe('option-two')
   })
 
   describe('when "value" does not exist in options', () => {
     it('should select first option', () => {
-      const { wrapper } = factory({ value: '4' })
+      const { wrapper } = factory({ modelValue: '4' })
 
       expect(wrapper.find('[data-test-id=value]').text()).toBe('option-one')
     })
@@ -35,60 +35,60 @@ describe('SelectPercentage', () => {
 
   describe('minus button', () => {
     describe('when clicked', () => {
-      it('should emit "input" with the previous option', async () => {
-        const { wrapper, minusButton } = factory({ value: '3' })
+      it('should emit "update:modelValue" with the previous option', async () => {
+        const { wrapper, minusButton } = factory({ modelValue: '3' })
 
         await minusButton.trigger('click')
 
-        expect(wrapper.emitted('input')).toEqual([['2']])
+        expect(wrapper.emitted('update:modelValue')).toEqual([['2']])
       })
     })
 
     describe('when does not have less options', () => {
       it('should be disabled', () => {
-        const { minusButton } = factory({ value: '1' })
+        const { minusButton } = factory({ modelValue: '1' })
 
         const classes = minusButton.classes()
         expect(classes).toContain('bg-transparent')
         expect(classes).toContain('btn-disabled')
       })
 
-      it('should not emit "input"', async () => {
-        const { wrapper, minusButton } = factory({ value: '1' })
+      it('should not emit "update:modelValue"', async () => {
+        const { wrapper, minusButton } = factory({ modelValue: '1' })
 
         await minusButton.trigger('click')
 
-        expect(wrapper.emitted('input')).toBeUndefined()
+        expect(wrapper.emitted('update:modelValue')).toBeUndefined()
       })
     })
   })
 
   describe('plus button', () => {
     describe('when clicked', () => {
-      it('should emit "input" with the next option', async () => {
-        const { wrapper, plusButton } = factory({ value: '1' })
+      it('should emit "update:modelValue" with the next option', async () => {
+        const { wrapper, plusButton } = factory({ modelValue: '1' })
 
         await plusButton.trigger('click')
 
-        expect(wrapper.emitted('input')).toEqual([['2']])
+        expect(wrapper.emitted('update:modelValue')).toEqual([['2']])
       })
     })
 
     describe('when does not have more options', () => {
       it('should be disabled', () => {
-        const { plusButton } = factory({ value: '3' })
+        const { plusButton } = factory({ modelValue: '3' })
 
         const classes = plusButton.classes()
         expect(classes).toContain('bg-transparent')
         expect(classes).toContain('btn-disabled')
       })
 
-      it('should not emit "input"', async () => {
-        const { wrapper, plusButton } = factory({ value: '3' })
+      it('should not emit "update:modelValue"', async () => {
+        const { wrapper, plusButton } = factory({ modelValue: '3' })
 
         await plusButton.trigger('click')
 
-        expect(wrapper.emitted('input')).toBeUndefined()
+        expect(wrapper.emitted('update:modelValue')).toBeUndefined()
       })
     })
   })

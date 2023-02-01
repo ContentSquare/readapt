@@ -1,22 +1,26 @@
-<script lang="ts" setup>
-interface Props {
+<script setup lang="ts">
+type Props = {
+  modelValue: number
   names: string[]
-  value: number
 }
 const props = defineProps<Props>()
 
-const emit = defineEmits(['input'])
-const emitInput = (index: number) => emit('input', index)
+type Emits = {
+  (event: 'update:modelValue', index: number): void
+}
+const emit = defineEmits<Emits>()
+
+const emitInput = (index: number) => emit('update:modelValue', index)
 </script>
 
 <template>
   <div class="tabs">
     <div
-      class="tab tab-bordered tab-lg"
-      :class="{ 'tab-active': index === value }"
-      data-test-id="tab"
       v-for="(name, index) in props.names"
       :key="index"
+      class="tab tab-bordered tab-lg"
+      :class="{ 'tab-active': index === modelValue }"
+      data-test-id="tab"
       @click="emitInput(index)"
     >
       {{ name }}
