@@ -3,6 +3,7 @@ import type { TextSettingsTemplate } from '@/entities/textSettingsTemplate'
 import { textSettingsFixture as settings, useTextPreferences } from '@/entities/textPreferences'
 import TextProfileCreateFromTemplate from './TextProfileCreateFromTemplate.vue'
 import TextSettingsTemplatePreview from './TextSettingsTemplatePreview.vue'
+import { nextTick } from 'vue'
 
 describe('TextProfileCreateFromTemplate', () => {
   afterEach(() => {
@@ -59,6 +60,8 @@ describe('TextProfileCreateFromTemplate', () => {
       const { wrapper, previews } = factory()
 
       await previews[0].vm.$emit('modify', templates[0].settings)
+
+      await nextTick()
 
       expect(wrapper.emitted('created')).toEqual([[1]])
     })

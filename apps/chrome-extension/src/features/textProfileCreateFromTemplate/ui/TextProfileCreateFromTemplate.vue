@@ -3,6 +3,7 @@ import type { TextSettingsTemplate } from '@/entities/textSettingsTemplate'
 import type { TextSettings, TextProfileId } from '@/entities/textPreferences'
 import TextSettingsTemplatePreview from './TextSettingsTemplatePreview.vue'
 import { useCreateTextProfileFromTemplate } from '../model/useCreateProfileFromTemplate'
+import { nextTick } from 'vue'
 
 type Props = {
   templates: TextSettingsTemplate[]
@@ -15,8 +16,9 @@ interface Emits {
 const emit = defineEmits<Emits>()
 
 const create = useCreateTextProfileFromTemplate()
-const onModify = (settings: TextSettings) => {
+const onModify = async (settings: TextSettings) => {
   const newTextProfileId = create(settings)
+  await nextTick()
   emit('created', newTextProfileId)
 }
 </script>
