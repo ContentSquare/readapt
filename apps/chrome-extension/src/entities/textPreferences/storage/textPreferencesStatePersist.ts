@@ -1,4 +1,4 @@
-import { toRaw, watchEffect } from 'vue'
+import { toRaw, watch } from 'vue'
 import type { StorageType } from '@/shared/lib/storage'
 import type { TextPreferences } from '../model/TextPreferences'
 import { TEXT_PREFERENCES_STORAGE_KEY } from '../config/storage'
@@ -16,7 +16,7 @@ export async function textPreferencesStatePersist(storage: StorageType) {
     }
   }
 
-  return watchEffect(() => {
+  return watch(preferences, () => {
     storage.set({
       [TEXT_PREFERENCES_STORAGE_KEY]: toRaw(preferences)
     })
