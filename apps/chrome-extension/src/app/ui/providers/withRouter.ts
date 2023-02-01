@@ -3,7 +3,6 @@ import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-rou
 import { MainMenuPage } from '@/pages/mainMenu'
 
 export function withRouter() {
-
   const routes: Array<RouteRecordRaw> = [
     {
       path: '/',
