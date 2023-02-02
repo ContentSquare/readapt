@@ -1,14 +1,20 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.config.json"
-    },
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.vitest.json"
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/**/*.json", "vite.config.*", "vitest.config.*", "package.json"],
+  "exclude": ["src/**/*.spec.ts"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": [
+      "esnext",
+      "dom",
+    ],
+    "types": [
+      "node",
+      "vitest/globals",
+      "chrome",
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
     }
-  ]
+  },
 }
