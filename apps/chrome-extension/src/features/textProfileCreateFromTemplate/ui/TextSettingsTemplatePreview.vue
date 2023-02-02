@@ -1,18 +1,18 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import AdaptContainer from '@/shared/ui/AdaptContainer.vue'
-import type { SettingsTemplate } from '../model/settingsTemplate'
+import type { TextSettingsTemplate } from '@/entities/textSettingsTemplate'
 import { adaptHtmlElementAsyncFn } from '@/shared/lib/textAdaptation'
-import { useI18n } from 'vue-i18n-composable'
+import { useI18n } from 'vue-i18n'
 import type { TextSettings } from '@/entities/textPreferences'
 
-interface Props {
-  template: SettingsTemplate
+type Props = {
+  template: TextSettingsTemplate
 }
 const props = defineProps<Props>()
 
 interface Emits {
-  (event: 'modify', value: TextSettings)
+  (event: 'modify', value: TextSettings): void
 }
 const emit = defineEmits<Emits>()
 const emitModify = () => {
@@ -31,8 +31,8 @@ const { t } = useI18n()
     </div>
 
     <ul class="list-disc pl-4">
-      <template v-for="description of template.descriptions">
-        <li :key="description">{{ description }}</li>
+      <template v-for="description of template.descriptions" :key="description">
+        <li>{{ description }}</li>
       </template>
     </ul>
 

@@ -3,10 +3,13 @@ import LanguageSelect from './LanguageSelect.vue'
 import { type Language, languageOptions } from '@readapt/settings'
 
 describe('LanguageSelect', () => {
-  const factory = ({ value = 'en' } = {}) => {
+  type FactoryProps = {
+    modelValue?: Language
+  }
+  const factory = ({ modelValue = 'en' }: FactoryProps = {}) => {
     const wrapper = mount(LanguageSelect, {
-      propsData: {
-        value
+      props: {
+        modelValue
       }
     })
     const select = wrapper.find<HTMLSelectElement>('select')
@@ -23,19 +26,19 @@ describe('LanguageSelect', () => {
 
   it('should set select value from "value" prop', () => {
     const language: Language = 'fr'
-    const { select } = factory({ value: language })
+    const { select } = factory({ modelValue: language })
 
     expect(select.element.value).toBe(language)
   })
 
   describe('when language changes', () => {
-    it('should emit "input " with the new language', async () => {
+    it('should emit "update:modelValue " with the new language', async () => {
       const newLanguage: Language = 'fr'
       const { wrapper, select } = factory()
 
       await select.setValue(newLanguage)
 
-      expect(wrapper.emitted('input')).toEqual([[newLanguage]])
+      expect(wrapper.emitted('update:modelValue')).toEqual([[newLanguage]])
     })
   })
 })

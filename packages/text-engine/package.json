@@ -1,6 +1,6 @@
 {
   "name": "@readapt/text-engine",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "main": "dist/readapt-text-engine.js",
   "module": "dist/readapt-text-engine.esm.js",
   "types": "dist/index.d.ts",
@@ -25,6 +25,6 @@
     "src/*"
   ],
   "dependencies": {
-    "@readapt/dictionaries": "^1.7.0"
+    "@readapt/dictionaries": "^1.7.1"
   }
 }

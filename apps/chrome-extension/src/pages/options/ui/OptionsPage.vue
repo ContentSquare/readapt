@@ -13,8 +13,8 @@ import { TextProfileForm } from '@/features/textProfileForm'
 import { TextSettingsFileDownload } from '@/features/textSettingsFileDownload'
 
 import { useExtensionUtils } from '@/shared/lib/extension'
-import { useRouter } from 'vue-router/composables'
-import { useI18n } from 'vue-i18n-composable'
+import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 
@@ -22,10 +22,11 @@ const { preferences } = useTextPreferences()
 // TODO: extract profile selection into a composable
 const selectedProfiledId = ref<TextProfileId | null>(null)
 onMounted(() => {
-  if ('editActiveProfile' in router.currentRoute.query) {
+  const { query } = router.currentRoute.value
+  if ('editActiveProfile' in query) {
     selectedProfiledId.value = preferences.activeProfileId
-  } else if ('profileId' in router.currentRoute.query) {
-    selectedProfiledId.value = parseInt(router.currentRoute.query.profileId)
+  } else if ('profileId' in query) {
+    selectedProfiledId.value = parseInt(String(query.profileId))
   }
 })
 
@@ -39,18 +40,18 @@ const { t } = useI18n()
   <div class="m-auto max-w-screen-lg p-2 text-base">
     <div class="mb-2 flex items-center bg-base-100">
       <div class="mr-4 text-2xl font-semibold">{{ $t('SETTINGS.PROFILE') }}:</div>
-      <TextProfileEditDropdown class="w-60" v-model="selectedProfiledId" :settings="settings" />
+      <TextProfileEditDropdown v-model="selectedProfiledId" class="w-60" :settings="settings" />
       <TextProfileRenameButton class="ml-3" :profile-id="selectedProfiledId" />
       <TextSettingsFileDownload class="ml-auto" :settings="settings" />
     </div>
     <div class="flex">
-      <TextProfileForm class="w-2/3 min-w-[850px]" :settings="settings" @update-settings="updateSettings" @change-language="changeLanguage" />
+      <TextProfileForm class="w-2/3 min-w-[730px]" :settings="settings" @update-settings="updateSettings" @change-language="changeLanguage" />
       <div class="flex w-1/3 flex-1 flex-col pl-4 pt-10">
         <div class="text-2xl font-semibold">{{ $t('SETTINGS.TEXT_PREVIEW') }}</div>
         <TextSettingsAdaptationPreview class="h-items-settings overflow-scroll" :settings="settings" />
         <div class="mt-auto flex flex-wrap justify-between">
           <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
-          <TextProfileDeleteButton class="ml-3 mr-auto" v-model="selectedProfiledId" />
+          <TextProfileDeleteButton v-model="selectedProfiledId" class="ml-3 mr-auto" />
           <!-- TODO: add dirty settings calculation -->
           <button class="btn-secondary btn-sm btn" @click="close">{{ t('SETTINGS.CLOSE') }}</button>
         </div>

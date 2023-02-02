@@ -2,13 +2,13 @@
 // TODO: add unit tests
 import { ref, unref } from 'vue'
 
-interface Props {
+type Props = {
   contentToAdapt: string
 }
 defineProps<Props>()
 
 interface Emits {
-  (event: 'update', text: string)
+  (event: 'update', text: string): void
 }
 const emit = defineEmits<Emits>()
 const textToAdaptElement = ref<HTMLTextAreaElement>()
@@ -31,9 +31,9 @@ const onEdit = () => {
 </script>
 <template>
   <div :class="{ 'p-3': !isReading }">
-    <textarea class="textarea mx-2 max-h-full w-full" rows="5" ref="textToAdaptElement" :value="contentToAdapt" @blur="onRead" :hidden="isReading" />
+    <textarea ref="textToAdaptElement" class="textarea mx-2 max-h-full w-full" rows="5" :value="contentToAdapt" :hidden="isReading" @blur="onRead" />
 
-    <div v-if="isReading" @click="onEdit" class="m-px cursor-pointer hover:outline-1 hover:outline-gray-200 hover:outline">
+    <div v-if="isReading" class="m-px cursor-pointer hover:outline-1 hover:outline-gray-200 hover:outline" @click="onEdit">
       <slot>
         <!--fallback -->
         <div v-html="contentToAdapt"></div>

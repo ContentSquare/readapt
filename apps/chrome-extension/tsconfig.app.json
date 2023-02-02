@@ -1,6 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/**/*.json"],
   "exclude": ["src/**/*.spec.ts"],
   "compilerOptions": {
     "composite": true,
@@ -16,5 +16,4 @@
       "@/*": ["./src/*"]
     }
   },
-  "vueCompilerOptions": { "target": 2.7 }
 }

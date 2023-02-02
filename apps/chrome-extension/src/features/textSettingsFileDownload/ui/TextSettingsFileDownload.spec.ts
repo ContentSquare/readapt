@@ -5,7 +5,7 @@ import { textSettingsFixture as settings } from '@/entities/textPreferences'
 describe('TextSettingsFileDownload', () => {
   it('should render an anchor', () => {
     const wrapper = mount(TextSettingsFileDownload, {
-      propsData: {
+      props: {
         settings
       },
       mocks: {

@@ -3,7 +3,7 @@
 module.exports = {
   root: true,
   extends: [
-    'plugin:vue/essential',
+    'plugin:vue/vue3-recommended',
     'eslint:recommended',
     'plugin:tailwindcss/recommended',
     '@vue/eslint-config-typescript/recommended',

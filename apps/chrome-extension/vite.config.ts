@@ -2,7 +2,7 @@ import { fileURLToPath, URL } from 'node:url'
 import path from 'node:path'
 import { type UserConfig, defineConfig } from 'vite'
 import type { InlineConfig } from 'vitest'
-import vue2 from '@vitejs/plugin-vue2'
+import vue from '@vitejs/plugin-vue'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 import pkg from './package.json'
 
@@ -10,12 +10,10 @@ interface VitestConfigExport extends UserConfig {
   test: InlineConfig
 }
 
-console.log(JSON.stringify(pkg.version))
-
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue2(),
+    vue(),
     viteStaticCopy({
       targets: [
         {
@@ -40,25 +38,27 @@ export default defineConfig({
   },
   optimizeDeps: {
     // TODO: try to provide ESM and remove the optimizeDeps
-    include: ['@readapt/shared-components', '@readapt/text-engine']
+    include: ['@readapt/text-engine']
   },
   build: {
     emptyOutDir: false,
     commonjsOptions: {
       transformMixedEsModules: true,
       // TODO: try to provide ESM and remove commonjsOptions
-      include: [/shared-components/, /text-engine/, /dictionaries/, /node_modules/]
+      include: [/text-engine/, /dictionaries/, /node_modules/]
     }
   },
   test: {
     setupFiles: [path.resolve(__dirname, './vitest.setup.ts')],
     globals: true,
-    environment: 'happy-dom'
+    environment: 'jsdom'
   },
   resolve: {
     // change config
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      // @see https://github.com/intlify/bundle-tools/issues/23
+      'vue-i18n': process.env.NODE_ENV === 'production' ? 'vue-i18n/dist/vue-i18n.runtime.esm-bundler.js' : 'vue-i18n'
     }
   }
 } as VitestConfigExport)

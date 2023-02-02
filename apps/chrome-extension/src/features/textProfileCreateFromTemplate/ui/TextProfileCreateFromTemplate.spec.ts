@@ -2,6 +2,8 @@ import { shallowMount } from '@vue/test-utils'
 import type { TextSettingsTemplate } from '@/entities/textSettingsTemplate'
 import { textSettingsFixture as settings, useTextPreferences } from '@/entities/textPreferences'
 import TextProfileCreateFromTemplate from './TextProfileCreateFromTemplate.vue'
+import TextSettingsTemplatePreview from './TextSettingsTemplatePreview.vue'
+import { nextTick } from 'vue'
 
 describe('TextProfileCreateFromTemplate', () => {
   afterEach(() => {
@@ -27,10 +29,10 @@ describe('TextProfileCreateFromTemplate', () => {
 
   const factory = () => {
     const wrapper = shallowMount(TextProfileCreateFromTemplate, {
-      propsData: { templates }
+      props: { templates }
     })
 
-    const previews = wrapper.findAll('[data-test-id=preview]')
+    const previews = wrapper.findAllComponents(TextSettingsTemplatePreview)
 
     return { wrapper, previews }
   }
@@ -39,7 +41,7 @@ describe('TextProfileCreateFromTemplate', () => {
     const { previews } = factory()
 
     templates.forEach((template, index) => {
-      expect(previews.at(index).props('template')).toEqual(template)
+      expect(previews[index].props('template')).toEqual(template)
     })
   })
 
@@ -48,7 +50,7 @@ describe('TextProfileCreateFromTemplate', () => {
       const { preferences } = useTextPreferences()
       const { previews } = factory()
 
-      await previews.at(0).vm.$emit('modify', templates[0].settings)
+      await previews[0].vm.$emit('modify', templates[0].settings)
 
       expect(preferences.profiles).toHaveLength(1)
       expect(preferences.profiles[0].settings).toEqual(templates[0].settings)
@@ -57,7 +59,9 @@ describe('TextProfileCreateFromTemplate', () => {
     it('should emit "created" with the newly created text profile id', async () => {
       const { wrapper, previews } = factory()
 
-      await previews.at(0).vm.$emit('modify', templates[0].settings)
+      await previews[0].vm.$emit('modify', templates[0].settings)
+
+      await nextTick()
 
       expect(wrapper.emitted('created')).toEqual([[1]])
     })

@@ -1,12 +1,9 @@
-import Vue from 'vue'
-import VueRouter, { type RouteConfig } from 'vue-router'
+import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router'
 
 import { MainMenuPage } from '@/pages/mainMenu'
 
 export function withRouter() {
-  Vue.use(VueRouter)
-
-  const routes: Array<RouteConfig> = [
+  const routes: Array<RouteRecordRaw> = [
     {
       path: '/',
       name: 'main',
@@ -24,8 +21,8 @@ export function withRouter() {
     }
   ]
 
-  const router = new VueRouter({
-    mode: 'hash',
+  const router = createRouter({
+    history: createWebHashHistory(),
     routes
   })
 

@@ -1,7 +1,8 @@
 {
 	"recommendations": [
     "dbaeumer.vscode-eslint",
-    "octref.vetur",
+    "vue.volar",
+    "vue.vscode-typescript-vue-plugin",
     "bradlc.vscode-tailwindcss"
 	]
 }

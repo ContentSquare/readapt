@@ -1,17 +1,18 @@
 import BaseSelect from './BaseSelect.vue'
 import { mount } from '@vue/test-utils'
 
-describe('BaseButton', () => {
+describe('BaseSelect', () => {
   const options = [
     { value: '10', text: 'Ten' },
     { value: '20', text: 'Twenty' }
   ]
+
   interface FactoryProps {
-    value?: string
+    modelValue?: string
   }
-  const factory = ({ value = '' }: FactoryProps = {}) => {
+  const factory = ({ modelValue = '' }: FactoryProps = {}) => {
     const wrapper = mount(BaseSelect, {
-      propsData: { value, options }
+      props: { modelValue, options }
     })
     const select = wrapper.find<HTMLSelectElement>('select')
 
@@ -29,26 +30,26 @@ describe('BaseButton', () => {
       const { select } = factory()
 
       options.forEach(({ value, text }) => {
-        expect(select.find(`option[value=${value}]`).text()).toBe(text)
+        expect(select.find(`option[value="${value}"]`).text()).toBe(text)
       })
     })
   })
 
   it('should set selected value from "value" prop', () => {
-    const value = '20'
-    const { select } = factory({ value })
+    const modelValue = '20'
+    const { select } = factory({ modelValue })
 
-    expect(select.element.value).toBe(value)
+    expect(select.element.value).toBe(modelValue)
   })
 
   describe('when an option is selected', () => {
-    it('should emit "input"', () => {
-      const value = '20'
-      const { wrapper, select } = factory({ value })
+    it('should emit "update:modelValue"', () => {
+      const modelValue = '20'
+      const { wrapper, select } = factory({ modelValue })
 
-      select.setValue(value)
+      select.setValue(modelValue)
 
-      expect(wrapper.emitted('input')).toEqual([[value]])
+      expect(wrapper.emitted('update:modelValue')).toEqual([[modelValue]])
     })
   })
 })

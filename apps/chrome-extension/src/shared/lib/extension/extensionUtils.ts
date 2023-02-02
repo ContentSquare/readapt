@@ -1,11 +1,11 @@
 import type { SettingsReadingTool } from '@/entities/readingTools'
-import type VueRouter from 'vue-router'
+import type { Router } from 'vue-router'
 
 export interface ChromeUtils {
   getCurrentTab: () => Promise<chrome.tabs.Tab>
-  openOptionsPage: (params?: Record<string, string>, router?: VueRouter) => Promise<void>
-  openTemplates: (router?: VueRouter) => Promise<void>
-  closeCurrentTab: (router?: VueRouter) => Promise<void>
+  openOptionsPage: (params?: Record<string, string>, router?: Router) => Promise<void>
+  openTemplates: (router?: Router) => Promise<void>
+  closeCurrentTab: (router?: Router) => Promise<void>
   sendMessageToCurrentTab: (message: unknown) => Promise<void>
   broadcastMessage: (message: unknown) => Promise<void>
   saveLocale: (locale: string) => Promise<void>

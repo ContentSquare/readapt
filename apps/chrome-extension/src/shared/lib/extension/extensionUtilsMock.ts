@@ -1,24 +1,24 @@
 import { type SettingsReadingTool, buildDefaultSettingsReadingTool } from '@/entities/readingTools'
-import type VueRouter from 'vue-router'
+import type { Router } from 'vue-router'
 
 const getCurrentTab = async (): Promise<chrome.tabs.Tab> => {
   console.log('getCurrentTab mock')
   return { id: 0 } as chrome.tabs.Tab
 }
 
-const closeCurrentTab = async (router?: VueRouter): Promise<void> => {
+const closeCurrentTab = async (router?: Router): Promise<void> => {
   console.log('closeCurrentTab mock')
   router?.push('/')
 }
 
-const openOptionsPage = async (params?: Record<string, string>, router?: VueRouter): Promise<void> => {
+const openOptionsPage = async (params?: Record<string, string>, router?: Router): Promise<void> => {
   router?.push({
     name: 'options',
     query: params
   })
 }
 
-const openTemplates = async (router?: VueRouter): Promise<void> => {
+const openTemplates = async (router?: Router): Promise<void> => {
   router?.push('templates')
 }
 
