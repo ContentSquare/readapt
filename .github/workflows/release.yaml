@@ -36,11 +36,8 @@ jobs:
 
   build:
     needs: bootstrap
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
-      - uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest-stable
       - uses: actions/checkout@v3
       - uses: ./.github/actions/build
         with:
@@ -56,7 +53,16 @@ jobs:
         with:
           version: ${{ inputs.version }}
 
-  package:
+  package-chrome:
+    needs: [lint, build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/package-chrome
+        with:
+          version: ${{ inputs.version }}
+
+  package-safari:
     needs: [lint, build]
     runs-on: macos-latest
     steps:
@@ -64,12 +70,12 @@ jobs:
         with:
           xcode-version: latest-stable
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/package
+      - uses: ./.github/actions/package-safari
         with:
           version: ${{ inputs.version }}
 
   deploy:
-    needs: [test, package]
+    needs: [test, package-chrome, package-safari]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

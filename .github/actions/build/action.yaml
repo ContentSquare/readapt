@@ -35,6 +35,3 @@ runs:
       run: yarn workspace chrome-extension build
       env:
         VUE_APP_MATOMO_URL: ${{ inputs.matomoUrl }}
-
-    - shell: bash
-      run: yarn workspace safari-extension build

@@ -60,6 +60,6 @@ runs:
           -t 'readapt v${{ inputs.version }}' \
           --generate-notes \
           ./apps/chrome-extension/dist/readapt-chrome-extension-v${{ inputs.version }}.zip \
-          ./apps/safari-extension/dist/Applications/Readapt.app
+          ./apps/safari-extension/dist/Applications/readapt-safari-extension-v${{ inputs.version }}.zip
       env:
         GH_TOKEN: ${{ inputs.gh_token }}

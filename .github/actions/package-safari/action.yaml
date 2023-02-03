@@ -1,0 +1,28 @@
+name: Package
+description: Package sources
+
+inputs:
+  version:
+    description: Bumped version
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: ./.github/actions/setup
+      with:
+        version: ${{ inputs.version }}
+
+    - uses: ./.github/actions/cache-dependencies
+
+    - uses: ./.github/actions/cache-build
+
+    - uses: ./.github/actions/cache-packages
+      with:
+        version: ${{ inputs.version }}
+
+    - shell: bash
+      run: yarn lerna version ${{ inputs.version }} -y --no-git-tag-version
+
+    - shell: bash
+      run: yarn package-safari-extension
