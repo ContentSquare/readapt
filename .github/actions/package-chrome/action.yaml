@@ -26,6 +26,3 @@ runs:
 
     - shell: bash
       run: yarn package-chrome-extension
-
-    - shell: bash
-      run: yarn package-safari-extension

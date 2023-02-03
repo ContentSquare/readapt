@@ -1,0 +1,34 @@
+name: Deploy apps
+description: Deploy apps to stores
+
+inputs:
+  version:
+    description: Bumped version
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: ./.github/actions/setup
+      with:
+        version: ${{ inputs.version }}
+
+    - uses: ./.github/actions/cache-dependencies
+
+    - uses: ./.github/actions/cache-build
+
+    - uses: ./.github/actions/cache-packages
+      with:
+        version: ${{ inputs.version }}
+
+    # - uses: Klemensas/chrome-extension-upload-action@$VERSION
+    #   with:
+    #     refresh-token: 'xxxxxxxxxxxxxxxxxxxxxx'
+    #     client-id: 'xxxxxxxxxxxxx'
+    #     client-secret: 'xxxxxxxxxxxx'
+    #     file-name: './apps/chrome-extension/dist/readapt-chrome-extension-v${{ inputs.version }}.zip'
+    #     app-id: 'xzc12xzc21cx23'
+    #     publish: true
+
+# DEVELOPMENT_TEAM = DNV9CHHUZ9;
+
