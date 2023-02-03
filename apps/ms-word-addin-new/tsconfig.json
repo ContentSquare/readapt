@@ -7,10 +7,12 @@
     "lib": [
       "esnext",
       "dom",
+      "scripthost"
     ],
     "types": [
       "node",
       "vitest/globals",
+      "office-js"
     ],
     "paths": {
       "@/*": ["./src/*"]

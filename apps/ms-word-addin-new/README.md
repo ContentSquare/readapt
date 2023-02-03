@@ -1,66 +1,48 @@
-# Readapt Chrome extension
+# MS Word Add-In
 
 ## Introduction
 
-Created by [Contentsquare Foundation](https://contentsquare-foundation.org/), Readapt is a software platform that aims to help those with reading challenges like dyslexia to more easily read digital text. The [Chrome extension](https://chrome.google.com/webstore/detail/readapt/emgfmfgandmhbgleikkoaebngboghfpe) version of Readapt allows users to set their reading preferences and adapt text on websites. It also provides reading tools like a screen mask and reading ruler.
+Created by [Contentsquare Foundation](https://contentsquare-foundation.org/), Readapt is a software platform that aims to help those with reading challenges like dyslexia to more easily read digital text. The [Microsoft Word version](https://appsource.microsoft.com/en-us/product/office/WA200004098?tab=Overview) of Readapt allows users to set their reading preferences and see an adaptation of the Word document's text. It also provides reading tools like a screen mask and reading ruler.
 
-This Chrome extension is compatible with many Chromium-based browsers like Google Chrome and Microsoft Edge (web view 2). It is available in English and French.
+## Operating system and Microsoft Office compatibility
+### MacOS
+Readapt can be used on most recent releases of MacOS and Microsoft Office.
 
-## How the Readapt Chrome extension works
-After installing the extension, you can click on the extension to either create your profile from scratch or select from one of our reading templates. After saving your preferences, you can start to adapt text on websites by holding the control (Windows) or command ⌘ key (Mac) and left-clicking on your target text. To remove the text adaptation, you can either click on the extension and click on "Reset text on page", or right-click on the webpage and select "Readapt > Reset all text".
+### Microsoft Office Online
+[Microsoft Office Online](www.office.com) (offered free of charge from Microsoft) can be used with Readapt.
 
-The reading tools (screen mask and reading ruler) can be activated on a webpage by webpage basis by right-clicking on the webpage and selecting "Readapt > Activate mask" or "Activate ruler". To deactivate these tools, hit ESCAPE. To modify the thickness and opacity of these tools, click on the extension and use the sliders.
+### Microsoft Windows & Microsoft Office
+Readapt can be used with certain combinations of Windows and Microsoft Office. Because Microsoft Office add-ins [use an embedded browser control](https://docs.microsoft.com/en-us/office/dev/add-ins/concepts/browsers-used-by-office-web-add-ins), the browser installed on your version of Windows can also determine if you can use Readapt. We strongly recommend installing the [latest version of Microsoft Edge](https://www.microsoft.com/en-us/edge) (free from Microsoft) for the best Readapt experience if you use Microsoft Windows. See below for a summary of what’s compatible. Unfortunately, versions of Microsoft Windows and Office not mentioned below are not compatible with Readapt.
 
-## Project setup
+|   | Microsoft 365 ver. >= 16.0.13530.20424 | Microsoft 365 ver. >= 16.0.11629 AND < 16.0.13530.204242 |non-subscription Office 2021 or later |
+| --- | --- | ---|---|
+| Windows 8.1 | Edge WebView2 must be installed | Incompatible | Incompatible |
+| Windows 10 before version 1903 | Incompatible | Incompatible |Edge WebView2 must be installed|
+| Windows 10 version 1903 and after OR Windows 11 | Readapt will work but Edge WebView2 installation recommended | Readapt will work but Edge WebView2 installation recommended | Edge WebView2 must be installed|
 
-```
-yarn install
-```
 
-### Setup env var
+## How the Readapt Microsoft Word add-in works
+Please see our [webpage](contentsquare-foundation.org/msword/) for a detailed guide.
 
-After install an `.env` file will be generated, please fill missing values
+## Development
 
-### Compiles and hot-reloads for development
-```
-yarn dev
-```
+Generate self-signed SSL certificates and deploy manifest.xml running
 
-### Run your unit tests
-```
-yarn test:unit
-```
+`yarn start`
 
-### Lints and fixes files
-```
-yarn lint
-```
+Launch dev server
 
-## Build a release
-Please ensure all @readapt dependencies are been built before build a release
+1. Launch dev server `yarn serve`
 
-```bash
-yarn build
-```
+## Build
 
-Run to generate a zip file inside the /dist directory
+Set env var `RENDER_EXTERNAL_URL` to generate a manifest.xml with an external Url
 
-```bash
-yarn package
-```
+Run `yarn build`
 
-## Install extension in development mode
+deploy `dist` folder il your environment
 
-After build, you can load an unpacked version in your browser following this instructions
 
-https://developer.chrome.com/docs/extensions/mv3/getstarted/#unpacked
+## Production deploy
 
-and selecting `dist/` directory
-
-## Autobuild of a release
-
-When creating a pull request, the CI build job creates automatically a release zip file of the extension. To access the release zip file:
-
-1. On the Pull Request page click the "Checks" tab
-2. On the "Checks" tab click "Readapt CI" from the left sidebar
-3. On the "Readapt CI" page scroll to the bottom to the "Artifacts" section and click "Chrome Extension" to download.
+Setup env var `READAPT_MSWORD_URL` before the build to generate the manifest.xml pointing to Readapt env URL.
