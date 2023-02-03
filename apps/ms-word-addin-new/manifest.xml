@@ -20,8 +20,8 @@
   <Description DefaultValue="Readapt helps those with reading challenges like dyslexia to improve their reading. Configure font and size, spacing between letters, words and lines. Distinguish syllables, phonemes, and letters. Use  tools like the mask and reading ruler."/>
 
   <!-- Icon for your add-in. Used on installation screens and the add-ins dialog. -->
-  <IconUrl DefaultValue="https://localhost:3000/assets/icon-32.png" />
-  <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-64.png"/>
+  <IconUrl DefaultValue="https://localhost:5173/assets/icon-32.png" />
+  <HighResolutionIconUrl DefaultValue="https://localhost:5173/assets/icon-64.png"/>
 
   <!--If you plan to submit this add-in to the Office Store, uncomment the SupportUrl element below-->
   <SupportUrl DefaultValue="https://contentsquare-foundation.org/readapt/msword/" />
@@ -32,7 +32,7 @@
     <Host Name="Document" />
   </Hosts>
   <DefaultSettings>
-    <SourceLocation DefaultValue="https://localhost:3000/index.html" />
+    <SourceLocation DefaultValue="https://localhost:5173/index.html" />
   </DefaultSettings>
   <!-- End TaskPane Mode integration.  -->
 
@@ -114,18 +114,18 @@
     <!-- You can use resources across hosts and form factors. -->
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://localhost:3000/assets/icon-16.png"/>
-        <bt:Image id="Icon.20x20" DefaultValue="https://localhost:3000/assets/icon-20.png"/>
-        <bt:Image id="Icon.24x24" DefaultValue="https://localhost:3000/assets/icon-24.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="https://localhost:3000/assets/icon-32.png"/>
-        <bt:Image id="Icon.40x40" DefaultValue="https://localhost:3000/assets/icon-40.png"/>
-        <bt:Image id="Icon.48x48" DefaultValue="https://localhost:3000/assets/icon-48.png"/>
-        <bt:Image id="Icon.64x64" DefaultValue="https://localhost:3000/assets/icon-64.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="https://localhost:3000/assets/icon-80.png"/>
+        <bt:Image id="Icon.16x16" DefaultValue="https://localhost:5173/assets/icon-16.png"/>
+        <bt:Image id="Icon.20x20" DefaultValue="https://localhost:5173/assets/icon-20.png"/>
+        <bt:Image id="Icon.24x24" DefaultValue="https://localhost:5173/assets/icon-24.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://localhost:5173/assets/icon-32.png"/>
+        <bt:Image id="Icon.40x40" DefaultValue="https://localhost:5173/assets/icon-40.png"/>
+        <bt:Image id="Icon.48x48" DefaultValue="https://localhost:5173/assets/icon-48.png"/>
+        <bt:Image id="Icon.64x64" DefaultValue="https://localhost:5173/assets/icon-64.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://localhost:5173/assets/icon-80.png"/>
       </bt:Images>
       <bt:Urls>
         <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://contentsquare-foundation.org/readapt/msword/" />
-        <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/index.html" />
+        <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:5173/index.html" />
       </bt:Urls>
       <!-- ShortStrings max characters==125. -->
       <bt:ShortStrings>
