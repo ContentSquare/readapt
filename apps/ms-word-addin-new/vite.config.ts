@@ -9,16 +9,12 @@ import pkg from './package.json'
 
 const { env } = process
 
+const DEV_SERVER_PORT = 3000
 const HOME_DIRECTORY = os.homedir()
 const IS_PRODUCTION = env.NODE_ENV === 'production'
 
 const copyManifest = viteStaticCopy({
   targets: [
-    {
-      // TODO: try to refactor this copying to normal building
-      src: '../../packages/visual-engine/dist/readapt-visual-engine.browser.js',
-      dest: 'scripts'
-    },
     {
       src: 'manifest*.xml',
       dest: '.',
@@ -28,7 +24,7 @@ const copyManifest = viteStaticCopy({
         if (!IS_PRODUCTION || !productionUrl) {
           return content
         }
-        const DEVELOPMENT_URL = 'https://localhost:5173'
+        const DEVELOPMENT_URL = `https://localhost:${DEV_SERVER_PORT}`
         return content.toString().replaceAll(DEVELOPMENT_URL, productionUrl)
       }
     }
@@ -71,6 +67,7 @@ export default defineConfig({
     }
   },
   server: {
+    port: DEV_SERVER_PORT,
     https: IS_PRODUCTION ? undefined : httpsConfigDevMode
   }
 })
