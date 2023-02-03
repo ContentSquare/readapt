@@ -1,13 +1,12 @@
 import { fileURLToPath, URL } from 'node:url'
 import path from 'node:path'
-import { type UserConfig, defineConfig } from 'vite'
-import type { InlineConfig } from 'vitest'
+import fs from 'node:fs'
+import os from 'node:os'
+import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import pkg from './package.json'
 
-interface VitestConfigExport extends UserConfig {
-  test: InlineConfig
-}
+const HOME_DIRECTORY = os.homedir()
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -37,5 +36,12 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  server: {
+    https: {
+      key: fs.readFileSync(path.resolve(`${HOME_DIRECTORY}/.office-addin-dev-certs/localhost.key`)),
+      cert: fs.readFileSync(path.resolve(`${HOME_DIRECTORY}/.office-addin-dev-certs/localhost.crt`)),
+      ca: fs.readFileSync(path.resolve(`${HOME_DIRECTORY}/.office-addin-dev-certs/ca.crt`))
+    }
   }
-} as VitestConfigExport)
+})
