@@ -34,20 +34,21 @@ const saveLocale = async (locale: string): Promise<void> => {
   // console.log('save locale', locale)
   localStorage.setItem('locale', locale)
 }
+
 const getLocale = async (): Promise<string> => {
   // console.log('get locale')
   return localStorage.getItem('locale') as string
 }
 
-const saveEnabled = async (enabled: boolean): Promise<void> => {
-  // console.log('save enabled', enabled)
-  localStorage.setItem('enabled', enabled.toString())
-}
-const getEnabled = async (): Promise<boolean> => {
-  // console.log('get enabled')
-  const enabled = localStorage.getItem('enabled') ?? 'true'
-  return enabled === 'true'
-}
+// const saveEnabled = async (enabled: boolean): Promise<void> => {
+//   // console.log('save enabled', enabled)
+//   localStorage.setItem('enabled', enabled.toString())
+// }
+// const getEnabled = async (): Promise<boolean> => {
+//   // console.log('get enabled')
+//   const enabled = localStorage.getItem('enabled') ?? 'true'
+//   return enabled === 'true'
+// }
 
 const saveMaskSettings = async (maskSettings: SettingsReadingTool) => {
   console.log('save MaskSettings')
@@ -87,8 +88,8 @@ export {
   saveLocale,
   getLocale,
   // broadcastMessage,
-  saveEnabled,
-  getEnabled,
+  // saveEnabled,
+  // getEnabled,
   getMaskSettings,
   getRuleSettings,
   saveMaskSettings,

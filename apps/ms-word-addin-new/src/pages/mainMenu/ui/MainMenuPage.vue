@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, ref, watchEffect } from 'vue'
+import { computed } from 'vue'
 
 import { useVersion } from '@/shared/lib/useVersion'
 import { TextProfileActiveDropdown } from '@/features/textProfileActiveDropdown'
@@ -13,19 +13,10 @@ import SvgIcon from '@/shared/ui/SvgIcon.vue'
 
 const router = useRouter()
 
-const readaptEnabled = ref(true)
-
-const { openOptionsPage, openTemplates, getEnabled, saveEnabled, saveLocale } = useExtensionUtils()
+const { openOptionsPage, openTemplates, saveLocale } = useExtensionUtils()
 
 const { preferences } = useTextPreferences()
 const hasActiveProfile = computed(() => Boolean(preferences.activeProfileId))
-
-watchEffect(async () => (readaptEnabled.value = await getEnabled()))
-
-const switchEnabled = async () => {
-  readaptEnabled.value = !readaptEnabled.value
-  await saveEnabled(readaptEnabled.value)
-}
 
 const selectTemplate = async () => await openTemplates(router)
 
@@ -42,11 +33,6 @@ const version = useVersion()
 <template>
   <div class="mx-auto w-full max-w-screen-sm py-2 px-3 text-base">
     <div class="flex items-center">
-      <div class="w-1/3">
-        <button v-if="hasActiveProfile" class="btn-outline btn-secondary btn-sm btn" :disabled="!readaptEnabled" @click="reset()">
-          {{ t('MAIN_MENU.RESET') }}
-        </button>
-      </div>
       <div class="w-1/3 text-center">
         {{ t('MAIN_MENU.MENU_LANGUAGE') }}
         <span v-if="locale === 'fr'">FR</span>
@@ -59,19 +45,6 @@ const version = useVersion()
         <img class="float-right w-[169px]" src="/logo.png" alt="Readapt Logo" />
       </div>
     </div>
-
-    <label class="mt-2 flex w-48 cursor-pointer items-center justify-start">
-      <span class="mr-2">{{ t('MAIN_MENU.READAPT_ACTIVE') }}</span>
-      <input type="checkbox" class="toggle-primary toggle toggle-sm" :checked="readaptEnabled" @change="switchEnabled" />
-    </label>
-
-    <div v-if="hasActiveProfile" class="mt-3">
-      <div class="text-lg font-semibold">{{ t('MAIN_MENU.ADAPT_TEXT_BY') }}</div>
-      <ul class="ml-4 mt-1 list-disc text-sm">
-        <li>{{ t('MAIN_MENU.HOLD_CMD_AND_CLICK_TARGET') }}</li>
-      </ul>
-    </div>
-    <div v-else class="my-3 text-center">{{ t('MAIN_MENU.FIRST_RUN') }}</div>
 
     <div class="mt-5 flex grow items-center gap-9" :class="hasActiveProfile ? 'justify-between' : 'justify-center'">
       <div v-if="hasActiveProfile" class="w-[220px]">

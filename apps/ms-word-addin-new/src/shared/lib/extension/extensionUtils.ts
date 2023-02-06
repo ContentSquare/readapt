@@ -10,8 +10,8 @@ export interface ChromeUtils {
   // broadcastMessage: (message: unknown) => Promise<void>
   saveLocale: (locale: string) => Promise<void>
   getLocale: () => Promise<string>
-  saveEnabled: (enabled: boolean) => Promise<void>
-  getEnabled: () => Promise<boolean>
+  // saveEnabled: (enabled: boolean) => Promise<void>
+  // getEnabled: () => Promise<boolean>
   getMaskSettings: () => Promise<SettingsReadingTool>
   saveMaskSettings: (maskSettings: SettingsReadingTool) => Promise<void>
   getRuleSettings: () => Promise<SettingsReadingTool>
