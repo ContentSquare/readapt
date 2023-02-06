@@ -1,5 +1,5 @@
 import type { ChromeUtils } from './extensionUtils'
-import * as extensionUtilsChrome from './extensionUtilsChrome'
+// import * as extensionUtilsChrome from './extensionUtilsChrome'
 import * as extensionUtilsMock from './extensionUtilsMock'
 
 export function useExtensionUtils(): ChromeUtils {

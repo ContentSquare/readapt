@@ -8,7 +8,6 @@ import { useTextPreferences } from '@/entities/textPreferences'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
-import { ReadingToolsQuickActivate } from '@/features/readingToolsQuickActivate'
 import { useExtensionUtils } from '@/shared/lib/extension'
 import SvgIcon from '@/shared/ui/SvgIcon.vue'
 
@@ -16,7 +15,7 @@ const router = useRouter()
 
 const readaptEnabled = ref(true)
 
-const { openOptionsPage, sendMessageToCurrentTab, openTemplates, broadcastMessage, getEnabled, saveEnabled, saveLocale } = useExtensionUtils()
+const { openOptionsPage, openTemplates, getEnabled, saveEnabled, saveLocale } = useExtensionUtils()
 
 const { preferences } = useTextPreferences()
 const hasActiveProfile = computed(() => Boolean(preferences.activeProfileId))
@@ -26,12 +25,8 @@ watchEffect(async () => (readaptEnabled.value = await getEnabled()))
 const switchEnabled = async () => {
   readaptEnabled.value = !readaptEnabled.value
   await saveEnabled(readaptEnabled.value)
-  const message = readaptEnabled.value ? 'ENABLE' : 'DISABLE'
-  await broadcastMessage(message)
 }
 
-const adapt = async () => await sendMessageToCurrentTab('ADAPT')
-const reset = async () => await sendMessageToCurrentTab('RESET')
 const selectTemplate = async () => await openTemplates(router)
 
 const { locale, t } = useI18n()
@@ -99,8 +94,6 @@ const version = useVersion()
         {{ t('MAIN_MENU.BASE_YOUR_PROFILE_FROM_TEMPLATE') }}
       </button>
     </div>
-
-    <ReadingToolsQuickActivate class="mb-auto mt-5" />
 
     <div class="mt-2 flex items-center text-sm">
       <div class="mr-auto">Version {{ version }}</div>

@@ -1,10 +1,10 @@
 import { type SettingsReadingTool, buildDefaultSettingsReadingTool } from '@/entities/readingTools'
 import type { Router } from 'vue-router'
 
-const getCurrentTab = async (): Promise<chrome.tabs.Tab> => {
-  console.log('getCurrentTab mock')
-  return { id: 0 } as chrome.tabs.Tab
-}
+// const getCurrentTab = async (): Promise<chrome.tabs.Tab> => {
+//   console.log('getCurrentTab mock')
+//   return { id: 0 } as chrome.tabs.Tab
+// }
 
 const closeCurrentTab = async (router?: Router): Promise<void> => {
   console.log('closeCurrentTab mock')
@@ -22,29 +22,29 @@ const openTemplates = async (router?: Router): Promise<void> => {
   router?.push('templates')
 }
 
-const sendMessageToCurrentTab = async (message: unknown): Promise<void> => {
-  console.log('sendMessageToCurrentTab: ', message)
-}
+// const sendMessageToCurrentTab = async (message: unknown): Promise<void> => {
+//   console.log('sendMessageToCurrentTab: ', message)
+// }
 
-const broadcastMessage = async (message: unknown): Promise<void> => {
-  console.log('brodcastMessage: ', message)
-}
+// const broadcastMessage = async (message: unknown): Promise<void> => {
+//   console.log('brodcastMessage: ', message)
+// }
 
 const saveLocale = async (locale: string): Promise<void> => {
-  console.log('save locale', locale)
+  // console.log('save locale', locale)
   localStorage.setItem('locale', locale)
 }
 const getLocale = async (): Promise<string> => {
-  console.log('get locale')
+  // console.log('get locale')
   return localStorage.getItem('locale') as string
 }
 
 const saveEnabled = async (enabled: boolean): Promise<void> => {
-  console.log('save enabled', enabled)
+  // console.log('save enabled', enabled)
   localStorage.setItem('enabled', enabled.toString())
 }
 const getEnabled = async (): Promise<boolean> => {
-  console.log('get enabled')
+  // console.log('get enabled')
   const enabled = localStorage.getItem('enabled') ?? 'true'
   return enabled === 'true'
 }
@@ -79,14 +79,14 @@ const getRuleSettings = async (): Promise<SettingsReadingTool> => {
 }
 
 export {
-  getCurrentTab,
+  // getCurrentTab,
   closeCurrentTab,
   openOptionsPage,
   openTemplates,
-  sendMessageToCurrentTab,
+  // sendMessageToCurrentTab,
   saveLocale,
   getLocale,
-  broadcastMessage,
+  // broadcastMessage,
   saveEnabled,
   getEnabled,
   getMaskSettings,
