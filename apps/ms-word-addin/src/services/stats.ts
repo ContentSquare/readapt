@@ -1,11 +1,10 @@
 import { config } from '@/constants/config'
 
 const trackAdaptEvent = (isSelection: boolean) => {
-  if (isSelection) {
-    fetch(`${config.matomoURL}/matomo.php?idsite=2&action_name=adaptSelection&rec=1`).catch(console.error)
-  } else {
-    fetch(`${config.matomoURL}/matomo.php?idsite=2&action_name=adaptDocument&rec=1`).catch(console.error)
-  }
+  let url = `${config.matomoURL}/.php?idsite=2&action_name=adaptSelection&rec=1&ua=unknown&uadata={}`
+  url += isSelection ? '&action_name=adaptSelection' : '&action_name=adaptDocument'
+
+  fetch(url).catch(console.error)
 }
 
 export { trackAdaptEvent }
