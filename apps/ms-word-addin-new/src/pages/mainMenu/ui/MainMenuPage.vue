@@ -31,54 +31,48 @@ const version = useVersion()
 </script>
 
 <template>
-  <div class="mx-auto w-full max-w-screen-sm py-2 px-3 text-base">
-    <div class="flex items-center">
-      <div class="w-1/3 text-center">
-        {{ t('MAIN_MENU.MENU_LANGUAGE') }}
+  <div class="mx-auto mt-6 flex w-full max-w-screen-xs flex-wrap gap-4 text-base">
+    <div v-if="hasActiveProfile" class="w-full">
+      <div class="text-lg font-semibold">{{ $t('MAIN_MENU.ACTIVE_PROFILE') }}:</div>
+      <div class="flex justify-between">
+        <TextProfileActiveDropdown class="w-40" />
+        <button
+          :title="$t('MAIN_MENU.SEE_MODIFY_CURRENT_PROFILE')"
+          class="btn-outline btn-primary btn-sm btn ml-1"
+          @click="openOptionsPage({ editActiveProfile: '' }, router)"
+        >
+          <SvgIcon id="edit" class="h-4 w-4 fill-current" />
+        </button>
+      </div>
+    </div>
+
+    <div><span class="text-4xl">Readapt</span> by</div>
+    <img class="mb-4 block w-full" src="/logo.png" alt="Readapt Logo" />
+    <button class="btn-primary btn w-full" @click="openOptionsPage({}, router)">
+      {{ t('MAIN_MENU.CREATE_BRAND_NEW_PROFILE') }}
+    </button>
+    <button class="btn-primary btn float-right w-full" @click="selectTemplate">
+      {{ t('MAIN_MENU.BASE_YOUR_PROFILE_FROM_TEMPLATE') }}
+    </button>
+
+    <div class="flex w-full items-center justify-between">
+      <a class="link" href="https://forms.gle/ciWCnYnkFjutwEHWA" target="_blank">
+        {{ t('MAIN_MENU.WHAT_IS_NEW') }}
+      </a>
+      <a class="link" href="https://forms.gle/9pv3HCmtPQN8Akpn9" target="_blank">
+        {{ t('MAIN_MENU.CONTACT_US') }}
+      </a>
+    </div>
+
+    <div class="flex w-full items-center justify-between">
+      <div class="text-sm">Version {{ version }}</div>
+      <div class="text-lg">
         <span v-if="locale === 'fr'">FR</span>
         <a v-if="locale !== 'fr'" href="#" @click="changeLocale('fr')">FR</a>
         /
         <span v-if="locale === 'en'">EN</span>
         <a v-if="locale !== 'en'" href="#" @click="changeLocale('en')">EN</a>
       </div>
-      <div class="w-1/3">
-        <img class="float-right w-[169px]" src="/logo.png" alt="Readapt Logo" />
-      </div>
-    </div>
-
-    <div class="mt-5 flex grow items-center gap-9" :class="hasActiveProfile ? 'justify-between' : 'justify-center'">
-      <div v-if="hasActiveProfile" class="w-[220px]">
-        <div class="text-lg font-semibold">{{ $t('MAIN_MENU.ACTIVE_PROFILE') }}:</div>
-        <div class="flex justify-between">
-          <TextProfileActiveDropdown class="w-40" />
-          <button
-            :title="$t('MAIN_MENU.SEE_MODIFY_CURRENT_PROFILE')"
-            class="btn-outline btn-primary btn-sm btn ml-1"
-            @click="openOptionsPage({ editActiveProfile: '' }, router)"
-          >
-            <SvgIcon id="edit" class="h-4 w-4 fill-current" />
-          </button>
-        </div>
-      </div>
-      <button class="btn-primary btn w-[150px]" @click="openOptionsPage({}, router)">
-        {{ t('MAIN_MENU.CREATE_BRAND_NEW_PROFILE') }}
-      </button>
-      <button class="btn-primary btn float-right w-[150px]" @click="selectTemplate">
-        {{ t('MAIN_MENU.BASE_YOUR_PROFILE_FROM_TEMPLATE') }}
-      </button>
-    </div>
-
-    <div class="mt-2 flex items-center text-sm">
-      <div class="mr-auto">Version {{ version }}</div>
-      <a class="link mr-3" href="https://readapt.ai/#user-guides" target="_blank">
-        {{ t('MAIN_MENU.USER_GUIDE') }}
-      </a>
-      <a class="link mr-3" href="https://forms.gle/ciWCnYnkFjutwEHWA" target="_blank">
-        {{ t('MAIN_MENU.WHAT_IS_NEW') }}
-      </a>
-      <a class="link" href="https://forms.gle/9pv3HCmtPQN8Akpn9" target="_blank">
-        {{ t('MAIN_MENU.CONTACT_US') }}
-      </a>
     </div>
   </div>
 </template>
