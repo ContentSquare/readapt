@@ -1,6 +1,6 @@
 {
   "name": "chrome-extension",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -18,9 +18,9 @@
     "postinstall": "node scripts/init-env"
   },
   "dependencies": {
-    "@readapt/settings": "^1.7.1",
-    "@readapt/text-engine": "^1.7.1",
-    "@readapt/visual-engine": "^1.7.1",
+    "@readapt/settings": "^1.7.2",
+    "@readapt/text-engine": "^1.7.2",
+    "@readapt/visual-engine": "^1.7.2",
     "dotenv": "^16.0.3",
     "lodash-es": "^4.17.21",
     "sanitize-html": "^2.8.1",
@@ -58,6 +58,8 @@
     "vue-tsc": "^1.0.24"
   },
   "workspaces": {
-    "nohoist": ["**"]
+    "nohoist": [
+      "**"
+    ]
   }
 }
