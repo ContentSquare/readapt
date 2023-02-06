@@ -17,7 +17,10 @@
     "FIRST_RUN": "Pour configurer votre profil, veuillez choisir une des options suivantes :",
     "ACTIVE_PROFILE": "Profil en cours",
     "WHAT_IS_NEW": "Les nouveatés",
-    "USER_GUIDE": "Guide d'utilisation"
+    "USER_GUIDE": "Guide d'utilisation",
+
+    "ADAPT_DOC": "Adapte le document !",
+    "ADAPT_SELECTION": "Adapte le texte selectioné"
   },
   "QUICK_ACTIVATE": {
     "QUICK_ACTIVATE": "Activation rapide : ",

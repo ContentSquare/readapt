@@ -17,7 +17,10 @@
     "FIRST_RUN": "To get started please select one of the two options below:",
     "ACTIVE_PROFILE": "Active profile",
     "WHAT_IS_NEW": "What's new?",
-    "USER_GUIDE": "User guide"
+    "USER_GUIDE": "User guide",
+
+    "ADAPT_DOC": "Adapt document!",
+    "ADAPT_SELECTION": "Adapt selected text"
   },
   "QUICK_ACTIVATE": {
     "QUICK_ACTIVATE": "Quick activate:",

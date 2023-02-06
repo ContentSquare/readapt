@@ -32,26 +32,36 @@ const version = useVersion()
 
 <template>
   <div class="mx-auto mt-6 flex w-full max-w-screen-xs flex-wrap gap-4 text-base">
-    <div v-if="hasActiveProfile" class="w-full">
-      <div class="text-lg font-semibold">{{ $t('MAIN_MENU.ACTIVE_PROFILE') }}:</div>
-      <div class="flex justify-between">
-        <TextProfileActiveDropdown class="w-40" />
-        <button
-          :title="$t('MAIN_MENU.SEE_MODIFY_CURRENT_PROFILE')"
-          class="btn-outline btn-primary btn-sm btn ml-1"
-          @click="openOptionsPage({ editActiveProfile: '' }, router)"
-        >
-          <SvgIcon id="edit" class="h-4 w-4 fill-current" />
-        </button>
-      </div>
-    </div>
-
     <div><span class="text-4xl">Readapt</span> by</div>
     <img class="mb-4 block w-full" src="/logo.png" alt="Readapt Logo" />
+
+    <template v-if="hasActiveProfile">
+      <div class="w-full">
+        <div class="text-lg font-semibold">{{ $t('MAIN_MENU.ACTIVE_PROFILE') }}:</div>
+        <div class="flex justify-between">
+          <TextProfileActiveDropdown class="select flex-1" />
+          <button
+            :title="$t('MAIN_MENU.SEE_MODIFY_CURRENT_PROFILE')"
+            class="btn-outline btn-primary btn-sm btn ml-1"
+            @click="openOptionsPage({ editActiveProfile: '' }, router)"
+          >
+            <SvgIcon id="edit" class="h-4 w-4 fill-current" />
+          </button>
+        </div>
+      </div>
+
+      <button class="btn w-full" @click="() => {}">
+        {{ t('MAIN_MENU.ADAPT_SELECTION') }}
+      </button>
+      <button class="btn mb-4 w-full" @click="() => {}">
+        {{ t('MAIN_MENU.ADAPT_DOC') }}
+      </button>
+    </template>
+
     <button class="btn-primary btn w-full" @click="openOptionsPage({}, router)">
       {{ t('MAIN_MENU.CREATE_BRAND_NEW_PROFILE') }}
     </button>
-    <button class="btn-primary btn float-right w-full" @click="selectTemplate">
+    <button class="btn-primary btn float-right mb-4 w-full" @click="selectTemplate">
       {{ t('MAIN_MENU.BASE_YOUR_PROFILE_FROM_TEMPLATE') }}
     </button>
 
