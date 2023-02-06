@@ -1,0 +1,19 @@
+name: Bootstrap
+description: Install dependencies
+
+inputs:
+  version:
+    description: Bumped version
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: ./.github/actions/setup
+      with:
+        version: ${{ inputs.version }}
+
+    - uses: ./.github/actions/cache-dependencies
+
+    - shell: bash
+      run: yarn install --frozen-lockfile

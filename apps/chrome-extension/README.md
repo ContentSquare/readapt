@@ -23,7 +23,7 @@ After install an `.env` file will be generated, please fill missing values
 
 ### Compiles and hot-reloads for development
 ```
-yarn serve
+yarn dev
 ```
 
 ### Run your unit tests
@@ -56,3 +56,11 @@ After build, you can load an unpacked version in your browser following this ins
 https://developer.chrome.com/docs/extensions/mv3/getstarted/#unpacked
 
 and selecting `dist/` directory
+
+## Autobuild of a release
+
+When creating a pull request, the CI build job creates automatically a release zip file of the extension. To access the release zip file:
+
+1. On the Pull Request page click the "Checks" tab
+2. On the "Checks" tab click "Readapt CI" from the left sidebar
+3. On the "Readapt CI" page scroll to the bottom to the "Artifacts" section and click "Chrome Extension" to download.

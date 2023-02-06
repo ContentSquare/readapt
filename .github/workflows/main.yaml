@@ -1,4 +1,4 @@
-name: readapt ci
+name: Readapt CI
 
 on:
   pull_request:
@@ -7,9 +7,32 @@ on:
     branches: [ "master" ]
 
 jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - run: npm i -g --force yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn lint
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - run: npm i -g --force yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn build-deps
+      - run: yarn test
   build:
     runs-on: ubuntu-latest
-
+    name: Build
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -18,11 +41,10 @@ jobs:
       - run: npm i -g --force yarn
       - run: yarn install --frozen-lockfile
       - run: yarn audit --groups dependencies
-      - run: yarn lint
       - run: yarn build-deps
-      - run: yarn test --ci
       - run: yarn workspace chrome-extension build
       - run: yarn workspace ms-word-addin build
-
-
-
+      - uses: actions/upload-artifact@v2
+        with:
+          name: "chrome-extension"
+          path: apps/chrome-extension/dist/

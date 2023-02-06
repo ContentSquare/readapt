@@ -18,8 +18,8 @@ export interface Settings {
   letterSpacing: LetterSpacingOption
   wordSpacing: WordSpacingOption
   lineSpacing: LineSpacingOption
-  syllableColor1?: ColorOption
-  syllableColor2?: ColorOption
+  syllableColor1: ColorOption | null
+  syllableColor2: ColorOption | null
   syllableActive: boolean
   syllableOpacity: OpacityOption
   silentLetterOpacity: SilentLetterOpacityOption

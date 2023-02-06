@@ -13,4 +13,4 @@ export const colors = [
   '#ffbc79'
 ] as const
 
-export type ColorOption = typeof colors[number]
+export type ColorOption = (typeof colors)[number]

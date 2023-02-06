@@ -1,0 +1,17 @@
+name: Setup
+description: Checkout and setup node
+
+inputs:
+  version:
+    description: Bumped version
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+
+    - shell: bash
+      run: npm i -g --force yarn

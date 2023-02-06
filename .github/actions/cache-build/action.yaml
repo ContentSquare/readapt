@@ -1,0 +1,12 @@
+name: Cache build
+description: Caching build files
+
+runs:
+  using: composite
+  steps:
+    - name: Cache Build
+      uses: actions/cache@v3
+      with:
+        path: |
+          **/dist
+        key: cache-build-${{ github.sha }}
