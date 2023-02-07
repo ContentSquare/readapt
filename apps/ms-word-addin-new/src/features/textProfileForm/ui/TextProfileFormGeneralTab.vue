@@ -58,13 +58,7 @@ watch(
 </script>
 <template>
   <div class="overflow-scroll">
-    <table class="table-zebra mt-4 table w-full">
-      <thead>
-        <tr>
-          <th class="sticky top-0 whitespace-normal">{{ $t('GENERAL.SETTING') }}</th>
-          <th class="sticky top-0 whitespace-normal">{{ $t('GENERAL.ACTIVATE') }}</th>
-        </tr>
-      </thead>
+    <table class="table-zebra table w-full">
       <tbody>
         <tr>
           <td>

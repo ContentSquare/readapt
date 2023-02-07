@@ -90,7 +90,7 @@ const setColor = (itemKey: string, color: ColorOption | undefined): void => {
     <table class="table-zebra table-compact table w-full">
       <thead>
         <tr>
-          <th v-for="{ key, label } in tableFields" :key="key" class="sticky top-0 whitespace-normal">
+          <th v-for="{ key, label } in tableFields" :key="key" class="sticky top-0 whitespace-normal normal-case">
             {{ label }}
           </th>
         </tr>
