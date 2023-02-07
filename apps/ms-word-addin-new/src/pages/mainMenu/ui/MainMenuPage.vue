@@ -36,13 +36,13 @@ const version = useVersion()
     <img class="mb-4 block w-full" src="/logo.png" width="250" height="63" alt="Readapt Logo" />
 
     <template v-if="hasActiveProfile">
-      <div class="w-full">
+      <div class="mb-4 w-full">
         <div class="text-lg font-semibold">{{ $t('MAIN_MENU.ACTIVE_PROFILE') }}:</div>
         <div class="flex justify-between">
-          <TextProfileActiveDropdown class="select flex-1" />
+          <TextProfileActiveDropdown class="select-secondary flex-1" />
           <button
             :title="$t('MAIN_MENU.SEE_MODIFY_CURRENT_PROFILE')"
-            class="btn-outline btn-primary btn-sm btn ml-1"
+            class="btn-outline btn-secondary btn-sm btn ml-1"
             @click="openOptionsPage({ editActiveProfile: '' }, router)"
           >
             <SvgIcon id="edit" class="h-4 w-4 fill-current" />
@@ -50,12 +50,19 @@ const version = useVersion()
         </div>
       </div>
 
-      <button class="btn w-full" @click="() => {}">
+      <button class="btn-secondary btn w-full" @click="() => {}">
         {{ t('MAIN_MENU.ADAPT_SELECTION') }}
       </button>
-      <button class="btn mb-4 w-full" @click="() => {}">
+      <button class="btn-secondary btn mb-4 w-full" @click="() => {}">
         {{ t('MAIN_MENU.ADAPT_DOC') }}
       </button>
+    </template>
+    <template v-else>
+      <div class="text-base">
+        <div class="my-2">{{ $t('MAIN_MENU.WELCOME_3') }}</div>
+        <div class="my-2">{{ $t('MAIN_MENU.WELCOME_1') }}</div>
+        <div class="my-2">{{ $t('MAIN_MENU.WELCOME_2') }}</div>
+      </div>
     </template>
 
     <button class="btn-primary btn w-full" @click="openOptionsPage({}, router)">

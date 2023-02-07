@@ -19,8 +19,11 @@
     "WHAT_IS_NEW": "Les nouveatés",
     "USER_GUIDE": "Guide d'utilisation",
 
-    "ADAPT_DOC": "Adapte le document !",
-    "ADAPT_SELECTION": "Adapte le texte selectioné"
+    "ADAPT_DOC": "Adapte le document",
+    "ADAPT_SELECTION": "Adapte le texte selectioné",
+    "WELCOME_1": "Visualisez le texte de votre document adapté en fonction de vos besoins spécifiques afin de pouvoir le lire plus confortablement !",
+    "WELCOME_2": "Configurez des éléments comme la police, la taille et l'espacement du texte, les phonèmes et les lettres. D’autres outils vous permettront de faciliter votre lecture et votre concentration.",
+    "WELCOME_3": "Readapt a été conçu pour les personnes présentant des troubles de la lecture tel que la dyslexie ou un déficit visuel."
   },
   "QUICK_ACTIVATE": {
     "QUICK_ACTIVATE": "Activation rapide : ",

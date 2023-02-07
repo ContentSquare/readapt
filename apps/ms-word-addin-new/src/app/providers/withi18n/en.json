@@ -19,8 +19,11 @@
     "WHAT_IS_NEW": "What's new?",
     "USER_GUIDE": "User guide",
 
-    "ADAPT_DOC": "Adapt document!",
-    "ADAPT_SELECTION": "Adapt selected text"
+    "ADAPT_DOC": "Adapt document",
+    "ADAPT_SELECTION": "Adapt selected text",
+    "WELCOME_1": "See an adaptation of your document’s text tailored to your specific needs so that you can read more comfortably.",
+    "WELCOME_2": "Configure elements like font, text size and spacing, phonemes and letters. Use tools to help with reading and concentration.",
+    "WELCOME_3": "Readapt was designed for those with reading challenges like dyslexia and poor vision."
   },
   "QUICK_ACTIVATE": {
     "QUICK_ACTIVATE": "Quick activate:",
