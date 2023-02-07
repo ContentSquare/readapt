@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router'
+import { createRouter, createMemoryHistory, type RouteRecordRaw } from 'vue-router'
 
 import { MainMenuPage } from '@/pages/mainMenu'
 
@@ -22,7 +22,7 @@ export function withRouter() {
   ]
 
   const router = createRouter({
-    history: createWebHashHistory(),
+    history: createMemoryHistory(),
     routes
   })
 

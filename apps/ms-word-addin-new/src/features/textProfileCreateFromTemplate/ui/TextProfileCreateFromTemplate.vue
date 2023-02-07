@@ -24,7 +24,9 @@ const onModify = async (settings: TextSettings) => {
 </script>
 
 <template>
-  <div v-for="template in templates" :key="template.value" class="my-2">
-    <TextSettingsTemplatePreview class="h-full" :template="template" data-test-id="preview" @modify="onModify" />
+  <div>
+    <div v-for="template in templates" :key="template.value" class="my-2">
+      <TextSettingsTemplatePreview class="h-full" :template="template" data-test-id="preview" @modify="onModify" />
+    </div>
   </div>
 </template>

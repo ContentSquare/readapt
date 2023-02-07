@@ -37,14 +37,14 @@ const { t } = useI18n()
       <TextProfileEditDropdown v-model="selectedProfiledId" class="w-60" :settings="settings" />
       <TextProfileRenameButton class="ml-3" :profile-id="selectedProfiledId" />
     </div>
-    <TextProfileForm class="" :settings="settings" @update-settings="updateSettings" @change-language="changeLanguage" />
+    <TextProfileForm :settings="settings" @update-settings="updateSettings" @change-language="changeLanguage" />
     <div>
       <TextSettingsAdaptationPreview class="my-2 h-40 max-h-40 overflow-scroll" :settings="settings" />
       <div class="mt-auto flex flex-wrap justify-between">
         <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
         <TextProfileDeleteButton v-model="selectedProfiledId" class="ml-3 mr-auto" />
         <!-- TODO: add dirty settings calculation -->
-        <button class="btn-outline btn-secondary btn-sm btn">{{ t('SETTINGS.BACK') }}</button>
+        <button class="btn-outline btn-secondary btn-sm btn" @click="router.push('/')">{{ t('SETTINGS.BACK') }}</button>
       </div>
     </div>
   </div>
