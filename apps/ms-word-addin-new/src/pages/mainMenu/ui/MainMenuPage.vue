@@ -71,7 +71,7 @@ const version = useVersion()
     <button class="btn-primary btn w-full" @click="openOptionsPage({}, router)">
       {{ t('MAIN_MENU.CREATE_BRAND_NEW_PROFILE') }}
     </button>
-    <button class="btn-primary btn float-right mb-4 w-full" @click="selectTemplate">
+    <button class="btn-primary btn float-right w-full" @click="selectTemplate">
       {{ t('MAIN_MENU.BASE_YOUR_PROFILE_FROM_TEMPLATE') }}
     </button>
 

@@ -10,7 +10,6 @@ import { TextProfileDeleteButton } from '@/features/textProfileDeleteButton'
 import { useFormSettings } from '../model/useFormSettings'
 import { TextProfileForm } from '@/features/textProfileForm'
 
-import { useExtensionUtils } from '@/shared/lib/extension'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
@@ -45,7 +44,7 @@ const { t } = useI18n()
         <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
         <TextProfileDeleteButton v-model="selectedProfiledId" class="ml-3 mr-auto" />
         <!-- TODO: add dirty settings calculation -->
-        <button class="btn-outline btn-secondary btn-sm btn" @click="$router.back()">{{ t('SETTINGS.BACK') }}</button>
+        <button class="btn-outline btn-secondary btn-sm btn" @click="$router.push('/')">{{ t('SETTINGS.BACK') }}</button>
       </div>
     </div>
   </div>
