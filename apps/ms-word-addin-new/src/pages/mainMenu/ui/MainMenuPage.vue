@@ -33,7 +33,7 @@ const version = useVersion()
 <template>
   <div class="mx-auto mt-6 flex w-full max-w-screen-xs flex-wrap gap-4 text-base">
     <div><span class="text-4xl">Readapt</span> by</div>
-    <img class="mb-4 block w-full" src="/logo.png" alt="Readapt Logo" />
+    <img class="mb-4 block w-full" src="/logo.png" width="250" height="63" alt="Readapt Logo" />
 
     <template v-if="hasActiveProfile">
       <div class="w-full">
@@ -66,10 +66,10 @@ const version = useVersion()
     </button>
 
     <div class="flex w-full items-center justify-between">
-      <a class="link" href="https://forms.gle/ciWCnYnkFjutwEHWA" target="_blank">
-        {{ t('MAIN_MENU.WHAT_IS_NEW') }}
+      <a class="link" href="https://forms.gle/tXTeYXhxevafZPF69" target="_blank">
+        {{ t('MAIN_MENU.TELL_US_ABOUT_YOU') }}
       </a>
-      <a class="link" href="https://forms.gle/9pv3HCmtPQN8Akpn9" target="_blank">
+      <a class="link" href="https://forms.gle/cZWVQmhpwuCfbBh39" target="_blank">
         {{ t('MAIN_MENU.CONTACT_US') }}
       </a>
     </div>
