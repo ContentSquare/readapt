@@ -35,7 +35,7 @@ const version = useVersion()
     <div class="flex w-full justify-between">
       <div><span class="text-3xl">Readapt</span> by</div>
 
-      <div class="text-lg">
+      <div class="text-base">
         <span v-if="locale === 'fr'">FR</span>
         <a v-if="locale !== 'fr'" href="#" class="hover:underline" @click="changeLocale('fr')">FR</a>
         /
