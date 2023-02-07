@@ -32,7 +32,17 @@ const version = useVersion()
 
 <template>
   <div class="mx-auto mt-6 flex max-w-screen-xs flex-wrap gap-4 text-base">
-    <div><span class="text-4xl">Readapt</span> by</div>
+    <div class="flex w-full justify-between">
+      <div><span class="text-3xl">Readapt</span> by</div>
+
+      <div class="text-lg">
+        <span v-if="locale === 'fr'">FR</span>
+        <a v-if="locale !== 'fr'" href="#" class="hover:underline" @click="changeLocale('fr')">FR</a>
+        /
+        <span v-if="locale === 'en'">EN</span>
+        <a v-if="locale !== 'en'" href="#" class="hover:underline" @click="changeLocale('en')">EN</a>
+      </div>
+    </div>
     <img class="mb-4 block w-full" src="/logo.png" width="250" height="63" alt="Readapt Logo" />
 
     <template v-if="hasActiveProfile">
@@ -72,24 +82,16 @@ const version = useVersion()
       {{ t('MAIN_MENU.BASE_YOUR_PROFILE_FROM_TEMPLATE') }}
     </button>
 
-    <div class="flex w-full items-center justify-between">
-      <a class="link" href="https://forms.gle/tXTeYXhxevafZPF69" target="_blank">
-        {{ t('MAIN_MENU.TELL_US_ABOUT_YOU') }}
-      </a>
-      <a class="link" href="https://forms.gle/cZWVQmhpwuCfbBh39" target="_blank">
-        {{ t('MAIN_MENU.CONTACT_US') }}
-      </a>
-    </div>
-
-    <div class="flex w-full items-center justify-between">
-      <div class="text-sm">Version {{ version }}</div>
-      <div class="text-lg">
-        <span v-if="locale === 'fr'">FR</span>
-        <a v-if="locale !== 'fr'" href="#" @click="changeLocale('fr')">FR</a>
-        /
-        <span v-if="locale === 'en'">EN</span>
-        <a v-if="locale !== 'en'" href="#" @click="changeLocale('en')">EN</a>
+    <div class="w-full">
+      <div class="mb-1 flex w-full items-center justify-between">
+        <a class="link" href="https://forms.gle/tXTeYXhxevafZPF69" target="_blank">
+          {{ t('MAIN_MENU.TELL_US_ABOUT_YOU') }}
+        </a>
+        <a class="link" href="https://forms.gle/cZWVQmhpwuCfbBh39" target="_blank">
+          {{ t('MAIN_MENU.CONTACT_US') }}
+        </a>
       </div>
+      <div class="text-sm">Version {{ version }}</div>
     </div>
   </div>
 </template>
