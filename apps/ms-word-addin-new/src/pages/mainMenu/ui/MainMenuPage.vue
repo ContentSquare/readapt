@@ -31,7 +31,7 @@ const version = useVersion()
 </script>
 
 <template>
-  <div class="mx-auto mt-6 flex w-full max-w-screen-xs flex-wrap gap-4 text-base">
+  <div class="mx-auto mt-6 flex max-w-screen-xs flex-wrap gap-4 text-base">
     <div><span class="text-4xl">Readapt</span> by</div>
     <img class="mb-4 block w-full" src="/logo.png" width="250" height="63" alt="Readapt Logo" />
 
