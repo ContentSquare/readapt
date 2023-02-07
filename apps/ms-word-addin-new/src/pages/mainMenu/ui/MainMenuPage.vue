@@ -67,13 +67,6 @@ const version = useVersion()
         {{ t('MAIN_MENU.ADAPT_DOC') }}
       </button>
     </template>
-    <template v-else>
-      <div class="text-base">
-        <div class="my-2">{{ $t('MAIN_MENU.WELCOME_3') }}</div>
-        <div class="my-2">{{ $t('MAIN_MENU.WELCOME_1') }}</div>
-        <div class="my-2">{{ $t('MAIN_MENU.WELCOME_2') }}</div>
-      </div>
-    </template>
 
     <button class="btn-primary btn w-full" @click="openOptionsPage({}, router)">
       {{ t('MAIN_MENU.CREATE_BRAND_NEW_PROFILE') }}
@@ -81,6 +74,12 @@ const version = useVersion()
     <button class="btn-primary btn float-right mb-4 w-full" @click="selectTemplate">
       {{ t('MAIN_MENU.BASE_YOUR_PROFILE_FROM_TEMPLATE') }}
     </button>
+
+    <div v-if="!hasActiveProfile" class="text-base">
+      <div class="my-2">{{ $t('MAIN_MENU.WELCOME_3') }}</div>
+      <div class="my-2">{{ $t('MAIN_MENU.WELCOME_1') }}</div>
+      <div class="my-2">{{ $t('MAIN_MENU.WELCOME_2') }}</div>
+    </div>
 
     <div class="w-full">
       <div class="mb-1 flex w-full items-center justify-between">
