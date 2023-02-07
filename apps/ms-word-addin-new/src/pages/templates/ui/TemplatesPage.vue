@@ -23,7 +23,7 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <div class="mx-auto max-w-screen-md p-2 text-base">
+  <div class="max-w-screen-md mx-auto p-2 text-base">
     <div class="text-2xl font-semibold">{{ t('SELECT_TEMPLATE.PLEASE_SELECT_A_TEMPLATE') }}</div>
     <div class="mt-3">{{ t('SELECT_TEMPLATE.CLICK_TO_MODIFY_OR_SELECT_TEMPLATE') }}</div>
     <div class="mt-3">
@@ -32,7 +32,7 @@ const { t } = useI18n()
     </div>
     <TextProfileCreateFromTemplate class="mt-3" :templates="templates" @created="openProfile" />
     <div class="mt-2 flex justify-end">
-      <button class="btn-outline btn-secondary btn-sm btn" @click="closeCurrentTab(router)">{{ t('SELECT_TEMPLATE.CANCEL') }}</button>
+      <button class="btn-outline btn-secondary btn-sm btn" @click="$router.back()">{{ t('SETTINGS.BACK') }}</button>
     </div>
   </div>
 </template>

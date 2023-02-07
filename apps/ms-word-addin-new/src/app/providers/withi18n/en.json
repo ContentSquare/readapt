@@ -49,6 +49,7 @@
     "SAVE": "Save",
     "DELETE": "Delete",
     "CLOSE": "Close",
+    "BACK": "Back",
     "CONFIRMATION_TITLE": "Your settings have been saved",
     "CONFIRMATION_MESSAGE": "You can close this tab and start using your profile",
     "OK": "Okay",

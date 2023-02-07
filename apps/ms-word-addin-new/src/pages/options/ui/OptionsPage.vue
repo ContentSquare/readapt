@@ -30,8 +30,6 @@ onMounted(() => {
 
 const { settings, changeLanguage, updateSettings } = useFormSettings(selectedProfiledId)
 
-const close = async () => await useExtensionUtils().closeCurrentTab()
-
 const { t } = useI18n()
 </script>
 <template>
@@ -47,7 +45,7 @@ const { t } = useI18n()
         <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
         <TextProfileDeleteButton v-model="selectedProfiledId" class="ml-3 mr-auto" />
         <!-- TODO: add dirty settings calculation -->
-        <button class="btn-secondary btn-sm btn" @click="close">{{ t('SETTINGS.CLOSE') }}</button>
+        <button class="btn-outline btn-secondary btn-sm btn" @click="$router.back()">{{ t('SETTINGS.BACK') }}</button>
       </div>
     </div>
   </div>
