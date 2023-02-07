@@ -33,7 +33,7 @@ const { t } = useI18n()
 const tableFields = computed(() => {
   return [
     { key: 'value', label: t(props.tableLabel) },
-    { key: 'example', label: t('SETTINGS.EXAMPLE') },
+    // { key: 'example', label: t('SETTINGS.EXAMPLE') },
     { key: 'color', label: t('SETTINGS.TEXT_COLOR') },
     { key: 'bold', label: t('SETTINGS.BOLD') },
     { key: 'activate', label: t('SETTINGS.ACTIVATE') }
@@ -91,16 +91,16 @@ const setColor = (itemKey: string, color: ColorOption | undefined): void => {
       <table class="table-zebra table-compact table w-full">
         <thead>
           <tr>
-            <th v-for="{ key, label } in tableFields" :key="key" class="sticky top-0">{{ label }}</th>
+            <th v-for="{ key, label } in tableFields" :key="key" class="sticky top-0 whitespace-normal text-sm font-normal normal-case">
+              {{ label }}
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="tableItem in tableItems" :key="tableItem.key">
-            <td v-for="{ key } in tableFields" :key="key" class="text-base">
+            <td v-for="{ key } in tableFields" :key="key" class="whitespace-normal">
               <template v-if="key === 'value'">
                 <div>{{ tableItem.value }}</div>
-              </template>
-              <template v-else-if="key === 'example'">
                 <div v-html="tableItem.example" />
               </template>
               <template v-else-if="key === 'color'">

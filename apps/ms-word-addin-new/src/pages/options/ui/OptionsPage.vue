@@ -39,14 +39,12 @@ const { t } = useI18n()
 <template>
   <div class="m-auto max-w-screen-lg p-2 text-base">
     <div class="mb-2 flex items-center bg-base-100">
-      <div class="mr-4 text-2xl font-semibold">{{ $t('SETTINGS.PROFILE') }}:</div>
       <TextProfileEditDropdown v-model="selectedProfiledId" class="w-60" :settings="settings" />
       <TextProfileRenameButton class="ml-3" :profile-id="selectedProfiledId" />
-      <TextSettingsFileDownload class="ml-auto" :settings="settings" />
     </div>
-    <div class="flex">
-      <TextProfileForm class="w-2/3 min-w-[730px]" :settings="settings" @update-settings="updateSettings" @change-language="changeLanguage" />
-      <div class="flex w-1/3 flex-1 flex-col pl-4 pt-10">
+    <div class="">
+      <TextProfileForm :settings="settings" @update-settings="updateSettings" @change-language="changeLanguage" />
+      <div class="flex">
         <div class="text-2xl font-semibold">{{ $t('SETTINGS.TEXT_PREVIEW') }}</div>
         <TextSettingsAdaptationPreview class="h-items-settings overflow-scroll" :settings="settings" />
         <div class="mt-auto flex flex-wrap justify-between">
