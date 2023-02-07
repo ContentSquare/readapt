@@ -37,22 +37,19 @@ const close = async () => await useExtensionUtils().closeCurrentTab()
 const { t } = useI18n()
 </script>
 <template>
-  <div class="m-auto max-w-screen-lg p-2 text-base">
+  <div class="m-auto flex max-h-screen max-w-screen-lg flex-col p-2 text-base">
     <div class="mb-2 flex items-center bg-base-100">
       <TextProfileEditDropdown v-model="selectedProfiledId" class="w-60" :settings="settings" />
       <TextProfileRenameButton class="ml-3" :profile-id="selectedProfiledId" />
     </div>
-    <div class="">
-      <TextProfileForm :settings="settings" @update-settings="updateSettings" @change-language="changeLanguage" />
-      <div class="flex">
-        <div class="text-2xl font-semibold">{{ $t('SETTINGS.TEXT_PREVIEW') }}</div>
-        <TextSettingsAdaptationPreview class="h-items-settings overflow-scroll" :settings="settings" />
-        <div class="mt-auto flex flex-wrap justify-between">
-          <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
-          <TextProfileDeleteButton v-model="selectedProfiledId" class="ml-3 mr-auto" />
-          <!-- TODO: add dirty settings calculation -->
-          <button class="btn-secondary btn-sm btn" @click="close">{{ t('SETTINGS.CLOSE') }}</button>
-        </div>
+    <TextProfileForm class="" :settings="settings" @update-settings="updateSettings" @change-language="changeLanguage" />
+    <div>
+      <TextSettingsAdaptationPreview class="mb-2 h-40 max-h-40 overflow-scroll" :settings="settings" />
+      <div class="mt-auto flex flex-wrap justify-between">
+        <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
+        <TextProfileDeleteButton v-model="selectedProfiledId" class="ml-3 mr-auto" />
+        <!-- TODO: add dirty settings calculation -->
+        <button class="btn-secondary btn-sm btn" @click="close">{{ t('SETTINGS.CLOSE') }}</button>
       </div>
     </div>
   </div>

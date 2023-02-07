@@ -82,40 +82,38 @@ const setColor = (itemKey: string, color: ColorOption | undefined): void => {
 </script>
 
 <template>
-  <div class="w-full">
-    <label class="inline-block cursor-pointer py-4">
-      <input type="checkbox" class="toggle mr-3 align-middle" :checked="allItemsActive" @input="switchAllItems" />
-      {{ t(switchAllLabel) }}
-    </label>
-    <div class="relative h-items-settings overflow-scroll">
-      <table class="table-zebra table-compact table w-full">
-        <thead>
-          <tr>
-            <th v-for="{ key, label } in tableFields" :key="key" class="sticky top-0 whitespace-normal">
-              {{ label }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="tableItem in tableItems" :key="tableItem.key">
-            <td v-for="{ key } in tableFields" :key="key" class="whitespace-normal">
-              <template v-if="key === 'value'">
-                <div>{{ tableItem.value }}</div>
-                <div v-html="tableItem.example" />
-              </template>
-              <template v-else-if="key === 'color'">
-                <ColorPicker :model-value="tableItem.color" @select-color="setColor(tableItem.key, $event)" />
-              </template>
-              <template v-else-if="key === 'bold'">
-                <input type="checkbox" class="checkbox checkbox-sm" :checked="tableItem.bold" @change="switchBold(tableItem.key)" />
-              </template>
-              <template v-else-if="key === 'activate'">
-                <input type="checkbox" class="toggle toggle-sm" :checked="tableItem.active" @change="switchActive(tableItem.key)" />
-              </template>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <label class="inline-block cursor-pointer py-4">
+    <input type="checkbox" class="toggle mr-3 align-middle" :checked="allItemsActive" @input="switchAllItems" />
+    {{ t(switchAllLabel) }}
+  </label>
+  <div class="overflow-scroll">
+    <table class="table-zebra table-compact table w-full">
+      <thead>
+        <tr>
+          <th v-for="{ key, label } in tableFields" :key="key" class="sticky top-0 whitespace-normal">
+            {{ label }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="tableItem in tableItems" :key="tableItem.key">
+          <td v-for="{ key } in tableFields" :key="key" class="whitespace-normal">
+            <template v-if="key === 'value'">
+              <div>{{ tableItem.value }}</div>
+              <div v-html="tableItem.example" />
+            </template>
+            <template v-else-if="key === 'color'">
+              <ColorPicker :model-value="tableItem.color" @select-color="setColor(tableItem.key, $event)" />
+            </template>
+            <template v-else-if="key === 'bold'">
+              <input type="checkbox" class="checkbox checkbox-sm" :checked="tableItem.bold" @change="switchBold(tableItem.key)" />
+            </template>
+            <template v-else-if="key === 'activate'">
+              <input type="checkbox" class="toggle toggle-sm" :checked="tableItem.active" @change="switchActive(tableItem.key)" />
+            </template>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>

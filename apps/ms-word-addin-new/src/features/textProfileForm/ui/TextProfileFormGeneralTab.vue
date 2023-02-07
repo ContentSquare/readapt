@@ -57,7 +57,7 @@ watch(
 )
 </script>
 <template>
-  <div class="relative h-general-settings overflow-scroll">
+  <div class="overflow-scroll">
     <table class="table-zebra mt-4 table w-full">
       <thead>
         <tr>

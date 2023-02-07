@@ -31,39 +31,37 @@ const emitChangeLanguage = (language: Language) => emit('change-language', langu
 const languageConfig = computed(() => getLangConfig(props.settings.language))
 </script>
 <template>
-  <div>
-    <BaseTabs v-model="activeTabIndex" data-test-id="tabs" :names="tabNames" />
-    <TextProfileFormGeneralTab
-      v-if="activeTabIndex === 0"
-      key="general"
-      :settings="settings"
-      data-test-id="general"
-      @update="emitUpdateSettings($event)"
-      @change-language="emitChangeLanguage($event)"
-    />
-    <TextProfileFormItemsTab
-      v-if="activeTabIndex === 1"
-      key="phonemes"
-      :all-items-active="settings.phonemesActive"
-      :items="settings.phonemes"
-      :options="languageConfig.phonemeOptions"
-      table-label="SETTINGS.PHONEME_AND_EXAMPLE"
-      switch-all-label="SETTINGS.ALL_PHONEMES_SETTINGS"
-      data-test-id="phonemes"
-      @update-items="emitUpdateSettings({ key: 'phonemes', value: $event })"
-      @update-active="emitUpdateSettings({ key: 'phonemesActive', value: $event })"
-    />
-    <TextProfileFormItemsTab
-      v-if="activeTabIndex === 2"
-      key="letters"
-      :all-items-active="settings.lettersActive"
-      :items="settings.letters"
-      :options="languageConfig.letterOptions"
-      table-label="SETTINGS.LETTER_AND_EXAMPLE"
-      switch-all-label="SETTINGS.ALL_LETTERS_SETTINGS"
-      data-test-id="letters"
-      @update-items="emitUpdateSettings({ key: 'letters', value: $event })"
-      @update-active="emitUpdateSettings({ key: 'lettersActive', value: $event })"
-    />
-  </div>
+  <BaseTabs v-model="activeTabIndex" data-test-id="tabs" :names="tabNames" />
+  <TextProfileFormGeneralTab
+    v-if="activeTabIndex === 0"
+    key="general"
+    :settings="settings"
+    data-test-id="general"
+    @update="emitUpdateSettings($event)"
+    @change-language="emitChangeLanguage($event)"
+  />
+  <TextProfileFormItemsTab
+    v-if="activeTabIndex === 1"
+    key="phonemes"
+    :all-items-active="settings.phonemesActive"
+    :items="settings.phonemes"
+    :options="languageConfig.phonemeOptions"
+    table-label="SETTINGS.PHONEME_AND_EXAMPLE"
+    switch-all-label="SETTINGS.ALL_PHONEMES_SETTINGS"
+    data-test-id="phonemes"
+    @update-items="emitUpdateSettings({ key: 'phonemes', value: $event })"
+    @update-active="emitUpdateSettings({ key: 'phonemesActive', value: $event })"
+  />
+  <TextProfileFormItemsTab
+    v-if="activeTabIndex === 2"
+    key="letters"
+    :all-items-active="settings.lettersActive"
+    :items="settings.letters"
+    :options="languageConfig.letterOptions"
+    table-label="SETTINGS.LETTER_AND_EXAMPLE"
+    switch-all-label="SETTINGS.ALL_LETTERS_SETTINGS"
+    data-test-id="letters"
+    @update-items="emitUpdateSettings({ key: 'letters', value: $event })"
+    @update-active="emitUpdateSettings({ key: 'lettersActive', value: $event })"
+  />
 </template>

@@ -23,16 +23,7 @@ module.exports = {
   },
   theme: {
     screens: {
-      xs: '250px',
-      sm: '600px',
-      md: '1000px',
-      lg: '1400px'
-    },
-    extend: {
-      height: {
-        'general-settings': 'min(1000px,calc(100vh - 120px))',
-        'items-settings': 'min(942px,calc(100vh - 178px))'
-      }
+      xs: '250px'
     }
   }
 }
