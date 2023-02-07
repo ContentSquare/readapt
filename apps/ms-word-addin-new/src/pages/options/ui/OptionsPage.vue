@@ -44,7 +44,7 @@ const { t } = useI18n()
         <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
         <TextProfileDeleteButton v-model="selectedProfiledId" class="ml-3 mr-auto" />
         <!-- TODO: add dirty settings calculation -->
-        <button class="btn-outline btn-secondary btn-sm btn" @click="$router.push('/')">{{ t('SETTINGS.BACK') }}</button>
+        <button class="btn-outline btn-secondary btn-sm btn">{{ t('SETTINGS.BACK') }}</button>
       </div>
     </div>
   </div>

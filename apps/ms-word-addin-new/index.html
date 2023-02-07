@@ -10,9 +10,18 @@
     <link rel="preload" href="/fonts/OpenDyslexic-Regular.otf" type="font/otf" as="font" crossorigin/>
     <link rel="preload" href="/fonts/OpenDyslexic-Bold.otf" type="font/otf" as="font" crossorigin/>
     <link rel="stylesheet" href="/fonts.css" />
+
+    <link rel="preload" href="https://appsforoffice.microsoft.com/lib/1/hosted/o15apptofilemappingtable.js" as="script" />
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
   </head>
   <body>
     <div id="app"></div>
     <script type="module" src="/src/app/index.ts"></script>
+
+    <script>
+      if (navigator.userAgent.indexOf('Trident') !== -1) {
+        document.getElementById('app').innerHTML = "We detect that you are using an Office version that uses Internet Explorer 11. This, unfortunately, is not supported by Readapt. We apologise for the incovenience."
+      }
+    </script>
   </body>
 </html>

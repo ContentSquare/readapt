@@ -29,7 +29,7 @@ const { t } = useI18n()
     </div>
     <TextProfileCreateFromTemplate class="mt-3" :templates="templates" @created="openProfile" />
     <div class="mt-2 flex justify-end">
-      <button class="btn-outline btn-secondary btn-sm btn" @click="$router.push('/')">{{ t('SETTINGS.BACK') }}</button>
+      <button class="btn-outline btn-secondary btn-sm btn" @click="router.push('/')">{{ t('SETTINGS.BACK') }}</button>
     </div>
   </div>
 </template>

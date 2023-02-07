@@ -1,3 +1,5 @@
 import { mountUI } from './mount'
 
-mountUI()
+Office.onReady(() => {
+  mountUI()
+})
