@@ -58,50 +58,36 @@ watch(
 </script>
 <template>
   <div class="relative h-general-settings overflow-scroll">
-    <table class="table w-full">
-      <thead>
-        <tr>
-          <th class="sticky top-0" />
-          <th class="sticky top-0" />
-          <th class="sticky top-0 whitespace-normal">{{ $t('GENERAL.SETTING') }}</th>
-          <th class="sticky top-0 whitespace-normal">{{ $t('GENERAL.OPACITY') }}</th>
-          <th class="sticky top-0 whitespace-normal">{{ $t('GENERAL.ACTIVATE') }}</th>
-        </tr>
-      </thead>
+    <table class="table-zebra table w-full">
       <tbody>
         <tr>
-          <td class="whitespace-normal font-bold">{{ $t('GENERAL.PROFILE_LANGUAGE') }}</td>
-          <td />
           <td>
+            <div class="mb-1">{{ $t('GENERAL.PROFILE_LANGUAGE') }}</div>
+
             <BaseSelect
-              class="select-secondary select select-sm w-full"
+              class="select-secondary select select-sm block w-full"
               :options="languageOptions"
               :model-value="settings.language"
               @update:model-value="changeLanguage($event as Language)"
             />
           </td>
           <td />
-          <td />
         </tr>
         <tr>
-          <td rowspan="2" class="whitespace-normal font-bold">
-            {{ $t('GENERAL.FONT_SETTINGS') }}
-          </td>
-          <td class="whitespace-normal">{{ $t('GENERAL.FONT') }}</td>
           <td>
+            <div class="mb-1">{{ $t('GENERAL.FONT') }}</div>
             <BaseSelect
-              class="select-secondary select select-sm w-full"
+              class="select-secondary select select-sm block w-full"
               :options="fontFamilyOptions"
               :model-value="settings.fontFamily"
               @update:model-value="emitUpdate({ key: 'fontFamily', value: $event })"
             />
           </td>
           <td />
-          <td />
         </tr>
         <tr>
-          <td class="whitespace-normal">{{ $t('GENERAL.FONT_SIZE') }}</td>
           <td>
+            <div class="mb-1">{{ $t('GENERAL.FONT_SIZE') }}</div>
             <SelectPercentage
               class="w-full"
               :options="fontSizeOptions"
@@ -110,14 +96,10 @@ watch(
             />
           </td>
           <td />
-          <td />
         </tr>
         <tr>
-          <td rowspan="3" class="whitespace-normal font-bold">
-            {{ $t('GENERAL.SPACING') }}
-          </td>
-          <td class="whitespace-normal">{{ $t('GENERAL.LETTER_SPACING') }}</td>
           <td>
+            <div class="mb-1">{{ $t('GENERAL.LETTER_SPACING') }}</div>
             <SelectPercentage
               :options="letterSpacingOptions"
               :model-value="settings.letterSpacing"
@@ -125,11 +107,10 @@ watch(
             />
           </td>
           <td />
-          <td />
         </tr>
         <tr>
-          <td class="whitespace-normal">{{ $t('GENERAL.WORD_SPACING') }}</td>
           <td>
+            <div class="mb-1">{{ $t('GENERAL.WORD_SPACING') }}</div>
             <SelectPercentage
               :options="wordSpacingOptions"
               :model-value="settings.wordSpacing"
@@ -137,11 +118,10 @@ watch(
             />
           </td>
           <td />
-          <td />
         </tr>
         <tr>
-          <td class="whitespace-normal">{{ $t('GENERAL.LINE_SPACING') }}</td>
           <td>
+            <div class="mb-1">{{ $t('GENERAL.WORD_SPACING') }}</div>
             <SelectPercentage
               :options="lineSpacingOptionsOptimized"
               :model-value="settings.lineSpacing"
@@ -149,15 +129,11 @@ watch(
             />
           </td>
           <td />
-          <td />
         </tr>
         <tr>
-          <td :rowspan="settings.language === 'fr' ? 3 : 2" class="whitespace-normal font-bold">
-            {{ $t('GENERAL.TEXT_HINTS') }}
-          </td>
-          <td class="whitespace-normal">{{ $t('GENERAL.HIGHLIGHT_ALTERNATING_SYLLABLES') }}</td>
           <td>
-            <div class="flex justify-center">
+            <div class="mb-1">{{ $t('GENERAL.HIGHLIGHT_ALTERNATING_SYLLABLES') }}</div>
+            <div class="mb-1 flex">
               <ColorPicker
                 class="m-1"
                 :model-value="(settings.syllableColor1 as string)"
@@ -169,10 +145,9 @@ watch(
                 @select-color="emitUpdate({ key: 'syllableColor2', value: $event })"
               />
             </div>
-          </td>
-          <td>
+
             <RangeBar
-              class="w-28 lg:w-52"
+              class="w-full"
               :model-value="settings.syllableOpacity"
               :options="opacityOptions"
               @update:model-value="emitUpdate({ key: 'syllableOpacity', value: $event })"
@@ -182,7 +157,7 @@ watch(
             <input type="checkbox" class="toggle" :checked="settings.syllableActive" @input="emitUpdateToggled({ key: 'syllableActive' })" />
           </td>
         </tr>
-        <tr v-if="settings.language === 'fr'">
+        <!--<tr v-if="settings.language === 'fr'">
           <td class="whitespace-normal">{{ $t('GENERAL.SHOW_LIAISONS') }}</td>
           <td />
           <td>
@@ -234,6 +209,7 @@ watch(
             />
           </td>
         </tr>
+        -->
       </tbody>
     </table>
   </div>
