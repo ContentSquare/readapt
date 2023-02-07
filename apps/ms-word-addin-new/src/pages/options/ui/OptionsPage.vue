@@ -10,8 +10,6 @@ import { TextProfileDeleteButton } from '@/features/textProfileDeleteButton'
 import { useFormSettings } from '../model/useFormSettings'
 import { TextProfileForm } from '@/features/textProfileForm'
 
-import { TextSettingsFileDownload } from '@/features/textSettingsFileDownload'
-
 import { useExtensionUtils } from '@/shared/lib/extension'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
@@ -37,14 +35,14 @@ const close = async () => await useExtensionUtils().closeCurrentTab()
 const { t } = useI18n()
 </script>
 <template>
-  <div class="m-auto flex max-h-screen max-w-screen-lg flex-col p-2 text-base">
+  <div class="m-auto flex max-h-screen flex-col p-2 text-base">
     <div class="mb-2 flex items-center bg-base-100">
       <TextProfileEditDropdown v-model="selectedProfiledId" class="w-60" :settings="settings" />
       <TextProfileRenameButton class="ml-3" :profile-id="selectedProfiledId" />
     </div>
     <TextProfileForm class="" :settings="settings" @update-settings="updateSettings" @change-language="changeLanguage" />
     <div>
-      <TextSettingsAdaptationPreview class="mb-2 h-40 max-h-40 overflow-scroll" :settings="settings" />
+      <TextSettingsAdaptationPreview class="my-2 h-40 max-h-40 overflow-scroll" :settings="settings" />
       <div class="mt-auto flex flex-wrap justify-between">
         <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
         <TextProfileDeleteButton v-model="selectedProfiledId" class="ml-3 mr-auto" />
