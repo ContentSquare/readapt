@@ -58,7 +58,7 @@ watch(
 </script>
 <template>
   <div class="relative h-general-settings overflow-scroll">
-    <table class="table-zebra table-compact mt-4 table w-full">
+    <table class="table-zebra mt-4 table w-full">
       <thead>
         <tr>
           <th class="sticky top-0 whitespace-normal">{{ $t('GENERAL.SETTING') }}</th>
@@ -68,7 +68,7 @@ watch(
       <tbody>
         <tr>
           <td>
-            <div class="mb-1">{{ $t('GENERAL.PROFILE_LANGUAGE') }}</div>
+            <div class="mb-2">{{ $t('GENERAL.PROFILE_LANGUAGE') }}</div>
             <BaseSelect
               class="select-secondary select select-sm block w-full"
               :options="languageOptions"
@@ -80,7 +80,7 @@ watch(
         </tr>
         <tr>
           <td>
-            <div class="mb-1">{{ $t('GENERAL.FONT') }}</div>
+            <div class="mb-2">{{ $t('GENERAL.FONT') }}</div>
             <BaseSelect
               class="select-secondary select select-sm block w-full"
               :options="fontFamilyOptions"
@@ -92,7 +92,7 @@ watch(
         </tr>
         <tr>
           <td>
-            <div class="mb-1">{{ $t('GENERAL.FONT_SIZE') }}</div>
+            <div class="mb-2">{{ $t('GENERAL.FONT_SIZE') }}</div>
             <SelectPercentage
               class="w-full"
               :options="fontSizeOptions"
@@ -104,7 +104,7 @@ watch(
         </tr>
         <tr>
           <td>
-            <div class="mb-1">{{ $t('GENERAL.LETTER_SPACING') }}</div>
+            <div class="mb-2">{{ $t('GENERAL.LETTER_SPACING') }}</div>
             <SelectPercentage
               :options="letterSpacingOptions"
               :model-value="settings.letterSpacing"
@@ -115,7 +115,7 @@ watch(
         </tr>
         <tr>
           <td>
-            <div class="mb-1">{{ $t('GENERAL.WORD_SPACING') }}</div>
+            <div class="mb-2">{{ $t('GENERAL.WORD_SPACING') }}</div>
             <SelectPercentage
               :options="wordSpacingOptions"
               :model-value="settings.wordSpacing"
@@ -126,7 +126,7 @@ watch(
         </tr>
         <tr>
           <td>
-            <div class="mb-1">{{ $t('GENERAL.WORD_SPACING') }}</div>
+            <div class="mb-2">{{ $t('GENERAL.WORD_SPACING') }}</div>
             <SelectPercentage
               :options="lineSpacingOptionsOptimized"
               :model-value="settings.lineSpacing"
@@ -137,8 +137,8 @@ watch(
         </tr>
         <tr>
           <td>
-            <div class="mb-1">{{ $t('GENERAL.HIGHLIGHT_ALTERNATING_SYLLABLES') }}</div>
-            <div class="mb-1 flex">
+            <div class="mb-2">{{ $t('GENERAL.HIGHLIGHT_ALTERNATING_SYLLABLES') }}</div>
+            <div class="mb-2 flex">
               <ColorPicker
                 class="m-1"
                 :model-value="(settings.syllableColor1 as string)"
@@ -152,7 +152,6 @@ watch(
             </div>
 
             <RangeBar
-              class="w-full"
               :model-value="settings.syllableOpacity"
               :options="opacityOptions"
               @update:model-value="emitUpdate({ key: 'syllableOpacity', value: $event })"
@@ -167,12 +166,11 @@ watch(
             />
           </td>
         </tr>
-        <!--<tr v-if="settings.language === 'fr'">
-          <td class="whitespace-normal">{{ $t('GENERAL.SHOW_LIAISONS') }}</td>
-          <td />
+        <tr v-if="settings.language === 'fr'">
           <td>
+            <div class="mb-2">{{ $t('GENERAL.SHOW_LIAISONS') }}</div>
             <RangeBar
-              class="w-28 lg:w-52"
+              class=""
               :disabled="settings.language === ('en' as Language)"
               :model-value="settings.liaisonsOpacity"
               :options="opacityOptions"
@@ -180,31 +178,36 @@ watch(
             />
           </td>
           <td>
-            <input type="checkbox" class="toggle" :checked="settings.liaisonsActive" @input="emitUpdateToggled({ key: 'liaisonsActive' })" />
+            <input
+              type="checkbox"
+              class="toggle toggle-sm"
+              :checked="settings.liaisonsActive"
+              @input="emitUpdateToggled({ key: 'liaisonsActive' })"
+            />
           </td>
         </tr>
         <tr>
-          <td class="whitespace-normal">{{ $t('GENERAL.GREY_SILENT_LETTERS') }}</td>
-          <td />
           <td>
+            <div class="mb-2">{{ $t('GENERAL.GREY_SILENT_LETTERS') }}</div>
             <RangeBar
-              class="w-28 lg:w-52"
               :model-value="settings.silentLetterOpacity"
               :options="silentLetterOpacityOptions"
               @update:model-value="emitUpdate({ key: 'silentLetterOpacity', value: $event })"
             />
           </td>
           <td>
-            <input type="checkbox" class="toggle" :checked="settings.silentLetterActive" @input="emitUpdateToggled({ key: 'silentLetterActive' })" />
+            <input
+              type="checkbox"
+              class="toggle toggle-sm"
+              :checked="settings.silentLetterActive"
+              @input="emitUpdateToggled({ key: 'silentLetterActive' })"
+            />
           </td>
         </tr>
         <tr>
-          <td class="whitespace-normal font-bold">{{ $t('GENERAL.READING_TOOLS') }}</td>
-          <td class="whitespace-normal">{{ $t('GENERAL.SHADE_ALTERNATE_LINES') }}</td>
-          <td />
           <td>
+            <div class="mb-2">{{ $t('GENERAL.SHADE_ALTERNATE_LINES') }}</div>
             <RangeBar
-              class="w-28 lg:w-52"
               :model-value="settings.shadeAlternateLinesOpacity"
               :options="opacityOptions"
               @update:model-value="emitUpdate({ key: 'shadeAlternateLinesOpacity', value: $event })"
@@ -213,13 +216,12 @@ watch(
           <td>
             <input
               type="checkbox"
-              class="toggle"
+              class="toggle toggle-sm"
               :checked="settings.shadeAlternateLinesActive"
               @input="emitUpdateToggled({ key: 'shadeAlternateLinesActive' })"
             />
           </td>
         </tr>
-        -->
       </tbody>
     </table>
   </div>
