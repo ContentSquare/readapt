@@ -110,7 +110,7 @@ const setColor = (itemKey: string, color: ColorOption | undefined): void => {
                 <input type="checkbox" class="checkbox checkbox-sm" :checked="tableItem.bold" @change="switchBold(tableItem.key)" />
               </template>
               <template v-else-if="key === 'activate'">
-                <input type="checkbox" class="toggle" :checked="tableItem.active" @change="switchActive(tableItem.key)" />
+                <input type="checkbox" class="toggle toggle-sm" :checked="tableItem.active" @change="switchActive(tableItem.key)" />
               </template>
             </td>
           </tr>

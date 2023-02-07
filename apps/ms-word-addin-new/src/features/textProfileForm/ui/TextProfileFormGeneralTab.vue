@@ -58,12 +58,17 @@ watch(
 </script>
 <template>
   <div class="relative h-general-settings overflow-scroll">
-    <table class="table-zebra table w-full">
+    <table class="table-zebra table-compact mt-4 table w-full">
+      <thead>
+        <tr>
+          <th class="sticky top-0 whitespace-normal">{{ $t('GENERAL.SETTING') }}</th>
+          <th class="sticky top-0 whitespace-normal">{{ $t('GENERAL.ACTIVATE') }}</th>
+        </tr>
+      </thead>
       <tbody>
         <tr>
           <td>
             <div class="mb-1">{{ $t('GENERAL.PROFILE_LANGUAGE') }}</div>
-
             <BaseSelect
               class="select-secondary select select-sm block w-full"
               :options="languageOptions"
@@ -154,7 +159,12 @@ watch(
             />
           </td>
           <td>
-            <input type="checkbox" class="toggle" :checked="settings.syllableActive" @input="emitUpdateToggled({ key: 'syllableActive' })" />
+            <input
+              type="checkbox"
+              class="toggle toggle-sm"
+              :checked="settings.syllableActive"
+              @input="emitUpdateToggled({ key: 'syllableActive' })"
+            />
           </td>
         </tr>
         <!--<tr v-if="settings.language === 'fr'">
