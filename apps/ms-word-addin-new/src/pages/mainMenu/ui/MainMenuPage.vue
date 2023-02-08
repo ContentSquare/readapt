@@ -46,11 +46,11 @@ const version = useVersion()
     <img class="mb-4 block w-full" src="/logo.png" width="250" height="63" alt="Readapt Logo" />
 
     <template v-if="hasActiveProfile">
-      <button class="btn-secondary btn w-full" @click="() => {}">
+      <button class="btn-accent btn w-full" @click="() => {}">
         {{ t('MAIN_MENU.ADAPT_DOC') }}
       </button>
 
-      <button class="btn-secondary btn mb-4 w-full" @click="() => {}">
+      <button class="btn-accent btn mb-4 w-full" @click="() => {}">
         {{ t('MAIN_MENU.ADAPT_SELECTION') }}
       </button>
 

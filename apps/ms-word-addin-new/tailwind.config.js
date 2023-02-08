@@ -12,7 +12,9 @@ module.exports = {
         light: {
           ...daisyThemeLight,
           primary: '#4B8AE7',
-          secondary: '#80669D',
+          secondary: '#6C757D',
+          accent: '#80669D',
+          'accent-content': '#FFFFFF',
           warning: '#DC3545',
           'warning-content': '#FFFFFF',
           '--btn-text-case': 'none'
