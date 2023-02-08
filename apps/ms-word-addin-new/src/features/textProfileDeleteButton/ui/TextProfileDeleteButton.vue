@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
 import { useI18n } from 'vue-i18n'
+import { confirm } from '@/shared/ui/dialog'
+import { DialogWrapper } from 'vue3-promise-dialog'
 
 const props = defineProps<{
   modelValue: TextProfileId | null
@@ -14,7 +16,7 @@ const { deleteProfile } = useTextPreferences()
 const { t } = useI18n()
 
 const onClick = async () => {
-  if (props.modelValue && confirm(t('SETTINGS.PROFILE_DELETE_CONFIRM'))) {
+  if (props.modelValue && (await confirm(t('SETTINGS.PROFILE_DELETE_CONFIRM')))) {
     deleteProfile(props.modelValue)
     emit('update:modelValue', null)
     alert(t('SETTINGS.PROFILE_DELETED'))
@@ -22,5 +24,8 @@ const onClick = async () => {
 }
 </script>
 <template>
-  <button v-if="modelValue" class="btn-warning btn-sm btn" data-test-id="delete" @click="onClick">{{ t('SETTINGS.DELETE') }}</button>
+  <div>
+    <DialogWrapper />
+    <button v-if="modelValue" class="btn-warning btn-sm btn" data-test-id="delete" @click="onClick">{{ t('SETTINGS.DELETE') }}</button>
+  </div>
 </template>
