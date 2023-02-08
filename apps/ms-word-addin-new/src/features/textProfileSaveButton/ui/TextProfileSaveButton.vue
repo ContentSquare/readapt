@@ -3,6 +3,7 @@ import { useTextPreferences, type TextProfileId } from '@/entities/textPreferenc
 import type { Settings } from '@readapt/settings'
 import { nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { alert, prompt } from '@/shared/ui/dialog'
 
 const props = defineProps<{
   modelValue: TextProfileId | null
@@ -18,25 +19,25 @@ const onClick = () => (props.modelValue ? update() : create())
 const { preferences, createProfile, updateProfile } = useTextPreferences()
 const { t } = useI18n()
 
-const update = () => {
+const update = async () => {
   if (props.modelValue) {
     updateProfile(props.modelValue, { settings: props.settings })
-    alert(t('SETTINGS.PROFILE_UPDATED'))
+    await alert(t('SETTINGS.PROFILE_UPDATED'))
   }
 }
 
 const create = async () => {
   const MAX_PROFILES = 20
   if (preferences.profiles.length === MAX_PROFILES) {
-    alert(t('SETTINGS.PROFILES_MAX'))
+    await alert(t('SETTINGS.PROFILES_MAX'))
     return
   }
-  const newProfileName = prompt(t('SETTINGS.PROFILE_GIVE_NAME'))
+  const newProfileName = await prompt(t('SETTINGS.PROFILE_GIVE_NAME'))
   if (!newProfileName) {
     return
   }
   if (profileNameExists(newProfileName)) {
-    alert(t('SETTINGS.PROFILE_NAME_EXISTS', { name: newProfileName }))
+    await alert(t('SETTINGS.PROFILE_NAME_EXISTS', { name: newProfileName }))
     return
   }
   const newProfileId = createProfile({
@@ -45,7 +46,7 @@ const create = async () => {
   })
   await nextTick()
   emit('update:modelValue', newProfileId)
-  alert(t('SETTINGS.PROFILE_CREATED'))
+  await alert(t('SETTINGS.PROFILE_CREATED'))
 }
 
 const profileNameExists = (profileName: string): boolean => {

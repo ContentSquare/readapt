@@ -11,6 +11,6 @@ export async function alert(text: string) {
   return await openDialog(DialogAlert, { text })
 }
 
-export async function prompt(text: string, initialValue: string) {
+export async function prompt(text: string, initialValue = '') {
   return await openDialog(DialogPrompt, { text, initialValue })
 }

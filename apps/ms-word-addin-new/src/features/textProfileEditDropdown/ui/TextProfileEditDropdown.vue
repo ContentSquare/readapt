@@ -4,6 +4,7 @@ import { buildDefaultSettings } from '@readapt/settings'
 import isEqual from 'lodash-es/isEqual'
 import { toRefs } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { confirm } from '@/shared/ui/dialog'
 
 const { preferences, getProfileById } = useTextPreferences()
 
@@ -17,9 +18,9 @@ const emit = defineEmits<{
   (event: 'update:modelValue', profileId: TextProfileId | null): void
 }>()
 
-const onChange = (event: Event) => {
+const onChange = async (event: Event) => {
   const target = event.target as HTMLSelectElement
-  if (validateUnsavedChanges()) {
+  if (await validateUnsavedChanges()) {
     const profileId = target.value ? parseInt(target.value) : null
     emit('update:modelValue', profileId)
   } else {
@@ -29,12 +30,12 @@ const onChange = (event: Event) => {
 
 const { t } = useI18n()
 
-const validateUnsavedChanges = () => {
+const validateUnsavedChanges = async () => {
   const defaultSettings = modelValue.value ? getProfileById(modelValue.value)?.settings : buildDefaultSettings('en')
   if (defaultSettings && isEqual(defaultSettings, settings.value)) {
     return true
   }
-  return confirm(t('SETTINGS.PROFILE_UNSAVED_CHANGES'))
+  return await confirm(t('SETTINGS.PROFILE_UNSAVED_CHANGES'))
 }
 </script>
 <template>
