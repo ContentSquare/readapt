@@ -1,7 +1,11 @@
 import { openDialog } from 'vue3-promise-dialog'
-import ConfirmDialog from './ConfirmDialog.vue'
+import DialogConfirm from './DialogConfirm.vue'
+import DialogAlert from './DialogAlert.vue'
 
 export async function confirm(text: string) {
-  console.log('Called!')
-  return await openDialog(ConfirmDialog, { text })
+  return await openDialog(DialogConfirm, { text })
+}
+
+export async function alert(text: string) {
+  return await openDialog(DialogAlert, { text })
 }
