@@ -47,10 +47,11 @@ const version = useVersion()
 
     <template v-if="hasActiveProfile">
       <button class="btn-secondary btn w-full" @click="() => {}">
-        {{ t('MAIN_MENU.ADAPT_SELECTION') }}
-      </button>
-      <button class="btn-secondary btn mb-4 w-full" @click="() => {}">
         {{ t('MAIN_MENU.ADAPT_DOC') }}
+      </button>
+
+      <button class="btn-secondary btn mb-4 w-full" @click="() => {}">
+        {{ t('MAIN_MENU.ADAPT_SELECTION') }}
       </button>
 
       <div class="w-full">
