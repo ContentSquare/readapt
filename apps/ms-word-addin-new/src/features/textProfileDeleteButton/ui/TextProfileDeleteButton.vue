@@ -2,7 +2,6 @@
 import { useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
 import { useI18n } from 'vue-i18n'
 import { confirm, alert } from '@/shared/ui/dialog'
-import { DialogWrapper } from 'vue3-promise-dialog'
 
 const props = defineProps<{
   modelValue: TextProfileId | null
@@ -24,8 +23,5 @@ const onClick = async () => {
 }
 </script>
 <template>
-  <div>
-    <DialogWrapper />
-    <button v-if="modelValue" class="btn-warning btn-sm btn" data-test-id="delete" @click="onClick">{{ t('SETTINGS.DELETE') }}</button>
-  </div>
+  <button v-if="modelValue" class="btn-warning btn-sm btn" data-test-id="delete" @click="onClick">{{ t('SETTINGS.DELETE') }}</button>
 </template>

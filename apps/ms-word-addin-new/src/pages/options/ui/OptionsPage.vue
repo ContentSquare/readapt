@@ -9,6 +9,7 @@ import { TextProfileRenameButton } from '@/features/textProfileRenameButton'
 import { TextProfileDeleteButton } from '@/features/textProfileDeleteButton'
 import { useFormSettings } from '../model/useFormSettings'
 import { TextProfileForm } from '@/features/textProfileForm'
+import { DialogWrapper } from 'vue3-promise-dialog'
 
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
@@ -48,4 +49,5 @@ const { t } = useI18n()
       </div>
     </div>
   </div>
+  <DialogWrapper />
 </template>

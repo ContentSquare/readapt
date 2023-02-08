@@ -2,26 +2,27 @@
 import { useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
 import SvgIcon from '@/shared/ui/SvgIcon.vue'
 import { useI18n } from 'vue-i18n'
+import { prompt, alert } from '@/shared/ui/dialog'
 
 const { preferences, updateProfile, getProfileById } = useTextPreferences()
 
 const props = defineProps<{ profileId: TextProfileId | null }>()
 const { t } = useI18n()
 
-const onClick = () => {
+const onClick = async () => {
   let profileName = ''
   if (props.profileId) {
     profileName = getProfileById(props.profileId).name
   }
-  const newProfileName = prompt(t('SETTINGS.PROFILE_RENAME_TO'), profileName)
+  const newProfileName = await prompt(t('SETTINGS.PROFILE_RENAME_TO'), profileName)
   if (!newProfileName || !props.profileId) {
     return
   }
   if (isNameUnique(newProfileName)) {
     updateProfile(props.profileId, { name: newProfileName })
-    alert(t('SETTINGS.PROFILE_RENAMED'))
+    await alert(t('SETTINGS.PROFILE_RENAMED'))
   } else {
-    alert(t('SETTINGS.PROFILE_NAME_EXISTS', { name: newProfileName }))
+    await alert(t('SETTINGS.PROFILE_NAME_EXISTS', { name: newProfileName }))
   }
 }
 
