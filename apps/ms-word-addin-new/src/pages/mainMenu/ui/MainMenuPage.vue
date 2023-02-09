@@ -3,6 +3,7 @@ import { computed } from 'vue'
 
 import { useVersion } from '@/shared/lib/useVersion'
 import { TextProfileActiveDropdown } from '@/features/textProfileActiveDropdown'
+import { TextSettingsAdaptDocumentButton, TextSettingsAdaptSelectionButton } from '@/features/textSettingsAdaptButtons'
 import { useTextPreferences } from '@/entities/textPreferences'
 
 import { useI18n } from 'vue-i18n'
@@ -46,14 +47,8 @@ const version = useVersion()
     <img class="mb-4 block w-full" src="/logo.png" width="250" height="63" alt="Readapt Logo" />
 
     <template v-if="hasActiveProfile">
-      <button class="btn-accent btn w-full" @click="() => {}">
-        {{ t('MAIN_MENU.ADAPT_DOC') }}
-      </button>
-
-      <button class="btn-accent btn mb-4 w-full" @click="() => {}">
-        {{ t('MAIN_MENU.ADAPT_SELECTION') }}
-      </button>
-
+      <TextSettingsAdaptDocumentButton class="w-full" />
+      <TextSettingsAdaptSelectionButton class="w-full" />
       <div class="w-full">
         <div class="text-lg font-semibold">{{ $t('MAIN_MENU.ACTIVE_PROFILE') }}:</div>
         <div class="flex justify-between">
