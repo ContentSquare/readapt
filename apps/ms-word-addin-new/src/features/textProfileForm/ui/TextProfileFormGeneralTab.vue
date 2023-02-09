@@ -120,7 +120,7 @@ watch(
         </tr>
         <tr>
           <td>
-            <div class="mb-2">{{ $t('GENERAL.WORD_SPACING') }}</div>
+            <div class="mb-2">{{ $t('GENERAL.LINE_SPACING') }}</div>
             <SelectPercentage
               :options="lineSpacingOptionsOptimized"
               :model-value="settings.lineSpacing"
