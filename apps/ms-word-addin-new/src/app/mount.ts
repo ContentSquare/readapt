@@ -8,9 +8,10 @@ import { withRouter } from './providers/withRouter'
 import './styles/tailwind.scss'
 
 export const mountUI = async () => {
-  await withOffice()
   const { i18n } = await withi18n()
   const { router } = withRouter()
+
+  await withOffice()
 
   const app = createApp(App)
   app.use(i18n)

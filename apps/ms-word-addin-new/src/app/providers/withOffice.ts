@@ -1,8 +1,5 @@
 let promise: Promise<void> | null = null
 
-// Note: this is a workaround to fix msoffice breaking vue-router
-// The function must be called before vue-router initialization
-// @see https://github.com/OfficeDev/office-js/pull/2808
 export const withOffice = async () => {
   const replaceState = window.history.replaceState
   const pushState = window.history.pushState
@@ -13,6 +10,8 @@ export const withOffice = async () => {
       script.src = 'https://appsforoffice.microsoft.com/lib/1/hosted/office.js'
       script.onload = () => {
         Office.onReady(() => {
+          // Note: this is a workaround to fix msoffice breaking vue-router
+          // @see https://github.com/OfficeDev/office-js/pull/2808
           window.history.replaceState = replaceState
           window.history.pushState = pushState
 
