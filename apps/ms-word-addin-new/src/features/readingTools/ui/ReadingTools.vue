@@ -8,6 +8,12 @@ const mask = ref<SettingsReadingTool>(buildDefaultSettingsReadingTool())
 const ruler = ref<SettingsReadingTool>(buildDefaultSettingsReadingTool())
 </script>
 <template>
+  <!-- <b-form-checkbox :checked="maskSettings.enabled" inline switch @change="toggleMask()">
+    {{ $t('DIALOG_BOX.MASK') }}
+  </b-form-checkbox>
+  <b-form-checkbox :checked="rulerSettings.enabled" inline switch @change="toggleRuler()">
+    {{ $t('DIALOG_BOX.RULER') }}
+  </b-form-checkbox> -->
   <label for="reading-tools-form-modal" class="btn-outline btn-xs btn">Settings</label>
   <input id="reading-tools-form-modal" type="checkbox" class="modal-toggle" />
   <div class="modal">

@@ -8,9 +8,9 @@ import { useTextPreferences } from '@/entities/textPreferences'
 import { adaptHtmlElementAsyncFn } from '@/shared/lib/textAdaptation'
 import AdaptContainer from '@/shared/ui/AdaptContainer.vue'
 import { ReadingTools } from '@/features/readingTools'
+import PrintButton from '@/shared/ui/PrintButton.vue'
 
 const error = ref<string>('')
-const userPlatform = ref<Office.PlatformType>()
 
 const heightMask = 25
 const BASE_COLOR = '#000000'
@@ -65,9 +65,8 @@ const onRegister = (asyncResult: Office.AsyncResult<unknown>): void => {
 }
 
 onMounted(() => {
-  Office.onReady((info: { platform: Office.PlatformType }) => {
+  Office.onReady(() => {
     Office.context.ui.addHandlerAsync(Office.EventType.DialogParentMessageReceived, onMessage, onRegister)
-    userPlatform.value = info.platform
   })
 
   document.addEventListener('mousemove', (event: MouseEvent) => {
@@ -86,8 +85,6 @@ onMounted(() => {
     }
   })
 })
-
-const print = () => window.print()
 
 // RULER
 const toggleRuler = () => {
@@ -130,12 +127,13 @@ const maskUpdateOpacity = (opacity: OpacityOption) => {
   maskAfterReadingZoneElem.style.backgroundColor = BASE_COLOR + opacity
   maskSettings.value.opacity = opacity
 }
-
-const isNotMacOS = computed(() => userPlatform.value !== Office.PlatformType.Mac)
 </script>
 
 <template>
-  <ReadingTools />
+  <div class="sticky top-0 flex gap-3 bg-white py-2 px-4">
+    <PrintButton />
+    <ReadingTools />
+  </div>
   <div class="py-2 px-4">
     <div v-if="error">{{ error }}</div>
     <div class="container-fluid">

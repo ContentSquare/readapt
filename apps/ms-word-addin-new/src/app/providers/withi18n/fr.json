@@ -81,6 +81,9 @@
     "PROFILE_RENAMED": "Le profil a été renommé",
     "PROFILE_CREATED": "Le profil a été créé"
   },
+  "DIALOG_BOX": {
+    "PRINT": "Imprimer"
+  },
   "GENERAL": {
     "SETTING": "Paramètres",
     "OPACITY": "Opacité",
