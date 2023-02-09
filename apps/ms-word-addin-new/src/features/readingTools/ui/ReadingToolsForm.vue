@@ -48,7 +48,7 @@ const emit = defineEmits<Emits>()
         <tr>
           <td class="p-3">{{ $t('QUICK_ACTIVATE.OPACITY') }}</td>
           <td class="p-3">
-            <RangeBar :model-value="rulerOpacity" :options="opacityOptions" @update:model-value="emit('update:rulerThickness', $event)" />
+            <RangeBar :model-value="rulerOpacity" :options="opacityOptions" @update:model-value="emit('update:rulerOpacity', $event)" />
           </td>
         </tr>
       </tbody>

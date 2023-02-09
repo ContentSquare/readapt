@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import ReadingToolsForm from './ReadingToolsForm.vue'
+import ReadingToolsRuler from './ReadingToolsRuler.vue'
 
 import { type SettingsReadingTool, buildDefaultSettingsReadingTool } from '@/entities/readingTools'
 
@@ -20,6 +21,7 @@ const rulerEnabled = ref(false)
     <input v-model="rulerEnabled" type="checkbox" class="toggle toggle-sm align-middle" />
     {{ $t('DIALOG_BOX.RULER') }}
   </label>
+  <ReadingToolsRuler v-if="rulerEnabled" :ruler="ruler" />
 
   <label for="reading-tools-form-modal" class="btn-outline btn-xs btn">{{ $t('SETTINGS.MY_PREFERENCES') }}</label>
   <input id="reading-tools-form-modal" type="checkbox" class="modal-toggle" />
@@ -31,7 +33,7 @@ const rulerEnabled = ref(false)
         v-model:mask-thickness="mask.thickness"
         v-model:ruler-opacity="ruler.opacity"
         v-model:ruler-thickness="ruler.thickness"
-        class="mt-6"
+        class="mt-8"
       />
     </div>
   </div>
