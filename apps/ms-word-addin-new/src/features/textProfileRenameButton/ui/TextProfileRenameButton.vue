@@ -12,7 +12,7 @@ const { t } = useI18n()
 const onClick = async () => {
   let profileName = ''
   if (props.profileId) {
-    profileName = getProfileById(props.profileId).name
+    profileName = getProfileById(props.profileId)?.name ?? ''
   }
   const newProfileName = await prompt(t('SETTINGS.PROFILE_RENAME_TO'), profileName)
   if (!newProfileName || !props.profileId) {
