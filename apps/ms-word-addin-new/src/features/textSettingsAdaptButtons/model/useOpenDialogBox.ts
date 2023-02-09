@@ -10,7 +10,7 @@ export const useOpenDialogBox = (settings: Ref<Settings>) => {
   return (document: HTMLElement, isSelection = false) => {
     trackAdaptEvent(isSelection)
     Office.context.ui.displayDialogAsync(
-      `${window.location.origin}/#/adapted-content`,
+      `${window.location.origin}/#adapted-content`,
       { height: 90, width: 90 },
       (asyncResult: Office.AsyncResult<Office.Dialog>) => {
         dialog.value = asyncResult.value

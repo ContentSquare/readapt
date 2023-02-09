@@ -16,8 +16,7 @@ const router = useRouter()
 
 const { openOptionsPage, openTemplates, saveLocale } = useExtensionUtils()
 
-const { preferences } = useTextPreferences()
-const hasActiveProfile = computed(() => Boolean(preferences.activeProfileId))
+const { getActiveProfile } = useTextPreferences()
 
 const selectTemplate = async () => await openTemplates(router)
 
@@ -29,6 +28,10 @@ const changeLocale = async (lang: 'en' | 'fr') => {
 }
 
 const version = useVersion()
+
+const activeProfile = computed(() => {
+  return getActiveProfile()
+})
 </script>
 
 <template>
@@ -46,9 +49,9 @@ const version = useVersion()
     </div>
     <img class="mb-4 block w-full" src="/logo.png" width="250" height="63" alt="Readapt Logo" />
 
-    <template v-if="hasActiveProfile">
-      <TextSettingsAdaptDocumentButton class="w-full" />
-      <TextSettingsAdaptSelectionButton class="w-full" />
+    <template v-if="activeProfile">
+      <TextSettingsAdaptDocumentButton :settings="activeProfile.settings" class="w-full" />
+      <TextSettingsAdaptSelectionButton :settings="activeProfile.settings" class="w-full" />
       <div class="w-full">
         <div class="text-lg font-semibold">{{ $t('MAIN_MENU.ACTIVE_PROFILE') }}:</div>
         <div class="flex justify-between">
@@ -71,7 +74,7 @@ const version = useVersion()
       {{ t('MAIN_MENU.BASE_YOUR_PROFILE_FROM_TEMPLATE') }}
     </button>
 
-    <div v-if="!hasActiveProfile" class="text-base">
+    <div v-if="!activeProfile" class="text-base">
       <div class="my-2">{{ $t('MAIN_MENU.WELCOME_3') }}</div>
       <div class="my-2">{{ $t('MAIN_MENU.WELCOME_1') }}</div>
       <div class="my-2">{{ $t('MAIN_MENU.WELCOME_2') }}</div>

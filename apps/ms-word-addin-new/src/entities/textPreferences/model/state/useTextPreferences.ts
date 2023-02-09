@@ -37,12 +37,21 @@ export function useTextPreferences() {
     return newProfileId
   }
 
-  const getProfileById = (profileId: TextProfileId): TextProfile => {
-    return state.profiles.find(({ id }) => id === profileId) as TextProfile
+  const getProfileById = (profileId: TextProfileId): TextProfile | undefined => {
+    return state.profiles.find(({ id }) => id === profileId)
+  }
+
+  const getActiveProfile = (): TextProfile | undefined => {
+    if (state.activeProfileId) {
+      return getProfileById(state.activeProfileId)
+    }
   }
 
   const updateProfile = (profileId: TextProfileId, { settings, name }: { settings?: Settings; name?: string }) => {
     const profile = getProfileById(profileId)
+    if (!profile) {
+      return
+    }
 
     if (settings) {
       profile.settings = cloneDeep(settings)
@@ -74,6 +83,7 @@ export function useTextPreferences() {
     setProfiles,
     createProfile,
     getProfileById,
+    getActiveProfile,
     updateProfile,
     deleteProfile,
     setActiveProfileId,

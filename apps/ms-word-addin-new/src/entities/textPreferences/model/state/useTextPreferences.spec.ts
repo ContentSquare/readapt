@@ -183,6 +183,17 @@ describe('useTextPreferences()', () => {
     })
   })
 
+  describe('getActiveProfile()', () => {
+    it('should get the active profile', async () => {
+      const { setActiveProfileId, setProfiles, getActiveProfile } = useTextPreferences()
+      setProfiles([profile])
+
+      setActiveProfileId(profile.id)
+
+      expect(getActiveProfile()).toEqual(profile)
+    })
+  })
+
   describe('reset()', () => {
     it('should reset profiles state', async () => {
       const { preferences, reset, setProfiles } = useTextPreferences()
