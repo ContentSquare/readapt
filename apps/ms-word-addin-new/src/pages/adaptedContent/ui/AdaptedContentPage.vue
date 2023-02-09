@@ -7,6 +7,7 @@ import { useTextPreferences } from '@/entities/textPreferences'
 
 import { adaptHtmlElementAsyncFn } from '@/shared/lib/textAdaptation'
 import AdaptContainer from '@/shared/ui/AdaptContainer.vue'
+import { ReadingTools } from '@/features/readingTools'
 
 const error = ref<string>('')
 const userPlatform = ref<Office.PlatformType>()
@@ -134,6 +135,7 @@ const isNotMacOS = computed(() => userPlatform.value !== Office.PlatformType.Mac
 </script>
 
 <template>
+  <ReadingTools />
   <div class="py-2 px-4">
     <div v-if="error">{{ error }}</div>
     <div class="container-fluid">
