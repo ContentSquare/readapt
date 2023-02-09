@@ -6,6 +6,9 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 import pkg from './package.json'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const { env } = process
 
