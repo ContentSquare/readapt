@@ -51,7 +51,7 @@ const activeProfile = computed(() => {
 
     <template v-if="activeProfile">
       <TextSettingsAdaptDocumentButton :settings="activeProfile.settings" class="w-full" />
-      <TextSettingsAdaptSelectionButton :settings="activeProfile.settings" class="w-full" />
+      <TextSettingsAdaptSelectionButton :settings="activeProfile.settings" class="mb-4 w-full" />
       <div class="w-full">
         <div class="text-lg font-semibold">{{ $t('MAIN_MENU.ACTIVE_PROFILE') }}:</div>
         <div class="flex justify-between">
