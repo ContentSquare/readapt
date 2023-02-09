@@ -130,7 +130,7 @@ const maskUpdateOpacity = (opacity: OpacityOption) => {
 </script>
 
 <template>
-  <div class="sticky top-0 flex gap-3 bg-white py-2 px-4">
+  <div class="sticky top-0 flex gap-4 bg-white py-2 px-4">
     <PrintButton />
     <ReadingTools />
   </div>

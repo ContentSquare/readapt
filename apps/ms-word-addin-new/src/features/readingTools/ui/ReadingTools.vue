@@ -6,15 +6,22 @@ import { type SettingsReadingTool, buildDefaultSettingsReadingTool } from '@/ent
 
 const mask = ref<SettingsReadingTool>(buildDefaultSettingsReadingTool())
 const ruler = ref<SettingsReadingTool>(buildDefaultSettingsReadingTool())
+
+const maskEnabled = ref(false)
+const rulerEnabled = ref(false)
 </script>
 <template>
-  <!-- <b-form-checkbox :checked="maskSettings.enabled" inline switch @change="toggleMask()">
+  <label class="cursor-pointer">
+    <input v-model="maskEnabled" type="checkbox" class="toggle toggle-sm align-middle" />
     {{ $t('DIALOG_BOX.MASK') }}
-  </b-form-checkbox>
-  <b-form-checkbox :checked="rulerSettings.enabled" inline switch @change="toggleRuler()">
+  </label>
+
+  <label class="cursor-pointer">
+    <input v-model="rulerEnabled" type="checkbox" class="toggle toggle-sm align-middle" />
     {{ $t('DIALOG_BOX.RULER') }}
-  </b-form-checkbox> -->
-  <label for="reading-tools-form-modal" class="btn-outline btn-xs btn">Settings</label>
+  </label>
+
+  <label for="reading-tools-form-modal" class="btn-outline btn-xs btn">{{ $t('SETTINGS.MY_PREFERENCES') }}</label>
   <input id="reading-tools-form-modal" type="checkbox" class="modal-toggle" />
   <div class="modal">
     <div class="modal-box relative">
