@@ -1,4 +1,4 @@
-import { createRouter, createMemoryHistory, type RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router'
 
 import { MainMenuPage } from '@/pages/mainMenu'
 
@@ -18,11 +18,16 @@ export function withRouter() {
       path: '/options',
       name: 'options',
       component: async () => (await import('@/pages/options')).OptionsPage
+    },
+    {
+      path: '/adapted-content',
+      name: 'adapted-content',
+      component: async () => (await import('@/pages/adaptedContent')).AdaptedContentPage
     }
   ]
 
   const router = createRouter({
-    history: createMemoryHistory(),
+    history: createWebHashHistory(),
     routes
   })
 

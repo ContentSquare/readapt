@@ -3,14 +3,14 @@ import { useI18n } from 'vue-i18n'
 import { trackAdaptEvent } from '../api/stats'
 import type { TextSettings as Settings } from '@/entities/textPreferences'
 
-export const openDialogBox = (settings: Ref<Settings>) => {
+export const useOpenDialogBox = (settings: Ref<Settings>) => {
   const dialog = ref<Office.Dialog>()
   const { locale } = useI18n()
 
   return (document: HTMLElement, isSelection = false) => {
     trackAdaptEvent(isSelection)
     Office.context.ui.displayDialogAsync(
-      `${window.location.origin}/#/dialog-box`,
+      `${window.location.origin}/#/adapted-content`,
       { height: 90, width: 90 },
       (asyncResult: Office.AsyncResult<Office.Dialog>) => {
         dialog.value = asyncResult.value
