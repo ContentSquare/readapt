@@ -26,16 +26,14 @@ watch(rulerEnabled, () => {
 })
 </script>
 <template>
-  <div class="sticky top-0 z-10 flex gap-4 bg-white py-2 px-4 print:hidden">
-    <!-- TODO: review if print button belongs to this component -->
-    <PrintButton />
-    <label class="cursor-pointer">
-      <input v-model="maskEnabled" type="checkbox" class="toggle toggle-sm align-middle" />
+  <div class="sticky top-0 z-10 flex items-center gap-4 bg-white py-2 px-4 print:hidden">
+    <label class="flex cursor-pointer items-center">
+      <input v-model="maskEnabled" type="checkbox" class="toggle toggle-sm mr-1" />
       {{ $t('DIALOG_BOX.MASK') }}
     </label>
 
-    <label class="cursor-pointer">
-      <input v-model="rulerEnabled" type="checkbox" class="toggle toggle-sm align-middle" />
+    <label class="flex cursor-pointer items-center">
+      <input v-model="rulerEnabled" type="checkbox" class="toggle toggle-sm mr-1" />
       {{ $t('DIALOG_BOX.RULER') }}
     </label>
 
@@ -53,6 +51,9 @@ watch(rulerEnabled, () => {
         />
       </div>
     </div>
+
+    <!-- TODO: review if print button belongs to this component -->
+    <PrintButton class="ml-auto" />
   </div>
   <ReadingToolsMask v-if="maskEnabled" :mask="mask" />
   <ReadingToolsRuler v-if="rulerEnabled" :ruler="ruler" />

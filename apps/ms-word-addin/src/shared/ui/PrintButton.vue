@@ -14,7 +14,7 @@ onMounted(() => {
 const print = () => window.print()
 </script>
 <template>
-  <button v-if="isNotMacOS" class="btn-xs btn" @click="print">
+  <button v-if="isNotMacOS" class="btn-outline btn-secondary btn-xs btn" @click="print">
     {{ $t('DIALOG_BOX.PRINT') }}
   </button>
 </template>
