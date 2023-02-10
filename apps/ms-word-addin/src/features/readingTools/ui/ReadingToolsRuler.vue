@@ -24,11 +24,11 @@ const height = computed(() => `${props.ruler.thickness}px`)
 console.log(props)
 </script>
 <template>
-  <div class="ruler fixed inset-x-0 top-0 bg-black"></div>
+  <div class="ruler__line fixed inset-x-0 top-0 bg-black"></div>
 </template>
 
 <style scoped>
-.ruler {
+.ruler__line {
   height: v-bind(height);
   transform: translateY(v-bind(translateY));
   background-color: v-bind(backgroundColor);

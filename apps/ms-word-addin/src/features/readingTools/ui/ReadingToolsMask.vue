@@ -7,38 +7,39 @@ const props = defineProps<{
   mask: SettingsReadingTool
 }>()
 
-const { clientY } = useMousePosition()
-const translateY = computed(() => {
-  if (clientY.value < 50) {
-    return '50px'
-  }
-  return `${clientY.value}px`
+const backgroundColor = computed(() => {
+  const MASK_BASE_COLOR = '#000000'
+  return MASK_BASE_COLOR + props.mask.opacity
 })
 
-const backgroundColor = computed(() => {
-  const MASK_VERLAY_BASE_COLOR = '#000000'
-  return MASK_VERLAY_BASE_COLOR + props.mask.opacity
-})
 const height = computed(() => {
   const MASK_BASE_HEIGHT = 25
-  const height = MASK_BASE_HEIGHT * parseInt(props.mask.thickness)
-  return `${height}px`
+  return MASK_BASE_HEIGHT * parseInt(props.mask.thickness)
 })
+const heightPx = computed(() => `${height.value}px`)
 
-console.log(props)
+const { clientY } = useMousePosition()
+const translateY = computed(() => {
+  const offset = clientY.value - Math.floor(height.value / 2)
+  return `${offset}px`
+})
 </script>
 <template>
-  <div class="ruler__overlay fixed inset-0"></div>
-  <div class="ruler__line fixed inset-x-0 top-0 bg-white"></div>
+  <div class="mask__top fixed inset-0"></div>
+  <div class="mask__bottom top-50 fixed inset-0"></div>
 </template>
 
 <style scoped>
-.ruler__line {
-  height: v-bind(height);
-  transform: translateY(v-bind(translateY));
+.mask__top,
+.mask__bottom {
+  background: v-bind(backgroundColor);
 }
 
-.ruler__overlay {
-  background-color: v-bind(backgroundColor);
+.mask__top {
+  clip-path: inset(0 0 calc(100% - v-bind(translateY)) 0);
+}
+
+.mask__bottom {
+  clip-path: inset(calc(v-bind(translateY) + v-bind(heightPx)) 0 0 0);
 }
 </style>
