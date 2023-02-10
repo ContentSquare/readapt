@@ -34,11 +34,11 @@ const copyManifest = viteStaticCopy({
   ]
 })
 
-const httpsConfigDevMode = {
+const httpsConfigDevMode = () => ({
   key: fs.readFileSync(path.resolve(`${HOME_DIRECTORY}/.office-addin-dev-certs/localhost.key`)),
   cert: fs.readFileSync(path.resolve(`${HOME_DIRECTORY}/.office-addin-dev-certs/localhost.crt`)),
   ca: fs.readFileSync(path.resolve(`${HOME_DIRECTORY}/.office-addin-dev-certs/ca.crt`))
-}
+})
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -71,6 +71,6 @@ export default defineConfig({
   },
   server: {
     port: DEV_SERVER_PORT,
-    https: IS_PRODUCTION ? undefined : httpsConfigDevMode
+    https: IS_PRODUCTION ? undefined : httpsConfigDevMode()
   }
 })
