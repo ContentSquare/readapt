@@ -29,13 +29,11 @@ watch(rulerEnabled, () => {
     <input v-model="maskEnabled" type="checkbox" class="toggle toggle-sm align-middle" />
     {{ $t('DIALOG_BOX.MASK') }}
   </label>
-  <ReadingToolsMask v-if="maskEnabled" :mask="mask" />
 
   <label class="cursor-pointer">
     <input v-model="rulerEnabled" type="checkbox" class="toggle toggle-sm align-middle" />
     {{ $t('DIALOG_BOX.RULER') }}
   </label>
-  <ReadingToolsRuler v-if="rulerEnabled" :ruler="ruler" />
 
   <label for="reading-tools-form-modal" class="btn-outline btn-xs btn">{{ $t('SETTINGS.MY_PREFERENCES') }}</label>
   <input id="reading-tools-form-modal" type="checkbox" class="modal-toggle" />
@@ -51,4 +49,6 @@ watch(rulerEnabled, () => {
       />
     </div>
   </div>
+  <ReadingToolsMask v-if="maskEnabled" :mask="mask" />
+  <ReadingToolsRuler v-if="rulerEnabled" :ruler="ruler" />
 </template>

@@ -9,6 +9,7 @@ import { adaptHtmlElementAsyncFn } from '@/shared/lib/textAdaptation'
 import AdaptContainer from '@/shared/ui/AdaptContainer.vue'
 import { ReadingTools } from '@/features/readingTools'
 import PrintButton from '@/shared/ui/PrintButton.vue'
+import FloatingImagesAlert from './FloatingImagesAlert.vue'
 
 const error = ref<string>('')
 
@@ -50,27 +51,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="sticky top-0 flex gap-4 bg-white py-2 px-4 print:hidden">
+  <div class="sticky top-0 z-10 flex gap-4 bg-white py-2 px-4 print:hidden">
     <PrintButton />
     <ReadingTools />
   </div>
   <div class="py-2 px-4">
     <div v-if="error">{{ error }}</div>
-    <div>
-      <template v-if="hasFloatingImages">
-        <div class="alert m-4 block w-auto shadow-lg">
-          <div class="text-lg font-semibold">{{ $t('DIALOG_BOX.FLOATING_IMAGES_TITLE') }}</div>
-          <div class="p-1 text-sm">{{ $t('DIALOG_BOX.FLOATING_IMAGES_EXPLANATION') }}</div>
-          <div class="p-1 text-sm">
-            {{ $t('DIALOG_BOX.FLOATING_IMAGES_LEARN_MORE') }}
-            <a class="link" target="_blank" :href="$t('DIALOG_BOX.FLOATING_IMAGES_SUPPORT_LINK')">{{
-              $t('DIALOG_BOX.FLOATING_IMAGES_CLICK_HERE')
-            }}</a>
-          </div>
-        </div>
-      </template>
-
-      <AdaptContainer :adapt-html-element-async="adaptHtmlElementAsyncFn()" :settings="settings" :content-to-adapt="docHtml" />
-    </div>
+    <FloatingImagesAlert v-if="hasFloatingImages" />
+    <AdaptContainer :adapt-html-element-async="adaptHtmlElementAsyncFn()" :settings="settings" :content-to-adapt="docHtml" />
   </div>
 </template>
