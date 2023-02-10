@@ -15,7 +15,10 @@ const translateY = computed(() => {
   return `${clientY.value}px`
 })
 
-const color = computed(() => `#000000${props.ruler.opacity}`)
+const backgroundColor = computed(() => {
+  const RULER_BASE_COLOR = '#000000'
+  return RULER_BASE_COLOR + props.ruler.opacity
+})
 const height = computed(() => `${props.ruler.thickness}px`)
 
 console.log(props)
@@ -28,6 +31,6 @@ console.log(props)
 .ruler {
   height: v-bind(height);
   transform: translateY(v-bind(translateY));
-  background-color: v-bind(color);
+  background-color: v-bind(backgroundColor);
 }
 </style>

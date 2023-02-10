@@ -19,7 +19,7 @@ type Emits = {
 const emit = defineEmits<Emits>()
 </script>
 <template>
-  <div class="mt-2 rounded-lg border border-base-300">
+  <div class="rounded-lg border border-base-300">
     <table class="table w-full">
       <tbody>
         <tr>

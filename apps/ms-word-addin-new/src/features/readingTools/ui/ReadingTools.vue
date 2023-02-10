@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import ReadingToolsForm from './ReadingToolsForm.vue'
 import ReadingToolsRuler from './ReadingToolsRuler.vue'
+import ReadingToolsMask from './ReadingToolsMask.vue'
 
 import { type SettingsReadingTool, buildDefaultSettingsReadingTool } from '@/entities/readingTools'
 
@@ -10,12 +11,25 @@ const ruler = ref<SettingsReadingTool>(buildDefaultSettingsReadingTool())
 
 const maskEnabled = ref(false)
 const rulerEnabled = ref(false)
+
+watch(maskEnabled, () => {
+  if (maskEnabled.value) {
+    rulerEnabled.value = false
+  }
+})
+
+watch(rulerEnabled, () => {
+  if (rulerEnabled.value) {
+    maskEnabled.value = false
+  }
+})
 </script>
 <template>
   <label class="cursor-pointer">
     <input v-model="maskEnabled" type="checkbox" class="toggle toggle-sm align-middle" />
     {{ $t('DIALOG_BOX.MASK') }}
   </label>
+  <ReadingToolsMask v-if="maskEnabled" :mask="mask" />
 
   <label class="cursor-pointer">
     <input v-model="rulerEnabled" type="checkbox" class="toggle toggle-sm align-middle" />
@@ -33,7 +47,7 @@ const rulerEnabled = ref(false)
         v-model:mask-thickness="mask.thickness"
         v-model:ruler-opacity="ruler.opacity"
         v-model:ruler-thickness="ruler.thickness"
-        class="mt-8"
+        class="mt-6"
       />
     </div>
   </div>
