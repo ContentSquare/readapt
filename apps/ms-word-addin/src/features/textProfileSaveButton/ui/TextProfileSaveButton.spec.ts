@@ -1,14 +1,10 @@
 import { mount } from '@vue/test-utils'
 import TextProfileSave from './TextProfileSaveButton.vue'
 import { textSettingsFixture as settings, textProfileFixture as profile, useTextPreferences } from '@/entities/textPreferences'
-import { mockAlert, mockPrompt } from '@/shared/test'
+import { alert, prompt } from '@/shared/ui/dialog'
 import type { Settings } from '@readapt/settings'
 
 describe('TextProfileSaveButton', () => {
-  beforeEach(() => {
-    mockAlert()
-  })
-
   afterEach(() => {
     useTextPreferences().reset()
     vi.restoreAllMocks()
@@ -17,7 +13,7 @@ describe('TextProfileSaveButton', () => {
   describe('when save button is clicked', () => {
     describe('when the profile is new', () => {
       const newProfileFactory = (newProfileName = 'My Profile') => {
-        mockPrompt(newProfileName)
+        vi.mocked(prompt).mockResolvedValueOnce(newProfileName)
 
         const wrapper = mount(TextProfileSave, {
           props: {

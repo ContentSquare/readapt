@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import TextProfileDeleteButton from './TextProfileDeleteButton.vue'
 import { textProfileFixture as profile, useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
-import { mockAlert, mockConfirm } from '@/shared/test'
+import { confirm, alert } from '@/shared/ui/dialog'
 
 describe('TextProfileDeleteButton', () => {
   beforeEach(() => {
@@ -10,7 +10,7 @@ describe('TextProfileDeleteButton', () => {
 
   afterEach(() => {
     useTextPreferences().reset()
-    vi.restoreAllMocks()
+    vi.resetAllMocks()
   })
 
   interface FactoryProps {
@@ -19,8 +19,7 @@ describe('TextProfileDeleteButton', () => {
   }
 
   const factory = ({ modelValue, confirmValue = true }: FactoryProps) => {
-    mockAlert()
-    mockConfirm(confirmValue)
+    vi.mocked(confirm).mockResolvedValueOnce(confirmValue)
     const wrapper = mount(TextProfileDeleteButton, {
       propsData: { modelValue },
       mocks: {

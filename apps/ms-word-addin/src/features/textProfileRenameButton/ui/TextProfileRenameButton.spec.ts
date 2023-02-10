@@ -1,11 +1,10 @@
 import { mount } from '@vue/test-utils'
 import TextProfileRenameButton from './TextProfileRenameButton.vue'
 import { textProfileFixture as profile, useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
-import { mockAlert, mockPrompt } from '@/shared/test'
+import { alert, prompt } from '@/shared/ui/dialog'
 
 describe('TextProfileRenameButton', () => {
   beforeEach(() => {
-    mockAlert()
     useTextPreferences().setProfiles([profile])
   })
 
@@ -20,7 +19,7 @@ describe('TextProfileRenameButton', () => {
   }
 
   const factory = ({ profileId, newProfileName = '' }: FactoryProps) => {
-    mockPrompt(newProfileName)
+    vi.mocked(prompt).mockResolvedValueOnce(newProfileName)
     const wrapper = mount(TextProfileRenameButton, {
       props: { profileId }
     })

@@ -2,7 +2,7 @@ import TextProfileEditDropdown from './TextProfileEditDropdown.vue'
 import { mount } from '@vue/test-utils'
 import { textProfileFixture as profile, useTextPreferences } from '@/entities/textPreferences'
 import type { TextProfileId, TextSettings } from '@/entities/textPreferences/model/TextPreferences'
-import { mockConfirm } from '@/shared/test'
+import { confirm } from '@/shared/ui/dialog'
 
 describe('TextProfileEditDropdown', () => {
   beforeEach(() => {
@@ -10,6 +10,7 @@ describe('TextProfileEditDropdown', () => {
   })
   afterEach(() => {
     useTextPreferences().reset()
+    vi.restoreAllMocks()
   })
 
   interface FactoryProps {
@@ -19,7 +20,7 @@ describe('TextProfileEditDropdown', () => {
   }
 
   const factory = ({ modelValue = profile.id, settings = profile.settings, confirmResult = true }: FactoryProps = {}) => {
-    mockConfirm(confirmResult)
+    vi.mocked(confirm).mockResolvedValueOnce(confirmResult)
     const wrapper = mount(TextProfileEditDropdown, {
       props: {
         modelValue,
@@ -54,20 +55,20 @@ describe('TextProfileEditDropdown', () => {
     })
 
     describe('when selecting an existing profile', () => {
-      it('should trigger "update:modelValue" with selected profile id', () => {
+      it('should trigger "update:modelValue" with selected profile id', async () => {
         const { wrapper, selectByProfileId } = factory({ modelValue: null })
 
-        selectByProfileId(profile.id)
+        await selectByProfileId(profile.id)
 
         expect(wrapper.emitted('update:modelValue')).toEqual([[profile.id]])
       })
     })
 
     describe('when selecting a new profile', () => {
-      it('should trigger "update:modelValue" with null', () => {
+      it('should trigger "update:modelValue" with null', async () => {
         const { wrapper, selectByProfileId } = factory()
 
-        selectByProfileId(null)
+        await selectByProfileId(null)
 
         expect(wrapper.emitted('update:modelValue')).toEqual([[null]])
       })
@@ -101,8 +102,7 @@ describe('TextProfileEditDropdown', () => {
 
     describe('when user cancels the selection change', () => {
       it.each(cases)('should not trigger "update:modelValue"', async ({ profileId, newProfileId }) => {
-        const { wrapper, selectByProfileId } = factory({ modelValue: profileId, settings: dirtySettings })
-        mockConfirm(false)
+        const { wrapper, selectByProfileId } = factory({ modelValue: profileId, settings: dirtySettings, confirmResult: false })
 
         await selectByProfileId(newProfileId)
 
@@ -110,8 +110,7 @@ describe('TextProfileEditDropdown', () => {
       })
 
       it.each(cases)('should keep the selection', async ({ profileId, newProfileId }) => {
-        const { dropdown, selectByProfileId } = factory({ modelValue: profileId, settings: dirtySettings })
-        mockConfirm(false)
+        const { dropdown, selectByProfileId } = factory({ modelValue: profileId, settings: dirtySettings, confirmResult: false })
 
         await selectByProfileId(newProfileId)
 
