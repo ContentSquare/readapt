@@ -1,22 +1,21 @@
+/* eslint-env node */
+
 module.exports = {
   root: true,
-  env: {
-    node: true
-  },
-  extends: ['plugin:vue/essential', 'eslint:recommended', '@vue/typescript/recommended', 'plugin:prettier/recommended'],
-  parserOptions: {
-    ecmaVersion: 2020
-  },
+  extends: [
+    'plugin:vue/vue3-recommended',
+    'eslint:recommended',
+    'plugin:tailwindcss/recommended',
+    '@vue/eslint-config-typescript/recommended',
+    '@vue/eslint-config-prettier'
+  ],
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
-  },
-  overrides: [
-    {
-      files: ['**/__tests__/*.{j,t}s?(x)', '**/tests/unit/**/*.spec.{j,t}s?(x)'],
-      env: {
-        jest: true
+    'prettier/prettier': [
+      'error',
+      {
+        singleQuote: true,
+        semi: false
       }
-    }
-  ]
+    ]
+  }
 }
