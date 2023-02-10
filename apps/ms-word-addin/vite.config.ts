@@ -14,7 +14,7 @@ const { env } = process
 
 const DEV_SERVER_PORT = 3000
 const HOME_DIRECTORY = os.homedir()
-const IS_PRODUCTION = env.NODE_ENV === 'production'
+const IS_DEVELOPMENT = env.NODE_ENV === 'development'
 
 const copyManifest = viteStaticCopy({
   targets: [
@@ -24,7 +24,7 @@ const copyManifest = viteStaticCopy({
       transform(content) {
         // @see https://render.com/docs/environment-variables
         const productionUrl = env.IS_PULL_REQUEST === 'true' || !env.READAPT_MSWORD_URL ? env.RENDER_EXTERNAL_URL : env.READAPT_MSWORD_URL
-        if (!IS_PRODUCTION || !productionUrl) {
+        if (IS_DEVELOPMENT || !productionUrl) {
           return content
         }
         const DEVELOPMENT_URL = `https://localhost:${DEV_SERVER_PORT}`
@@ -71,6 +71,6 @@ export default defineConfig({
   },
   server: {
     port: DEV_SERVER_PORT,
-    https: IS_PRODUCTION ? undefined : httpsConfigDevMode()
+    https: IS_DEVELOPMENT ? httpsConfigDevMode() : undefined
   }
 })

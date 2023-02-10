@@ -25,8 +25,8 @@ const translateY = computed(() => {
 })
 </script>
 <template>
-  <div class="mask__top fixed inset-0"></div>
-  <div class="mask__bottom top-50 fixed inset-0"></div>
+  <div class="mask__top fixed inset-0 print:hidden"></div>
+  <div class="mask__bottom top-50 fixed inset-0 print:hidden"></div>
 </template>
 
 <style scoped>

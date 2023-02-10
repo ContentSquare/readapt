@@ -19,7 +19,7 @@ const height = computed(() => `${props.ruler.thickness}px`)
 console.log(props)
 </script>
 <template>
-  <div class="ruler__line fixed inset-x-0 top-0 bg-black"></div>
+  <div class="ruler__line fixed inset-x-0 top-0 bg-black print:hidden"></div>
 </template>
 
 <style scoped>
