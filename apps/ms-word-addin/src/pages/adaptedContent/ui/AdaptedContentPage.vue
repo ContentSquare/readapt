@@ -8,7 +8,6 @@ import { useTextPreferences } from '@/entities/textPreferences'
 import { adaptHtmlElementAsyncFn } from '@/shared/lib/textAdaptation'
 import AdaptContainer from '@/shared/ui/AdaptContainer.vue'
 import { ReadingTools } from '@/features/readingTools'
-import PrintButton from '@/shared/ui/PrintButton.vue'
 import FloatingImagesAlert from './FloatingImagesAlert.vue'
 
 const error = ref<string>('')
@@ -51,10 +50,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="sticky top-0 z-10 flex gap-4 bg-white py-2 px-4 print:hidden">
-    <PrintButton />
-    <ReadingTools />
-  </div>
+  <ReadingTools />
   <div class="py-2 px-4">
     <div v-if="error">{{ error }}</div>
     <FloatingImagesAlert v-if="hasFloatingImages" />

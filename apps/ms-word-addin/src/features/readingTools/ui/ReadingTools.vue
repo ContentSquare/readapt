@@ -3,6 +3,7 @@ import { ref, watch } from 'vue'
 import ReadingToolsForm from './ReadingToolsForm.vue'
 import ReadingToolsRuler from './ReadingToolsRuler.vue'
 import ReadingToolsMask from './ReadingToolsMask.vue'
+import PrintButton from '@/shared/ui/PrintButton.vue'
 
 import { type SettingsReadingTool, buildDefaultSettingsReadingTool } from '@/entities/readingTools'
 
@@ -25,28 +26,32 @@ watch(rulerEnabled, () => {
 })
 </script>
 <template>
-  <label class="cursor-pointer">
-    <input v-model="maskEnabled" type="checkbox" class="toggle toggle-sm align-middle" />
-    {{ $t('DIALOG_BOX.MASK') }}
-  </label>
+  <div class="sticky top-0 z-10 flex gap-4 bg-white py-2 px-4 print:hidden">
+    <!-- TODO: review if print button belongs to this component -->
+    <PrintButton />
+    <label class="cursor-pointer">
+      <input v-model="maskEnabled" type="checkbox" class="toggle toggle-sm align-middle" />
+      {{ $t('DIALOG_BOX.MASK') }}
+    </label>
 
-  <label class="cursor-pointer">
-    <input v-model="rulerEnabled" type="checkbox" class="toggle toggle-sm align-middle" />
-    {{ $t('DIALOG_BOX.RULER') }}
-  </label>
+    <label class="cursor-pointer">
+      <input v-model="rulerEnabled" type="checkbox" class="toggle toggle-sm align-middle" />
+      {{ $t('DIALOG_BOX.RULER') }}
+    </label>
 
-  <label for="reading-tools-form-modal" class="btn-outline btn-xs btn">{{ $t('SETTINGS.MY_PREFERENCES') }}</label>
-  <input id="reading-tools-form-modal" type="checkbox" class="modal-toggle" />
-  <div class="modal">
-    <div class="modal-box relative">
-      <label for="reading-tools-form-modal" class="btn-sm btn-circle btn absolute right-2 top-2">✕</label>
-      <ReadingToolsForm
-        v-model:mask-opacity="mask.opacity"
-        v-model:mask-thickness="mask.thickness"
-        v-model:ruler-opacity="ruler.opacity"
-        v-model:ruler-thickness="ruler.thickness"
-        class="mt-6"
-      />
+    <label for="reading-tools-form-modal" class="btn-outline btn-xs btn">{{ $t('SETTINGS.MY_PREFERENCES') }}</label>
+    <input id="reading-tools-form-modal" type="checkbox" class="modal-toggle" />
+    <div class="modal">
+      <div class="modal-box relative">
+        <label for="reading-tools-form-modal" class="btn-sm btn-circle btn absolute right-2 top-2">✕</label>
+        <ReadingToolsForm
+          v-model:mask-opacity="mask.opacity"
+          v-model:mask-thickness="mask.thickness"
+          v-model:ruler-opacity="ruler.opacity"
+          v-model:ruler-thickness="ruler.thickness"
+          class="mt-6"
+        />
+      </div>
     </div>
   </div>
   <ReadingToolsMask v-if="maskEnabled" :mask="mask" />
