@@ -1,6 +1,6 @@
 {
   "name": "@readapt/settings",
-  "version": "1.7.4",
+  "version": "1.8.0",
   "main": "dist/readapt-settings.js",
   "module": "dist/readapt-settings.esm.js",
   "types": "dist/types/index.d.ts",
