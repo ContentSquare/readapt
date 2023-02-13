@@ -58,7 +58,7 @@ onMounted(() => {
       <div>{{ $t('DIALOG_BOX.PROFILE') }} <TextProfileActiveDropdownReadonly v-model="selectedProfileId" class="select-secondary ml-1 w-52" /></div>
       |
     </template>
-    <template #after><PrintButton /></template>
+    <template #after><PrintButton class="ml-auto" /></template>
   </ReadingToolsToolbar>
   <div class="py-2 px-4">
     <div v-if="error">{{ error }}</div>
