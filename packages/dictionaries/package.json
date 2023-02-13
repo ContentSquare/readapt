@@ -1,6 +1,6 @@
 {
   "name": "@readapt/dictionaries",
-  "version": "1.7.4",
+  "version": "1.8.0",
   "types": "dist/index.d.ts",
   "main": "",
   "targets": {
