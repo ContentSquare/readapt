@@ -7,13 +7,16 @@ import { useTextPreferences } from '@/entities/textPreferences'
 
 import { adaptHtmlElementAsyncFn } from '@/shared/lib/textAdaptation'
 import AdaptContainer from '@/shared/ui/AdaptContainer.vue'
-import { ReadingTools } from '@/features/readingTools'
 import FloatingImagesAlert from './FloatingImagesAlert.vue'
+import { ReadingToolsToolbar } from '@/features/readingToolsToolbar'
+import PrintButton from '@/shared/ui/PrintButton.vue'
+import { TextProfileActiveDropdownReadonly } from '@/features/textProfileActiveDropdown'
 
 const error = ref<string>('')
 
-const { getActiveProfile } = useTextPreferences()
-const settings = computed(() => getActiveProfile()?.settings as Settings)
+const { preferences, getProfileById } = useTextPreferences()
+const selectedProfileId = ref<number>(preferences.activeProfileId as number)
+const settings = computed(() => getProfileById(selectedProfileId.value)?.settings as Settings)
 
 const docHtml = ref<string>('')
 
@@ -50,7 +53,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <ReadingTools />
+  <ReadingToolsToolbar>
+    <template #before>
+      <div>{{ $t('DIALOG_BOX.PROFILE') }} <TextProfileActiveDropdownReadonly v-model="selectedProfileId" class="select-secondary ml-1 w-52" /></div>
+      |
+    </template>
+    <template #after><PrintButton /></template>
+  </ReadingToolsToolbar>
   <div class="py-2 px-4">
     <div v-if="error">{{ error }}</div>
     <FloatingImagesAlert v-if="hasFloatingImages" />

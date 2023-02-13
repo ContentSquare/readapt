@@ -82,6 +82,7 @@
     "PROFILE_CREATED": "The profile has been created"
   },
   "DIALOG_BOX": {
+    "PROFILE": "Profile:",
     "PRINT": "Print",
     "RULER": "Activate ruler",
     "MASK": "Show mask",

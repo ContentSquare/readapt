@@ -82,6 +82,7 @@
     "PROFILE_CREATED": "Le profil a été créé"
   },
   "DIALOG_BOX": {
+    "PROFILE": "Profil :",
     "PRINT": "Imprimer",
     "RULER": "Activer la règle",
     "MASK": "Afficher le masque",
