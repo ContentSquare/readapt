@@ -2,10 +2,10 @@
 
 ## Introduction
 
-Created by [Contentsquare Foundation](https://contentsquare-foundation.org/), Readapt is a software platform that aims to help those with reading challenges like dyslexia to more easily read digital text. The [Microsoft Word version](https://appsource.microsoft.com/en-us/product/office/WA200004098?tab=Overview) of Readapt allows users to set their reading preferences and see an adaptation of the Word document's text. It also provides reading tools like a screen mask and reading ruler. 
+Created by [Contentsquare Foundation](https://contentsquare-foundation.org/), Readapt is a software platform that aims to help those with reading challenges like dyslexia to more easily read digital text. The [Microsoft Word version](https://appsource.microsoft.com/en-us/product/office/WA200004098?tab=Overview) of Readapt allows users to set their reading preferences and see an adaptation of the Word document's text. It also provides reading tools like a screen mask and reading ruler.
 
 ## Operating system and Microsoft Office compatibility
-### MacOS 
+### MacOS
 Readapt can be used on most recent releases of MacOS and Microsoft Office.
 
 ### Microsoft Office Online

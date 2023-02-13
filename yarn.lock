@@ -16170,6 +16170,11 @@ vue-tsc@^1.0.24:
     "@volar/vue-language-core" "1.0.24"
     "@volar/vue-typescript" "1.0.24"
 
+vue3-promise-dialog@^0.3.4:
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/vue3-promise-dialog/-/vue3-promise-dialog-0.3.4.tgz#d7ba9396f0c1e5ff49cc6de4fd2756ce9476bc98"
+  integrity sha512-JquYYE+1lxuGgncD8Q+8KTFAWUJsNWnhuYPSsOFRKzz3kz66Rjz5pdlEW6GLfUlV3cKak9T8b3mV49B4ouEgVg==
+
 vue@~2.7.14:
   version "2.7.14"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.7.14.tgz#3743dcd248fd3a34d421ae456b864a0246bafb17"
