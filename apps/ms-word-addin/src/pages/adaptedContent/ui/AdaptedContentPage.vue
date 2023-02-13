@@ -7,7 +7,7 @@ import { useTextPreferences } from '@/entities/textPreferences'
 
 import { adaptHtmlElementAsyncFn } from '@/shared/lib/textAdaptation'
 import AdaptContainer from '@/shared/ui/AdaptContainer.vue'
-import { ReadingTools } from '@/features/readingTools'
+import { AdaptToolbar } from '@/widgets/adaptToolbar'
 import FloatingImagesAlert from './FloatingImagesAlert.vue'
 
 const error = ref<string>('')
@@ -50,7 +50,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <ReadingTools />
+  <AdaptToolbar />
   <div class="py-2 px-4">
     <div v-if="error">{{ error }}</div>
     <FloatingImagesAlert v-if="hasFloatingImages" />
