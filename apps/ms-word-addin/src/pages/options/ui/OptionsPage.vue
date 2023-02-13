@@ -4,7 +4,7 @@ import { onMounted, ref } from 'vue'
 import { useTextPreferences, type TextProfileId } from '@/entities/textPreferences'
 import { TextProfileEditDropdown } from '@/features/textProfileEditDropdown'
 import { TextProfileSaveButton } from '@/features/textProfileSaveButton'
-import { TextSettingsAdaptationPreview } from '@/features/textSettingsAdaptationPreview'
+import { TextSettingsAdaptPreview } from '@/features/textSettingsAdaptPreview'
 import { TextProfileRenameButton } from '@/features/textProfileRenameButton'
 import { TextProfileDeleteButton } from '@/features/textProfileDeleteButton'
 import { useFormSettings } from '../model/useFormSettings'
@@ -40,11 +40,10 @@ const { t } = useI18n()
     </div>
     <TextProfileForm :settings="settings" @update-settings="updateSettings" @change-language="changeLanguage" />
     <div>
-      <TextSettingsAdaptationPreview class="my-2 h-40 max-h-40 overflow-scroll" :settings="settings" />
+      <TextSettingsAdaptPreview class="my-2 h-40 max-h-20 overflow-scroll tall:max-h-40" :settings="settings" />
       <div class="mt-auto flex flex-wrap justify-between">
         <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
         <TextProfileDeleteButton v-model="selectedProfiledId" class="ml-3 mr-auto" />
-        <!-- TODO: add dirty settings calculation -->
         <button class="btn-outline btn-secondary btn-sm btn" @click="router.push('/')">{{ t('SETTINGS.BACK') }}</button>
       </div>
     </div>
