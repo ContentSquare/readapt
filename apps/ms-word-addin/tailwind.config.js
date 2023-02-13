@@ -25,7 +25,8 @@ module.exports = {
   },
   theme: {
     screens: {
-      xs: '250px'
+      xs: '250px',
+      tall: { raw: '(min-height: 600px)' }
     }
   }
 }
