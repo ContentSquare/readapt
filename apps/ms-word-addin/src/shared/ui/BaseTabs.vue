@@ -18,7 +18,7 @@ const emitInput = (index: number) => emit('update:modelValue', index)
     <div
       v-for="(name, index) in props.names"
       :key="index"
-      class="tab tab-bordered tab-lg"
+      class="tab tab-bordered text-base"
       :class="{ 'tab-active': index === modelValue }"
       data-test-id="tab"
       @click="emitInput(index)"
