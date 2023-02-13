@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import ReadingToolsFormModal from './ReadingToolsFormModal.vue'
 import ReadingToolsRuler from './ReadingToolsRuler.vue'
 import ReadingToolsMask from './ReadingToolsMask.vue'
-import PrintButton from '@/shared/ui/PrintButton.vue'
 import { useToolsEnabler } from '../model/useToolsEnabler'
 
 import { type SettingsReadingTool, buildDefaultSettingsReadingTool } from '@/entities/readingTools'
@@ -15,6 +14,8 @@ const { maskEnabled, rulerEnabled } = useToolsEnabler()
 </script>
 <template>
   <div class="sticky top-0 z-10 flex items-center gap-4 bg-white py-2 px-4 print:hidden">
+    <slot name="before" />
+
     <label class="flex cursor-pointer items-center">
       <input v-model="maskEnabled" type="checkbox" class="toggle toggle-sm mr-1" />
       {{ $t('DIALOG_BOX.MASK') }}
@@ -33,10 +34,7 @@ const { maskEnabled, rulerEnabled } = useToolsEnabler()
       class="mt-6"
     />
 
-    <slot />
-
-    <!-- TODO: review if print button belongs to this component -->
-    <PrintButton class="ml-auto" />
+    <slot name="after" />
   </div>
   <ReadingToolsMask v-if="maskEnabled" :mask="mask" />
   <ReadingToolsRuler v-if="rulerEnabled" :ruler="ruler" />

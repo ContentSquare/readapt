@@ -7,13 +7,16 @@ import { useTextPreferences } from '@/entities/textPreferences'
 
 import { adaptHtmlElementAsyncFn } from '@/shared/lib/textAdaptation'
 import AdaptContainer from '@/shared/ui/AdaptContainer.vue'
-import { AdaptToolbar } from '@/widgets/adaptToolbar'
 import FloatingImagesAlert from './FloatingImagesAlert.vue'
+import { ReadingToolsToolbar } from '@/features/readingToolsToolbar'
+import PrintButton from '@/shared/ui/PrintButton.vue'
+import { TextProfileActiveDropdownReadonly } from '@/features/textProfileActiveDropdown'
 
 const error = ref<string>('')
 
-const { getActiveProfile } = useTextPreferences()
-const settings = computed(() => getActiveProfile()?.settings as Settings)
+const { preferences, getProfileById } = useTextPreferences()
+const selectedProfileId = ref<number>(preferences.activeProfileId as number)
+const settings = computed(() => getProfileById(selectedProfileId.value)?.settings as Settings)
 
 const docHtml = ref<string>('')
 
@@ -50,7 +53,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <AdaptToolbar />
+  <ReadingToolsToolbar>
+    <template #before><TextProfileActiveDropdownReadonly v-model="selectedProfileId" class="select-secondary w-52" /> | </template>
+    <template #after><PrintButton /></template>
+  </ReadingToolsToolbar>
   <div class="py-2 px-4">
     <div v-if="error">{{ error }}</div>
     <FloatingImagesAlert v-if="hasFloatingImages" />
