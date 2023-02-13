@@ -54,7 +54,10 @@ onMounted(() => {
 
 <template>
   <ReadingToolsToolbar>
-    <template #before><TextProfileActiveDropdownReadonly v-model="selectedProfileId" class="select-secondary w-52" /> | </template>
+    <template #before>
+      <div>{{ $t('DIALOG_BOX.PROFILE') }} <TextProfileActiveDropdownReadonly v-model="selectedProfileId" class="select-secondary ml-1 w-52" /></div>
+      |
+    </template>
     <template #after><PrintButton /></template>
   </ReadingToolsToolbar>
   <div class="py-2 px-4">
