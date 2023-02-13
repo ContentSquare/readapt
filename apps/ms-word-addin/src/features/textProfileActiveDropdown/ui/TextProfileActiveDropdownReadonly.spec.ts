@@ -35,7 +35,7 @@ describe('TextProfileActiveDropdownReadonly', () => {
     })
   })
 
-  describe('selecte profile', () => {
+  describe('select profile', () => {
     describe('when a profile is selected', () => {
       it('should select the option of the profile', async () => {
         const { dropdown } = factory()
@@ -45,7 +45,7 @@ describe('TextProfileActiveDropdownReadonly', () => {
     })
 
     describe('when user selects a new active profile from dropdown', () => {
-      it.only('should emit "update:modelValue" with the new profile id', async () => {
+      it('should emit "update:modelValue" with the new profile id', async () => {
         const { dropdown, wrapper } = factory()
 
         await dropdown.setValue(profiles[0].id.toString())
