@@ -31,7 +31,6 @@ const { maskEnabled, rulerEnabled } = useToolsEnabler()
       v-model:mask-thickness="mask.thickness"
       v-model:ruler-opacity="ruler.opacity"
       v-model:ruler-thickness="ruler.thickness"
-      class="mt-6"
     />
 
     <slot name="after" />
