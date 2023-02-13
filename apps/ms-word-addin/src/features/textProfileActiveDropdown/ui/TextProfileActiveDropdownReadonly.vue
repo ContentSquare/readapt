@@ -15,7 +15,7 @@ const onValueChange = (event: Event): void => {
 }
 </script>
 <template>
-  <select :value="modelValue" class="select-primary select select-sm" @input="onValueChange">
+  <select :value="modelValue" class="select-primary select select-sm" @change="onValueChange">
     <option v-for="{ name, id } in preferences.profiles" :key="id" :value="id">
       {{ name }}
     </option>
