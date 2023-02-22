@@ -109,7 +109,7 @@ chrome.storage.onChanged.addListener(async (changes) => {
   }
 
   if (hasEventChanged(changes)) {
-    await fetch(`${__MATOMO_URL__}/matomo.php?idsite=1&action_name=adapt&rec=1`)
+    await fetch(`${__MATOMO_URL__}/matomo.php?idsite=1&action_name=adapt&rec=1&ua=unknown&uadata={}`)
   }
 })
 
