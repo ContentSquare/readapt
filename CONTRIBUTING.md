@@ -8,18 +8,16 @@ In this guide you'll find helpful information on how to create issues, pull requ
 
 ## 1. Opening an issue
 
-A good way to start contributing to Readapt is to create an issue. Normally you'd create an issue in cases if:
-
-1. You've faced a bug and you want to report it
-2. You have an idea and/or you'd like to create new features
+A good way to start contributing to Readapt is to create an issue: create a bug report and suggest an idea.
 
 ### 1.1 Issue: bug report
 
 When creating an issue for a bug report, it's advisable to structure the issue from 4 main parts.  
 
-1. *Brief description*: describe shorty the bug you've encountered
-2. *Actual behavior*: describe in more detail the buggy behavior. On top of that reproduction steps, photos and/or videos of the application behavior are welcome.
-3. *Expected behavior*: how the application should have been working if the bug wasn't present.
+1. *Brief description*: describe shorty the bug you've encountered;
+2. *Actual behavior*: describe in more detail the buggy behavior. Bug reproduction steps, photos and/or videos of the are welcome;
+3. *Expected behavior*: how the application should work if the bug wasn't present;
+3. *Logs*: if you have access to application logs (e.g. any errors in the console);
 4. *Running environment*: give information about the environment where the application runs: application version, browser name and version, OS name and version, and any other information that you seem relevent.
 
 ### 1.2 Issue: new feature idea
