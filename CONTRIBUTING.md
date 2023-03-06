@@ -64,11 +64,11 @@ Now your development environment is ready.
 
 After that you can:
 
-7a. Make changes to the Chrome Extension source and consult its [documentation](https://github.com/ContentSquare/readapt/tree/master/apps/chrome-extension#readapt-chrome-extension):
+7a. Make changes to the Chrome Extension source ([documentation](https://github.com/ContentSquare/readapt/tree/master/apps/chrome-extension#readapt-chrome-extension)):
 ```bash
 cd ./apps/chrome-extension
 ```
-7b. Makes changes to the MS Word Addin source and consult its [documentation](https://github.com/ContentSquare/readapt/tree/master/apps/ms-word-addin#ms-word-add-in):
+7b. Makes changes to the MS Word Addin source ([documentation](https://github.com/ContentSquare/readapt/tree/master/apps/ms-word-addin#ms-word-add-in)):
 ```bash
 cd ./apps/ms-word-addin
 ```
@@ -77,7 +77,8 @@ cd ./apps/ms-word-addin
 
 Readapt repository is a [lerna](https://lerna.js.org/) [monorepo](https://monorepo.tools/) containing apps and packages.  
 
-The difference between an app in a package is that apps are final programs that can be built and shipped to the user. But packages are pieces of shared code used by apps.  
+* *An app* is a programs that can be built and shipped to the user;
+* *A package* is a piece of shared code used by an an app or other package. 
 
 ### Packages
 
@@ -102,8 +103,10 @@ Readapt core team has made made a big effort to keep the technical stack of Read
 
 * [Vue 3 with composition API](https://vuejs.org/guide/introduction.html) for the frontend UI
 * [Tailwind](https://tailwindcss.com/) and [DaisyUI](https://daisyui.com/) for styling components
+* [TypeScript](https://www.typescriptlang.org/) language to use the benefits of typing
 * [Vitejs](https://vitejs.dev/) for bundling
 * [Vitest](https://vitest.dev/) for unit testing
+* [Featured-Sliced Design](https://feature-sliced.design/) methodology is used to design the source code of apps
 
 By contributing to Readapt, you have a wonderful opportunity to work and learn the latest technical stack.  
 
