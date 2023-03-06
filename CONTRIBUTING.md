@@ -4,7 +4,7 @@ Thank you for your time and interest in contributing to the Readapt project. Any
 
 Before continuing, please read our [Contributor Code of Conduct](./CODE_OF_CONDUCT.md) to make our community respectful and welcoming for everyone.  
 
-In this guide, you'll find helpful information on how to create issues, setup your development environment, and understand technology stack used in the Readapt project.  
+In this guide, you'll find helpful information on how to create issues, setup your development environment, and understand the technology stack used in the Readapt project.  
 
 ## 1. Opening an issue
 
@@ -28,7 +28,7 @@ Please include the following information in a feature suggestion issue:
 
 1. *Description*: describe your idea;
 2. *User benefits*: how the user benefits from this feature;
-3. *Existing solutions*: if other application has implement the suggested feature, please share that application.
+3. *Existing solutions*: if another application has implemented the suggested feature already, please share that application.
 
 If you are a software developer and you'd like to implement the feature by yourself &mdash; you're welcome! But before jumping into the code, it's highly advisable to create a feature idea first to discuss it with us.  
 
@@ -99,7 +99,7 @@ Readapt repository is a [lerna](https://lerna.js.org/) [monorepo](https://monore
 
 ## 4. The technical stack
 
-Readapt core team has made made a big effort to keep the technical stack of Readapt at the latest versions:
+The core team has made a big effort to keep the technical stack of Readapt at the latest versions:
 
 * [Vue 3 with composition API](https://vuejs.org/guide/introduction.html) for the frontend UI
 * [Tailwind](https://tailwindcss.com/) and [DaisyUI](https://daisyui.com/) for styling components
