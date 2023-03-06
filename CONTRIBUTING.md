@@ -4,33 +4,33 @@ Thank you for your time and interest in contributing to the Readapt project. Any
 
 Before continuing, please read our [Contributor Code of Conduct](./CODE_OF_CONDUCT.md) to make our community respectful and welcoming for everyone.  
 
-In this guide, you'll find helpful information on how to create issues, pull requests, and understand the coding practices used in the Readapt project.  
+In this guide, you'll find helpful information on how to create issues, setup your development environment, and understand technology stack used in the Readapt project.  
 
 ## 1. Opening an issue
 
-A good way to start contributing to Readapt is to create an issue: create a bug report and suggest an idea.
+A good way to start contributing to Readapt is to create an issue: a bug report or a feature suggestion.
 
 ### 1.1 Issue: bug report
 
 When creating an issue for a bug report, it's advisable to structure the issue into 4 main parts.  
 
 1. *Brief Description*: describe shorty the bug you've encountered;
-2. *Actual behavior*: describe in more detail the buggy behavior. Bug reproduction steps, photos, and/or videos of the are welcome;
-3. *Expected behavior*: how the application should work if the bug wasn't present;
-3. *Logs*: if you have access to application logs (e.g. any errors in the console);
-4. *Running environment*: give information about the environment where the application runs: application version, browser name and version, OS name and version, and any other information that you deem relevant.
+2. *Actual Behavior*: describe in more detail the buggy behavior. Reproduction steps, photos, and/or videos are welcome;
+3. *Expected Behavior*: how the application should work if the bug wasn't present;
+3. *Logs*: if you have access, share error logs. For example screenshots of errors in the console;
+4. *Environment*: give information about the environment where the application runs: application version, browser name and version, OS name and version, and any other information that you deem relevant.
 
-### 1.2 Issue: new feature idea
+### 1.2 Issue: feature suggestion
 
-Feature ideas are great because they make Readapt more useful for users.  
+Feature ideas are great because they increase the value of Readapt for its users.  
 
-Please include the following information in a feature idea issue:
+Please include the following information in a feature suggestion issue:
 
 1. *Description*: describe your idea;
 2. *User benefits*: how the user benefits from this feature;
-3. *Existing solutions*: please share other applications that have the new feature idea already implemented.
+3. *Existing solutions*: if other application has implement the suggested feature, please share that application.
 
-If you are a software developer and you'd like to implement the feature by yourself: you're welcome! But before jumping into the code, it's highly advisable to create a feature idea first to discuss it with us.  
+If you are a software developer and you'd like to implement the feature by yourself &mdash; you're welcome! But before jumping into the code, it's highly advisable to create a feature idea first to discuss it with us.  
 
 ## 2. Development environment setup
 
@@ -99,7 +99,7 @@ Readapt repository is a [lerna](https://lerna.js.org/) [monorepo](https://monore
 
 ## 4. The technical stack
 
-Readapt core team has made made a big effort to keep the technical stack of Readapt at the latest technologies:
+Readapt core team has made made a big effort to keep the technical stack of Readapt at the latest versions:
 
 * [Vue 3 with composition API](https://vuejs.org/guide/introduction.html) for the frontend UI
 * [Tailwind](https://tailwindcss.com/) and [DaisyUI](https://daisyui.com/) for styling components
