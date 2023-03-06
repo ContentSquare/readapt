@@ -32,15 +32,23 @@ Please include the following information in a feature idea issue:
 
 If you are a software developer and you'd like to implement the feature by yourself: you're welcome! But before jumping into the code, it's highly advisable to create an feature idea first to discuss it with us.  
 
-## 3. Development environment setup
+## 2. Development environment setup
 
 Readapt repository is a [lerna](https://lerna.js.org/)-based monorepo consisting of packages and apps.
 
 Here are the steps you need to perform to setup your environment setup:
 
-1. Have Node.js version `16` installed. 
+1. Have Node.js `v16` installed (tip: nvm is a good tool to install and manage differente Node.js version);
+2. Have `yarn` package manager `v1.22.x` installed:
+```
+npm install -g yarn
+```
+3. Clone the Readapt repository (or your fork of Readapt repository):
+```
 
-## 2. Opening a pull request
+```
+
+## 3. Opening a pull request
 
 ## 4. Coding practices
 
