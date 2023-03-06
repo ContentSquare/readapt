@@ -38,17 +38,52 @@ Readapt repository is a [lerna](https://lerna.js.org/)-based monorepo consisting
 
 Here are the steps you need to perform to setup your environment setup:
 
-1. Have Node.js `v16` installed (tip: nvm is a good tool to install and manage differente Node.js version);
+1. Have Node.js `v16` installed (tip: [nvm](https://github.com/nvm-sh/nvm) is a good tool to install and manage differente Node.js version);
 2. Have `yarn` package manager `v1.22.x` installed:
-```
+```bash
 npm install -g yarn
 ```
 3. Clone the Readapt repository (or your fork of Readapt repository):
+```bash
+git clone git@github.com:ContentSquare/readapt.git
+```
+4. Change active directory to Readapt project:
+```bash
+cd ./readapt
+```
+5. Install the dependencies:
+```bash
+yarn install
+```
+6. Build local packages:
+```
+yarn build-deps
 ```
 
+Now your development environment is ready.  
+
+After that you can:
+
+7a. Make changes to the Chrome Extension source and consult its [documentation](https://github.com/ContentSquare/readapt/tree/master/apps/chrome-extension#readapt-chrome-extension):
+```bash
+cd ./apps/chrome-extension
+```
+7b. Makes changes to the MS Word Addin source and consult its [documentation](https://github.com/ContentSquare/readapt/tree/master/apps/ms-word-addin#ms-word-add-in):
+```bash
+cd ./apps/ms-word-addin
 ```
 
-## 3. Opening a pull request
+### 3. The technical stack
 
-## 4. Coding practices
+Readapt core team has made made a big effort to keep the technical stack of Readapt with the latest technologies:
 
+* [Vue 3 with composition API](https://vuejs.org/guide/introduction.html) for the frontend UI
+* [Vitejs](https://vitejs.dev/) for bundling
+* [Vitest](https://vitest.dev/) for unit testing
+* [Tailwind](https://tailwindcss.com/) and [DaisyUI](https://daisyui.com/) for styling components
+
+By contributing to Readapt, you have a wonderful opportunity to work with the latest technical stack.  
+
+### 4. Still have questions?
+
+Still having questions? No problem! We're more than happy to answer them: open an [issue](https://github.com/ContentSquare/readapt/issues/new) or contact us [readapt@contentsquare.com](mailto:readapt@contentsquare.com).
