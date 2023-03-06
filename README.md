@@ -17,6 +17,8 @@ intelligent and creative people in our modern time and in history who have made 
 were dyslexic. Leonardo Da Vinci, Albert Einstein, Walt Disney, Whoopi Goldberg, and Steven Spielberg just to name a
 few. Dyslexic people just process things differently, and Readapt can help with that.
 
+![demo](https://user-images.githubusercontent.com/92599554/223161841-c9a60969-2826-45df-822a-c2d6306871c2.gif)
+
 ## How Readapt helps
 Reading challenges can be very different across dyslexic people. Readapt uses techniques known to help with specific
 challenges. Since every reader could have their unique challenges, users can configure their reading preferences to
