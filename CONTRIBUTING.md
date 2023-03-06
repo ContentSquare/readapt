@@ -1,10 +1,10 @@
 # Welcome to Readapt contributing guide
 
-Thank you for your time and interest in contributing to the Readapt project. Any contrubution, either creating a bug report or adding new functionality is welcome! 
+Thank you for your time and interest in contributing to the Readapt project. Any contrubution, either creating a bug report or coding is welcome! 
 
 Before continuing, please read our [Contributor Code of Conduct](./CODE_OF_CONDUCT.md) to make our community respectful and welcoming for everyone.  
 
-In this guide you'll find helpful information on how to create issues, pull requests, as well as understand the common coding practices used in the Readapt project.  
+In this guide you'll find helpful information on how to create issues, pull requests, and understand the coding practices used in the Readapt project.  
 
 ## 1. Opening an issue
 
@@ -24,17 +24,23 @@ When creating an issue for a bug report, it's advisable to structure the issue f
 
 Feature ideas are great because they make Readapt more useful for the users.  
 
-Normally you can include the following information in a fueature idea issue:
+Please include the following information in a feature idea issue:
 
-1. *Brief description*: describe shortly your idea
-2. *User benefits*: how the user benefits from this feature
-3. *Existing solutions*: if there are other application that have implemented this feature, please let us know about those.  
+1. *Brief description*: describe shortly your idea;
+2. *User benefits*: how the user benefits from this feature;
+3. *Existing solutions*: please share other applications that have the new feature idea already implemented.
 
-
-
-## 2. Opening a pull request
+If you are a software developer and you'd like to implement the feature by yourself: you're welcome! But before jumping into the code, it's highly advisable to create an feature idea first to discuss it with us.  
 
 ## 3. Development environment setup
+
+Readapt repository is a [lerna](https://lerna.js.org/)-based monorepo consisting of packages and apps.
+
+Here are the steps you need to perform to setup your environment setup:
+
+1. Have Node.js version `16` installed. 
+
+## 2. Opening a pull request
 
 ## 4. Coding practices
 
