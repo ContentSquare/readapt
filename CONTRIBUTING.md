@@ -1,10 +1,10 @@
 # Welcome to Readapt contributing guide
 
-Thank you for your time and interest in contributing to the Readapt project. Any contrubution, either creating a bug report or coding is welcome! 
+Thank you for your time and interest in contributing to the Readapt project. Any contribution, either creating a bug report or coding is welcome! 
 
 Before continuing, please read our [Contributor Code of Conduct](./CODE_OF_CONDUCT.md) to make our community respectful and welcoming for everyone.  
 
-In this guide you'll find helpful information on how to create issues, pull requests, and understand the coding practices used in the Readapt project.  
+In this guide, you'll find helpful information on how to create issues, pull requests, and understand the coding practices used in the Readapt project.  
 
 ## 1. Opening an issue
 
@@ -12,17 +12,17 @@ A good way to start contributing to Readapt is to create an issue: create a bug 
 
 ### 1.1 Issue: bug report
 
-When creating an issue for a bug report, it's advisable to structure the issue from 4 main parts.  
+When creating an issue for a bug report, it's advisable to structure the issue into 4 main parts.  
 
-1. *Brief description*: describe shorty the bug you've encountered;
-2. *Actual behavior*: describe in more detail the buggy behavior. Bug reproduction steps, photos and/or videos of the are welcome;
+1. *Brief Description*: describe shorty the bug you've encountered;
+2. *Actual behavior*: describe in more detail the buggy behavior. Bug reproduction steps, photos, and/or videos of the are welcome;
 3. *Expected behavior*: how the application should work if the bug wasn't present;
 3. *Logs*: if you have access to application logs (e.g. any errors in the console);
-4. *Running environment*: give information about the environment where the application runs: application version, browser name and version, OS name and version, and any other information that you seem relevent.
+4. *Running environment*: give information about the environment where the application runs: application version, browser name and version, OS name and version, and any other information that you deem relevant.
 
 ### 1.2 Issue: new feature idea
 
-Feature ideas are great because they make Readapt more useful for the users.  
+Feature ideas are great because they make Readapt more useful for users.  
 
 Please include the following information in a feature idea issue:
 
@@ -30,7 +30,7 @@ Please include the following information in a feature idea issue:
 2. *User benefits*: how the user benefits from this feature;
 3. *Existing solutions*: please share other applications that have the new feature idea already implemented.
 
-If you are a software developer and you'd like to implement the feature by yourself: you're welcome! But before jumping into the code, it's highly advisable to create an feature idea first to discuss it with us.  
+If you are a software developer and you'd like to implement the feature by yourself: you're welcome! But before jumping into the code, it's highly advisable to create a feature idea first to discuss it with us.  
 
 ## 2. Development environment setup
 
@@ -47,7 +47,7 @@ npm install -g yarn
 ```bash
 git clone git@github.com:ContentSquare/readapt.git
 ```
-4. Change active directory to Readapt project:
+4. Change the active directory to Readapt project:
 ```bash
 cd ./readapt
 ```
@@ -77,8 +77,8 @@ cd ./apps/ms-word-addin
 
 Readapt repository is a [lerna](https://lerna.js.org/) [monorepo](https://monorepo.tools/) containing apps and packages.  
 
-* *An app* is a programs that can be built and shipped to the user;
-* *A package* is a piece of shared code used by an an app or other package. 
+* *An app* is a program that can be built and shipped to the user;
+* *A package* is a piece of shared code used by an app or other package. 
 
 ### Packages
 
@@ -108,8 +108,8 @@ Readapt core team has made made a big effort to keep the technical stack of Read
 * [Vitest](https://vitest.dev/) for unit testing
 * [Featured-Sliced Design](https://feature-sliced.design/) methodology is used to design the source code of apps
 
-By contributing to Readapt, you have a wonderful opportunity to work and learn the latest technical stack.  
+By contributing to Readapt, you have a wonderful opportunity to work and learn the latest technology stack.  
 
-## 5. Still have questions?
+## 5. Have questions?
 
-Still having questions? No problem! We're more than happy to answer them: open an [issue](https://github.com/ContentSquare/readapt/issues/new) or contact us [readapt@contentsquare.com](mailto:readapt@contentsquare.com).
+Having questions? No problem! We're more than happy to answer them: open an [issue](https://github.com/ContentSquare/readapt/issues/new) or contact us [readapt@contentsquare.com](mailto:readapt@contentsquare.com).
