@@ -26,7 +26,7 @@ Feature ideas are great because they make Readapt more useful for the users.
 
 Please include the following information in a feature idea issue:
 
-1. *Brief description*: describe shortly your idea;
+1. *Description*: describe your idea;
 2. *User benefits*: how the user benefits from this feature;
 3. *Existing solutions*: please share other applications that have the new feature idea already implemented.
 
@@ -73,17 +73,40 @@ cd ./apps/chrome-extension
 cd ./apps/ms-word-addin
 ```
 
-### 3. The technical stack
+## 3. Project structure
 
-Readapt core team has made made a big effort to keep the technical stack of Readapt with the latest technologies:
+Readapt repository is a [lerna](https://lerna.js.org/) [monorepo](https://monorepo.tools/) containing apps and packages.  
+
+The difference between an app in a package is that apps are final programs that can be built and shipped to the user. But packages are pieces of shared code used by apps.  
+
+### Packages
+
+| Name | Description | Depends on |
+| --- | --- | --- |
+| [@readapt/dictionaries](./packages/dictionaries) | Language-specific dictionaries and data | -
+| [@readapt/settings](./packages/settings) | User settings interface | -
+| [@readapt/shared-components](./packages/shared-components) | Shared components library | @readapt/settings
+| [@readapt/text-engine](./packages/text-engine) | Text Engine | @readapt/dictionaries
+| [@readapt/visual-engine](./packages/visual-engine) | Visual Engine | @readapt/text-engine <br> @readapt/settings
+
+### Apps
+
+| Name | Description | Link
+|--- | --- | --- |
+| [chrome-extension](./apps/chrome-extension) | Chrome web extension | [link](https://chrome.google.com/webstore/detail/readapt/emgfmfgandmhbgleikkoaebngboghfpe)
+| [ms-word-addin](./apps/ms-word-addin) | MS Word Add-in | [link](https://appsource.microsoft.com/en-us/product/office/WA200004098)
+
+## 4. The technical stack
+
+Readapt core team has made made a big effort to keep the technical stack of Readapt at the latest technologies:
 
 * [Vue 3 with composition API](https://vuejs.org/guide/introduction.html) for the frontend UI
+* [Tailwind](https://tailwindcss.com/) and [DaisyUI](https://daisyui.com/) for styling components
 * [Vitejs](https://vitejs.dev/) for bundling
 * [Vitest](https://vitest.dev/) for unit testing
-* [Tailwind](https://tailwindcss.com/) and [DaisyUI](https://daisyui.com/) for styling components
 
-By contributing to Readapt, you have a wonderful opportunity to work with the latest technical stack.  
+By contributing to Readapt, you have a wonderful opportunity to work and learn the latest technical stack.  
 
-### 4. Still have questions?
+## 5. Still have questions?
 
 Still having questions? No problem! We're more than happy to answer them: open an [issue](https://github.com/ContentSquare/readapt/issues/new) or contact us [readapt@contentsquare.com](mailto:readapt@contentsquare.com).

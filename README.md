@@ -33,6 +33,10 @@ accommodate their very specific needs.
 |Difficulty with “sight” words (words that are pronounced different from how they are spelled. For example we do not pronounce the “gh” in “night”.)|Mark silent letters, show liaisons (French only)|
 |Confusing letters that look similar (b with d, p with q etc.)|Colouring specific letters|
 
+# Contributor's guide
+
+If you want to contribute to Readapt project, please refer to our [contributor's guide](./CONTRIBUTING.md).
+
 # Structure
 
 This is a monorepo which contains many apps and packages:
