@@ -1,0 +1,66 @@
+{
+  "name": "extension-template",
+  "version": "1.8.3",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "rm -rf ./dist && run-s type-check build-background build-contentscript build-ui",
+    "preview": "vite preview --port 4173",
+    "test": "yarn test:unit --run",
+    "test:unit": "vitest",
+    "build-ui": "vite build",
+    "build-background": "ENTRY=background vite build -c vite.config.extension.ts",
+    "build-contentscript": "ENTRY=contentscript vite build -c vite.config.extension.ts",
+    "type-check": "vue-tsc --noEmit",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "package": "scripts/package-release",
+    "clean": "shx rm -rf dist",
+    "postinstall": "node scripts/init-env"
+  },
+  "dependencies": {
+    "@readapt/settings": "^1.8.3",
+    "@readapt/text-engine": "^1.8.3",
+    "@readapt/visual-engine": "^1.8.3",
+    "dotenv": "^16.0.3",
+    "lodash-es": "^4.17.21",
+    "sanitize-html": "^2.8.1",
+    "vue": "~3.2.45",
+    "vue-i18n": "~9.2.2",
+    "vue-router": "~4.1.6",
+    "webextension-polyfill": "0.10.0"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.6",
+    "@types/node": "^16.18.10",
+    "@types/sanitize-html": "^2.8.0",
+    "@types/webextension-polyfill": "0.9.2",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "@vue/eslint-config-prettier": "^7.0.0",
+    "@vue/eslint-config-typescript": "^11.0.2",
+    "@vue/test-utils": "^2.2.8",
+    "@vue/tsconfig": "^0.1.3",
+    "autoprefixer": "^10.4.13",
+    "daisyui": "^2.46.1",
+    "eslint": "^8.30.0",
+    "eslint-plugin-tailwindcss": "^3.8.0",
+    "eslint-plugin-vue": "^9.8.0",
+    "jsdom": "^21.1.0",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.20",
+    "prettier": "^2.8.1",
+    "sass": "^1.57.1",
+    "tailwindcss": "^3.2.4",
+    "terser": "^5.16.1",
+    "typescript": "~4.9.4",
+    "vite": "^4.0.4",
+    "vite-plugin-static-copy": "^0.13.0",
+    "vitest": "^0.27.0",
+    "vue-tsc": "^1.0.24"
+  },
+  "workspaces": {
+    "nohoist": [
+      "**"
+    ]
+  }
+}

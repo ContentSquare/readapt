@@ -1,6 +1,6 @@
 {
   "name": "Readapt",
-  "description": "Readapt by Contentsquare Foundation",
+  "description": "Readapt - Adapt text on websites to suit your needs.",
   "version": "0.0.0",
   "manifest_version": 3,
   "action": {

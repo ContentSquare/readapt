@@ -5,8 +5,8 @@ const { execSync } = require('child_process')
 const path = require('path')
 
 const version = pkg.version
-const name = `readapt-safari-extension-v${version}.zip`
-const distPath = path.join(__dirname, '../dist-extension/Applications')
+const name = `readapt-chrome-extension-v${version}.zip`
+const distPath = path.join(__dirname, '../dist')
 
 console.log(`package release ${name}...`)
 execSync(`cd ${distPath} && zip -r ${name} .`)

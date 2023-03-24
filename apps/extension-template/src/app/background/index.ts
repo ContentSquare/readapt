@@ -95,6 +95,7 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
 })
 
 declare const __MATOMO_URL__: string // __MATOMO_URL__ gets replaced with the actual value during build
+declare const __MATOMO_SITEID__: string // __MATOMO_SITEID__ gets replaced with the actual value during build
 
 browser.storage.onChanged.addListener(async (changes) => {
   if (hasEnabledChanged(changes)) {
@@ -109,7 +110,7 @@ browser.storage.onChanged.addListener(async (changes) => {
   }
 
   if (hasEventChanged(changes)) {
-    await fetch(`${__MATOMO_URL__}/matomo.php?idsite=1&action_name=adapt&rec=1&ua=unknown&uadata={}`)
+    await fetch(`${__MATOMO_URL__}/matomo.php?idsite=${__MATOMO_SITEID__}&action_name=adapt&rec=1&ua=unknown&uadata={}`)
   }
 })
 

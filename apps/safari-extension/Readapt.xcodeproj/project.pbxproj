@@ -129,21 +129,21 @@
 		B2229F3E2955BD0F0047BAB0 /* Readapt Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Readapt Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2229F432955BD0F0047BAB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2229F442955BD0F0047BAB0 /* Readapt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Readapt.entitlements; sourceTree = "<group>"; };
-		B2229F642955BD0F0047BAB0 /* favicon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; name = favicon.ico; path = "../../chrome-extension/dist/favicon.ico"; sourceTree = "<group>"; };
-		B2229F652955BD0F0047BAB0 /* icon-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-16.png"; path = "../../chrome-extension/dist/icon-16.png"; sourceTree = "<group>"; };
-		B2229F662955BD0F0047BAB0 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = index.html; path = "../../chrome-extension/dist/index.html"; sourceTree = "<group>"; };
-		B2229F692955BD0F0047BAB0 /* icon-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-48.png"; path = "../../chrome-extension/dist/icon-48.png"; sourceTree = "<group>"; };
-		B2229F6A2955BD0F0047BAB0 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = "../../chrome-extension/dist/assets"; sourceTree = "<group>"; };
-		B2229F6B2955BD0F0047BAB0 /* readapt-fonts.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = "readapt-fonts.css"; path = "../../chrome-extension/dist/readapt-fonts.css"; sourceTree = "<group>"; };
-		B2229F6C2955BD0F0047BAB0 /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = icons; path = "../../chrome-extension/dist/icons"; sourceTree = "<group>"; };
-		B2229F6D2955BD0F0047BAB0 /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scripts; path = "../../chrome-extension/dist/scripts"; sourceTree = "<group>"; };
-		B2229F6E2955BD0F0047BAB0 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = "../../chrome-extension/dist/manifest.json"; sourceTree = "<group>"; };
-		B2229F6F2955BD0F0047BAB0 /* fonts.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = fonts.css; path = "../../chrome-extension/dist/fonts.css"; sourceTree = "<group>"; };
-		B2229F702955BD0F0047BAB0 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = "../../chrome-extension/dist/fonts"; sourceTree = "<group>"; };
-		B2229F712955BD0F0047BAB0 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = logo.png; name = logo.png; path = "../../chrome-extension/dist/logo.png"; sourceTree = "<group>"; };
-		B2229F722955BD0F0047BAB0 /* readapt-styles.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = "readapt-styles.css"; path = "../../chrome-extension/dist/readapt-styles.css"; sourceTree = "<group>"; };
+		B2229F642955BD0F0047BAB0 /* favicon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; name = favicon.ico; path = "../dist/favicon.ico"; sourceTree = "<group>"; };
+		B2229F652955BD0F0047BAB0 /* icon-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-16.png"; path = "../dist/icon-16.png"; sourceTree = "<group>"; };
+		B2229F662955BD0F0047BAB0 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = index.html; path = "../dist/index.html"; sourceTree = "<group>"; };
+		B2229F692955BD0F0047BAB0 /* icon-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-48.png"; path = "../dist/icon-48.png"; sourceTree = "<group>"; };
+		B2229F6A2955BD0F0047BAB0 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = "../dist/assets"; sourceTree = "<group>"; };
+		B2229F6B2955BD0F0047BAB0 /* readapt-fonts.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = "readapt-fonts.css"; path = "../dist/readapt-fonts.css"; sourceTree = "<group>"; };
+		B2229F6C2955BD0F0047BAB0 /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = icons; path = "../dist/icons"; sourceTree = "<group>"; };
+		B2229F6D2955BD0F0047BAB0 /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scripts; path = "../dist/scripts"; sourceTree = "<group>"; };
+		B2229F6E2955BD0F0047BAB0 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = "../dist/manifest.json"; sourceTree = "<group>"; };
+		B2229F6F2955BD0F0047BAB0 /* fonts.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = fonts.css; path = "../dist/fonts.css"; sourceTree = "<group>"; };
+		B2229F702955BD0F0047BAB0 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = "../dist/fonts"; sourceTree = "<group>"; };
+		B2229F712955BD0F0047BAB0 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = logo.png; name = logo.png; path = "../dist/logo.png"; sourceTree = "<group>"; };
+		B2229F722955BD0F0047BAB0 /* readapt-styles.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = "readapt-styles.css"; path = "../dist/readapt-styles.css"; sourceTree = "<group>"; };
 		B2A5E3372979DEFC00910795 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
-		B2DA4CA2297AB50E00976C55 /* icon-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-128.png"; path = "../../chrome-extension/dist/icon-128.png"; sourceTree = "<group>"; };
+		B2DA4CA2297AB50E00976C55 /* icon-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-128.png"; path = "../dist/icon-128.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

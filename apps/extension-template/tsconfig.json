@@ -2,10 +2,15 @@
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "include": [
     "env.d.ts",
+    "auto-imports.d.ts",
+    "src/**/*",
+    "src/**/*.vue",
+    "src/**/*.json",
     "vite.config.*",
     "vitest.config.*",
     "package.json"
   ],
+  "exclude": ["src/**/*.spec.ts"],
   "compilerOptions": {
     "baseUrl": ".",
     "lib": [
@@ -15,6 +20,9 @@
     "types": [
       "node",
       "vitest/globals",
-    ]
-  }
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
 }
