@@ -25,4 +25,4 @@ runs:
       run: yarn lerna version ${{ inputs.version }} -y --no-git-tag-version
 
     - shell: bash
-      run: yarn workspace chrome-extension package
+      run: yarn workspace firefox-addin package

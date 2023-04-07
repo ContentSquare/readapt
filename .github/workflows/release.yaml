@@ -74,8 +74,17 @@ jobs:
         with:
           version: ${{ inputs.version }}
 
+  package-firefox:
+    needs: [lint, build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/package-firefox
+        with:
+          version: ${{ inputs.version }}
+
   deploy:
-    needs: [test, package-chrome, package-safari]
+    needs: [test, package-chrome, package-safari, package-firefox]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

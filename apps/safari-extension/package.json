@@ -4,15 +4,14 @@
 	"private": true,
   "sideEffects": false,
 	"scripts": {
-    "build": "run-s clean type-check update-version build-background build-contentscript build-ui build-move build-extension",
+    "build": "run-s clean type-check update-version build-background build-contentscript build-ui build-move",
     "clean": "shx rm -rf dist",
     "type-check": "vue-tsc --noEmit",
     "update-version": "node scripts/update-version",
     "build-ui": "vite build",
     "build-background": "ENTRY=background vite build -c vite.config.extension.ts",
     "build-contentscript": "ENTRY=contentscript vite build -c vite.config.extension.ts",
-    "build-move": "mv ../extension-template/dist ../safari-extension",
-		"build-extension": "xcodebuild -project ./Readapt.xcodeproj -scheme 'Readapt (macOS)' DSTROOT='./dist-extension' clean build",
+    "build-move": "mv ../browser-extension-template/dist ../safari-extension",
 
     "test": "echo 'no test yet'",
 		"package": "run-s update-version package-project package-release",

@@ -1,5 +1,5 @@
 {
-  "name": "extension-template",
+  "name": "browser-extension-template",
   "version": "1.8.3",
   "private": true,
   "scripts": {

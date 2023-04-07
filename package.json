@@ -4,15 +4,9 @@
   "description": "Readapt by Contentsquare",
   "private": true,
   "scripts": {
-    "build-ms-word-addin": "yarn build-deps && yarn workspace ms-word-addin build",
-    "build-chrome-extension": "yarn build-browser",
-    "build-safari-extension": "yarn build-browser && yarn workspace safari-extension build",
-    "package-chrome-extension": "yarn workspace chrome-extension package",
-    "package-safari-extension": "yarn workspace safari-extension package",
-    "test": "yarn workspaces run test",
-    "build-browser": "yarn build-deps && yarn workspace chrome-extension build",
     "build-deps": "lerna run build --stream --include-dependencies --scope=@readapt/* ",
-    "lint": "eslint --ext .ts,.vue packages/* apps/chrome-extension apps/ms-word-addin"
+    "test": "yarn workspaces run test",
+    "lint": "eslint --ext .ts,.vue packages/* apps/*"
   },
   "devDependencies": {
     "@parcel/packager-ts": "^2.8.2",

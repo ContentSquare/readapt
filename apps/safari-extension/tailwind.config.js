@@ -4,7 +4,7 @@ const daisyThemeLight = require('daisyui/src/colors/themes')['[data-theme=light]
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['/index.html', '../extension-template/src/**/*.vue'],
+  content: ['/index.html', '../browser-extension-template/src/**/*.vue'],
   plugins: [daisy],
   daisyui: {
     themes: [

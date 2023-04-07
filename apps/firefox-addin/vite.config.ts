@@ -16,7 +16,7 @@ export default defineConfig(
               dest: 'scripts'
             },
             {
-              src: '../safari-extension/manifest.json',
+              src: '../firefox-addin/manifest.json',
               dest: '.',
               transform(content) {
                 const manifest = JSON.parse(content)

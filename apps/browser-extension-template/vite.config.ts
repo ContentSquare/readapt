@@ -2,9 +2,8 @@ import { fileURLToPath, URL } from 'node:url'
 import path from 'node:path'
 import { type UserConfig, defineConfig } from 'vite'
 import type { InlineConfig } from 'vitest'
-import vue from '@vitejs/plugin-vue'
-import { viteStaticCopy } from 'vite-plugin-static-copy'
 import pkg from './package.json'
+import vue from '@vitejs/plugin-vue'
 
 interface VitestConfigExport extends UserConfig {
   test: InlineConfig
@@ -13,25 +12,15 @@ interface VitestConfigExport extends UserConfig {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue(),
-    viteStaticCopy({
-      targets: [
-        {
-          // TODO: try to refactor this copying to normal building
-          src: '../../packages/visual-engine/dist/readapt-visual-engine.browser.js',
-          dest: 'scripts'
-        },
-        {
-          src: 'manifest.json',
-          dest: '.',
-          transform(content) {
-            const manifest = JSON.parse(content)
-            manifest.version = process.env.npm_package_version
-            return JSON.stringify(manifest, null, 2)
-          }
-        }
-      ]
-    })
+    vue()
+    // AutoImport({
+    //   imports: [
+    //     'vue',
+    //     {
+    //       'webextension-polyfill': [['*', 'browser']]
+    //     }
+    //   ]
+    // }),
   ],
   define: {
     __VERSION__: `"${pkg.version}"`

@@ -1,6 +1,6 @@
 {
-  "name": "chrome-extension",
-  "version": "1.8.4",
+  "name": "firefox-addin",
+  "version": "1.8.3",
   "private": true,
   "sideEffects": false,
   "scripts": {
@@ -10,16 +10,15 @@
     "build-ui": "vite build",
     "build-background": "ENTRY=background vite build -c vite.config.extension.ts",
     "build-contentscript": "ENTRY=contentscript vite build -c vite.config.extension.ts",
-    "build-move": "mv ../browser-extension-template/dist ../chrome-extension",
+    "build-move": "mv ../browser-extension-template/dist ../firefox-addin",
 
-    "run": "web-ext run -t chromium",
+    "run": "web-ext run --firefox-preview",
     "test": "echo 'no test yet'",
     "package": "scripts/package-release",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "postinstall": "node scripts/init-env"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.0.0",
     "@vue/eslint-config-prettier": "^7.0.0",
 		"web-ext": "7.4.0"
   },

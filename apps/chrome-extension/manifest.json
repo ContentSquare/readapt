@@ -1,0 +1,47 @@
+{
+  "name": "Readapt",
+  "description": "Readapt - Adapt text on websites to suit your needs.",
+  "version": "0.0.0",
+  "manifest_version": 3,
+  "action": {
+    "default_title": "Readapt",
+    "default_popup": "index.html"
+  },
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "scripts/background.iife.js"
+  },
+  "options_page": "index.html#/options",
+  "content_scripts": [
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "js": ["scripts/contentScript.iife.js"],
+      "css": ["readapt-fonts.css", "readapt-styles.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "fonts/Luciole-Bold.ttf",
+        "fonts/Luciole-Bold-Italic.ttf",
+        "fonts/Luciole-Regular.ttf",
+        "fonts/Luciole-Regular-Italic.ttf",
+        "fonts/OpenDyslexic-Bold.otf",
+        "fonts/OpenDyslexic-BoldItalic.otf",
+        "fonts/OpenDyslexic-Italic.otf",
+        "fonts/OpenDyslexic-Regular.otf",
+        "scripts/readapt-visual-engine.browser.js"
+      ],
+      "matches": ["https://*/*", "http://*/*"]
+    }
+  ],
+  "icons": {
+    "16": "icon-16.png",
+    "48": "icon-48.png",
+    "128": "icon-128.png"
+  }
+}

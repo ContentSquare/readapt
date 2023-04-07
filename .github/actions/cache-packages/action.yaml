@@ -20,3 +20,9 @@ runs:
       with:
         path: ./apps/safari-extension/dist/Applications/readapt-safari-extension-v${{ inputs.version }}.zip
         key: cache-packages-safari-${{ github.sha }}
+
+    - name: Cache Packages Firefox
+      uses: actions/cache@v3
+      with:
+        path: ./apps/firefox-addin/dist/readapt-firefox-addin-v${{ inputs.version }}.zip
+        key: cache-packages-firefox-${{ github.sha }}

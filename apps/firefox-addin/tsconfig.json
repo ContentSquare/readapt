@@ -1,0 +1,20 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "include": [
+    "env.d.ts",
+    "vite.config.*",
+    "vitest.config.*",
+    "package.json"
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": [
+      "esnext",
+      "dom",
+    ],
+    "types": [
+      "node",
+      "vitest/globals",
+    ]
+  }
+}
