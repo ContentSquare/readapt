@@ -1,0 +1,30 @@
+name: Publish Release
+description: Publish a new release to Github
+
+inputs:
+  version:
+    description: Bumped version
+    required: true
+  gh_token:
+    description: Github Token
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: ./.github/actions/setup
+      with:
+        version: ${{ inputs.version }}
+
+    - uses: ./.github/actions/cache-packages
+      with:
+        version: ${{ inputs.version }}
+
+    # - uses: mnao305/chrome-extension-upload@v4.0.1
+    #   with:
+    #     file-path: './apps/chrome-extension/dist/readapt-chrome-extension-v${{ inputs.version }}.zip'
+    #     extension-id: emgfmfgandmhbgleikkoaebngboghfpe
+    #     client-id: ${{ secrets.CHROME_CLIENT_ID }}
+    #     client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
+    #     refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
+    #     publish: false

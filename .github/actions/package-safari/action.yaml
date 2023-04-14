@@ -25,4 +25,15 @@ runs:
       run: yarn lerna version ${{ inputs.version }} -y --no-git-tag-version
 
     - shell: bash
-      run: yarn workspace safari-extension package
+      run: yarn workspace safari-extension update-version
+
+    - name: build archive
+      shell: bash
+      run: yarn workspace safari-extension package-project
+
+    - name: package archive
+      shell: bash
+      run: yarn workspace safari-extension package-export
+
+    - shell: bash
+      run: yarn workspace safari-extension package-release

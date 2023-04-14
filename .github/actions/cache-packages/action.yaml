@@ -18,7 +18,7 @@ runs:
     - name: Cache Packages Safari
       uses: actions/cache@v3
       with:
-        path: ./apps/safari-extension/dist/Applications/readapt-safari-extension-v${{ inputs.version }}.zip
+        path: ./apps/safari-extension/dist/archive
         key: cache-packages-safari-${{ github.sha }}
 
     - name: Cache Packages Firefox
