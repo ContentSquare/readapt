@@ -1,6 +1,6 @@
 {
   "name": "chrome-extension",
-  "version": "1.8.3",
+  "version": "1.8.4",
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -18,9 +18,9 @@
     "postinstall": "node scripts/init-env"
   },
   "dependencies": {
-    "@readapt/settings": "^1.8.3",
-    "@readapt/text-engine": "^1.8.3",
-    "@readapt/visual-engine": "^1.8.3",
+    "@readapt/settings": "^1.8.4",
+    "@readapt/text-engine": "^1.8.4",
+    "@readapt/visual-engine": "^1.8.4",
     "dotenv": "^16.0.3",
     "lodash-es": "^4.17.21",
     "sanitize-html": "^2.8.1",
