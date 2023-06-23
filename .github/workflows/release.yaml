@@ -121,14 +121,14 @@ jobs:
         with:
           version: ${{ inputs.version }}
 
-  # deploy-npm:
-  #   needs: [test, package-chrome, package-safari, package-firefox]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: ./.github/actions/deploy-npm
-  #       with:
-  #         version: ${{ inputs.version }}
-  #         npm_token: ${{ secrets.NPM_TOKEN }}
+  deploy-npm:
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/deploy-npm
+        with:
+          version: ${{ inputs.version }}
+          npm_token: ${{ secrets.NPM_TOKEN }}
 
   deploy-chrome:
     needs: [package-chrome]
@@ -165,7 +165,7 @@ jobs:
           version: ${{ inputs.version }}
 
   release:
-    needs: [deploy-chrome, deploy-safari, deploy-firefox]
+    needs: [deploy-chrome, deploy-safari, deploy-firefox, deploy-npm]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
