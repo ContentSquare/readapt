@@ -1,0 +1,23 @@
+{
+  "name": "safari-extension",
+  "version": "1.8.3",
+  "private": true,
+  "sideEffects": false,
+  "scripts": {
+    "build": "run-s clean type-check update-version build-background build-contentscript build-ui build-move",
+    "clean": "shx rm -rf dist",
+    "type-check": "vue-tsc --noEmit",
+    "update-version": "node scripts/update-version",
+    "build-ui": "vite build",
+    "build-background": "ENTRY=background vite build -c vite.config.extension.ts",
+    "build-contentscript": "ENTRY=contentscript vite build -c vite.config.extension.ts",
+    "build-move": "mv ../browser-extension-template/dist ../safari-extension",
+    "test": "echo 'no test yet'",
+    "package-project": "xcodebuild -project ./Readapt.xcodeproj -scheme 'Readapt (macOS)' -quiet -derivedDataPath ./build -archivePath ./build/Readapt clean archive",
+    "package-export": "xcodebuild -allowProvisioningUpdates -exportArchive -archivePath ./build/Readapt.xcarchive -exportOptionsPlist ./ExportOptions.plist -exportPath ./dist/archive",
+    "package-release": "scripts/package-release"
+  },
+  "devDependencies": {
+    "@vue/eslint-config-prettier": "^7.0.0"
+  }
+}

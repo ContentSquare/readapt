@@ -9,8 +9,20 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Cache Packages
+    - name: Cache Packages Chrome
       uses: actions/cache@v3
       with:
         path: ./apps/chrome-extension/dist/readapt-chrome-extension-v${{ inputs.version }}.zip
-        key: cache-packages-${{ github.sha }}
+        key: cache-packages-chrome-${{ github.sha }}
+
+    - name: Cache Packages Safari
+      uses: actions/cache@v3
+      with:
+        path: ./apps/safari-extension/dist/archive
+        key: cache-packages-safari-${{ github.sha }}
+
+    - name: Cache Packages Firefox
+      uses: actions/cache@v3
+      with:
+        path: ./apps/firefox-addin/dist/readapt-firefox-addin-v${{ inputs.version }}.zip
+        key: cache-packages-firefox-${{ github.sha }}

@@ -6,7 +6,7 @@ inputs:
     description: Bumped version
     required: true
   matomoUrl:
-    description: matomo URL
+    description: Matomo URL
     required: true
 
 runs:
@@ -27,11 +27,25 @@ runs:
       run: yarn build-deps
 
     - shell: bash
-      run: yarn workspace chrome-extension build
+      run: yarn workspace ms-word-addin build
       env:
         VUE_APP_MATOMO_URL: ${{ inputs.matomoUrl }}
 
     - shell: bash
-      run: yarn workspace ms-word-addin build
+      run: yarn workspace chrome-extension build
       env:
         VUE_APP_MATOMO_URL: ${{ inputs.matomoUrl }}
+        VUE_APP_MATOMO_SITEID: "1"
+
+    - shell: bash
+      run: yarn workspace safari-extension build
+      env:
+        VUE_APP_MATOMO_URL: ${{ inputs.matomoUrl }}
+        VUE_APP_MATOMO_SITEID: "3"
+
+    - shell: bash
+      run: yarn workspace firefox-addin build
+      env:
+        VUE_APP_MATOMO_URL: ${{ inputs.matomoUrl }}
+        VUE_APP_MATOMO_SITEID: "4"
+

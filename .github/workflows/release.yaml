@@ -53,22 +53,123 @@ jobs:
         with:
           version: ${{ inputs.version }}
 
-  package:
-    needs: [lint, build]
+  package-chrome:
+    needs: [lint, test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/package
+      - uses: ./.github/actions/package-chrome
         with:
           version: ${{ inputs.version }}
 
-  deploy:
-    needs: [test, package]
+  package-safari:
+    needs: [lint, test]
+    runs-on: macos-13
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '14.3'
+      - uses: actions/checkout@v3
+
+      - name: Install the Apple certificate and provisioning profile
+        env:
+          DEVELOPMENT_CERTIFICATE_BASE64: ${{ secrets.SAFARI_CERTIFICATE_DEVELOPMENT_BASE64 }}
+          DISTRIBUTION_CERTIFICATE_BASE64: ${{ secrets.SAFARI_CERTIFICATE_DISTRIBUTION_BASE64 }}
+          INSTALLER_CERTIFICATE_BASE64: ${{ secrets.SAFARI_CERTIFICATE_INSTALLER_BASE64 }}
+          P12_PASSWORD: ${{ secrets.SAFARI_CERTIFICATE_PASSWORD }}
+          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.SAFARI_PROVISION_PROFILE_BASE64 }}
+          KEYCHAIN_PASSWORD: ${{ secrets.SAFARI_KEYCHAIN_PASSWORD }}
+        run: |
+          # create variables
+          DEVELOPMENT_CERTIFICATE_PATH=$RUNNER_TEMP/development_certificate.p12
+          DISTRIBUTION_CERTIFICATE_PATH=$RUNNER_TEMP/distribution_certificate.p12
+          INSTALLER_CERTIFICATE_PATH=$RUNNER_TEMP/mac_installer_certificate.p12
+          PP_PATH=$RUNNER_TEMP/build_pp.provisionprofile
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+
+          # import certificate and provisioning profile from secrets
+          echo -n "$DEVELOPMENT_CERTIFICATE_BASE64" | base64 --decode -o $DEVELOPMENT_CERTIFICATE_PATH
+          echo -n "$DISTRIBUTION_CERTIFICATE_BASE64" | base64 --decode -o $DISTRIBUTION_CERTIFICATE_PATH
+          echo -n "$INSTALLER_CERTIFICATE_BASE64" | base64 --decode -o $INSTALLER_CERTIFICATE_PATH
+          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
+
+          # create temporary keychain
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+          # import certificate to keychain
+          security import $DEVELOPMENT_CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security import $DISTRIBUTION_CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security import $INSTALLER_CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+
+          # apply provisioning profile
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+
+      - uses: ./.github/actions/package-safari
+        with:
+          version: ${{ inputs.version }}
+
+  package-firefox:
+    needs: [lint, test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/deploy
+      - uses: ./.github/actions/package-firefox
         with:
           version: ${{ inputs.version }}
-          npm_token: ${{ secrets.NPM_TOKEN }}
+
+  # deploy-npm:
+  #   needs: [test, package-chrome, package-safari, package-firefox]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: ./.github/actions/deploy-npm
+  #       with:
+  #         version: ${{ inputs.version }}
+  #         npm_token: ${{ secrets.NPM_TOKEN }}
+
+  deploy-chrome:
+    needs: [package-chrome]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/deploy-chrome
+        with:
+          version: ${{ inputs.version }}
+
+  deploy-safari:
+    needs: [package-safari]
+    runs-on: macos-13
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '14.3'
+      - uses: actions/checkout@v3
+
+      - uses: ./.github/actions/deploy-safari
+        with:
+          version: ${{ inputs.version }}
+          issuerId: ${{ secrets.APPSTORE_ISSUER_ID }}
+          apiKeyId: ${{ secrets.APPSTORE_API_KEY_ID }}
+          apiPrivateKey: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+
+  deploy-firefox:
+    needs: [package-firefox]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/deploy-firefox
+        with:
+          version: ${{ inputs.version }}
+
+  release:
+    needs: [deploy-chrome, deploy-safari, deploy-firefox]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/release
+        with:
+          version: ${{ inputs.version }}
           gh_token: ${{ secrets.GH_TOKEN_FOR_GA }}

@@ -43,6 +43,8 @@ jobs:
       - run: yarn audit --groups dependencies
       - run: yarn build-deps
       - run: yarn workspace chrome-extension build
+      - run: yarn workspace safari-extension build
+      - run: yarn workspace firefox-addin build
       - run: yarn workspace ms-word-addin build
       - uses: actions/upload-artifact@v2
         with:
