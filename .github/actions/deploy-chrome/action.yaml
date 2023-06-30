@@ -20,7 +20,7 @@ runs:
       with:
         version: ${{ inputs.version }}
 
-    # - uses: mnao305/chrome-extension-upload@v4.0.1
+    # - uses: mnao305/chrome-extension-upload@v224d037fac1b07a5f31c7aadb48e8ee061a2c568
     #   with:
     #     file-path: './apps/chrome-extension/dist/readapt-chrome-extension-v${{ inputs.version }}.zip'
     #     extension-id: emgfmfgandmhbgleikkoaebngboghfpe
