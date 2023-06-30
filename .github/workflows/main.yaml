@@ -12,8 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/bootstrap
-        with:
-          version: ${{ github.sha }}
 
   lint:
     needs: bootstrap
@@ -21,8 +19,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/lint
-        with:
-          version: ${{ github.sha }}
 
   build:
     needs: bootstrap
@@ -31,7 +27,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/build
         with:
-          version: ${{ github.sha }}
+          version: prerelease
           matomoUrl: ${{ secrets.MATOMO_URL }}
 
   test:
@@ -40,5 +36,3 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/test
-        with:
-          version: ${{ github.sha }}

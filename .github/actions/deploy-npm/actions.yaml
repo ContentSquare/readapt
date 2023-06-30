@@ -2,9 +2,6 @@ name: Deploy packages
 description: Deploy packages to NPM
 
 inputs:
-  version:
-    description: Bumped version
-    required: true
   npm_token:
     description: NPM Token
     required: true
@@ -13,8 +10,6 @@ runs:
   using: composite
   steps:
     - uses: ./.github/actions/setup
-      with:
-        version: ${{ inputs.version }}
 
     - uses: ./.github/actions/cache-build
 
