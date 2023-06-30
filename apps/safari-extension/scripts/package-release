@@ -1,11 +1,8 @@
 #!/usr/bin/env node
-
-const pkg = require('../package.json')
 const { execSync } = require('child_process')
 const path = require('path')
 
-const version = pkg.version
-const name = `readapt-safari-extension-v${version}.zip`
+const name = `readapt-safari-extension.zip`
 const distPath = path.join(__dirname, '../dist/archive')
 
 console.log(`package release ${name}...`)

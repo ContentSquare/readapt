@@ -13,6 +13,7 @@
     "build-contentscript": "ENTRY=contentscript vite build -c vite.config.extension.ts",
     "build-move": "mv ../browser-extension-template/dist ../safari-extension",
     "test": "echo 'no test yet'",
+    "package": "run-s package-project package-export package-release",
     "package-project": "xcodebuild -project ./Readapt.xcodeproj -scheme 'Readapt (macOS)' -quiet -derivedDataPath ./build -archivePath ./build/Readapt clean archive",
     "package-export": "xcodebuild -allowProvisioningUpdates -exportArchive -archivePath ./build/Readapt.xcarchive -exportOptionsPlist ./ExportOptions.plist -exportPath ./dist/archive",
     "package-release": "scripts/package-release"

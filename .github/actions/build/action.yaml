@@ -13,8 +13,6 @@ runs:
   using: composite
   steps:
     - uses: ./.github/actions/setup
-      with:
-        version: ${{ inputs.version }}
 
     - uses: ./.github/actions/cache-dependencies
 

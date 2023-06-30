@@ -1,11 +1,6 @@
 name: Setup
 description: Checkout and setup node
 
-inputs:
-  version:
-    description: Bumped version
-    required: true
-
 runs:
   using: composite
   steps:
