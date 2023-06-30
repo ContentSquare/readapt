@@ -1,18 +1,13 @@
 name: Cache packages
 description: Caching packages files
 
-inputs:
-  version:
-    description: Bumped version
-    required: true
-
 runs:
   using: composite
   steps:
     - name: Cache Packages Chrome
       uses: actions/cache@v3
       with:
-        path: ./apps/chrome-extension/dist/readapt-chrome-extension-v${{ inputs.version }}.zip
+        path: ./apps/chrome-extension/dist/readapt-chrome-extension.zip
         key: cache-packages-chrome-${{ github.sha }}
 
     - name: Cache Packages Safari
@@ -24,5 +19,5 @@ runs:
     - name: Cache Packages Firefox
       uses: actions/cache@v3
       with:
-        path: ./apps/firefox-addin/dist/readapt-firefox-addin-v${{ inputs.version }}.zip
+        path: ./apps/firefox-addin/dist/readapt-firefox-addin.zip
         key: cache-packages-firefox-${{ github.sha }}

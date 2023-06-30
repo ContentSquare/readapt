@@ -13,14 +13,10 @@ runs:
   using: composite
   steps:
     - uses: ./.github/actions/setup
-      with:
-        version: ${{ inputs.version }}
 
     - uses: ./.github/actions/cache-dependencies
 
     - uses: ./.github/actions/cache-packages
-      with:
-        version: ${{ inputs.version }}
 
     - shell: bash
       run: git config user.name "github-ci"
@@ -57,8 +53,8 @@ runs:
         gh release create v${{ inputs.version }} \
           -t 'readapt v${{ inputs.version }}' \
           --generate-notes \
-          ./apps/chrome-extension/dist/readapt-chrome-extension-v${{ inputs.version }}.zip \
-          ./apps/safari-extension/dist/archive/readapt-safari-extension-v${{ inputs.version }}.zip
-          ./apps/firefox-addin/dist/readapt-firefox-addin-v${{ inputs.version }}.zip \
+          ./apps/chrome-extension/dist/readapt-chrome-extension.zip \
+          ./apps/safari-extension/dist/archive/readapt-safari-extension.zip
+          ./apps/firefox-addin/dist/readapt-firefox-addin.zip \
       env:
         GH_TOKEN: ${{ inputs.gh_token }}

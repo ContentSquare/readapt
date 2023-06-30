@@ -13,8 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/bootstrap
-        with:
-          version: ${{ inputs.version }}
 
   lint:
     needs: bootstrap
@@ -22,8 +20,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/lint
-        with:
-          version: ${{ inputs.version }}
 
   build:
     needs: bootstrap
@@ -41,8 +37,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/test
-        with:
-          version: ${{ inputs.version }}
 
   package-chrome:
     needs: [lint, test]
@@ -50,8 +44,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/package-chrome
-        with:
-          version: ${{ inputs.version }}
 
   package-safari:
     needs: [lint, test]
@@ -100,8 +92,6 @@ jobs:
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
       - uses: ./.github/actions/package-safari
-        with:
-          version: ${{ inputs.version }}
 
   package-firefox:
     needs: [lint, test]
@@ -109,16 +99,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/package-firefox
-        with:
-          version: ${{ inputs.version }}
 
   deploy-npm:
     needs: [lint, test]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/deploy-npm
         with:
-          version: ${{ inputs.version }}
           npm_token: ${{ secrets.NPM_TOKEN }}
 
   deploy-chrome:
@@ -127,8 +115,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/deploy-chrome
-        with:
-          version: ${{ inputs.version }}
 
   deploy-safari:
     needs: [package-safari]
@@ -141,7 +127,6 @@ jobs:
 
       - uses: ./.github/actions/deploy-safari
         with:
-          version: ${{ inputs.version }}
           issuerId: ${{ secrets.APPSTORE_ISSUER_ID }}
           apiKeyId: ${{ secrets.APPSTORE_API_KEY_ID }}
           apiPrivateKey: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
@@ -152,8 +137,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/deploy-firefox
-        with:
-          version: ${{ inputs.version }}
 
   release:
     needs: [deploy-chrome, deploy-safari, deploy-firefox, deploy-npm]
