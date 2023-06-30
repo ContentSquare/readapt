@@ -17,3 +17,6 @@ runs:
 
     - shell: bash
       run: yarn install --frozen-lockfile
+
+    # - shell: bash
+    #   run: yarn audit --groups dependencies

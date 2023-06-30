@@ -1,4 +1,4 @@
-name: Readapt CI
+name: Build on master
 
 on:
   pull_request:
@@ -7,46 +7,38 @@ on:
     branches: [ "master" ]
 
 jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/bootstrap
+        with:
+          version: ${{ github.sha }}
+
   lint:
-    name: Lint
+    needs: bootstrap
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: ./.github/actions/lint
         with:
-          node-version: 16.x
-      - run: npm i -g --force yarn
-      - run: yarn install --frozen-lockfile
-      - run: yarn lint
-  test:
-    name: Unit Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
-      - run: npm i -g --force yarn
-      - run: yarn install --frozen-lockfile
-      - run: yarn build-deps
-      - run: yarn test
+          version: ${{ github.sha }}
+
   build:
+    needs: bootstrap
     runs-on: ubuntu-latest
-    name: Build
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: ./.github/actions/build
         with:
-          node-version: 16.x
-      - run: npm i -g --force yarn
-      - run: yarn install --frozen-lockfile
-      - run: yarn audit --groups dependencies
-      - run: yarn build-deps
-      - run: yarn workspace chrome-extension build
-      - run: yarn workspace safari-extension build
-      - run: yarn workspace firefox-addin build
-      - run: yarn workspace ms-word-addin build
-      - uses: actions/upload-artifact@v2
+          version: ${{ github.sha }}
+          matomoUrl: ${{ secrets.MATOMO_URL }}
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/test
         with:
-          name: "chrome-extension"
-          path: apps/chrome-extension/dist/
+          version: ${{ github.sha }}
