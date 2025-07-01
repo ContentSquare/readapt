@@ -1,11 +1,12 @@
 #!/usr/bin/env node
-const { execSync } = require('child_process')
+const { execFileSync } = require('child_process')
 const path = require('path')
 
 const name = `readapt-chrome-extension.zip`
 const distPath = path.join(__dirname, '../dist')
 
 console.log(`package release ${name}...`)
-execSync(`cd ${distPath} && zip -r ${name} .`)
+const { execFileSync } = require('child_process');
+execFileSync('zip', ['-r', name, '.'], { cwd: distPath });
 console.log('package complete!')
 console.log(`Output ${distPath}${name}`)
