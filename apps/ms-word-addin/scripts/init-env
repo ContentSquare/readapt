@@ -19,6 +19,9 @@ if (!fs.existsSync(ENV_FILE_PATH)) {
 // setup env file in CI
 if (process.env.RENDER) {
   console.log('Env vars must be configured in the CI dashboard')
-  execSync(`${__dirname}/set-env > ${ENV_FILE_PATH}`)
+  const setEnvScript = path.join(__dirname, 'set-env');
+  const outputFile = fs.openSync(ENV_FILE_PATH, 'w');
+  execFileSync(setEnvScript, [], { stdio: ['inherit', outputFile, 'inherit'] });
+  fs.closeSync(outputFile);
   return
 }
