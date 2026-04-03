@@ -11,21 +11,21 @@ jobs:
   bootstrap:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: ContentSquare/actions-checkout@approved-v3
       - uses: ./.github/actions/bootstrap
 
   lint:
     needs: bootstrap
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: ContentSquare/actions-checkout@approved-v3
       - uses: ./.github/actions/lint
 
   build:
     needs: bootstrap
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: ContentSquare/actions-checkout@approved-v3
       - uses: ./.github/actions/build
         with:
           version: ${{ inputs.version }}
@@ -35,24 +35,24 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: ContentSquare/actions-checkout@approved-v3
       - uses: ./.github/actions/test
 
   package-chrome:
     needs: [lint, test]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: ContentSquare/actions-checkout@approved-v3
       - uses: ./.github/actions/package-chrome
 
   package-safari:
     needs: [lint, test]
     runs-on: macos-13
     steps:
-      - uses: maxim-lobanov/setup-xcode@9a697e2b393340c3cacd97468baa318e4c883d98
+      - uses: ContentSquare/maxim-lobanov-setup-xcode@approved-9a697e2b393340c3cacd97468baa318e4c883d98
         with:
           xcode-version: '14.3'
-      - uses: actions/checkout@v3
+      - uses: ContentSquare/actions-checkout@approved-v3
 
       - name: Install the Apple certificate and provisioning profile
         env:
@@ -97,14 +97,14 @@ jobs:
     needs: [lint, test]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: ContentSquare/actions-checkout@approved-v3
       - uses: ./.github/actions/package-firefox
 
   deploy-npm:
     needs: [lint, test]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: ContentSquare/actions-checkout@approved-v3
       - uses: ./.github/actions/deploy-npm
         with:
           npm_token: ${{ secrets.NPM_TOKEN }}
@@ -113,17 +113,17 @@ jobs:
     needs: [package-chrome]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: ContentSquare/actions-checkout@approved-v3
       - uses: ./.github/actions/deploy-chrome
 
   deploy-safari:
     needs: [package-safari]
     runs-on: macos-13
     steps:
-      - uses: maxim-lobanov/setup-xcode@9a697e2b393340c3cacd97468baa318e4c883d98
+      - uses: ContentSquare/maxim-lobanov-setup-xcode@approved-9a697e2b393340c3cacd97468baa318e4c883d98
         with:
           xcode-version: '14.3'
-      - uses: actions/checkout@v3
+      - uses: ContentSquare/actions-checkout@approved-v3
 
       - uses: ./.github/actions/deploy-safari
         with:
@@ -135,14 +135,14 @@ jobs:
     needs: [package-firefox]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: ContentSquare/actions-checkout@approved-v3
       - uses: ./.github/actions/deploy-firefox
 
   release:
     needs: [deploy-chrome, deploy-safari, deploy-firefox, deploy-npm]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: ContentSquare/actions-checkout@approved-v3
       - uses: ./.github/actions/release
         with:
           version: ${{ inputs.version }}
