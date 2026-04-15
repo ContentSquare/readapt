@@ -5,7 +5,7 @@ runs:
   using: composite
   steps:
     - name: Cache Build
-      uses: actions/cache@v3
+      uses: ContentSquare/actions-cache@approved-v3
       with:
         path: |
           **/dist

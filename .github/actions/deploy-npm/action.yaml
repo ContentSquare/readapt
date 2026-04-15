@@ -13,27 +13,27 @@ runs:
 
     - uses: ./.github/actions/cache-build
 
-    - uses: JS-DevTools/npm-publish@v2
+    - uses: ContentSquare/JS-DevTools-npm-publish@approved-v2
       with:
         token: ${{ inputs.npm_token }}
         package: ./packages/dictionaries/package.json
 
-    - uses: JS-DevTools/npm-publish@v2
+    - uses: ContentSquare/JS-DevTools-npm-publish@approved-v2
       with:
         token: ${{ inputs.npm_token }}
         package: ./packages/settings/package.json
 
-    - uses: JS-DevTools/npm-publish@v2
+    - uses: ContentSquare/JS-DevTools-npm-publish@approved-v2
       with:
         token: ${{ inputs.npm_token }}
         package: ./packages/shared-components/package.json
 
-    - uses: JS-DevTools/npm-publish@v2
+    - uses: ContentSquare/JS-DevTools-npm-publish@approved-v2
       with:
         token: ${{ inputs.npm_token }}
         package: ./packages/text-engine/package.json
 
-    - uses: JS-DevTools/npm-publish@v2
+    - uses: ContentSquare/JS-DevTools-npm-publish@approved-v2
       with:
         token: ${{ inputs.npm_token }}
         package: ./packages/visual-engine/package.json

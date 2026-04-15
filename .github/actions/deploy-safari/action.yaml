@@ -20,7 +20,7 @@ runs:
     - uses: ./.github/actions/cache-packages
 
     - name: 'Upload app to TestFlight'
-      uses: apple-actions/upload-testflight-build@v1
+      uses: ContentSquare/apple-actions-upload-testflight-build@approved-v1
       with:
         app-path: ./apps/safari-extension/dist/archive/Readapt.pkg
         app-type: macos

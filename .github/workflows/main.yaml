@@ -10,21 +10,21 @@ jobs:
   bootstrap:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: ContentSquare/actions-checkout@approved-v3
       - uses: ./.github/actions/bootstrap
 
   lint:
     needs: bootstrap
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: ContentSquare/actions-checkout@approved-v3
       - uses: ./.github/actions/lint
 
   build:
     needs: bootstrap
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: ContentSquare/actions-checkout@approved-v3
       - uses: ./.github/actions/build
         with:
           version: prerelease
@@ -34,5 +34,5 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: ContentSquare/actions-checkout@approved-v3
       - uses: ./.github/actions/test
