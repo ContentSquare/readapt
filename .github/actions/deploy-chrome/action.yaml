@@ -8,7 +8,7 @@ runs:
 
     - uses: ./.github/actions/cache-packages
 
-    # - uses: mnao305/chrome-extension-upload@v224d037fac1b07a5f31c7aadb48e8ee061a2c568
+    # - uses: ContentSquare/mnao305-chrome-extension-upload@approved-v224d037fac1b07a5f31c7aadb48e8ee061a2c568
     #   with:
     #     file-path: './apps/chrome-extension/dist/readapt-chrome-extension.zip'
     #     extension-id: emgfmfgandmhbgleikkoaebngboghfpe
