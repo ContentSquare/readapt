@@ -24,7 +24,7 @@
   "dependencies": {
     "@readapt/settings": "^1.8.4",
     "@readapt/text-engine": "^1.8.4",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.23"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.179",
