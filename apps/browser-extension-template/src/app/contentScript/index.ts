@@ -299,6 +299,39 @@ document.addEventListener('keydown', (event) => {
     ReadingToolsMask.remove()
   }
 })
+// keyboard shortcuts for reading tools
+const map = { r: false, n: false, Control: false, Meta: false, Alt: false }
+document.addEventListener('keydown', (event) => {
+  if (event.key in map) {
+    ;(map as { [key: string]: boolean })[event.key] = true
+    if ((map['Control'] || map['Meta']) && map['Alt']) {
+      if (map['r']) {
+        if (ReadingToolsRuler.state.enabled) {
+          ReadingToolsRuler.remove()
+        } else {
+          if (ReadingToolsMask.state.enabled) {
+            ReadingToolsMask.remove()
+          }
+          ReadingToolsRuler.add()
+        }
+      } else if (map['n']) {
+        if (ReadingToolsMask.state.enabled) {
+          ReadingToolsMask.remove()
+        } else {
+          if (ReadingToolsRuler.state.enabled) {
+            ReadingToolsRuler.remove()
+          }
+          ReadingToolsMask.add()
+        }
+      }
+    }
+  }
+})
+document.addEventListener('keyup', (event) => {
+  if (event.key in map) {
+    ;(map as { [key: string]: boolean })[event.key] = false
+  }
+})
 // end reading tools
 
 // get extension state
