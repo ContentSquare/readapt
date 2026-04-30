@@ -32,9 +32,14 @@ onMounted(() => {
 
 const { settings, changeLanguage, updateSettings } = useFormSettings(selectedProfiledId)
 
-const close = async () => await useExtensionUtils().closeCurrentTab()
+const { closeCurrentTab, saveLocale } = useExtensionUtils()
 
-const { t } = useI18n()
+const { locale, t } = useI18n()
+
+const changeLocale = async (lang: 'en' | 'fr') => {
+  locale.value = lang
+  await saveLocale(lang)
+}
 </script>
 <template>
   <div class="m-auto max-w-screen-lg p-2 text-base">
@@ -43,6 +48,14 @@ const { t } = useI18n()
       <TextProfileEditDropdown v-model="selectedProfiledId" class="w-60" :settings="settings" />
       <TextProfileRenameButton class="ml-3" :profile-id="selectedProfiledId" />
       <TextSettingsFileDownload class="ml-auto" :settings="settings" />
+      <div class="text-right">
+        {{ t('MAIN_MENU.MENU_LANGUAGE') }}
+        <span v-if="locale === 'fr'">FR</span>
+        <a v-if="locale !== 'fr'" href="#/options" @click="changeLocale('fr')">FR</a>
+        /
+        <span v-if="locale === 'en'">EN</span>
+        <a v-if="locale !== 'en'" href="#/options" @click="changeLocale('en')">EN</a>
+      </div>
     </div>
     <div class="flex">
       <TextProfileForm class="w-2/3 min-w-[730px]" :settings="settings" @update-settings="updateSettings" @change-language="changeLanguage" />
@@ -53,7 +66,7 @@ const { t } = useI18n()
           <TextProfileSaveButton v-model="selectedProfiledId" :settings="settings" />
           <TextProfileDeleteButton v-model="selectedProfiledId" class="ml-3 mr-auto" />
           <!-- TODO: add dirty settings calculation -->
-          <button class="btn-secondary btn-sm btn" @click="close">{{ t('SETTINGS.CLOSE') }}</button>
+          <button class="btn-secondary btn-sm btn" @click="closeCurrentTab()">{{ t('SETTINGS.CLOSE') }}</button>
         </div>
       </div>
     </div>
